@@ -17,7 +17,7 @@ Works especially well with APIs built with the [API Platform](https://api-platfo
 
 ## Installation and Usage
 
-Create a React application using Facebook's Create React App:
+Create a React application using [Facebook's Create React App](https://github.com/facebookincubator/create-react-app):
 
     $ create-react-app my-app
     $ cd my-app
