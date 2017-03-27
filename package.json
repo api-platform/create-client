@@ -32,6 +32,7 @@
   "dependencies": {
     "api-doc-parser": "^0.1.1",
     "babel-runtime": "^6.23.0",
+    "colors": "^1.1.2",
     "commander": "^2.9.0",
     "handlebars": "^4.0.6",
     "isomorphic-fetch": "^2.2.1",

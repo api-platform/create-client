@@ -22,6 +22,7 @@ export default class ReactCrudGenerator {
     // components
     this.registerTemplate(templatePath, 'components/foo/Create.js');
     this.registerTemplate(templatePath, 'components/foo/Form.js');
+    this.registerTemplate(templatePath, 'components/foo/index.js');
     this.registerTemplate(templatePath, 'components/foo/List.js');
     this.registerTemplate(templatePath, 'components/foo/Update.js');
 
@@ -68,6 +69,7 @@ export default class ReactCrudGenerator {
     // components
     this.createFile('components/foo/Create.js', `${dir}/components/${lc}/Create.js`, context);
     this.createFile('components/foo/Form.js', `${dir}/components/${lc}/Form.js`, context);
+    this.createFile('components/foo/index.js', `${dir}/components/${lc}/index.js`, context);
     this.createFile('components/foo/List.js', `${dir}/components/${lc}/List.js`, context);
     this.createFile('components/foo/Update.js', `${dir}/components/${lc}/Update.js`, context);
 
