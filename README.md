@@ -1,23 +1,23 @@
 # API Platform CRUD Generator
 
 A generator to scaffold a React/Redux app with Create-Retrieve-Update-Delete features for any API exposing a Hydra documentation.
-Works especially well with APIs built with the [API Platform](https://api-platform.com) framework.
+Works especially well with APIs built with the [API Platform][link-api-platform] framework.
 
 [![Build Status](https://travis-ci.org/api-platform/generate-crud.svg?branch=master)](https://travis-ci.org/api-platform/generate-crud)
 
 ## Features
 
-* Generate a working ES6 application built with [React](https://facebook.github.io/react/), [Redux](http://redux.js.org), [React Router](https://reacttraining.com/react-router/) and [Redux Form](http://redux-form.com/)
+* Generate a working ES6 application built with [React][link-react], [Redux][link-redux], [React Router][link-redux-router] and [Redux Form][link-redux-form]
 * List
 * Create form with appropriate form inputs depending of the documented type and client-side validation (required fields)
 * Update form
 * Errors handling
 * Deletion
-* [Bootstrap](https://getbootstrap.com/) support
+* [Bootstrap][link-bootstrap] support
 
 ## Installation and Usage
 
-Create a React application using Facebook's Create React App:
+Create a React application using [Facebook's Create React App][link-facebook-create-react-app]:
 
     $ create-react-app my-app
     $ cd my-app
@@ -104,4 +104,14 @@ ReactDom.render(
 
 ## Credits
 
-Created by [Kévin Dunglas](https://dunglas.fr). Sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
+Created by [Kévin Dunglas][link-kevin-dunglas]. Sponsored by [Les-Tilleuls.coop][link-les-tilleuls].
+
+[link-api-platform]: https://api-platform.com
+[link-react]: https://facebook.github.io/react/
+[link-redux]: http://redux.js.org
+[link-redux-router]: https://reacttraining.com/react-router/
+[link-redux-form]: http://redux-form.com/
+[link-bootstrap]: https://getbootstrap.com/
+[link-facebook-create-react-app]: https://github.com/facebookincubator/create-react-app
+[link-kevin-dunglas]: https://dunglas.fr
+[link-les-tilleuls]: https://les-tilleuls.coop
