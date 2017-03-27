@@ -3,6 +3,8 @@
 A generator to scaffold a React/Redux app with Create-Retrieve-Update-Delete features for any API exposing a Hydra documentation.
 Works especially well with APIs built with the [API Platform](https://api-platform.com) framework.
 
+[![Build Status](https://travis-ci.org/api-platform/generate-crud.svg?branch=master)](https://travis-ci.org/api-platform/generate-crud)
+
 ## Features
 
 * Generate a working ES6 application built with [React](https://facebook.github.io/react/), [Redux](http://redux.js.org), [React Router](https://reacttraining.com/react-router/) and [Redux Form](http://redux-form.com/)
