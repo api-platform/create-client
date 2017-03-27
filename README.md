@@ -56,7 +56,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { reducer as form } from 'redux-form';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { syncHistoryWithStore, routerReducer as routing } from 'react-router-redux'
 
@@ -66,8 +66,14 @@ import FooList from './components/foo/List';
 import FooCreate from './components/foo/Create';
 import FooUpdate from './components/foo/Update';
 
+import bar from './reducers/bar/';
+import BarList from './components/bar/List';
+import BarCreate from './components/bar/Create';
+import BarUpdate from './components/bar/Update';
+
+
 const store = createStore(
-  combineReducers({routing, form, foo}),
+  combineReducers({routing, form, foo, bar}),
   applyMiddleware(thunk),
 );
 
@@ -76,12 +82,14 @@ const history = syncHistoryWithStore(createBrowserHistory(), store);
 ReactDom.render(
   <Provider store={store}>
     <Router history={history}>
-      <div>
+      <Switch>
         {/*Replace URLs and components accordingly*/}
-        <Route exact={true} path='/foos/' component={FooList}/>
-        <Route exact={true} path='/foos/create' component={FooCreate}/>
-        <Route exact={true} path='/foos/edit/:id' component={FooUpdate}/>
-      </div>
+        <Route path="/foos/" component={FooList} exact={true} strict={true}/>
+        <Route path="/foos/create" component={FooCreate} exact={true} />
+        <Route path="/foos/edit/:id" component={FooUpdate} exact={true}/>
+
+        <Route render={() => <h1>Not Found</h1>}/>
+      </Switch>
     </Router>
   </Provider>,
   document.getElementById('root')

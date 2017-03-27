@@ -93,7 +93,6 @@ export default class ReactCrudGenerator {
         return {type: 'number'};
 
       case 'http://www.w3.org/2001/XMLSchema#decimal':
-      case 'http://www.w3.org/2001/XMLSchema#number':
         return {type: 'number', step: '0.1'};
 
       case 'http://www.w3.org/2001/XMLSchema#boolean':
@@ -116,11 +115,6 @@ export default class ReactCrudGenerator {
   buildFields(apiFields) {
     let fields = [];
     for (let apiField of apiFields) {
-      if (null !== apiField.reference) {
-        // References are ignored for now
-        continue;
-      }
-
       let field = this.getInputTypeFromField(apiField);
       field.required = apiField.required;
       field.name = apiField.name;
