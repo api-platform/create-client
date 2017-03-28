@@ -1,3 +1,4 @@
+import { SubmissionError } from 'redux-form';
 import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
 
 export function retrieveError(retrieveError) {
@@ -16,7 +17,7 @@ export function retrieve(id) {
   return (dispatch) => {
     dispatch(retrieveLoading(true));
 
-    {{{ lc }}}Fetch(id)
+    return {{{ lc }}}Fetch(id)
       .then(response => response.json())
       .then(data => {
         dispatch(retrieveLoading(false));
@@ -45,7 +46,7 @@ export function update(item, values) {
   return (dispatch) => {
     dispatch(updateLoading(true));
 
-    {{{ lc }}}Fetch(item['@id'], {
+    return {{{ lc }}}Fetch(item['@id'], {
         method: 'PUT',
         headers: new Headers({'Content-Type': 'application/ld+json'}),
         body: JSON.stringify(values),
@@ -58,6 +59,12 @@ export function update(item, values) {
       })
       .catch(e => {
         dispatch(updateLoading(false));
+
+        if (e instanceof SubmissionError) {
+          dispatch(updateError(e.errors._error));
+          throw e;
+        }
+
         dispatch(updateError(e.message));
       });
   };

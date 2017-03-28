@@ -16,7 +16,7 @@ export function del(item) {
   return (dispatch) => {
     dispatch(loading(true));
 
-    {{{ lc }}}Fetch(item['@id'], {method: 'DELETE'})
+    return {{{ lc }}}Fetch(item['@id'], {method: 'DELETE'})
       .then(() => {
         dispatch(loading(false));
         dispatch(success(item))

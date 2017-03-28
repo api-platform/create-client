@@ -1,3 +1,4 @@
+import { SubmissionError } from 'redux-form';
 import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
 
 export function error(error) {
@@ -16,7 +17,7 @@ export function create(values) {
   return (dispatch) => {
     dispatch(loading(true));
 
-    {{{ lc }}}Fetch('/{{{ name }}}', {method: 'POST', body: JSON.stringify(values)})
+    return {{{ lc }}}Fetch('/{{{ name }}}', {method: 'POST', body: JSON.stringify(values)})
       .then(response => {
         dispatch(loading(false));
 
@@ -26,7 +27,12 @@ export function create(values) {
       .catch(e => {
         dispatch(loading(false));
 
-        dispatch(error(e.message))
+        if (e instanceof SubmissionError) {
+          dispatch(error(e.errors._error));
+          throw e;
+        }
+
+        dispatch(error(e.message));
       });
   };
 }

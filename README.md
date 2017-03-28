@@ -7,13 +7,18 @@ Works especially well with APIs built with the [API Platform](https://api-platfo
 
 ## Features
 
-* Generate a working ES6 application built with [React](https://facebook.github.io/react/), [Redux](http://redux.js.org), [React Router](https://reacttraining.com/react-router/) and [Redux Form](http://redux-form.com/)
-* List
-* Create form with appropriate form inputs depending of the documented type and client-side validation (required fields)
-* Update form
-* Errors handling
-* Deletion
-* [Bootstrap](https://getbootstrap.com/) support
+* Generate high-quality ES6 components and files built with [React](https://facebook.github.io/react/), [Redux](http://redux.js.org), [React Router](https://reacttraining.com/react-router/) and [Redux Form](http://redux-form.com/) including:
+  * A list view
+  * A creation form
+  * An edition form
+  * A deletion button
+* Use the Hydra API documentation to generate the code
+* Generate the appropriate HTML5 input type (`number`, `date`...) according to the type of the API property
+* Display server-side validation errors under the related input (if using API Platform Core)
+* Client-side validation (`required` attributes)
+* The generated HTML is compatible with [Bootstrap](https://getbootstrap.com/) and include mandatory classes
+* The generated HTML code is accessible to people with disabilities ([ARIA](https://www.w3.org/WAI/intro/aria) support)
+* The Redux and the React Router configuration is also generated
 
 ## Installation and Usage
 
@@ -60,20 +65,12 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { syncHistoryWithStore, routerReducer as routing } from 'react-router-redux'
 
-// Replace "foo" by the name of your resource
+// Replace "foo" by the name of the resource type
 import foo from './reducers/foo/';
-import FooList from './components/foo/List';
-import FooCreate from './components/foo/Create';
-import FooUpdate from './components/foo/Update';
-
-import bar from './reducers/bar/';
-import BarList from './components/bar/List';
-import BarCreate from './components/bar/Create';
-import BarUpdate from './components/bar/Update';
-
+import { FooList, FooCreate, FooUpdate } from './components/foo/';
 
 const store = createStore(
-  combineReducers({routing, form, foo, bar}),
+  combineReducers({routing, form, foo}), // Don't forget to register the reducers here
   applyMiddleware(thunk),
 );
 
@@ -83,7 +80,7 @@ ReactDom.render(
   <Provider store={store}>
     <Router history={history}>
       <Switch>
-        {/*Replace URLs and components accordingly*/}
+        {/*Replace URLs and components by the one displayed bu the generator*/}
         <Route path="/foos/" component={FooList} exact={true} strict={true}/>
         <Route path="/foos/create" component={FooCreate} exact={true} />
         <Route path="/foos/edit/:id" component={FooUpdate} exact={true}/>
@@ -100,10 +97,8 @@ ReactDom.render(
 
 * Add support for pagination
 * Automatically normalize numbers
-* Support the (proprietary) API Platform mechanism for field errors
 * Generate E2E tests
 * Add a React Native generator
-* Add support for relations?
 
 ## Run tests
 

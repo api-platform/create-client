@@ -47,12 +47,12 @@ class Update extends Component {
     return <div>
       <h1>Edit {item && item['@id']}</h1>
 
-      {this.props.created && <div className="alert alert-success">{this.props.created['@id']} created.</div>}
-      {this.props.updated && <div className="alert alert-success">{this.props.updated['@id']} updated.</div>}
-      {(this.props.retrieveLoading || this.props.updateLoading || this.props.deleteLoading) && <div className="alert alert-info">Loading...</div>}
-      {this.props.retrieveError && <div className="alert alert-danger">{this.props.retrieveError}</div>}
-      {this.props.updateError && <div className="alert alert-danger">{this.props.updateError}</div>}
-      {this.props.deleteError && <div className="alert alert-danger">{this.props.deleteError}</div>}
+      {this.props.created && <div className="alert alert-success" role="status">{this.props.created['@id']} created.</div>}
+      {this.props.updated && <div className="alert alert-success" role="status">{this.props.updated['@id']} updated.</div>}
+      {(this.props.retrieveLoading || this.props.updateLoading || this.props.deleteLoading) && <div className="alert alert-info" role="status">Loading...</div>}
+      {this.props.retrieveError && <div className="alert alert-danger" role="alert"><span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {this.props.retrieveError}</div>}
+      {this.props.updateError && <div className="alert alert-danger" role="alert"><span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {this.props.updateError}</div>}
+      {this.props.deleteError && <div className="alert alert-danger" role="alert"><span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {this.props.deleteError}</div>}
 
       {item && <Form onSubmit={values => this.props.update(item, values)} initialValues={item}/>}
       <Link to=".." className="btn btn-default">Back to list</Link>

@@ -1,3 +1,5 @@
+import { SubmissionError } from 'redux-form';
+
 const entrypoint = 'http://localhost';
 const jsonLdMimeType = 'application/ld+json';
 
@@ -19,7 +21,16 @@ export default function {{{ lc }}}Fetch(url, options = {}) {
       return response
         .json()
         .then(json => {
-          throw Error(json['{{{ hydraPrefix }}}description'] ? json['{{{ hydraPrefix }}}description'] : response.statusText)
+          const error = json['{{{ hydraPrefix }}}description'] ? json['{{{ hydraPrefix }}}description'] : response.statusText;
+
+          if (!json.violations) {
+            throw Error(error);
+          }
+
+          let errors = {_error: error};
+          json.violations.map((violation) => errors[violation.propertyPath] = violation.message);
+
+          throw new SubmissionError(errors);
         });
     }
 
