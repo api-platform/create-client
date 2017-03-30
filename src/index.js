@@ -11,8 +11,8 @@ program
   .version(version)
   .description('Generate a CRUD application built with React, Redux and React Router from an Hydra-enabled API')
   .usage('apiEntrypoint outputDirectory')
-  .option('-e, --resource [resourceName]', 'Generate CRUD for the given resource')
-  .option('-e, --hydra-prefix [hydraPrefix]', 'The hydra prefix used by the API', 'hydra:')
+  .option('-r, --resource [resourceName]', 'Generate CRUD for the given resource')
+  .option('-p, --hydra-prefix [hydraPrefix]', 'The hydra prefix used by the API', 'hydra:')
   .parse(process.argv);
 
 if (2 !== program.args.length) {
