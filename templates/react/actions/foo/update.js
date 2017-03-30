@@ -1,5 +1,6 @@
 import { SubmissionError } from 'redux-form';
 import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
+import { success as createSuccess } from './create';
 
 export function retrieveError(retrieveError) {
   return {type: '{{{ uc }}}_UPDATE_RETRIEVE_ERROR', retrieveError};
@@ -44,6 +45,8 @@ export function updateSuccess(updated) {
 
 export function update(item, values) {
   return (dispatch) => {
+    dispatch(updateError(false));
+    dispatch(createSuccess(null));
     dispatch(updateLoading(true));
 
     return {{{ lc }}}Fetch(item['@id'], {

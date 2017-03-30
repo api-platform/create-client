@@ -48,7 +48,12 @@ class List extends Component {
 {{#each fields}}
               <td>{item['{{{ name }}}']}</td>
 {{/each}}
-              <td><Link to={`edit/${encodeURIComponent(item['@id'])}`}><span className="glyphicon glyphicon-pencil"/></Link></td>
+              <td>
+                <Link to={`edit/${encodeURIComponent(item['@id'])}`}>
+                  <span className="glyphicon glyphicon-pencil" aria-hidden="true"/>
+                  <span className="sr-only">Edit</span>
+                </Link>
+              </td>
             </tr>
           )}
           </tbody>
