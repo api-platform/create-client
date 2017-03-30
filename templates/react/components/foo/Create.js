@@ -18,9 +18,7 @@ class Create extends Component {
   }
 
   render() {
-    if (this.props.created) {
-      return <Redirect to={`edit/${encodeURIComponent(this.props.created['@id'])}`}/>;
-    }
+    if (this.props.created) return <Redirect to={`edit/${encodeURIComponent(this.props.created['@id'])}`}/>;
 
     return <div>
       <h1>New {{{ title }}}</h1>

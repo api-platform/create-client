@@ -45,7 +45,7 @@ export function updateSuccess(updated) {
 
 export function update(item, values) {
   return (dispatch) => {
-    dispatch(updateError(false));
+    dispatch(updateError(null));
     dispatch(createSuccess(null));
     dispatch(updateLoading(true));
 

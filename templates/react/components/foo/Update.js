@@ -32,15 +32,11 @@ class Update extends Component {
   }
 
   del = () => {
-    if (confirm('Are you sure you want to delete this item?')) {
-      this.props.del(this.props.retrieved);
-    }
+    if (confirm('Are you sure you want to delete this item?')) this.props.del(this.props.retrieved);
   };
 
   render() {
-    if (this.props.deleted) {
-      return <Redirect to=".."/>;
-    }
+    if (this.props.deleted) return <Redirect to=".."/>;
 
     const item = this.props.updated ? this.props.updated : this.props.retrieved;
 
