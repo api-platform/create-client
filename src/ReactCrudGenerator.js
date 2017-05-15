@@ -32,6 +32,9 @@ export default class ReactCrudGenerator {
     this.registerTemplate(templatePath, 'reducers/foo/index.js');
     this.registerTemplate(templatePath, 'reducers/foo/list.js');
     this.registerTemplate(templatePath, 'reducers/foo/update.js');
+
+    // routes
+    this.registerTemplate(templatePath, 'routes/foo.js');
   }
 
   registerTemplate(templatePath, path) {
@@ -40,6 +43,7 @@ export default class ReactCrudGenerator {
 
   generate(api, resource, dir) {
     const lc = resource.title.toLowerCase();
+    const titleUcFirst = resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
 
     const context = {
       title: resource.title,
@@ -49,6 +53,7 @@ export default class ReactCrudGenerator {
       fields: resource.readableFields,
       formFields: this.buildFields(resource.writableFields),
       hydraPrefix: this.hydraPrefix,
+      titleUcFirst
     };
 
     // Create directories
@@ -56,6 +61,7 @@ export default class ReactCrudGenerator {
     this.createDir(`${dir}/actions/${lc}`);
     this.createDir(`${dir}/components/${lc}`);
     this.createDir(`${dir}/reducers/${lc}`);
+    this.createDir(`${dir}/routes`);
 
     // actions
     this.createFile('actions/foo/create.js', `${dir}/actions/${lc}/create.js`, context);
@@ -79,6 +85,9 @@ export default class ReactCrudGenerator {
     this.createFile('reducers/foo/index.js', `${dir}/reducers/${lc}/index.js`, context);
     this.createFile('reducers/foo/list.js', `${dir}/reducers/${lc}/list.js`, context);
     this.createFile('reducers/foo/update.js', `${dir}/reducers/${lc}/update.js`, context);
+
+    // routes
+    this.createFile('routes/foo.js', `${dir}/routes/${lc}.js`, context)
   }
 
   getInputTypeFromField(field) {
