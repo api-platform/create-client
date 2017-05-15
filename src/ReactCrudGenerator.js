@@ -61,7 +61,7 @@ export default class ReactCrudGenerator {
     this.createDir(`${dir}/actions/${lc}`);
     this.createDir(`${dir}/components/${lc}`);
     this.createDir(`${dir}/reducers/${lc}`);
-    this.createDir(`${dir}/routes`);
+    mkdirp.sync(`${dir}/routes`); // This directory may already exist
 
     // actions
     this.createFile('actions/foo/create.js', `${dir}/actions/${lc}/create.js`, context);

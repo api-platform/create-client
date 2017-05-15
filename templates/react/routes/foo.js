@@ -5,8 +5,8 @@ import { List as {{{titleUcFirst}}}List, Create as {{{titleUcFirst}}}Create, Upd
 
 export default (
     [
-        <Route path='/{{{lc}}}/' component={ {{{titleUcFirst}}}List } exact={true} strict={true}/>,
-        <Route path='/{{{lc}}}/create' component={ {{{titleUcFirst}}}Create } exact={true} />,
-        <Route path="/{{{lc}}}/edit/:id" component={ {{{titleUcFirst}}}Update } exact={true}/>
+        <Route path='/{{{lc}}}/' component={ {{{titleUcFirst}}}List } exact={true} strict={true} key='{{{titleUcFirst}}}List'/>,
+        <Route path='/{{{lc}}}/create' component={ {{{titleUcFirst}}}Create } exact={true} key='{{{titleUcFirst}}}Create'/>,
+        <Route path="/{{{lc}}}/edit/:id" component={ {{{titleUcFirst}}}Update } exact={true} key='{{{titleUcFirst}}}Update'/>
     ]
 );
