@@ -29,7 +29,7 @@ Create a React application using [Facebook's Create React App](https://github.co
 
 Install React Router, Redux, React Redux, React Router Redux, Redux Form and Redux Thunk (to handle AJAX requests):
 
-    $ yarn add redux react-redux redux-thunk redux-form react-router-dom react-router-redux
+    $ yarn add redux react-redux redux-thunk redux-form react-router-dom react-router-redux prop-types
 
 Install the generator globally:
 

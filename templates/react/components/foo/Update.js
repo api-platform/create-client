@@ -1,27 +1,13 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Form from './Form';
 import { success } from '../../actions/{{{ lc }}}/create';
 import { retrieve, update, reset } from '../../actions/{{{ lc }}}/update';
 import { del, loading, error } from '../../actions/{{{ lc }}}/delete';
 
 class Update extends Component {
-  static propTypes = {
-    retrieveError: React.PropTypes.string,
-    retrieveLoading: React.PropTypes.bool.isRequired,
-    updateError: React.PropTypes.string,
-    updateLoading: React.PropTypes.bool.isRequired,
-    deleteError: React.PropTypes.string,
-    deleteLoading: React.PropTypes.bool.isRequired,
-    retrieved: React.PropTypes.object,
-    updated: React.PropTypes.object,
-    deleted: React.PropTypes.object,
-    retrieve: React.PropTypes.func.isRequired,
-    update: React.PropTypes.func.isRequired,
-    del: React.PropTypes.func.isRequired,
-    reset: React.PropTypes.func.isRequired,
-  };
 
   componentDidMount() {
     this.props.retrieve(decodeURIComponent(this.props.match.params.id));
@@ -84,6 +70,22 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(success(null));
     },
   };
+};
+
+Update.propTypes = {
+    retrieveError: PropTypes.string,
+    retrieveLoading: PropTypes.bool.isRequired,
+    updateError: PropTypes.string,
+    updateLoading: PropTypes.bool.isRequired,
+    deleteError: PropTypes.string,
+    deleteLoading: PropTypes.bool.isRequired,
+    retrieved: PropTypes.object,
+    updated: PropTypes.object,
+    deleted: PropTypes.object,
+    retrieve: PropTypes.func.isRequired,
+    update: PropTypes.func.isRequired,
+    del: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Update);
