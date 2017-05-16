@@ -35,6 +35,9 @@ export default class ReactCrudGenerator {
 
     // routes
     this.registerTemplate(templatePath, 'routes/foo.js');
+
+    // entrypoint
+    this.registerTemplate(templatePath, 'api/_entrypoint.js');
   }
 
   registerTemplate(templatePath, path) {
@@ -88,6 +91,10 @@ export default class ReactCrudGenerator {
 
     // routes
     this.createFile('routes/foo.js', `${dir}/routes/${lc}.js`, context)
+  }
+
+  entrypoint(dir) {
+      this.createFile('api/_entrypoint.js', `${dir}/api/_entrypoint.js`, null);
   }
 
   getInputTypeFromField(field) {

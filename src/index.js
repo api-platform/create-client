@@ -33,6 +33,7 @@ parseHydraDocumentation(program.args[0]).then(api => {
         console.log('Code for the "%s" resource type has been generated!'.green, resource.title);
       }
     }
+    generator.entrypoint(program.args[1]);
 }).catch((e) => {
   console.log(e);
 });
