@@ -56,14 +56,6 @@ export default class ReactCrudGenerator {
       titleUcFirst
     };
 
-    // fix for replacing " with ' for Form placeholder description
-    let updatedFields = [];
-    context.formFields.map( (field) => {
-      field.description = field.description.replace(/"/g, "'");
-      updatedFields.push(field);
-    });
-    context.formFields = updatedFields;
-
     // Create directories
     mkdirp.sync(`${dir}/api`); // This directory may already exist
     this.createDir(`${dir}/actions/${lc}`);
@@ -97,7 +89,6 @@ export default class ReactCrudGenerator {
     // routes
     this.createFile('routes/foo.js', `${dir}/routes/${lc}.js`, context)
   }
-
 
   getInputTypeFromField(field) {
     switch (field.id) {
@@ -135,7 +126,7 @@ export default class ReactCrudGenerator {
       let field = this.getInputTypeFromField(apiField);
       field.required = apiField.required;
       field.name = apiField.name;
-      field.description = apiField.description;
+      field.description = apiField.description.replace(/"/g, "'"); // fix for Form placeholder description
 
       fields.push(field)
     }
