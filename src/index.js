@@ -47,7 +47,7 @@ combineReducers(${titleLc},{/* ... */}),
 `.green);
       }
     }
-    generator.entrypoint(program.args[1]);
+    generator.entrypoint(program.args[0], program.args[1]);
 }).catch((e) => {
   console.log(e);
 });

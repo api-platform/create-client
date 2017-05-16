@@ -1,6 +1,7 @@
 import mkdirp from 'mkdirp';
 import handlebars from 'handlebars';
 import fs from 'fs';
+import urlapi from 'url';
 
 export default class ReactCrudGenerator {
   templates = {};
@@ -93,8 +94,17 @@ export default class ReactCrudGenerator {
     this.createFile('routes/foo.js', `${dir}/routes/${lc}.js`, context)
   }
 
-  entrypoint(dir) {
-      this.createFile('api/_entrypoint.js', `${dir}/api/_entrypoint.js`, null);
+  entrypoint(apiEntry, dir) {
+    const url = urlapi.parse(apiEntry);
+    let host = url.protocol + "//" + url.host;
+    host += url.port ? (':' + url.port) : '';
+
+    const context = {
+      host,
+      path: url.pathname
+    }
+
+    this.createFile('api/_entrypoint.js', `${dir}/api/_entrypoint.js`, context);
   }
 
   getInputTypeFromField(field) {

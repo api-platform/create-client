@@ -1,2 +1,2 @@
-export const API_HOST = 'http://localhost';
-export const API_PATH = '';
+export const API_HOST = "{{{host}}}";
+export const API_PATH = "{{{path}}}";
