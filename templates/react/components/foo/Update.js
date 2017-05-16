@@ -8,6 +8,21 @@ import { retrieve, update, reset } from '../../actions/{{{ lc }}}/update';
 import { del, loading, error } from '../../actions/{{{ lc }}}/delete';
 
 class Update extends Component {
+  static propTypes = {
+    retrieveError: PropTypes.string,
+    retrieveLoading: PropTypes.bool.isRequired,
+    updateError: PropTypes.string,
+    updateLoading: PropTypes.bool.isRequired,
+    deleteError: PropTypes.string,
+    deleteLoading: PropTypes.bool.isRequired,
+    retrieved: PropTypes.object,
+    updated: PropTypes.object,
+    deleted: PropTypes.object,
+    retrieve: PropTypes.func.isRequired,
+    update: PropTypes.func.isRequired,
+    del: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+  };
 
   componentDidMount() {
     this.props.retrieve(decodeURIComponent(this.props.match.params.id));
@@ -70,22 +85,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(success(null));
     },
   };
-};
-
-Update.propTypes = {
-    retrieveError: PropTypes.string,
-    retrieveLoading: PropTypes.bool.isRequired,
-    updateError: PropTypes.string,
-    updateLoading: PropTypes.bool.isRequired,
-    deleteError: PropTypes.string,
-    deleteLoading: PropTypes.bool.isRequired,
-    retrieved: PropTypes.object,
-    updated: PropTypes.object,
-    deleted: PropTypes.object,
-    retrieve: PropTypes.func.isRequired,
-    update: PropTypes.func.isRequired,
-    del: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Update);

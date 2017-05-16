@@ -6,6 +6,13 @@ import Form from './Form';
 import { create, loading, error } from '../../actions/{{{ lc }}}/create';
 
 class Create extends Component {
+  static propTypes = {
+    error: PropTypes.string,
+    loading: PropTypes.bool.isRequired,
+    created: PropTypes.object,
+    create: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+  };
 
   componentWillUnmount() {
     this.props.reset();
@@ -42,14 +49,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(error(null));
     },
   };
-};
-
-Create.propTypes = {
-    error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-    created: PropTypes.object,
-    create: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);

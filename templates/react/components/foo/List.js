@@ -6,6 +6,14 @@ import { list, reset } from '../../actions/{{{ lc }}}/list';
 import { success } from '../../actions/{{{ lc }}}/delete';
 
 class List extends Component {
+  static propTypes = {
+    error: PropTypes.string,
+    loading: PropTypes.bool.isRequired,
+    items: PropTypes.array.isRequired,
+    deletedItem: PropTypes.object,
+    list: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+  };
 
   componentDidMount() {
     this.props.list();
@@ -75,15 +83,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(success(null));
     },
   };
-};
-
-List.propTypes = {
-    error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-    items: PropTypes.array.isRequired,
-    deletedItem: PropTypes.object,
-    list: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);
