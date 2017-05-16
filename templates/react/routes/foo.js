@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
 
-import { List as {{{titleUcFirst}}}List, Create as {{{titleUcFirst}}}Create, Update as {{{titleUcFirst}}}Update } from './components/{{{lc}}}/';
+import { List as {{{titleUcFirst}}}List, Create as {{{titleUcFirst}}}Create, Update as {{{titleUcFirst}}}Update } from '../components/{{{lc}}}/';
 
 export default (
     [
