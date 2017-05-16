@@ -31,7 +31,7 @@ parseHydraDocumentation(program.args[0]).then(api => {
         generator.generate(api, resource, program.args[1]);
 
         console.log('Code for the "%s" resource type has been generated!'.green, resource.title);
-        console.log('Paste the following routes definitions in your application configuration:');
+        console.log('Paste the following definitions in your application configuration:');
         console.log(`
 // import reducers        
 import ${titleLc} from './reducers/${titleLc}/';
