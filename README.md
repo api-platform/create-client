@@ -68,7 +68,6 @@ import { syncHistoryWithStore, routerReducer as routing } from 'react-router-red
 // Replace "foo" by the name of the resource type
 import fooReducers from './reducers/foo/';
 import fooRoutes from './routes/foo';
-import { FooList, FooCreate, FooUpdate } from './components/foo/';
 
 const store = createStore(
   combineReducers({routing, form, fooReducers}), // Don't forget to register the reducers here
