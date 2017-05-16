@@ -48,7 +48,7 @@ export default class ReactCrudGenerator {
     const lc = resource.title.toLowerCase();
     const titleUcFirst = resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
 
-    let context = {
+    const context = {
       title: resource.title,
       name: resource.name,
       lc,

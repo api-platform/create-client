@@ -40,7 +40,10 @@ import ${titleLc} from './reducers/${titleLc}/';
 import ${titleLc}Routes from './routes/${titleLc}';        
         
 // Add the reducer
-  combineReducers(${titleLc},{/* ... */}),
+combineReducers(${titleLc},{/* ... */}),
+  
+// Add routes to <Switch>
+{ ${titleLc}Routes }
 `.green);
       }
     }
