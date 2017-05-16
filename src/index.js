@@ -30,7 +30,7 @@ parseHydraDocumentation(program.args[0]).then(api => {
       if (null === resourceToGenerate || nameLc === resourceToGenerate || titleLc === resourceToGenerate) {
         generator.generate(api, resource, program.args[1]);
 
-        console.log('Code for the "%s" resource type has been generated!'.green, resource.title);
+        console.log('Code for the "%s" resource type has been generated!', resource.title);
         console.log('Paste the following definitions in your application configuration:');
         console.log(`
 // import reducers        
