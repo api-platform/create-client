@@ -45,7 +45,7 @@ export default class ReactCrudGenerator {
     const lc = resource.title.toLowerCase();
     const titleUcFirst = resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
 
-    const context = {
+    let context = {
       title: resource.title,
       name: resource.name,
       lc,
@@ -55,6 +55,14 @@ export default class ReactCrudGenerator {
       hydraPrefix: this.hydraPrefix,
       titleUcFirst
     };
+
+    // fix for replacing " with ' for Form placeholder description
+    let updatedFields = [];
+    context.formFields.map( (field) => {
+      field.description = field.description.replace(/"/g, "'");
+      updatedFields.push(field);
+    });
+    context.formFields = updatedFields;
 
     // Create directories
     mkdirp.sync(`${dir}/api`); // This directory may already exist
@@ -89,6 +97,7 @@ export default class ReactCrudGenerator {
     // routes
     this.createFile('routes/foo.js', `${dir}/routes/${lc}.js`, context)
   }
+
 
   getInputTypeFromField(field) {
     switch (field.id) {

@@ -66,11 +66,11 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import { syncHistoryWithStore, routerReducer as routing } from 'react-router-redux'
 
 // Replace "foo" by the name of the resource type
-import fooReducers from './reducers/foo/';
+import foo from './reducers/foo/';
 import fooRoutes from './routes/foo';
 
 const store = createStore(
-  combineReducers({routing, form, fooReducers}), // Don't forget to register the reducers here
+  combineReducers({routing, form, foo}), // Don't forget to register the reducers here
   applyMiddleware(thunk),
 );
 
