@@ -6,64 +6,66 @@ import { retrieve, reset } from '../../actions/{{{ lc }}}/show';
 
 
 class Show extends Component {
-    static propTypes = {
-        retrieveError: PropTypes.string,
-        retrieveLoading: PropTypes.bool.isRequired,
-        updateError: PropTypes.string,
-        updateLoading: PropTypes.bool.isRequired,
-        deleteError: PropTypes.string,
-        deleteLoading: PropTypes.bool.isRequired,
-        retrieved: PropTypes.object,
-        updated: PropTypes.object,
-        deleted: PropTypes.object,
-        retrieve: PropTypes.func.isRequired,
-        update: PropTypes.func.isRequired,
-        del: PropTypes.func.isRequired,
-        reset: PropTypes.func.isRequired,
-    };
+  static propTypes = {
+    retrieveError: PropTypes.string,
+    retrieveLoading: PropTypes.bool.isRequired,
+    retrieved: PropTypes.object,
+    retrieve: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+  };
 
-    componentDidMount() {
-        this.props.retrieve(decodeURIComponent(this.props.match.params.id));
-    }
+  constructor(props) {
+    super(props);
+    console.log('Show - constructor');
+    console.log(props);
+  }
 
-    componentWillUnmount() {
-        this.props.reset();
-    }
+  componentDidMount() {
+    console.log('Show - componentDidMount');
+    this.props.retrieve(decodeURIComponent(this.props.match.params.id));
+  }
 
-    // del = () => {
-    //     if (confirm('Are you sure you want to delete this item?')) this.props.del(this.props.retrieved);
-    // };
+  componentWillUnmount() {
+    this.props.reset();
+  }
 
-    render() {
-        if (this.props.deleted) return <Redirect to=".."/>;
+  // del = () => {
+  //   if (confirm('Are you sure you want to delete this item?')) this.props.del(this.props.retrieved);
+  // }; // del = () => {
+  //   if (confirm('Are you sure you want to delete this item?')) this.props.del(this.props.retrieved);
+  // };
 
-        const item = this.props.retrieved;
+  render() {
 
-        return <div>
-            <h1>Show {item && item['@id']}</h1>
+    const item = this.props.updated ? this.props.updated : this.props.retrieved;
 
-        </div>;
-    }
+    return <div>
+        <h1>Show {item && item['@id']}</h1>
+
+      {(this.props.retrieveLoading ) && <div className="alert alert-info" role="status">Loading...</div>}
+      {this.props.retrieveError && <div className="alert alert-danger" role="alert"><span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {this.props.retrieveError}</div>}
+
+
+        <Link to=".." className="btn btn-default">Back to list</Link>
+      {/* DELETE  EDIT actions ??? */}
+        {/*<button onClick={this.del} className="btn btn-danger">Delete</button>*/}
+    </div>;
+  }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        retrieveError: state.{{{ lc }}}.show.retrieveError,
-        retrieveLoading: state.{{{ lc }}}.show.retrieveLoading,
-        retrieved: state.{{{ lc }}}.show.retrieved,
+  return {
+    retrieveError: state.{{{ lc }}}.show.retrieveError,
+    retrieveLoading: state.{{{ lc }}}.show.retrieveLoading,
+    retrieved: state.{{{ lc }}}.show.retrieved
 };
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        retrieve: id => dispatch(retrieve(id)),
-        reset: () => {
-            dispatch(reset());
-            dispatch(error(null));
-            dispatch(loading(false));
-            dispatch(success(null));
-        },
-    };
+  return {
+    retrieve: id => dispatch(retrieve(id)),
+    reset: () => dispatch(reset())
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Show);

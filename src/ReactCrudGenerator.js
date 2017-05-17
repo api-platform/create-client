@@ -93,6 +93,7 @@ export default class ReactCrudGenerator {
     this.createFile('reducers//foo/delete.js', `${dir}/reducers/${lc}/delete.js`, context);
     this.createFile('reducers/foo/index.js', `${dir}/reducers/${lc}/index.js`, context);
     this.createFile('reducers/foo/list.js', `${dir}/reducers/${lc}/list.js`, context);
+    this.createFile('reducers/foo/update.js', `${dir}/reducers/${lc}/update.js`, context);
     this.createFile('reducers/foo/show.js', `${dir}/reducers/${lc}/show.js`, context);
 
     // routes

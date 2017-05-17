@@ -1,4 +1,3 @@
-import { SubmissionError } from 'redux-form';
 import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
 
 export function retrieveError(retrieveError) {
