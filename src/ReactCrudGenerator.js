@@ -16,6 +16,7 @@ export default class ReactCrudGenerator {
     this.registerTemplate(templatePath, 'actions/foo/delete.js');
     this.registerTemplate(templatePath, 'actions/foo/list.js');
     this.registerTemplate(templatePath, 'actions/foo/update.js');
+    this.registerTemplate(templatePath, 'actions/foo/show.js');
 
     // api
     this.registerTemplate(templatePath, 'api/fooFetch.js');
@@ -26,6 +27,7 @@ export default class ReactCrudGenerator {
     this.registerTemplate(templatePath, 'components/foo/index.js');
     this.registerTemplate(templatePath, 'components/foo/List.js');
     this.registerTemplate(templatePath, 'components/foo/Update.js');
+    this.registerTemplate(templatePath, 'components/foo/Show.js');
 
     // reducers
     this.registerTemplate(templatePath, 'reducers/foo/create.js');
@@ -33,6 +35,7 @@ export default class ReactCrudGenerator {
     this.registerTemplate(templatePath, 'reducers/foo/index.js');
     this.registerTemplate(templatePath, 'reducers/foo/list.js');
     this.registerTemplate(templatePath, 'reducers/foo/update.js');
+    this.registerTemplate(templatePath, 'reducers/foo/show.js');
 
     // routes
     this.registerTemplate(templatePath, 'routes/foo.js');
@@ -72,6 +75,7 @@ export default class ReactCrudGenerator {
     this.createFile('actions/foo/delete.js', `${dir}/actions/${lc}/delete.js`, context);
     this.createFile('actions/foo/list.js', `${dir}/actions/${lc}/list.js`, context);
     this.createFile('actions/foo/update.js', `${dir}/actions/${lc}/update.js`, context);
+    this.createFile('actions/foo/show.js', `${dir}/actions/${lc}/show.js`, context);
 
     // api
     this.createFile('api/fooFetch.js', `${dir}/api/${lc}Fetch.js`, context);
@@ -82,13 +86,14 @@ export default class ReactCrudGenerator {
     this.createFile('components/foo/index.js', `${dir}/components/${lc}/index.js`, context);
     this.createFile('components/foo/List.js', `${dir}/components/${lc}/List.js`, context);
     this.createFile('components/foo/Update.js', `${dir}/components/${lc}/Update.js`, context);
+    this.createFile('components/foo/Show.js', `${dir}/components/${lc}/Show.js`, context);
 
     // reducers
     this.createFile('reducers/foo/create.js', `${dir}/reducers/${lc}/create.js`, context);
     this.createFile('reducers//foo/delete.js', `${dir}/reducers/${lc}/delete.js`, context);
     this.createFile('reducers/foo/index.js', `${dir}/reducers/${lc}/index.js`, context);
     this.createFile('reducers/foo/list.js', `${dir}/reducers/${lc}/list.js`, context);
-    this.createFile('reducers/foo/update.js', `${dir}/reducers/${lc}/update.js`, context);
+    this.createFile('reducers/foo/show.js', `${dir}/reducers/${lc}/show.js`, context);
 
     // routes
     this.createFile('routes/foo.js', `${dir}/routes/${lc}.js`, context)

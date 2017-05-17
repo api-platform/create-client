@@ -7,6 +7,7 @@ export default (
     [
         <Route path='/{{{lc}}}/' component={ {{{titleUcFirst}}}List } exact={true} strict={true} key='{{{titleUcFirst}}}List'/>,
         <Route path='/{{{lc}}}/create' component={ {{{titleUcFirst}}}Create } exact={true} key='{{{titleUcFirst}}}Create'/>,
-        <Route path="/{{{lc}}}/edit/:id" component={ {{{titleUcFirst}}}Update } exact={true} key='{{{titleUcFirst}}}Update'/>
+        <Route path="/{{{lc}}}/edit/:id" component={ {{{titleUcFirst}}}Update } exact={true} key='{{{titleUcFirst}}}Update'/>,
+        <Route path="/{{{lc}}}/show/:id" component={ {{{titleUcFirst}}}Show } exact={true} key='{{{titleUcFirst}}}Show'/>
     ]
 );
