@@ -51,15 +51,15 @@ class List extends Component {
               <td>{item['{{{ name }}}']}</td>
 {{/each}}
               <td>
-                <Link to={`edit/${encodeURIComponent(item['@id'])}`}>
-                  <span className="glyphicon glyphicon-pencil" aria-hidden="true"/>
-                  <span className="sr-only">Edit</span>
-                </Link>
-              </td>
-              <td>
                 <Link to={`show/${encodeURIComponent(item['@id'])}`}>
                   <span className="glyphicon glyphicon-search" aria-hidden="true"/>
                   <span className="sr-only">Show</span>
+                </Link>
+              </td>
+              <td>
+                <Link to={`edit/${encodeURIComponent(item['@id'])}`}>
+                  <span className="glyphicon glyphicon-pencil" aria-hidden="true"/>
+                  <span className="sr-only">Edit</span>
                 </Link>
               </td>
             </tr>
