@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Form from './Form';
 import { create, loading, error } from '../../actions/{{{ lc }}}/create';
 
 class Create extends Component {
   static propTypes = {
-    error: React.PropTypes.string,
-    loading: React.PropTypes.bool.isRequired,
-    created: React.PropTypes.object,
-    create: React.PropTypes.func.isRequired,
-    reset: React.PropTypes.func.isRequired,
+    error: PropTypes.string,
+    loading: PropTypes.bool.isRequired,
+    created: PropTypes.object,
+    create: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
   };
 
   componentWillUnmount() {

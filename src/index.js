@@ -30,24 +30,24 @@ parseHydraDocumentation(program.args[0]).then(api => {
       if (null === resourceToGenerate || nameLc === resourceToGenerate || titleLc === resourceToGenerate) {
         generator.generate(api, resource, program.args[1]);
 
-        const titleUcFirst = resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
-
         console.log('Code for the "%s" resource type has been generated!', resource.title);
-        console.log('Paste the following routes definitions in your application configuration:');
+        console.log('Paste the following definitions in your application configuration:');
         console.log(`
-  import ${titleLc} from './reducers/${titleLc}/';
-  import { List as ${titleUcFirst}List, Create as ${titleUcFirst}Create, Update as ${titleUcFirst}Update } from './components/${titleLc}/';
-  
-  // Add the reducer
-  combineReducers(${titleLc},{/* ... */}),
+// import reducers        
+import ${titleLc} from './reducers/${titleLc}/';
 
-  // Add the routes
-  <Route path="/${nameLc}/" component={${titleUcFirst}List} exact={true} strict={true}/>
-  <Route path="/${nameLc}/create" component={${titleUcFirst}Create} exact={true} />
-  <Route path="/${nameLc}/edit/:id" component={${titleUcFirst}Update} exact={true}/>
+//import routes
+import ${titleLc}Routes from './routes/${titleLc}';        
+        
+// Add the reducer
+combineReducers(${titleLc},{/* ... */}),
+  
+// Add routes to <Switch>
+{ ${titleLc}Routes }
 `.green);
       }
     }
+    generator.entrypoint(program.args[0], program.args[1]);
 }).catch((e) => {
   console.log(e);
 });

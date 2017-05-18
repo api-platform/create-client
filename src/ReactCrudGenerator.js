@@ -1,6 +1,7 @@
 import mkdirp from 'mkdirp';
 import handlebars from 'handlebars';
 import fs from 'fs';
+import urlapi from 'url';
 
 export default class ReactCrudGenerator {
   templates = {};
@@ -32,6 +33,12 @@ export default class ReactCrudGenerator {
     this.registerTemplate(templatePath, 'reducers/foo/index.js');
     this.registerTemplate(templatePath, 'reducers/foo/list.js');
     this.registerTemplate(templatePath, 'reducers/foo/update.js');
+
+    // routes
+    this.registerTemplate(templatePath, 'routes/foo.js');
+
+    // entrypoint
+    this.registerTemplate(templatePath, 'api/_entrypoint.js');
   }
 
   registerTemplate(templatePath, path) {
@@ -40,6 +47,7 @@ export default class ReactCrudGenerator {
 
   generate(api, resource, dir) {
     const lc = resource.title.toLowerCase();
+    const titleUcFirst = resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
 
     const context = {
       title: resource.title,
@@ -49,10 +57,12 @@ export default class ReactCrudGenerator {
       fields: resource.readableFields,
       formFields: this.buildFields(resource.writableFields),
       hydraPrefix: this.hydraPrefix,
+      titleUcFirst
     };
 
     // Create directories
     mkdirp.sync(`${dir}/api`); // This directory may already exist
+    mkdirp.sync(`${dir}/routes`); // This directory may already exist
     this.createDir(`${dir}/actions/${lc}`);
     this.createDir(`${dir}/components/${lc}`);
     this.createDir(`${dir}/reducers/${lc}`);
@@ -79,6 +89,22 @@ export default class ReactCrudGenerator {
     this.createFile('reducers/foo/index.js', `${dir}/reducers/${lc}/index.js`, context);
     this.createFile('reducers/foo/list.js', `${dir}/reducers/${lc}/list.js`, context);
     this.createFile('reducers/foo/update.js', `${dir}/reducers/${lc}/update.js`, context);
+
+    // routes
+    this.createFile('routes/foo.js', `${dir}/routes/${lc}.js`, context)
+  }
+
+  entrypoint(apiEntry, dir) {
+    const url = urlapi.parse(apiEntry);
+    const {protocol, host, port, pathname} = url;
+    const hostUrl = `${protocol}//${host}${port ? `:${port}` : ''}`;
+
+    const context = {
+      host: hostUrl,
+      path: pathname
+    }
+
+    this.createFile('api/_entrypoint.js', `${dir}/api/_entrypoint.js`, context);
   }
 
   getInputTypeFromField(field) {
@@ -117,7 +143,7 @@ export default class ReactCrudGenerator {
       let field = this.getInputTypeFromField(apiField);
       field.required = apiField.required;
       field.name = apiField.name;
-      field.description = apiField.description;
+      field.description = apiField.description.replace(/"/g, "'"); // fix for Form placeholder description
 
       fields.push(field)
     }

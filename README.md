@@ -29,7 +29,7 @@ Create a React application using [Facebook's Create React App](https://github.co
 
 Install React Router, Redux, React Redux, React Router Redux, Redux Form and Redux Thunk (to handle AJAX requests):
 
-    $ yarn add redux react-redux redux-thunk redux-form react-router-dom react-router-redux
+    $ yarn add redux react-redux redux-thunk redux-form react-router-dom react-router-redux prop-types
 
 Install the generator globally:
 
@@ -67,7 +67,7 @@ import { syncHistoryWithStore, routerReducer as routing } from 'react-router-red
 
 // Replace "foo" by the name of the resource type
 import foo from './reducers/foo/';
-import { FooList, FooCreate, FooUpdate } from './components/foo/';
+import fooRoutes from './routes/foo';
 
 const store = createStore(
   combineReducers({routing, form, foo}), // Don't forget to register the reducers here
@@ -80,11 +80,7 @@ ReactDom.render(
   <Provider store={store}>
     <Router history={history}>
       <Switch>
-        {/*Replace URLs and components by the one displayed bu the generator*/}
-        <Route path="/foos/" component={FooList} exact={true} strict={true}/>
-        <Route path="/foos/create" component={FooCreate} exact={true} />
-        <Route path="/foos/edit/:id" component={FooUpdate} exact={true}/>
-
+        {fooRoutes}
         <Route render={() => <h1>Not Found</h1>}/>
       </Switch>
     </Router>

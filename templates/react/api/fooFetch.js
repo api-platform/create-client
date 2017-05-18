@@ -1,6 +1,6 @@
 import { SubmissionError } from 'redux-form';
+import { API_HOST, API_PATH } from './_entrypoint';
 
-const entrypoint = 'http://localhost';
 const jsonLdMimeType = 'application/ld+json';
 
 export default function {{{ lc }}}Fetch(url, options = {}) {
@@ -11,7 +11,9 @@ export default function {{{ lc }}}Fetch(url, options = {}) {
     options.headers.set('Content-Type', jsonLdMimeType);
   }
 
-  return fetch(entrypoint+url, options).then(response => {
+  const link =  url.includes(API_PATH) ? API_HOST + url : API_HOST + API_PATH + url;
+
+  return fetch(link, options).then(response => {
     if (response.ok) return response;
 
     return response
