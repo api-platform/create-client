@@ -96,12 +96,12 @@ export default class ReactCrudGenerator {
 
   entrypoint(apiEntry, dir) {
     const url = urlapi.parse(apiEntry);
-    let host = url.protocol + "//" + url.host;
-    host += url.port ? (':' + url.port) : '';
+    const {protocol, host, port, pathname} = url;
+    const hostUrl = `${protocol}//${host}${port ? `:${port}` : ''}`;
 
     const context = {
-      host,
-      path: url.pathname
+      host: hostUrl,
+      path: pathname
     }
 
     this.createFile('api/_entrypoint.js', `${dir}/api/_entrypoint.js`, context);
