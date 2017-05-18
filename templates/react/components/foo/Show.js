@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import {retrieve, reset} from '../../actions/{{{ lc }}}/show';
 import { del, loading, error } from '../../actions/{{{ lc }}}/delete';
 
-
 class Show extends Component {
   static propTypes = {
     retrieveError: PropTypes.string,
@@ -32,7 +31,6 @@ class Show extends Component {
   };
 
   render() {
-
     const item = this.props.updated ? this.props.updated : this.props.retrieved;
 
     return (<div>
