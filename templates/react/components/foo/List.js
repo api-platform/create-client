@@ -40,6 +40,7 @@ class List extends Component {
               <th>{{name}}</th>
 {{/each}}
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -49,6 +50,12 @@ class List extends Component {
 {{#each fields}}
               <td>{item['{{{ name }}}']}</td>
 {{/each}}
+              <td>
+                <Link to={`show/${encodeURIComponent(item['@id'])}`}>
+                  <span className="glyphicon glyphicon-search" aria-hidden="true"/>
+                  <span className="sr-only">Show</span>
+                </Link>
+              </td>
               <td>
                 <Link to={`edit/${encodeURIComponent(item['@id'])}`}>
                   <span className="glyphicon glyphicon-pencil" aria-hidden="true"/>
