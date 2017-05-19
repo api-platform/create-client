@@ -31,6 +31,8 @@ class Show extends Component {
   };
 
   render() {
+    if (this.props.deleted) return <Redirect to=".."/>;
+
     const item = this.props.updated ? this.props.updated : this.props.retrieved;
 
     return (<div>
