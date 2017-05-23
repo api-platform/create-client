@@ -27,7 +27,7 @@ class Show extends Component {
   }
 
   del = () => {
-    if (confirm('Are you sure you want to delete this item?')) this.props.del(this.props.retrieved);
+    if (window.confirm('Are you sure you want to delete this item?')) this.props.del(this.props.retrieved);
   };
 
   render() {
