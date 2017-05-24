@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
-export function retrieveError(state = null, action) {
+export function error(state = null, action) {
   switch (action.type) {
-    case '{{{ uc }}}_SHOW_RETRIEVE_ERROR':
-      return action.retrieveError;
+    case '{{{ uc }}}_SHOW_ERROR':
+      return action.error;
 
     case '{{{ uc }}}_SHOW_RESET':
       return null;
@@ -13,10 +13,10 @@ export function retrieveError(state = null, action) {
   }
 }
 
-export function retrieveLoading(state = false, action) {
+export function loading(state = false, action) {
   switch (action.type) {
-    case '{{{ uc }}}_SHOW_RETRIEVE_LOADING':
-      return action.retrieveLoading;
+    case '{{{ uc }}}_SHOW_LOADING':
+      return action.loading;
 
     case '{{{ uc }}}_SHOW_RESET':
       return false;
@@ -28,7 +28,7 @@ export function retrieveLoading(state = false, action) {
 
 export function retrieved(state = null, action) {
   switch (action.type) {
-    case '{{{ uc }}}_SHOW_RETRIEVE_SUCCESS':
+    case '{{{ uc }}}_SHOW_RETRIEVED_SUCCESS':
       return action.retrieved;
 
     case '{{{ uc }}}_SHOW_RESET':
@@ -39,4 +39,4 @@ export function retrieved(state = null, action) {
   }
 }
 
-export default combineReducers({retrieveError, retrieveLoading, retrieved});
+export default combineReducers({error, loading, retrieved});

@@ -7,8 +7,8 @@ import { del, loading, error } from '../../actions/{{{ lc }}}/delete';
 
 class Show extends Component {
   static propTypes = {
-    retrieveError: PropTypes.string,
-    retrieveLoading: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    loading: PropTypes.bool.isRequired,
     retrieved: PropTypes.object,
     retrieve: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
@@ -33,13 +33,13 @@ class Show extends Component {
   render() {
     if (this.props.deleted) return <Redirect to=".."/>;
 
-    const item = this.props.updated ? this.props.updated : this.props.retrieved;
+    const item = this.props.retrieved;
 
     return (<div>
       <h1>Show {item && item['@id']}</h1>
 
-      {(this.props.retrieveLoading ) && <div className="alert alert-info" role="status">Loading...</div>}
-      {this.props.retrieveError && <div className="alert alert-danger" role="alert"><span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {this.props.retrieveError}</div>}
+      {this.props.loading && <div className="alert alert-info" role="status">Loading...</div>}
+      {this.props.error && <div className="alert alert-danger" role="alert"><span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {this.props.error}</div>}
       {this.props.deleteError && <div className="alert alert-danger" role="alert"><span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {this.props.deleteError}</div>}
 
       {item && <div className="table-responsive">
@@ -73,8 +73,8 @@ class Show extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    retrieveError: state.{{{lc}}}.show.retrieveError,
-    retrieveLoading: state.{{{lc}}}.show.retrieveLoading,
+    error: state.{{{lc}}}.show.error,
+    loading: state.{{{lc}}}.show.loading,
     retrieved:state.{{{lc}}}.show.retrieved,
     deleteError: state.{{{ lc }}}.del.error,
     deleteLoading: state.{{{ lc }}}.del.loading,
