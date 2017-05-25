@@ -1,30 +1,30 @@
 import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
 
-export function retrieveError(retrieveError) {
-  return {type: '{{{ uc }}}_SHOW_RETRIEVE_ERROR', retrieveError};
+export function error(error) {
+  return {type: '{{{ uc }}}_SHOW_ERROR', error};
 }
 
-export function retrieveLoading(retrieveLoading) {
-  return {type: '{{{ uc }}}_SHOW_RETRIEVE_LOADING', retrieveLoading};
+export function loading(loading) {
+  return {type: '{{{ uc }}}_SHOW_LOADING', loading};
 }
 
-export function retrieveSuccess(retrieved) {
-  return {type: '{{{ uc }}}_SHOW_RETRIEVE_SUCCESS', retrieved};
+export function retrieved(retrieved) {
+  return {type: '{{{ uc }}}_SHOW_RETRIEVED_SUCCESS', retrieved};
 }
 
 export function retrieve(id) {
   return (dispatch) => {
-    dispatch(retrieveLoading(true));
+    dispatch(loading(true));
 
     return {{{ lc }}}Fetch(id)
       .then(response => response.json())
       .then(data => {
-        dispatch(retrieveLoading(false));
-        dispatch(retrieveSuccess(data));
+        dispatch(loading(false));
+        dispatch(retrieved(data));
       })
       .catch(e => {
-        dispatch(retrieveLoading(false));
-        dispatch(retrieveError(e.message));
+        dispatch(loading(false));
+        dispatch(error(e.message));
       });
   };
 }
