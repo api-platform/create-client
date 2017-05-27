@@ -16,21 +16,18 @@ export default function (itemArray) {
 }
 
 function createLink(item) {
-  const route = findRoute(item);
-  return (
-    item.includes(API_PATH) ?
+  let component = null;
+  if(item.includes(API_PATH)) {
+    const route = item.replace(API_PATH, '').split('/')[1].slice(0, -1);
+    component =
       <span key={item}>
-          <Link to={`/${route}/show/${encodeURIComponent(item)}`}>
-            {item}
-          </Link>
-          <br/>
-        </span> :
-      <span key={item}>{item}<br/></span>
-  )
-}
-
-function findRoute(item) {
-  if (item.includes(API_PATH)) {
-    return item.replace(API_PATH, '').split('/')[1].slice(0, -1);;
+        <Link to={`/${route}/show/${encodeURIComponent(item)}`}>
+          {item}
+        </Link>
+        <br/>
+      </span>;
+  } else {
+    component = <span key={item}>{item}<br/></span>;
   }
+  return component;
 }
