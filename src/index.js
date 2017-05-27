@@ -48,6 +48,7 @@ combineReducers(${titleLc},{/* ... */}),
       }
     }
     generator.entrypoint(program.args[0], program.args[1]);
+    generator.utils(program.args[1]);
 }).catch((e) => {
   console.log(e);
 });
