@@ -46,7 +46,11 @@ class List extends Component {
           <tbody>
           {this.props.items.map(item =>
             <tr className={item['@id']} key={item['@id']}>
-              <td>{item['@id']}</td>
+              <td>
+                <Link to={`show/${encodeURIComponent(item['@id'])}`}>
+                  {item['@id']}
+                </Link>
+              </td>
 {{#each fields}}
               <td>{item['{{{ name }}}']}</td>
 {{/each}}
