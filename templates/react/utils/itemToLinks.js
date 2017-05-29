@@ -10,24 +10,21 @@ export default function (itemArray) {
         }
       )
     );
-  } else {
-    return createLink(itemArray);
   }
+  return createLink(itemArray);
 }
 
 function createLink(item) {
-  let component = null;
   if(item.includes(API_PATH)) {
     const route = item.replace(API_PATH, '').split('/')[1].slice(0, -1);
-    component =
+    return (
       <span key={item}>
         <Link to={`/${route}/show/${encodeURIComponent(item)}`}>
           {item}
         </Link>
         <br/>
-      </span>;
-  } else {
-    component = <span key={item}>{item}<br/></span>;
+      </span>
+    );
   }
-  return component;
+  return <span key={item}>{item}<br/></span>;
 }
