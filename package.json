@@ -1,6 +1,6 @@
 {
   "name": "api-platform-generate-crud",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Generate a CRUD application built with React, Redux and React Router from an Hydra-enabled API",
   "files": [
     "*.md",
