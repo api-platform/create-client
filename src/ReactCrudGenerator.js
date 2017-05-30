@@ -67,9 +67,11 @@ export default class ReactCrudGenerator {
     };
 
     // Create directories
-    mkdirp.sync(`${dir}/api`);    // This directory may already exist
-    mkdirp.sync(`${dir}/routes`); // This directory may already exist
-    mkdirp.sync(`${dir}/utils`);  // This directory may already exist
+    // These directories may already exist
+    mkdirp.sync(`${dir}/api`);
+    mkdirp.sync(`${dir}/routes`);
+    mkdirp.sync(`${dir}/utils`);
+
     this.createDir(`${dir}/actions/${lc}`);
     this.createDir(`${dir}/components/${lc}`);
     this.createDir(`${dir}/reducers/${lc}`);
