@@ -2,16 +2,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {API_PATH} from '../api/_entrypoint';
 
-export default function (itemArray) {
-  if (Array.isArray(itemArray)) {
-    return (
-      itemArray.map(item => {
-          return createLink(item)
-        }
-      )
-    );
-  }
-  return createLink(itemArray);
+export default function (items) {
+  return Array.isArray(items) ? items.map(item => createLink(item)) : createLink(items);
 }
 
 function createLink(item) {
