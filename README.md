@@ -13,8 +13,8 @@ Works especially well with APIs built with the [API Platform](https://api-platfo
   * An edition form
   * A deletion button
 * Use the Hydra API documentation to generate the code
-* Generate the appropriate HTML5 input type (`number`, `date`...) according to the type of the API property
-* Display server-side validation errors under the related input (if using API Platform Core)
+* Generate the suitable HTML5 input type (`number`, `date`...) according to the type of the API property
+* Display of the server-side validation errors under the related input (if using API Platform Core)
 * Client-side validation (`required` attributes)
 * The generated HTML is compatible with [Bootstrap](https://getbootstrap.com/) and include mandatory classes
 * The generated HTML code is accessible to people with disabilities ([ARIA](https://www.w3.org/WAI/intro/aria) support)
