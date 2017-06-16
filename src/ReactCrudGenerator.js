@@ -1,5 +1,6 @@
 import mkdirp from 'mkdirp';
 import handlebars from 'handlebars';
+import comparison from 'handlebars-helpers/lib/comparison';
 import fs from 'fs';
 import urlapi from 'url';
 
@@ -48,6 +49,7 @@ export default class ReactCrudGenerator {
   }
 
   registerTemplate(templatePath, path) {
+    handlebars.registerHelper('contains', comparison.contains);
     this.templates[path] = handlebars.compile(fs.readFileSync(templatePath+path).toString());
   }
 
