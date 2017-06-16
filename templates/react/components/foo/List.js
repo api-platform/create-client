@@ -58,7 +58,6 @@ class List extends Component {
 {{#each fields}}
   {{#contains name "id" }}
   {{else}}
-
               <td>{item['{{{ name }}}'] ? itemToLinks(item['{{{ name }}}']) : ''}</td>
   {{/contains}}
 {{/each}}
