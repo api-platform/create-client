@@ -62,7 +62,7 @@ class Show extends Component {
       </div>
       }
       <Link to=".." className="btn btn-default">Back to list</Link>
-      {item && <Link to={`/{{ lc }}/edit/${encodeURIComponent(item['@id'])}`}>
+      {item && <Link to={`/{{ name }}/edit/${encodeURIComponent(item['@id'])}`}>
         <button className="btn btn-warning">Edit</button>
         </Link>
       }
