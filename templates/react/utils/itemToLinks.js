@@ -2,23 +2,13 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {API_PATH} from '../api/_entrypoint';
 
-export default function(items) {
-  return Array.isArray(items)
-    ? items.map(item => createLink(item))
-    : createLink(items);
-}
-
+export default (items) => Array.isArray(items) ? items.map(item => createLink(item)) : createLink(items);
+gs
 function createLink(item) {
-  if (typeof(item) === 'string' && item.includes(API_PATH) > 0) {
+  if (typeof item === 'string' && item.includes(API_PATH) > 0) {
     const route = item.replace(API_PATH, '').split('/')[1];
-    return (
-      <span key={item}>
-        <Link to={`/${route}/show/${encodeURIComponent(item)}`}>
-          {item}
-        </Link>
-        <br/>
-      </span>
-    );
+    return <Link to={`/${route}/show/${encodeURIComponent(item)}`} key={item}>{item}</Link>
   }
-  return <span key={item}>{item}<br/></span>;
+
+  return <div key={item}>{item}</div>;
 }
