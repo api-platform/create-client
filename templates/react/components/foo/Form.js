@@ -5,7 +5,7 @@ class Form extends Component {
   renderField(data) {
     const hasError = data.meta.touched && !!data.meta.error;
     if (hasError) {
-      data.input['aria-describedby'] = 'bar_haha_helpBlock';
+      data.input['aria-describedby'] = `{{{ lc }}}_${data.input.name}_helpBlock`;
       data.input['aria-invalid'] = true;
     }
 
