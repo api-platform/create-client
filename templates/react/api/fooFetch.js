@@ -11,7 +11,7 @@ export default function {{{ lc }}}Fetch(url, options = {}) {
     options.headers.set('Content-Type', jsonLdMimeType);
   }
 
-  const link =  url.includes(API_PATH) ? API_HOST + url : API_HOST + API_PATH + url;
+  const link = url.includes(API_PATH) ? API_HOST + url : API_HOST + API_PATH + url;
 
   return fetch(link, options).then(response => {
     if (response.ok) return response;
