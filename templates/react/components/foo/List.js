@@ -38,10 +38,7 @@ class List extends Component {
             <tr>
               <th>Id</th>
 {{#each fields}}
-  {{#contains name "id" }}
-  {{else}}
               <th>{{name}}</th>
-  {{/contains}}
 {{/each}}
               <th></th>
               <th></th>
@@ -52,10 +49,7 @@ class List extends Component {
             <tr className={item['@id']} key={item['@id']}>
               <td><Link to={`show/${encodeURIComponent(item['@id'])}`}>{item['@id']}</Link></td>
 {{#each fields}}
-  {{#contains name "id" }}
-  {{else}}
               <td>{item['{{{ name }}}'] ? itemToLinks(item['{{{ name }}}']) : ''}</td>
-  {{/contains}}
 {{/each}}
               <td>
                 <Link to={`show/${encodeURIComponent(item['@id'])}`}>
