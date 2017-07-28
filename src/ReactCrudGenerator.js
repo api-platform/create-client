@@ -42,6 +42,9 @@ export default class ReactCrudGenerator {
 
     // entrypoint
     this.registerTemplate(templatePath, 'api/_entrypoint.js');
+
+    // utils
+    this.registerTemplate(templatePath, 'utils/itemToLinks.js');
   }
 
   registerTemplate(templatePath, path) {
@@ -64,8 +67,11 @@ export default class ReactCrudGenerator {
     };
 
     // Create directories
-    mkdirp.sync(`${dir}/api`); // This directory may already exist
-    mkdirp.sync(`${dir}/routes`); // This directory may already exist
+    // These directories may already exist
+    mkdirp.sync(`${dir}/api`);
+    mkdirp.sync(`${dir}/routes`);
+    mkdirp.sync(`${dir}/utils`);
+
     this.createDir(`${dir}/actions/${lc}`);
     this.createDir(`${dir}/components/${lc}`);
     this.createDir(`${dir}/reducers/${lc}`);
@@ -111,6 +117,10 @@ export default class ReactCrudGenerator {
     }
 
     this.createFile('api/_entrypoint.js', `${dir}/api/_entrypoint.js`, context);
+  }
+
+  utils(dir) {
+    this.createFile('utils/itemToLinks.js', `${dir}/utils/itemToLinks.js`, null);
   }
 
   getInputTypeFromField(field) {

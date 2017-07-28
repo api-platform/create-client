@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { list, reset } from '../../actions/{{{ lc }}}/list';
 import { success } from '../../actions/{{{ lc }}}/delete';
+import itemToLinks from '../../utils/itemToLinks';
 
 class List extends Component {
   static propTypes = {
@@ -46,9 +47,9 @@ class List extends Component {
           <tbody>
           {this.props.items.map(item =>
             <tr className={item['@id']} key={item['@id']}>
-              <td>{item['@id']}</td>
+              <td><Link to={`show/${encodeURIComponent(item['@id'])}`}>{item['@id']}</Link></td>
 {{#each fields}}
-              <td>{item['{{{ name }}}']}</td>
+              <td>{item['{{{ name }}}'] ? itemToLinks(item['{{{ name }}}']) : ''}</td>
 {{/each}}
               <td>
                 <Link to={`show/${encodeURIComponent(item['@id'])}`}>

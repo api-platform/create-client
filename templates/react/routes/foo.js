@@ -10,9 +10,9 @@ import {
 
 export default (
   [
-    <Route path='/{{{lc}}}/' component={ {{{titleUcFirst}}}List } exact={true} strict={true} key='{{{titleUcFirst}}}List'/>,
-    <Route path='/{{{lc}}}/create' component={ {{{titleUcFirst}}}Create } exact={true} key='{{{titleUcFirst}}}Create'/>,
-    <Route path="/{{{lc}}}/edit/:id" component={ {{{titleUcFirst}}}Update } exact={true} key='{{{titleUcFirst}}}Update'/>,
-    <Route path="/{{{lc}}}/show/:id" component={ {{{titleUcFirst}}}Show } exact={true} key='{{{titleUcFirst}}}Show'/>
+    <Route path='/{{{name}}}/' component={ {{{titleUcFirst}}}List } exact={true} strict={true} key='{{{titleUcFirst}}}List'/>,
+    <Route path='/{{{name}}}/create' component={ {{{titleUcFirst}}}Create } exact={true} key='{{{titleUcFirst}}}Create'/>,
+    <Route path="/{{{name}}}/edit/:id" component={ {{{titleUcFirst}}}Update } exact={true} key='{{{titleUcFirst}}}Update'/>,
+    <Route path="/{{{name}}}/show/:id" component={ {{{titleUcFirst}}}Show } exact={true} key='{{{titleUcFirst}}}Show'/>
   ]
 );
