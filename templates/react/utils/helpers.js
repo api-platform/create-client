@@ -8,7 +8,13 @@ export function itemToLinks(items) {
 
 function createLink(item) {
   if (typeof(item) === 'string' && item.includes(API_PATH) > 0) {
-    const route = item.replace(API_PATH, '').split('/')[0];
+    let route = null;
+    const routeTest = item.replace(API_PATH, '');
+    if( routeTest[0] === '/') {
+      route = item.replace(API_PATH, '').split('/')[1];
+    } else {
+      route = item.replace(API_PATH, '').split('/')[0];
+    }
     return (
       <span key={item}>
         <Link to={`/${route}/show/${encodeURIComponent(item)}`}>
