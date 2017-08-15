@@ -113,7 +113,7 @@ export default class ReactCrudGenerator {
 
     const context = {
       host: hostUrl,
-      path: pathname + '/'
+      path: pathname
     }
 
     this.createFile('api/_entrypoint.js', `${dir}/api/_entrypoint.js`, context);
