@@ -2,9 +2,9 @@
 # Troubleshooting
 * The generator does not perform any authentication, so you must ensure that all referenced hydra paths for your API are accessible anonymously. If you are using [API Platform](https://api-platform.com) this will at least include:
   ```
-  api_entrypoint                                       ANY      ANY      ANY    /{index}.{_format}
-  api_doc                                              ANY      ANY      ANY    /docs.{_format}
-  api_jsonld_context                                   ANY      ANY      ANY    /contexts/{shortName}.{_format}
+  api_entrypoint                             ANY      ANY      ANY    /{index}.{_format}
+  api_doc                                    ANY      ANY      ANY    /docs.{_format}
+  api_jsonld_context                         ANY      ANY      ANY    /contexts/{shortName}.{_format}
   ```
 
 * If you recieve `Error: The class http://www.w3.org/ns/hydra/core#ApiDocumentation doesn't exist.` you may have specified the documentation URL instead of the entrypoint. For example if you are using [API Platform](https://api-platform.com) and your documentation URL is at [https://demo.api-platform.com/docs] the entry point is likely at [https://demo.api-platform.com]. You can see an example of the expected response from an entrypoint in your browser by clicking visiting [https://demo.api-platform.com/index.jsonld].    
