@@ -44,7 +44,7 @@ export default class ReactCrudGenerator {
     this.registerTemplate(templatePath, 'api/_entrypoint.js');
 
     // utils
-    this.registerTemplate(templatePath, 'utils/itemToLinks.js');
+    this.registerTemplate(templatePath, 'utils/helpers.js');
   }
 
   registerTemplate(templatePath, path) {
@@ -120,7 +120,7 @@ export default class ReactCrudGenerator {
   }
 
   utils(dir) {
-    this.createFile('utils/itemToLinks.js', `${dir}/utils/itemToLinks.js`, null);
+    this.createFile('utils/helpers.js', `${dir}/utils/helpers.js`, null);
   }
 
   getInputTypeFromField(field) {
