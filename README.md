@@ -48,7 +48,7 @@ Reference the Bootstrap CSS stylesheet in `public/index.html` (optional):
 
 In the app directory, generate the files for the resource you want:
 
-    $ api-platform-generate-crud http://localhost src/ --resource foo
+    $ api-platform-generate-crud https://demo.api-platform.com src/ --resource foo
     # Replace the URL by the entrypoint of your Hydra-enabled API
     # Omit the resource flag to generate files for all resource types exposed by the API
 
