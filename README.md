@@ -89,6 +89,8 @@ ReactDom.render(
 );
 ```
 
+## [Troubleshooting](Troubleshooting.md)
+
 ## TODO
 
 * Add support for pagination
