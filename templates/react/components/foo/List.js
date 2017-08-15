@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { list, reset } from '../../actions/{{{ lc }}}/list';
 import { success } from '../../actions/{{{ lc }}}/delete';
-import itemToLinks from '../../utils/helpers';
+import { itemToLinks } from '../../utils/helpers';
 
 class List extends Component {
   static propTypes = {
