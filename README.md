@@ -97,7 +97,6 @@ ReactDom.render(
 
 ## TODO
 
-* Add support for pagination
 * Automatically normalize numbers
 * Generate E2E tests
 * Add a React Native generator
