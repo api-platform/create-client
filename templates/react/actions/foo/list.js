@@ -12,21 +12,31 @@ export function success(items) {
   return {type: '{{{ uc }}}_LIST_SUCCESS', items};
 }
 
-export function list() {
+export function view(items) {
+  return { type: '{{{ uc }}}_LIST_VIEW', items};
+}
+
+export function page(page) {
   return (dispatch) => {
     dispatch(loading(true));
+    dispatch(error(''));
 
-    {{{ lc }}}Fetch('/{{{ name }}}')
+    {{{ lc }}}Fetch(page)
       .then(response => response.json())
       .then(data => {
         dispatch(loading(false));
         dispatch(success(data['{{{ hydraPrefix }}}member']));
+        dispatch(view(data['{{{ hydraPrefix }}}view']));
       })
       .catch(e => {
         dispatch(loading(false));
         dispatch(error(e.message))
       });
   };
+}
+
+export function list() {
+  return page('/{{{ name }}}');
 }
 
 export function reset() {

@@ -66,6 +66,7 @@ export default class ReactCrudGenerator {
       titleUcFirst
     };
 
+
     // Create directories
     // These directories may already exist
     mkdirp.sync(`${dir}/api`);

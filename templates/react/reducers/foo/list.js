@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import {combineReducers} from 'redux'
 
 export function error(state = null, action) {
   switch (action.type) {
@@ -39,4 +39,14 @@ export function items(state = [], action) {
   }
 }
 
-export default combineReducers({error, loading, items});
+export function view(state = [], action) {
+  switch (action.type) {
+    case '{{{ uc }}}_LIST_VIEW':
+      return action.items;
+
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({error, loading, items, view});
