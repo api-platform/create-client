@@ -4,6 +4,10 @@ A generator to scaffold a React/Redux app with Create-Retrieve-Update-Delete fea
 Works especially well with APIs built with the [API Platform](https://api-platform.com) framework.
 
 [![Build Status](https://travis-ci.org/api-platform/generate-crud.svg?branch=master)](https://travis-ci.org/api-platform/generate-crud)
+[![npm version](https://badge.fury.io/js/api-platform-generate-crud.svg)](https://badge.fury.io/js/api-platform-generate-crud)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
+
+[![NPM](https://nodei.co/npm/api-platform-generate-crud.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/api-platform-generate-crud/)
 
 ## Features
 
@@ -93,7 +97,6 @@ ReactDom.render(
 
 ## TODO
 
-* Add support for pagination
 * Automatically normalize numbers
 * Generate E2E tests
 * Add a React Native generator

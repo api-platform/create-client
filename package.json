@@ -1,6 +1,6 @@
 {
   "name": "api-platform-generate-crud",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Generate a CRUD application built with React, Redux and React Router from an Hydra-enabled API",
   "files": [
     "*.md",
@@ -42,7 +42,8 @@
     "test": "jest",
     "lint": "eslint src",
     "build": "babel src -d lib --ignore '*.test.js'",
-    "watch": "babel --watch src -d lib --ignore '*.test.js'"
+    "watch": "babel --watch src -d lib --ignore '*.test.js'",
+    "test-gen": "rm -rf ./tmp && npm run build && ./lib/index.js  https://demo.api-platform.com ./tmp"
   },
   "bin": {
     "api-platform-generate-crud": "./lib/index.js"

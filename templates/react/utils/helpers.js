@@ -26,3 +26,7 @@ function createLink(item) {
   }
   return <span key={item}>{item}<br/></span>;
 }
+
+export function paginationRoute(item) {
+  return '/' + item.split('/').splice(-1,1);
+}
