@@ -26,7 +26,7 @@ Works especially well with APIs built with the [API Platform](https://api-platfo
 
 ## Documentation
 
-The documentation of API Platform CRUD Generator can be browsed [on the official website](https://api-platform.com/docs/).
+The documentation of API Platform CRUD Generator can be browsed [on the docs repository](https://github.com/api-platform/docs/blob/master/index.md#api-platform-crud-generator-scaffold-a-reactredux-app-with-crud-features).
 
 ## Credits
 
