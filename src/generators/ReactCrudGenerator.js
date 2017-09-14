@@ -2,12 +2,13 @@ import mkdirp from 'mkdirp';
 import handlebars from 'handlebars';
 import fs from 'fs';
 import urlapi from 'url';
+import chalk from 'chalk';
 
 export default class ReactCrudGenerator {
   templates = {};
 
   constructor(hydraPrefix) {
-    const templatePath = `${__dirname}/../templates/react/`;
+    const templatePath = `${__dirname}/../../templates/react/`;
 
     this.hydraPrefix = hydraPrefix;
 
@@ -49,6 +50,26 @@ export default class ReactCrudGenerator {
 
   registerTemplate(templatePath, path) {
     this.templates[path] = handlebars.compile(fs.readFileSync(templatePath+path).toString());
+  }
+
+  help(resource) {
+    const titleLc = resource.title.toLowerCase()
+
+    console.log('Code for the "%s" resource type has been generated!', resource.title);
+    console.log('Paste the following definitions in your application configuration:');
+    console.log(chalk.green(`
+// import reducers
+import ${titleLc} from './reducers/${titleLc}/';
+
+//import routes
+import ${titleLc}Routes from './routes/${titleLc}';
+
+// Add the reducer
+combineReducers(${titleLc},{/* ... */}),
+
+// Add routes to <Switch>
+{ ${titleLc}Routes }
+`));
   }
 
   generate(api, resource, dir) {
