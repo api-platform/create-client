@@ -1,7 +1,11 @@
-import list from './';
+import {
+  list,
+  create
+} from './';
 
 export default {
   modules: {
-    list
+    list,
+    create
   }
-};
+}
