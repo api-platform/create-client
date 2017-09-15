@@ -1,11 +1,13 @@
 import {
   list,
-  create
+  create,
+  update
 } from './';
 
 export default {
   modules: {
     list,
-    create
+    create,
+    update
   }
 }
