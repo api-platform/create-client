@@ -24,12 +24,11 @@ export default class VueCrudGenerator {
     this.registerTemplate(templatePath, 'api/fooFetch.js');
 
     // components
-    this.registerTemplate(templatePath, 'components/foo/Create.js');
-    this.registerTemplate(templatePath, 'components/foo/Form.js');
-    this.registerTemplate(templatePath, 'components/foo/index.js');
-    this.registerTemplate(templatePath, 'components/foo/List.js');
-    this.registerTemplate(templatePath, 'components/foo/Update.js');
-    this.registerTemplate(templatePath, 'components/foo/Show.js');
+    this.registerTemplate(templatePath, 'components/foo/Create.vue');
+    this.registerTemplate(templatePath, 'components/foo/Form.vue');
+    this.registerTemplate(templatePath, 'components/foo/List.vue');
+    this.registerTemplate(templatePath, 'components/foo/Update.vue');
+    this.registerTemplate(templatePath, 'components/foo/Show.vue');
 
     // routes
     this.registerTemplate(templatePath, 'routes/foo.js');
@@ -55,18 +54,23 @@ export default class VueCrudGenerator {
 import ${titleLc}Routes from './routes/${titleLc}';
 
 // Add the modules in the store
-import foo from './store/modules/foo';
+import { ${titleLc} from './store/modules/{ ${titleLc}/';
 
 export const store = new Vuex.Store({
     // ...
     modules: {
-        foo
+        { ${titleLc}
     }
 });
 
 
-// Add routes to <Switch>
-{ ${titleLc}Routes }
+// Add routes to VueRouter
+const router = new VueRouter({
+  // ...
+  routes: [
+      ...{ ${titleLc}Routes },
+  ]
+});
 `));
   }
 
@@ -107,12 +111,11 @@ export const store = new Vuex.Store({
     this.createFile('api/fooFetch.js', `${dir}/api/${lc}Fetch.js`, context);
 
     // components
-    this.createFile('components/foo/Create.js', `${dir}/components/${lc}/Create.js`, context);
-    this.createFile('components/foo/Form.js', `${dir}/components/${lc}/Form.js`, context);
-    this.createFile('components/foo/index.js', `${dir}/components/${lc}/index.js`, context);
-    this.createFile('components/foo/List.js', `${dir}/components/${lc}/List.js`, context);
-    this.createFile('components/foo/Update.js', `${dir}/components/${lc}/Update.js`, context);
-    this.createFile('components/foo/Show.js', `${dir}/components/${lc}/Show.js`, context);
+    this.createFile('components/foo/Create.vue', `${dir}/components/${lc}/Create.vue`, context);
+    this.createFile('components/foo/Form.vue', `${dir}/components/${lc}/Form.vue`, context);
+    this.createFile('components/foo/List.vue', `${dir}/components/${lc}/List.vue`, context);
+    this.createFile('components/foo/Update.vue', `${dir}/components/${lc}/Update.vue`, context);
+    this.createFile('components/foo/Show.vue', `${dir}/components/${lc}/Show.vue`, context);
 
     // routes
     this.createFile('routes/foo.js', `${dir}/routes/${lc}.js`, context)
