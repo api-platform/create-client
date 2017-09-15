@@ -1,8 +1,9 @@
-import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
+import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
 
 const {{{ uc }}}_SHOW_ERROR = '{{{ uc }}}_SHOW_ERROR';
 const {{{ uc }}}_SHOW_LOADING = '{{{ uc }}}_SHOW_LOADING';
 const {{{ uc }}}_SHOW_RETRIEVED_SUCCESS = '{{{ uc }}}_SHOW_RETRIEVED_SUCCESS';
+const {{{ uc }}}_SHOW_RESET = '{{{ uc }}}_SHOW_RESET';
 
 const state = {
   loading: false,
@@ -42,15 +43,15 @@ const actions = {
 };
 
 const mutations = {
-    [{{{ uc }}}_SHOW_ERROR] (state, { error }) {
+    [{{{ uc }}}_SHOW_ERROR] (state, error) {
       state.error = error;
     },
-    [{{{ uc }}}_SHOW_LOADING] (state, { loading }) {
+    [{{{ uc }}}_SHOW_LOADING] (state, loading) {
       state.loading = loading;
     },
-    [{{{ uc }}}_SHOW_RETRIEVED_SUCCESS] (state, { retrieved }) {
+    [{{{ uc }}}_SHOW_RETRIEVED_SUCCESS] (state, retrieved) {
       state.retrieved = retrieved;
-    }
+    },
     [{{{ uc }}}_SHOW_RESET] (state) {
       state.retrieved = null;
     }

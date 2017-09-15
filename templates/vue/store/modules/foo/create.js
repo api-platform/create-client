@@ -1,4 +1,4 @@
-import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
+import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
 
 const {{{ uc }}}_CREATE_ERROR = '{{{ uc }}}_CREATE_ERROR';
 const {{{ uc }}}_CREATE_LOADING = '{{{ uc }}}_CREATE_LOADING';
@@ -45,13 +45,13 @@ const actions = {
 };
 
 const mutations = {
-    [{{{ uc }}}_CREATE_ERROR] (state, { error }) {
+    [{{{ uc }}}_CREATE_ERROR] (state, error) {
       state.error = error;
     },
-    [{{{ uc }}}_CREATE_LOADING] (state, { loading }) {
+    [{{{ uc }}}_CREATE_LOADING] (state, loading) {
       state.loading = loading;
     },
-    [{{{ uc }}}_CREATE_SUCCESS] (state, { created }) {
+    [{{{ uc }}}_CREATE_SUCCESS] (state, created) {
       state.created = created;
     }
 };

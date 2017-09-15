@@ -1,4 +1,4 @@
-import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
+import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
 
 const {{{ uc }}}_UPDATE_RESET = '{{{ uc }}}_UPDATE_RESET';
 const {{{ uc }}}_UPDATE_UPDATE_ERROR = '{{{ uc }}}_UPDATE_UPDATE_ERROR';
@@ -87,25 +87,25 @@ const actions = {
 };
 
 const mutations = {
-    [{{{ uc }}}_UPDATE_RETRIEVE_ERROR] (state, { retrieveError }) {
+    [{{{ uc }}}_UPDATE_RETRIEVE_ERROR] (state, retrieveError) {
       state.retrieveError = retrieveError;
     },
-    [{{{ uc }}}_UPDATE_RETRIEVE_LOADING] (state, { retrieveLoading }) {
+    [{{{ uc }}}_UPDATE_RETRIEVE_LOADING] (state, retrieveLoading) {
       state.retrieveLoading = retrieveLoading;
     },
-    [{{{ uc }}}_UPDATE_RETRIEVE_SUCCESS] (state, { retrieved }) {
+    [{{{ uc }}}_UPDATE_RETRIEVE_SUCCESS] (state, retrieved) {
       state.retrieved = retrieved;
     },
-    [{{{ uc }}}_UPDATE_UPDATE_LOADING] (state, { loading }) {
+    [{{{ uc }}}_UPDATE_UPDATE_LOADING] (state, loading) {
       state.updateLoading = loading;
     },
-    [{{{ uc }}}_UPDATE_UPDATE_ERROR] (state, { updateError }) {
+    [{{{ uc }}}_UPDATE_UPDATE_ERROR] (state, updateError) {
       state.updateError = updateError;
     },
-    [{{{ uc }}}_UPDATE_UPDATE_LOADING] (state, { updateLoading }) {
+    [{{{ uc }}}_UPDATE_UPDATE_LOADING] (state, updateLoading) {
       state.updateLoading = updateLoading;
     },
-    [{{{ uc }}}_UPDATE_UPDATE_SUCCESS] (state, { updated }) {
+    [{{{ uc }}}_UPDATE_UPDATE_SUCCESS] (state, updated) {
       state.updated = updated;
     },
     [{{{ uc }}}_UPDATE_RESET] (state) {

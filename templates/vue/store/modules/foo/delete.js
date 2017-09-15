@@ -1,4 +1,4 @@
-import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
+import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
 
 const {{{ uc }}}_DELETE_ERROR = '{{{ uc }}}_DELETE_ERROR';
 const {{{ uc }}}_DELETE_LOADING = '{{{ uc }}}_DELETE_LOADING';
@@ -41,13 +41,13 @@ const actions = {
 };
 
 const mutations = {
-    [{{{ uc }}}_DELETE_ERROR] (state, { error }) {
+    [{{{ uc }}}_DELETE_ERROR] (state, error) {
       state.error = error;
     },
-    [{{{ uc }}}_DELETE_LOADING] (state, { loading }) {
+    [{{{ uc }}}_DELETE_LOADING] (state, loading) {
       state.loading = loading;
     },
-    [{{{ uc }}}_DELETE_SUCCESS] (state, { deleted }) {
+    [{{{ uc }}}_DELETE_SUCCESS] (state, deleted) {
       state.deleted = deleted;
     }
 };

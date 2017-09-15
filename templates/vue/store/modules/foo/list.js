@@ -1,4 +1,4 @@
-import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
+import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
 
 const {{{ uc }}}_LIST_ERROR = '{{{ uc }}}_LIST_ERROR';
 const {{{ uc }}}_LIST_LOADING = '{{{ uc }}}_LIST_LOADING';
@@ -59,19 +59,19 @@ const actions = {
 };
 
 const mutations = {
-    [{{{ uc }}}_LIST_ERROR] (state, { error }) {
+    [{{{ uc }}}_LIST_ERROR] (state, error) {
       state.error = error;
     },
-    [{{{ uc }}}_LIST_LOADING] (state, { loading }) {
+    [{{{ uc }}}_LIST_LOADING] (state, loading) {
       state.loading = loading;
     },
     [{{{ uc }}}_LIST_RESET] (state) {
       state.items = [];
     },
-    [{{{ uc }}}_LIST_VIEW] (state, { items }) {
+    [{{{ uc }}}_LIST_VIEW] (state, items) {
       state.view = items;
     },
-    [{{{ uc }}}_LIST_SUCCESS] (state, { items }) {
+    [{{{ uc }}}_LIST_SUCCESS] (state, items) {
       state.items = items;
     }
 };
