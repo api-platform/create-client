@@ -1,13 +1,15 @@
 import {
   list,
   create,
-  update
+  update,
+  show
 } from './';
 
 export default {
   modules: {
     list,
     create,
-    update
+    update,
+    show
   }
 }
