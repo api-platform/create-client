@@ -13,12 +13,12 @@ export default class VueCrudGenerator {
     this.hydraPrefix = hydraPrefix;
 
     // modules
-    this.registerTemplate(templatePath, 'modules/foo/index.js');
-    this.registerTemplate(templatePath, 'modules/foo/create.js');
-    this.registerTemplate(templatePath, 'modules/foo/delete.js');
-    this.registerTemplate(templatePath, 'modules/foo/list.js');
-    this.registerTemplate(templatePath, 'modules/foo/update.js');
-    this.registerTemplate(templatePath, 'modules/foo/show.js');
+    this.registerTemplate(templatePath, 'store/modules/foo/index.js');
+    this.registerTemplate(templatePath, 'store/modules/foo/create.js');
+    this.registerTemplate(templatePath, 'store/modules/foo/delete.js');
+    this.registerTemplate(templatePath, 'store/modules/foo/list.js');
+    this.registerTemplate(templatePath, 'store/modules/foo/update.js');
+    this.registerTemplate(templatePath, 'store/modules/foo/show.js');
 
     // api
     this.registerTemplate(templatePath, 'api/fooFetch.js');
@@ -55,7 +55,7 @@ export default class VueCrudGenerator {
 import ${titleLc}Routes from './routes/${titleLc}';
 
 // Add the modules in the store
-import foo from './modules/foo';
+import foo from './store/modules/foo';
 
 export const store = new Vuex.Store({
     // ...
@@ -92,16 +92,16 @@ export const store = new Vuex.Store({
     mkdirp.sync(`${dir}/routes`);
     mkdirp.sync(`${dir}/utils`);
 
-    this.createDir(`${dir}/modules/${lc}`);
+    this.createDir(`${dir}/store/modules/${lc}`);
     this.createDir(`${dir}/components/${lc}`);
 
     // modules
-    this.createFile('modules/foo/index.js', `${dir}/modules/${lc}/index.js`, context);
-    this.createFile('modules/foo/create.js', `${dir}/modules/${lc}/create.js`, context);
-    this.createFile('modules/foo/delete.js', `${dir}/modules/${lc}/delete.js`, context);
-    this.createFile('modules/foo/list.js', `${dir}/modules/${lc}/list.js`, context);
-    this.createFile('modules/foo/update.js', `${dir}/modules/${lc}/update.js`, context);
-    this.createFile('modules/foo/show.js', `${dir}/modules/${lc}/show.js`, context);
+    this.createFile('store/modules/foo/index.js', `${dir}/store/modules/${lc}/index.js`, context);
+    this.createFile('store/modules/foo/create.js', `${dir}/store/modules/${lc}/create.js`, context);
+    this.createFile('store/modules/foo/delete.js', `${dir}/store/modules/${lc}/delete.js`, context);
+    this.createFile('store/modules/foo/list.js', `${dir}/store/modules/${lc}/list.js`, context);
+    this.createFile('store/modules/foo/update.js', `${dir}/store/modules/${lc}/update.js`, context);
+    this.createFile('store/modules/foo/show.js', `${dir}/store/modules/${lc}/show.js`, context);
 
     // api
     this.createFile('api/fooFetch.js', `${dir}/api/${lc}Fetch.js`, context);
