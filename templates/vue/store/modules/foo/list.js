@@ -36,7 +36,10 @@ function reset(commit) {
   return commit({{{ uc }}}_LIST_RESET);
 }
 
-const getters = {};
+const getters = {
+  items: state => state.items,
+  view: state => state.view
+};
 
 const actions = {
     getItems({ commit, state }) {
@@ -45,11 +48,9 @@ const actions = {
       {{{ lc }}}Fetch('/{{{ name }}}', state.filters)
         .then(response => response.json())
         .then(data => {
-          const items = data['{{{ hydraPrefix }}}member'];
-          const viewItems = data['{{{ hydraPrefix }}}view'];
           loading(commit, false);
-          success(commit, items);
-          view(commit, viewItems);
+          success(commit, data['{{{ hydraPrefix }}}member']);
+          view(commit, data['{{{ hydraPrefix }}}view']);
         })
         .catch(e => {
           loading(commit, false);
