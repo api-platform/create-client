@@ -49,9 +49,9 @@
         </thead>
         <tbody>
           <tr v-for="item in items">
-            <td><router-link :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">\{{ item['@id'] }}</router-link></td>
+            <td><router-link v-if="item" :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">\{{ item['@id'] }}</router-link></td>
 {{#each fields}}
-            <td><router-link v-if="item['{{{ name }}}']" :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">\{{ item['{{{ name }}}'] }}</router-link></td>
+            <td><router-link v-if="item" :to="{name: '{{{../titleUcFirst}}}Show', params: { id: item['@id'] }}">\{{ item['{{{ name }}}'] }}</router-link></td>
 {{/each}}
             <td>
               <router-link :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">
@@ -75,18 +75,20 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+  import { createNamespacedHelpers } from 'vuex';
 
-export default {
-  computed: mapGetters([
-    'items',
-    'view'
-  ]),
-  methods: mapActions([
-    'getPage'
-  ]),
-  created () {
-    this.$store.dispatch('getItems')
+  const { mapActions, mapGetters } = createNamespacedHelpers('{{{lc}}}/list');
+
+  export default {
+    computed: mapGetters([
+      'items',
+      'view'
+    ]),
+    methods: mapActions([
+      'getPage'
+    ]),
+    created () {
+      this.$store.dispatch('{{{lc}}}/list/getItems')
+    }
   }
-}
 </script>
