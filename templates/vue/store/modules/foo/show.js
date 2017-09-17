@@ -23,10 +23,18 @@ function retrieved(commit, retrieved) {
   return commit({{{ uc }}}_SHOW_RETRIEVED_SUCCESS, retrieved);
 }
 
-const getters = {};
+function reset() {
+  return commit({{{ uc }}}_SHOW_RESET);
+}
+
+const getters = {
+  error: state => state.error,
+  loading: state => state.loading,
+  item: state => state.retrieved
+};
 
 const actions = {
-  retrieve({ commit }) {
+  retrieve({ commit }, id) {
     loading(commit, true);
 
     return {{{ lc }}}Fetch(id)
