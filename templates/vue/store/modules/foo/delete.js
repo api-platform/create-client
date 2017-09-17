@@ -22,10 +22,14 @@ function success(commit, deleted) {
   return commit({{{ uc }}}_DELETE_SUCCESS, deleted);
 }
 
-const getters = {};
+const getters = {
+  deleteError: state => state.error,
+  deleted: state => state.deleted,
+  loading: state => state.loading,
+};
 
 const actions = {
-  delete({ commit }) {
+  delete({ commit }, item) {
     loading(commit, true);
 
     return {{{ lc }}}Fetch(item['@id'], {method: 'DELETE'})
