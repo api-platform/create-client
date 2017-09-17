@@ -49,7 +49,7 @@ export function reset(commit) {
 const getters = {};
 
 const actions = {
-  retrieve({ commit}) {
+  retrieve({ commit }, id) {
     retrieveLoading(commit, true);
 
     return {{{ lc }}}Fetch(id)
@@ -63,9 +63,8 @@ const actions = {
         retrieveError(commit, e.message);
       });
   },
-  update({ commit, state }) {
+  update({ commit, state }, item) {
     updateError(commit, null);
-    //createSuccess(commit, null);
     updateLoading(commit, true);
 
     return {{{ lc }}}Fetch(item['@id'], {
