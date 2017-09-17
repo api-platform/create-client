@@ -23,7 +23,7 @@ function success(commit, deleted) {
 }
 
 const getters = {
-  deleteError: state => state.error,
+  error: state => state.error,
   deleted: state => state.deleted,
   loading: state => state.loading,
 };
