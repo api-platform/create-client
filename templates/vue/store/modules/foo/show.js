@@ -23,7 +23,7 @@ function retrieved(commit, retrieved) {
   return commit({{{ uc }}}_SHOW_RETRIEVED_SUCCESS, retrieved);
 }
 
-function reset() {
+function reset(commit) {
   return commit({{{ uc }}}_SHOW_RESET);
 }
 
@@ -47,6 +47,9 @@ const actions = {
         loading(commit, false);
         error(commit, e.message);
       });
+  },
+  reset({ commit }) {
+    reset(commit);
   }
 };
 
