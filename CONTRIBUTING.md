@@ -26,6 +26,26 @@ First of all, you must decide on what branch your changes will be based. If the 
 fully backward-compatible, you should base your changes on the latest stable branch.
 Otherwise, you should base your changes on the `master` branch.
 
+### Installing the source version
+
+To install the source version of API Platform Admin in your project and contribute a patch, run the following command:
+
+    # Link the source version of API Platform admin
+    $ cd ..
+    $ git clone git@github.com:api-platform/admin.git -b the-latest-stable-branch
+    $ cd admin
+    $ yarn link
+    $ cd ../yourpoject
+    $ yarn link api-platform-admin
+    # Use the React version of your project to build API Platform admin
+    $ cd node_modules/react
+    $ yarn link
+    $ cd ../../../admin
+    $ yarn link react
+    $ yarn watch
+
+You can now hack in the cloned repository of `api-platform-admin`.
+
 ### Testing your changes
 
 Before sending a Pull Request, make sure the tests pass correctly:
@@ -36,7 +56,7 @@ yarn test
 
 ### Matching coding standards
 
-The API Platform CRUD Generator project is inspired by the [Airbnb JavaScript style guide](https://github.com/airbnb/javascript).
+The API Platform Admin project is inspired by the [Airbnb JavaScript style guide](https://github.com/airbnb/javascript).
 But don't worry, you can fix CS issues automatically using [ESLint](https://eslint.org/) tool:
 
 ```bash
@@ -100,6 +120,28 @@ Now force push to update your PR:
 ```bash
 git push --force
 ```
+
+# Tag a new version (contributors only)
+
+Always test before releasing a new one:
+
+```
+yarn build
+yarn test
+yarn lint
+```
+
+To fix linting errors, you can use `yarn fix`.
+
+To release a new version:
+
+```bash
+yarn version # this creates a tag
+git push
+git push --tags
+```
+
+Travis will then publish the version on npm.
 
 # License and copyright attribution
 
