@@ -5,8 +5,8 @@ import fs from 'fs';
 export default class TypescriptInterfaceGenerator {
   templates = {};
 
-  constructor() {
-    const templatePath = `${__dirname}/../../templates/typescript`;
+  constructor({templateDirectory}) {
+    const templatePath = `${templateDirectory}/typescript/`;
     this.template = handlebars.compile(fs.readFileSync(`${templatePath}/interface.ts`).toString())
   }
 

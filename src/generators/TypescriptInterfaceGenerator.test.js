@@ -7,7 +7,7 @@ import TypescriptInterfaceGenerator from './TypescriptInterfaceGenerator';
 
 
 test('Generate a typescript interface', () => {
-  const generator = new TypescriptInterfaceGenerator('hydra:');
+  const generator = new TypescriptInterfaceGenerator({templateDirectory: `${__dirname}/../../templates`});
   const tmpobj = tmp.dirSync({unsafeCleanup: true});
 
   const resource = new Resource('abc', 'http://example.com/foos', {

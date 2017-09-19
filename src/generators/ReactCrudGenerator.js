@@ -7,8 +7,8 @@ import chalk from 'chalk';
 export default class ReactCrudGenerator {
   templates = {};
 
-  constructor(hydraPrefix) {
-    const templatePath = `${__dirname}/../../templates/react/`;
+  constructor({hydraPrefix, templateDirectory}) {
+    const templatePath = `${templateDirectory}/react/`;
 
     this.hydraPrefix = hydraPrefix;
 
