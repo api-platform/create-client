@@ -1,25 +1,19 @@
-# API Platform CRUD Generator
+# API Platform Client Generator
 
-[![Build Status](https://travis-ci.org/api-platform/generate-crud.svg?branch=master)](https://travis-ci.org/api-platform/generate-crud)
-[![npm version](https://badge.fury.io/js/api-platform-generate-crud.svg)](https://badge.fury.io/js/@api-platform/generate-crud)
+[![Build Status](https://travis-ci.org/api-platform/client-generator.svg?branch=master)](https://travis-ci.org/api-platform/client-generator)
+[![npm version](https://badge.fury.io/js/%40api-platform%2Fclient-generator.svg)](https://badge.fury.io/js/%40api-platform%2Fclient-generator)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
-
-[![NPM](https://nodei.co/npm/@api-platform/generate-crud.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/@api-platform/generate-crud/)
 
 A generator to scaffold a React/Redux app with Create-Retrieve-Update-Delete features for any API exposing a Hydra documentation.
 Works especially well with APIs built with the [API Platform](https://api-platform.com) framework.
 
 ## Installation
 
-```
-npm install -g @api-platform/generate-crud
-```
+    yarn global add @api-platform/client-generator
 
 ## Usage
 
-```
-api-platform-generate-crud https://demo.api-platform.com/ output/ --resource Book
-```
+    generate-api-platform-client https://demo.api-platform.com/ output/ --resource Book
 
 ## Features
 
@@ -38,7 +32,7 @@ api-platform-generate-crud https://demo.api-platform.com/ output/ --resource Boo
 
 ## Documentation
 
-The documentation of API Platform CRUD Generator can be browsed [on the docs repository](https://github.com/api-platform/docs/blob/master/index.md#api-platform-crud-generator-scaffold-a-reactredux-app-with-crud-features).
+The documentation of API Platform's Client Generator can be browsed [on the official website](https://api-platform.com/docs/generate-crud/).
 
 ## Credits
 
