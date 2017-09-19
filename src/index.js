@@ -13,6 +13,7 @@ program
   .option('-r, --resource [resourceName]', 'Generate CRUD for the given resource')
   .option('-p, --hydra-prefix [hydraPrefix]', 'The hydra prefix used by the API', 'hydra:')
   .option('-g, --generator [generator]', 'The generator to use, one of "react", "angular" etc.', 'react')
+  .option('-t, --template-directory [templateDirectory]', 'The templates directory base to use. Final directory will be ${templateDirectory}/${generator}', `${__dirname}/../templates/`)
   .parse(process.argv);
 
 if (2 !== program.args.length && (!process.env.API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT || !process.env.API_PLATFORM_CLIENT_GENERATOR_OUTPUT)) {
@@ -22,7 +23,10 @@ if (2 !== program.args.length && (!process.env.API_PLATFORM_CLIENT_GENERATOR_ENT
 const entrypoint = program.args[0] || process.env.API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT;
 const outputDirectory = program.args[1] || process.env.API_PLATFORM_CLIENT_GENERATOR_OUTPUT;
 
-const generator = generators(program.generator)(program.hydraPrefix);
+const generator = generators(program.generator)({
+  hydraPrefix: program.hydraPrefix,
+  templateDirectory: program.templateDirectory
+});
 const resourceToGenerate = program.resource ? program.resource.toLowerCase() : null;
 
 parseHydraDocumentation(entrypoint).then(api => {

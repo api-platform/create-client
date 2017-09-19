@@ -2,7 +2,7 @@ import ReactCrudGenerator from './generators/ReactCrudGenerator';
 import TypescriptInterfaceGenerator from './generators/TypescriptInterfaceGenerator';
 
 function wrap (cl) {
-  return (prefix) => new cl(prefix)
+  return ({hydraPrefix, templateDirectory}) => new cl({hydraPrefix, templateDirectory})
 }
 
 function generators (generator = 'react') {

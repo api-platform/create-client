@@ -7,7 +7,7 @@ import ReactCrudGenerator from './ReactCrudGenerator';
 
 
 test('Generate a React app', () => {
-  const generator = new ReactCrudGenerator('hydra:');
+  const generator = new ReactCrudGenerator({hydraPrefix: 'hydra:', templateDirectory: `${__dirname}/../../templates`});
   const tmpobj = tmp.dirSync({unsafeCleanup: true});
 
   const fields = [new Field('bar', {
