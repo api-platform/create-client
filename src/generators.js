@@ -1,4 +1,5 @@
 import ReactCrudGenerator from './generators/ReactCrudGenerator';
+import ReactNativeCrudGenerator from './generators/ReactNativeCrudGenerator';
 import TypescriptInterfaceGenerator from './generators/TypescriptInterfaceGenerator';
 
 function wrap (cl) {
@@ -9,6 +10,8 @@ function generators (generator = 'react') {
   switch (generator) {
     case 'react':
       return wrap(ReactCrudGenerator);
+    case 'react-native':
+      return wrap(ReactNativeCrudGenerator);
     case 'typescript':
       return wrap(TypescriptInterfaceGenerator);
   }
