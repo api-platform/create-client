@@ -10,9 +10,9 @@
     "templates"
   ],
   "main": "lib/index",
-  "repository": "api-platform/generate-crud",
-  "homepage": "https://github.com/api-platform/generate-crud",
-  "bugs": "https://github.com/api-platform/generate-crud/issues",
+  "repository": "api-platform/client-generator",
+  "homepage": "https://github.com/api-platform/client-generator",
+  "bugs": "https://github.com/api-platform/client-generator/issues",
   "author": "Kévin Dunglas",
   "license": "MIT",
   "devDependencies": {
@@ -46,6 +46,9 @@
     "test-gen": "rm -rf ./tmp && npm run build && ./lib/index.js  https://demo.api-platform.com ./tmp"
   },
   "bin": {
-    "api-platform-generate-crud": "./lib/index.js"
+    "generate-api-platform-client": "./lib/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
