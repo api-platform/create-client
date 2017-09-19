@@ -13,6 +13,7 @@ script:
 - yarn test
 - yarn lint
 - yarn test-gen
+- yarn test-gen-env
 - yarn check
 
 deploy:
