@@ -55,15 +55,9 @@ export default class ReactNativeCrudGenerator {
     console.log(chalk.green(`
 // import reducers
 import ${titleLc} from './reducers/${titleLc}/';
-<<<<<<< HEAD
-// Add the reducer
-combineReducers(${titleLc},{/* ... */}),
-=======
 
 // Add the reducer
 combineReducers(${titleLc},{/* ... */}),
-
->>>>>>> 3d43b1f377ef84d790d6022c6f61df5301c28246
 `));
   }
 
