@@ -21,36 +21,36 @@ const state = {
   violations: null
 };
 
-function retrieveError(commit, retrieveError) {
-  return commit({{{ uc }}}_UPDATE_RETRIEVE_ERROR, retrieveError);
+function retrieveError(retrieveError) {
+  return {type: {{{ uc }}}_UPDATE_RETRIEVE_ERROR, retrieveError};
 }
 
-function retrieveLoading(commit, retrieveLoading) {
-  return commit({{{ uc }}}_UPDATE_RETRIEVE_LOADING, retrieveLoading);
+function retrieveLoading(retrieveLoading) {
+  return {type: {{{ uc }}}_UPDATE_RETRIEVE_LOADING, retrieveLoading};
 }
 
-function retrieveSuccess(commit, retrieved) {
-  return commit({{{ uc }}}_UPDATE_RETRIEVE_SUCCESS, retrieved);
+function retrieveSuccess(retrieved) {
+  return {type: {{{ uc }}}_UPDATE_RETRIEVE_SUCCESS, retrieved};
 }
 
-export function updateError(commit, updateError) {
-  return commit({{{ uc }}}_UPDATE_UPDATE_ERROR, updateError);
+function updateError(updateError) {
+  return {type: {{{ uc }}}_UPDATE_UPDATE_ERROR, updateError};
 }
 
-export function updateLoading(commit, updateLoading) {
-  return commit({{{ uc }}}_UPDATE_UPDATE_LOADING, updateLoading);
+function updateLoading(updateLoading) {
+  return {type: {{{ uc }}}_UPDATE_UPDATE_LOADING, updateLoading};
 }
 
-export function updateSuccess(commit, updated) {
-  return commit({{{ uc }}}_UPDATE_UPDATE_SUCCESS, updated);
+function updateSuccess(updated) {
+  return {type: {{{ uc }}}_UPDATE_UPDATE_SUCCESS, updated};
 }
 
-export function reset(commit) {
-  return commit({{{ uc }}}_UPDATE_RESET);
+function violations(violations) {
+  return {type: {{{ uc }}}_UPDATE_UPDATE_VIOLATIONS, violations};
 }
 
-function violations(commit, violations) {
-  return commit({{{ uc }}}_UPDATE_UPDATE_VIOLATIONS, violations);
+function reset() {
+  return {type: {{{ uc }}}_UPDATE_RESET};
 }
 
 const getters = {
@@ -65,23 +65,23 @@ const getters = {
 };
 
 const actions = {
-  retrieve({ commit }, id) {
-    retrieveLoading(commit, true);
+  retrieve({ dispatch }, id) {
+    dispatch(retrieveLoading(true));
 
     return {{{ lc }}}Fetch(id)
       .then(response => response.json())
       .then(data => {
-        retrieveLoading(commit, false);
-        retrieveSuccess(commit, data);
+        dispatch(retrieveLoading(false));
+        dispatch(retrieveSuccess(data));
       })
       .catch(e => {
-        retrieveLoading(commit, false);
-        retrieveError(commit, e.message);
+        dispatch(retrieveLoading(false));
+        dispatch(retrieveError(e.message));
       });
   },
-  update({ commit, state }, { item, values }) {
-    updateError(commit, null);
-    updateLoading(commit, true);
+  update({ dispatch, state }, { item, values }) {
+    dispatch(updateError(null));
+    dispatch(updateLoading(true));
 
     return {{{ lc }}}Fetch(item['@id'], {
         method: 'PUT',
@@ -91,51 +91,51 @@ const actions = {
     )
       .then(response => response.json())
       .then(data => {
-        updateLoading(commit, false);
-        updateSuccess(commit, data);
+        dispatch(updateLoading(false));
+        dispatch(updateSuccess(data));
       })
       .catch(e => {
-        updateLoading(commit, false);
+        dispatch(updateLoading(false));
 
         if (e instanceof SubmissionError) {
-          violations(commit, e.errors);
-          updateError(commit, e.errors._error);
+          dispatch(violations(e.errors));
+          dispatch(updateError(e.errors._error));
           return;
         }
 
-        updateError(commit, e.message);
+        dispatch(updateError(e.message));
       });
   },
-  reset({ commit }) {
-    reset(commit);
+  reset({ dispatch }) {
+    dispatch(reset());
   }
 };
 
 const mutations = {
-    [{{{ uc }}}_UPDATE_RETRIEVE_ERROR] (state, retrieveError) {
-      state.retrieveError = retrieveError;
+    [{{{ uc }}}_UPDATE_RETRIEVE_ERROR] (state, payload) {
+      state.retrieveError = payload.retrieveError;
     },
-    [{{{ uc }}}_UPDATE_RETRIEVE_LOADING] (state, retrieveLoading) {
-      state.retrieveLoading = retrieveLoading;
+    [{{{ uc }}}_UPDATE_RETRIEVE_LOADING] (state, payload) {
+      state.retrieveLoading = payload.retrieveLoading;
     },
-    [{{{ uc }}}_UPDATE_RETRIEVE_SUCCESS] (state, retrieved) {
-      state.retrieved = retrieved;
+    [{{{ uc }}}_UPDATE_RETRIEVE_SUCCESS] (state, payload) {
+      state.retrieved = payload.retrieved;
     },
-    [{{{ uc }}}_UPDATE_UPDATE_LOADING] (state, loading) {
-      state.updateLoading = loading;
+    [{{{ uc }}}_UPDATE_UPDATE_LOADING] (state, payload) {
+      state.updateLoading = payload.loading;
     },
-    [{{{ uc }}}_UPDATE_UPDATE_ERROR] (state, updateError) {
-      state.updateError = updateError;
+    [{{{ uc }}}_UPDATE_UPDATE_ERROR] (state, payload) {
+      state.updateError = payload.updateError;
     },
-    [{{{ uc }}}_UPDATE_UPDATE_LOADING] (state, updateLoading) {
-      state.updateLoading = updateLoading;
+    [{{{ uc }}}_UPDATE_UPDATE_LOADING] (state, payload) {
+      state.updateLoading = payload.updateLoading;
     },
-    [{{{ uc }}}_UPDATE_UPDATE_SUCCESS] (state, updated) {
-      state.updated = updated;
+    [{{{ uc }}}_UPDATE_UPDATE_SUCCESS] (state, payload) {
+      state.updated = payload.updated;
       state.violations = null;
     },
-    [{{{ uc }}}_UPDATE_UPDATE_VIOLATIONS] (state, violations) {
-      state.violations = violations;
+    [{{{ uc }}}_UPDATE_UPDATE_VIOLATIONS] (state, payload) {
+      state.violations = payload.violations;
     },
     [{{{ uc }}}_UPDATE_RESET] (state) {
       state.loading = false;

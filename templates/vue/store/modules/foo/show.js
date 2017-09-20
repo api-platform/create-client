@@ -11,20 +11,20 @@ const state = {
   retrieved: null
 };
 
-function error(commit, error) {
-  return commit({{{ uc }}}_SHOW_ERROR, error);
+function error(error) {
+  return {type: {{{ uc }}}_SHOW_ERROR, error};
 }
 
-function loading(commit, loading) {
-  return commit({{{ uc }}}_SHOW_LOADING, loading);
+function loading(loading) {
+  return {type: {{{ uc }}}_SHOW_LOADING, loading};
 }
 
-function retrieved(commit, retrieved) {
-  return commit({{{ uc }}}_SHOW_RETRIEVED_SUCCESS, retrieved);
+function retrieved(retrieved) {
+  return {type: {{{ uc }}}_SHOW_RETRIEVED_SUCCESS, retrieved};
 }
 
-function reset(commit) {
-  return commit({{{ uc }}}_SHOW_RESET);
+function reset() {
+  return {type: {{{ uc }}}_SHOW_RESET};
 }
 
 const getters = {
@@ -34,34 +34,34 @@ const getters = {
 };
 
 const actions = {
-  retrieve({ commit }, id) {
-    loading(commit, true);
+  retrieve({ dispatch }, id) {
+    dispatch(loading(true));
 
     return {{{ lc }}}Fetch(id)
       .then(response => response.json())
       .then(data => {
-        loading(commit, false);
-        retrieved(commit, data);
+        dispatch(loading(false));
+        dispatch(retrieved(data));
       })
       .catch(e => {
-        loading(commit, false);
-        error(commit, e.message);
+        dispatch(loading(false));
+        dispatch(error(e.message));
       });
   },
-  reset({ commit }) {
-    reset(commit);
+  reset({ dispatch }) {
+    dispatch(reset());
   }
 };
 
 const mutations = {
-    [{{{ uc }}}_SHOW_ERROR] (state, error) {
-      state.error = error;
+    [{{{ uc }}}_SHOW_ERROR] (state, payload) {
+      state.error = payload.error;
     },
-    [{{{ uc }}}_SHOW_LOADING] (state, loading) {
-      state.loading = loading;
+    [{{{ uc }}}_SHOW_LOADING] (state, payload) {
+      state.loading = payload.loading;
     },
-    [{{{ uc }}}_SHOW_RETRIEVED_SUCCESS] (state, retrieved) {
-      state.retrieved = retrieved;
+    [{{{ uc }}}_SHOW_RETRIEVED_SUCCESS] (state, payload) {
+      state.retrieved = payload.retrieved;
     },
     [{{{ uc }}}_SHOW_RESET] (state) {
       state.retrieved = null;

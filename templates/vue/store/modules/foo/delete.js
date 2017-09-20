@@ -11,20 +11,20 @@ const state = {
   deleted: null
 };
 
-function error(commit, error) {
-  return commit({{{ uc }}}_DELETE_ERROR, error);
+function error(error) {
+  return {type: {{{ uc }}}_DELETE_ERROR, error};
 }
 
-function loading(commit, loading) {
-  return commit({{{ uc }}}_DELETE_LOADING, loading);
+function loading(loading) {
+  return {type: {{{ uc }}}_DELETE_LOADING, loading};
 }
 
-function success(commit, deleted) {
-  return commit({{{ uc }}}_DELETE_SUCCESS, deleted);
+function success(deleted) {
+  return {type: {{{ uc }}}_DELETE_SUCCESS, deleted};
 }
 
-function reset(commit) {
-  return commit({{{ uc }}}_DELETE_RESET);
+function reset() {
+  return {type: {{{ uc }}}_DELETE_RESET};
 }
 
 const getters = {
@@ -34,33 +34,33 @@ const getters = {
 };
 
 const actions = {
-  delete({ commit }, item) {
-    loading(commit, true);
+  delete({ dispatch }, item) {
+    dispatch(loading(true));
 
     return {{{ lc }}}Fetch(item['@id'], {method: 'DELETE'})
       .then(() => {
-        loading(commit, false);
-        success(commit, item);
+        dispatch(loading(false));
+        dispatch(success(item));
       })
       .catch(e => {
-        loading(commit, false);
-        error(commit, e.message);
+        dispatch(loading(false));
+        dispatch(error(e.message));
       });
   },
-  reset({ commit }) {
-    reset(commit);
+  reset({ dispatch }) {
+    dispatch(reset());
   }
 };
 
 const mutations = {
-    [{{{ uc }}}_DELETE_ERROR] (state, error) {
-      state.error = error;
+    [{{{ uc }}}_DELETE_ERROR] (state, payload) {
+      state.error = payload.error;
     },
-    [{{{ uc }}}_DELETE_LOADING] (state, loading) {
-      state.loading = loading;
+    [{{{ uc }}}_DELETE_LOADING] (state, payload) {
+      state.loading = payload.loading;
     },
-    [{{{ uc }}}_DELETE_SUCCESS] (state, deleted) {
-      state.deleted = deleted;
+    [{{{ uc }}}_DELETE_SUCCESS] (state, payload) {
+      state.deleted = payload.deleted;
     },
     [{{{ uc }}}_DELETE_RESET] (state) {
       state.error = '';

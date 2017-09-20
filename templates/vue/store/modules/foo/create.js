@@ -12,24 +12,24 @@ const state = {
   created: null
 };
 
-function error(commit, error) {
-  return commit({{{ uc }}}_CREATE_ERROR, error);
+function error(error) {
+  return {type: {{{ uc }}}_CREATE_ERROR, error};
 }
 
-function loading(commit, loading) {
-  return commit({{{ uc }}}_CREATE_LOADING, loading);
+function loading(loading) {
+  return {type: {{{ uc }}}_CREATE_LOADING, loading};
 }
 
-function success(commit, created) {
-  return commit({{{ uc }}}_CREATE_SUCCESS, created);
+function success(created) {
+  return {type: {{{ uc }}}_CREATE_SUCCESS, created};
 }
 
-function violations(commit, violations) {
-  return commit({{{ uc }}}_CREATE_VIOLATIONS, violations);
+function violations(violations) {
+  return {type: {{{ uc }}}_CREATE_VIOLATIONS, violations};
 }
 
-function reset(commit) {
-  return commit({{{ uc }}}_CREATE_RESET);
+function reset() {
+  return {type: {{{ uc }}}_CREATE_RESET};
 }
 
 const getters = {
@@ -40,40 +40,47 @@ const getters = {
 };
 
 const actions = {
-  create({ commit }) {
-    loading(commit, true);
+  create({ dispatch }, values) {
+    dispatch(loading(true));
 
     return {{{ lc }}}Fetch('/{{{ name }}}', {method: 'POST', body: JSON.stringify(values)})
       .then(response => {
-        loading(commit, false);
+        dispatch(loading(false));
 
         return response.json();
       })
       .then(data => {
-        success(commit, data);
+        dispatch(success(data));
       })
       .catch(e => {
-        loading(commit, false);
-        error(commit, e.message);
+        dispatch(loading(false));
+
+        if (e instanceof SubmissionError) {
+          dispatch(violations(e.errors));
+          dispatch(error(e.errors._error));
+          return;
+        }
+
+        dispatch(error(e.message));
       });
   },
-  reset({ commit }) {
-    reset(commit);
+  reset({ dispatch }) {
+    dispatch(reset());
   }
 };
 
 const mutations = {
-    [{{{ uc }}}_CREATE_ERROR] (state, error) {
-      state.error = error;
+    [{{{ uc }}}_CREATE_ERROR] (state, payload) {
+      state.error = payload.error;
     },
-    [{{{ uc }}}_CREATE_LOADING] (state, loading) {
-      state.loading = loading;
+    [{{{ uc }}}_CREATE_LOADING] (state, payload) {
+      state.loading = payload.loading;
     },
-    [{{{ uc }}}_CREATE_SUCCESS] (state, created) {
-      state.created = created;
+    [{{{ uc }}}_CREATE_SUCCESS] (state, payload) {
+      state.created = payload.created;
     },
-    [{{{ uc }}}_CREATE_VIOLATIONS] (state, violations) {
-      state.violations = violations;
+    [{{{ uc }}}_CREATE_VIOLATIONS] (state, payload) {
+      state.violations = payload.violations;
     },
     [{{{ uc }}}_CREATE_RESET] (state) {
       state.loading = false;
