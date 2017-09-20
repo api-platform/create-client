@@ -19,6 +19,7 @@ export default class VueCrudGenerator {
     this.registerTemplate(templatePath, 'store/modules/foo/list.js');
     this.registerTemplate(templatePath, 'store/modules/foo/update.js');
     this.registerTemplate(templatePath, 'store/modules/foo/show.js');
+    this.registerTemplate(templatePath, 'store/modules/foo/mutation-types.js');
 
     // api
     this.registerTemplate(templatePath, 'api/fooFetch.js');
@@ -106,6 +107,7 @@ const router = new VueRouter({
     this.createFile('store/modules/foo/list.js', `${dir}/store/modules/${lc}/list.js`, context);
     this.createFile('store/modules/foo/update.js', `${dir}/store/modules/${lc}/update.js`, context);
     this.createFile('store/modules/foo/show.js', `${dir}/store/modules/${lc}/show.js`, context);
+    this.createFile('store/modules/foo/mutation-types.js', `${dir}/store/modules/${lc}/mutation-types.js`, context);
 
     // api
     this.createFile('api/fooFetch.js', `${dir}/api/${lc}Fetch.js`, context);

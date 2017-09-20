@@ -1,10 +1,11 @@
 import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
-
-const {{{ uc }}}_CREATE_ERROR = '{{{ uc }}}_CREATE_ERROR';
-const {{{ uc }}}_CREATE_LOADING = '{{{ uc }}}_CREATE_LOADING';
-const {{{ uc }}}_CREATE_SUCCESS = '{{{ uc }}}_CREATE_SUCCESS';
-const {{{ uc }}}_CREATE_VIOLATIONS = '{{{ uc }}}_CREATE_VIOLATIONS';
-const {{{ uc }}}_CREATE_RESET = '{{{ uc }}}_CREATE_RESET';
+import {
+  {{{ uc }}}_CREATE_ERROR,
+  {{{ uc }}}_CREATE_LOADING,
+  {{{ uc }}}_CREATE_SUCCESS,
+  {{{ uc }}}_CREATE_VIOLATIONS,
+  {{{ uc }}}_CREATE_RESET
+} from './mutation-types';
 
 const state = {
   loading: false,

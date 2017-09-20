@@ -1,9 +1,10 @@
 import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
-
-const {{{ uc }}}_DELETE_ERROR = '{{{ uc }}}_DELETE_ERROR';
-const {{{ uc }}}_DELETE_LOADING = '{{{ uc }}}_DELETE_LOADING';
-const {{{ uc }}}_DELETE_SUCCESS = '{{{ uc }}}_DELETE_SUCCESS';
-const {{{ uc }}}_DELETE_RESET = '{{{ uc }}}_DELETE_RESET';
+import {
+  {{{ uc }}}_DELETE_ERROR,
+  {{{ uc }}}_DELETE_LOADING,
+  {{{ uc }}}_DELETE_SUCCESS,
+  {{{ uc }}}_DELETE_RESET
+} from './mutation-types';
 
 const state = {
   loading: false,

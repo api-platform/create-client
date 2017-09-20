@@ -1,10 +1,11 @@
 import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
-
-const {{{ uc }}}_LIST_ERROR = '{{{ uc }}}_LIST_ERROR';
-const {{{ uc }}}_LIST_LOADING = '{{{ uc }}}_LIST_LOADING';
-const {{{ uc }}}_LIST_RESET = '{{{ uc }}}_LIST_RESET';
-const {{{ uc }}}_LIST_VIEW = '{{{ uc }}}_LIST_VIEW';
-const {{{ uc }}}_LIST_SUCCESS = '{{{ uc }}}_LIST_SUCCESS';
+import {
+  {{{ uc }}}_LIST_ERROR,
+  {{{ uc }}}_LIST_LOADING,
+  {{{ uc }}}_LIST_RESET,
+  {{{ uc }}}_LIST_VIEW,
+  {{{ uc }}}_LIST_SUCCESS
+} from './mutation-types';
 
 const state = {
   loading: false,

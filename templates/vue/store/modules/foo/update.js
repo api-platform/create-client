@@ -1,14 +1,15 @@
 import SubmissionError from '../../../error/SubmissionError';
 import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
-
-const {{{ uc }}}_UPDATE_RESET = '{{{ uc }}}_UPDATE_RESET';
-const {{{ uc }}}_UPDATE_UPDATE_ERROR = '{{{ uc }}}_UPDATE_UPDATE_ERROR';
-const {{{ uc }}}_UPDATE_UPDATE_LOADING = '{{{ uc }}}_UPDATE_UPDATE_LOADING';
-const {{{ uc }}}_UPDATE_UPDATE_SUCCESS = '{{{ uc }}}_UPDATE_UPDATE_SUCCESS';
-const {{{ uc }}}_UPDATE_RETRIEVE_ERROR = '{{{ uc }}}_UPDATE_RETRIEVE_ERROR';
-const {{{ uc }}}_UPDATE_RETRIEVE_LOADING = '{{{ uc }}}_UPDATE_RETRIEVE_LOADING';
-const {{{ uc }}}_UPDATE_RETRIEVE_SUCCESS = '{{{ uc }}}_UPDATE_RETRIEVE_SUCCESS';
-const {{{ uc }}}_UPDATE_UPDATE_VIOLATIONS = '{{{ uc }}}_UPDATE_UPDATE_VIOLATIONS';
+import {
+  {{{ uc }}}_UPDATE_RESET,
+  {{{ uc }}}_UPDATE_UPDATE_ERROR,
+  {{{ uc }}}_UPDATE_UPDATE_LOADING,
+  {{{ uc }}}_UPDATE_UPDATE_SUCCESS,
+  {{{ uc }}}_UPDATE_RETRIEVE_ERROR,
+  {{{ uc }}}_UPDATE_RETRIEVE_LOADING,
+  {{{ uc }}}_UPDATE_RETRIEVE_SUCCESS,
+  {{{ uc }}}_UPDATE_UPDATE_VIOLATIONS
+} from './mutation-types';
 
 const state = {
   loading: false,
