@@ -39,7 +39,7 @@ export default class TypescriptInterfaceGenerator {
       case 'http://www.w3.org/2001/XMLSchema#decimal':
         return 'number';
       case 'http://www.w3.org/2001/XMLSchema#boolean':
-        return 'bool';
+        return 'boolean';
       case 'http://www.w3.org/2001/XMLSchema#date':
       case 'http://www.w3.org/2001/XMLSchema#dateTime':
       case 'http://www.w3.org/2001/XMLSchema#time':
