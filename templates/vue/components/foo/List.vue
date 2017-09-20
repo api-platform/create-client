@@ -61,7 +61,7 @@
             </td>
             <td>
               <router-link :to="{name: '{{{titleUcFirst}}}Update', params: { id: item['@id'] }}">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"/>
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
                 <span class="sr-only">Edit</span>
               </router-link>
             </td>
