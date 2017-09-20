@@ -3,6 +3,7 @@ import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
 const {{{ uc }}}_DELETE_ERROR = '{{{ uc }}}_DELETE_ERROR';
 const {{{ uc }}}_DELETE_LOADING = '{{{ uc }}}_DELETE_LOADING';
 const {{{ uc }}}_DELETE_SUCCESS = '{{{ uc }}}_DELETE_SUCCESS';
+const {{{ uc }}}_DELETE_RESET = '{{{ uc }}}_DELETE_RESET';
 
 const state = {
   loading: false,
@@ -20,6 +21,10 @@ function loading(commit, loading) {
 
 function success(commit, deleted) {
   return commit({{{ uc }}}_DELETE_SUCCESS, deleted);
+}
+
+function reset(commit) {
+  return commit({{{ uc }}}_DELETE_RESET);
 }
 
 const getters = {
@@ -41,6 +46,9 @@ const actions = {
         loading(commit, false);
         error(commit, e.message);
       });
+  },
+  reset({ commit }) {
+    reset(commit);
   }
 };
 
@@ -53,6 +61,11 @@ const mutations = {
     },
     [{{{ uc }}}_DELETE_SUCCESS] (state, deleted) {
       state.deleted = deleted;
+    },
+    [{{{ uc }}}_DELETE_RESET] (state) {
+      state.error = '';
+      state.loading = false;
+      state.deleted = null;
     }
 };
 

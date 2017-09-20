@@ -1,3 +1,4 @@
+import SubmissionError from '../../../error/SubmissionError';
 import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
 
 const {{{ uc }}}_UPDATE_RESET = '{{{ uc }}}_UPDATE_RESET';
@@ -7,6 +8,7 @@ const {{{ uc }}}_UPDATE_UPDATE_SUCCESS = '{{{ uc }}}_UPDATE_UPDATE_SUCCESS';
 const {{{ uc }}}_UPDATE_RETRIEVE_ERROR = '{{{ uc }}}_UPDATE_RETRIEVE_ERROR';
 const {{{ uc }}}_UPDATE_RETRIEVE_LOADING = '{{{ uc }}}_UPDATE_RETRIEVE_LOADING';
 const {{{ uc }}}_UPDATE_RETRIEVE_SUCCESS = '{{{ uc }}}_UPDATE_RETRIEVE_SUCCESS';
+const {{{ uc }}}_UPDATE_UPDATE_VIOLATIONS = '{{{ uc }}}_UPDATE_UPDATE_VIOLATIONS';
 
 const state = {
   loading: false,
@@ -15,7 +17,8 @@ const state = {
   retrieved: null,
   updated: null,
   updateError: '',
-  updateLoading: false
+  updateLoading: false,
+  violations: null
 };
 
 function retrieveError(commit, retrieveError) {
@@ -46,7 +49,20 @@ export function reset(commit) {
   return commit({{{ uc }}}_UPDATE_RESET);
 }
 
-const getters = {};
+function violations(commit, violations) {
+  return commit({{{ uc }}}_UPDATE_UPDATE_VIOLATIONS, violations);
+}
+
+const getters = {
+  loading: state => state.loading,
+  retrieveError: state => state.retrieveError,
+  retrieveLoading: state => state.retrieveLoading,
+  retrieved: state => state.retrieved,
+  updated: state => state.updated,
+  updateError: state => state.updateError,
+  updateLoading: state => state.updateLoading,
+  violations: state => state.violations
+};
 
 const actions = {
   retrieve({ commit }, id) {
@@ -63,7 +79,7 @@ const actions = {
         retrieveError(commit, e.message);
       });
   },
-  update({ commit, state }, item) {
+  update({ commit, state }, { item, values }) {
     updateError(commit, null);
     updateLoading(commit, true);
 
@@ -80,8 +96,18 @@ const actions = {
       })
       .catch(e => {
         updateLoading(commit, false);
+
+        if (e instanceof SubmissionError) {
+          violations(commit, e.errors);
+          updateError(commit, e.errors._error);
+          return;
+        }
+
         updateError(commit, e.message);
       });
+  },
+  reset({ commit }) {
+    reset(commit);
   }
 };
 
@@ -106,9 +132,20 @@ const mutations = {
     },
     [{{{ uc }}}_UPDATE_UPDATE_SUCCESS] (state, updated) {
       state.updated = updated;
+      state.violations = null;
+    },
+    [{{{ uc }}}_UPDATE_UPDATE_VIOLATIONS] (state, violations) {
+      state.violations = violations;
     },
     [{{{ uc }}}_UPDATE_RESET] (state) {
+      state.loading = false;
+      state.retrieveError = '';
+      state.retrieveLoading = false;
+      state.retrieved = null;
       state.updated = null;
+      state.updateError = '';
+      state.updateLoading = false;
+      state.violations = null;
     }
 };
 

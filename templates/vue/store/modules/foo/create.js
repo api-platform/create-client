@@ -3,6 +3,8 @@ import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
 const {{{ uc }}}_CREATE_ERROR = '{{{ uc }}}_CREATE_ERROR';
 const {{{ uc }}}_CREATE_LOADING = '{{{ uc }}}_CREATE_LOADING';
 const {{{ uc }}}_CREATE_SUCCESS = '{{{ uc }}}_CREATE_SUCCESS';
+const {{{ uc }}}_CREATE_VIOLATIONS = '{{{ uc }}}_CREATE_VIOLATIONS';
+const {{{ uc }}}_CREATE_RESET = '{{{ uc }}}_CREATE_RESET';
 
 const state = {
   loading: false,
@@ -22,7 +24,20 @@ function success(commit, created) {
   return commit({{{ uc }}}_CREATE_SUCCESS, created);
 }
 
-const getters = {};
+function violations(commit, violations) {
+  return commit({{{ uc }}}_CREATE_VIOLATIONS, violations);
+}
+
+function reset(commit) {
+  return commit({{{ uc }}}_CREATE_RESET);
+}
+
+const getters = {
+  created: state => state.created,
+  error: state => state.error,
+  loading: state => state.loading,
+  violations: state => state.violations,
+};
 
 const actions = {
   create({ commit }) {
@@ -41,6 +56,9 @@ const actions = {
         loading(commit, false);
         error(commit, e.message);
       });
+  },
+  reset({ commit }) {
+    reset(commit);
   }
 };
 
@@ -53,6 +71,15 @@ const mutations = {
     },
     [{{{ uc }}}_CREATE_SUCCESS] (state, created) {
       state.created = created;
+    },
+    [{{{ uc }}}_CREATE_VIOLATIONS] (state, violations) {
+      state.violations = violations;
+    },
+    [{{{ uc }}}_CREATE_RESET] (state) {
+      state.loading = false;
+      state.error = '';
+      state.created = null;
+      state.violations = null;
     }
 };
 
