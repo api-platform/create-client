@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { API_PATH } from '../../react-common/actions/api/_entrypoint';
+import { API_PATH } from '../api/_entrypoint';
 
 export function itemToLinks(items) {
   return Array.isArray(items) ? items.map(item => createLink(item)) : createLink(items);
