@@ -36,19 +36,19 @@ const getters = {
 };
 
 const actions = {
-    getItems({ dispatch }) {
-      dispatch(loading(true));
+    getItems({ commit }) {
+      commit(loading(true));
 
       {{{ lc }}}Fetch('/{{{ name }}}')
         .then(response => response.json())
         .then(data => {
-          dispatch(loading(false));
-          dispatch(success(data['{{{ hydraPrefix }}}member']));
-          dispatch(view(data['{{{ hydraPrefix }}}view']));
+          commit(loading(false));
+          commit(success(data['{{{ hydraPrefix }}}member']));
+          commit(view(data['{{{ hydraPrefix }}}view']));
         })
         .catch(e => {
-          dispatch(loading(false));
-          dispatch(error(e.message));
+          commit(loading(false));
+          commit(error(e.message));
         });
     }
 };

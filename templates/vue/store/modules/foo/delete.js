@@ -35,21 +35,21 @@ const getters = {
 };
 
 const actions = {
-  delete({ dispatch }, item) {
-    dispatch(loading(true));
+  delete({ commit }, item) {
+    commit(loading(true));
 
     return {{{ lc }}}Fetch(item['@id'], {method: 'DELETE'})
       .then(() => {
-        dispatch(loading(false));
-        dispatch(success(item));
+        commit(loading(false));
+        commit(success(item));
       })
       .catch(e => {
-        dispatch(loading(false));
-        dispatch(error(e.message));
+        commit(loading(false));
+        commit(error(e.message));
       });
   },
-  reset({ dispatch }) {
-    dispatch(reset());
+  reset({ commit }) {
+    commit(reset());
   }
 };
 

@@ -35,22 +35,22 @@ const getters = {
 };
 
 const actions = {
-  retrieve({ dispatch }, id) {
-    dispatch(loading(true));
+  retrieve({ commit }, id) {
+    commit(loading(true));
 
     return {{{ lc }}}Fetch(id)
       .then(response => response.json())
       .then(data => {
-        dispatch(loading(false));
-        dispatch(retrieved(data));
+        commit(loading(false));
+        commit(retrieved(data));
       })
       .catch(e => {
-        dispatch(loading(false));
-        dispatch(error(e.message));
+        commit(loading(false));
+        commit(error(e.message));
       });
   },
-  reset({ dispatch }) {
-    dispatch(reset());
+  reset({ commit }) {
+    commit(reset());
   }
 };
 

@@ -66,23 +66,23 @@ const getters = {
 };
 
 const actions = {
-  retrieve({ dispatch }, id) {
-    dispatch(retrieveLoading(true));
+  retrieve({ commit }, id) {
+    commit(retrieveLoading(true));
 
     return {{{ lc }}}Fetch(id)
       .then(response => response.json())
       .then(data => {
-        dispatch(retrieveLoading(false));
-        dispatch(retrieveSuccess(data));
+        commit(retrieveLoading(false));
+        commit(retrieveSuccess(data));
       })
       .catch(e => {
-        dispatch(retrieveLoading(false));
-        dispatch(retrieveError(e.message));
+        commit(retrieveLoading(false));
+        commit(retrieveError(e.message));
       });
   },
-  update({ dispatch, state }, { item, values }) {
-    dispatch(updateError(null));
-    dispatch(updateLoading(true));
+  update({ commit, state }, { item, values }) {
+    commit(updateError(null));
+    commit(updateLoading(true));
 
     return {{{ lc }}}Fetch(item['@id'], {
         method: 'PUT',
@@ -92,23 +92,23 @@ const actions = {
     )
       .then(response => response.json())
       .then(data => {
-        dispatch(updateLoading(false));
-        dispatch(updateSuccess(data));
+        commit(updateLoading(false));
+        commit(updateSuccess(data));
       })
       .catch(e => {
-        dispatch(updateLoading(false));
+        commit(updateLoading(false));
 
         if (e instanceof SubmissionError) {
-          dispatch(violations(e.errors));
-          dispatch(updateError(e.errors._error));
+          commit(violations(e.errors));
+          commit(updateError(e.errors._error));
           return;
         }
 
-        dispatch(updateError(e.message));
+        commit(updateError(e.message));
       });
   },
-  reset({ dispatch }) {
-    dispatch(reset());
+  reset({ commit }) {
+    commit(reset());
   }
 };
 

@@ -41,32 +41,32 @@ const getters = {
 };
 
 const actions = {
-  create({ dispatch }, values) {
-    dispatch(loading(true));
+  create({ commit }, values) {
+    commit(loading(true));
 
     return {{{ lc }}}Fetch('/{{{ name }}}', {method: 'POST', body: JSON.stringify(values)})
       .then(response => {
-        dispatch(loading(false));
+        commit(loading(false));
 
         return response.json();
       })
       .then(data => {
-        dispatch(success(data));
+        commit(success(data));
       })
       .catch(e => {
-        dispatch(loading(false));
+        commit(loading(false));
 
         if (e instanceof SubmissionError) {
-          dispatch(violations(e.errors));
-          dispatch(error(e.errors._error));
+          commit(violations(e.errors));
+          commit(error(e.errors._error));
           return;
         }
 
-        dispatch(error(e.message));
+        commit(error(e.message));
       });
   },
-  reset({ dispatch }) {
-    dispatch(reset());
+  reset({ commit }) {
+    commit(reset());
   }
 };
 
