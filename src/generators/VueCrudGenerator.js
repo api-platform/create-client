@@ -7,8 +7,8 @@ import chalk from 'chalk';
 export default class VueCrudGenerator {
   templates = {};
 
-  constructor(hydraPrefix) {
-    const templatePath = `${__dirname}/../../templates/vue/`;
+  constructor({hydraPrefix, templateDirectory}) {
+    const templatePath = `${templateDirectory}/vue/`;
 
     this.hydraPrefix = hydraPrefix;
 

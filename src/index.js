@@ -30,7 +30,7 @@ const generator = generators(program.generator)({
 const resourceToGenerate = program.resource ? program.resource.toLowerCase() : null;
 
 parseHydraDocumentation(entrypoint).then(api => {
-  for (let resource of api.api.resources) {
+  for (let resource of api.resources) {
     const nameLc = resource.name.toLowerCase();
     const titleLc = resource.title.toLowerCase();
 
