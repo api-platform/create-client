@@ -1,3 +1,4 @@
+import SubmissionError from '../../../error/SubmissionError';
 import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
 import {
   {{{ uc }}}_CREATE_ERROR,

@@ -1,3 +1,4 @@
+import SubmissionError from '../error/SubmissionError';
 import { API_HOST, API_PATH } from './_entrypoint';
 
 const jsonLdMimeType = 'application/ld+json';
@@ -23,6 +24,8 @@ export default function {{{ lc }}}Fetch(url, options = {}) {
 
         let errors = {_error: error};
         json.violations.map((violation) => errors[violation.propertyPath] = violation.message);
+
+        throw new SubmissionError(errors);
       });
   });
 }
