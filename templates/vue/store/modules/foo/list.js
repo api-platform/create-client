@@ -32,6 +32,7 @@ function view(items) {
 
 const getters = {
   items: state => state.items,
+  loading: state => state.loading,
   view: state => state.view
 };
 

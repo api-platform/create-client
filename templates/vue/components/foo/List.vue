@@ -82,6 +82,7 @@
   export default {
     computed: mapGetters([
       'items',
+      'loading',
       'view'
     ]),
     methods: mapActions([
