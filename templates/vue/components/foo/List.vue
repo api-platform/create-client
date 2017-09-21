@@ -11,7 +11,7 @@
         type="button"
         class="btn btn-basic btn-sm"
         @click="getPage(view['hydra:first'])"
-        :disabled="!view['hydra:first']"
+        :disabled="!view['hydra:previous']"
       >First</button>
       &nbsp;
       <button
@@ -30,7 +30,7 @@
       <button
         type="button" class="btn btn-basic btn-sm"
         @click="getPage(view['hydra:last'])"
-        :disabled="!view['hydra:last']"
+        :disabled="view['hydra:last']"
       >Last</button>
       &nbsp;
     </span>
@@ -85,9 +85,9 @@
       'loading',
       'view'
     ]),
-    methods: mapActions([
-      'getPage'
-    ]),
+    methods: mapActions({
+      getPage: 'getItems'
+    }),
     created () {
       this.$store.dispatch('{{{lc}}}/list/getItems')
     }

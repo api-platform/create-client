@@ -37,10 +37,10 @@ const getters = {
 };
 
 const actions = {
-    getItems({ commit }) {
+    getItems({ commit }, page = '/{{{ name }}}') {
       commit(loading(true));
 
-      {{{ lc }}}Fetch('/{{{ name }}}')
+      {{{ lc }}}Fetch(page)
         .then(response => response.json())
         .then(data => {
           commit(loading(false));
