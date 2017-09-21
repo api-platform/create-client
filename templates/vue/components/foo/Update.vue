@@ -9,7 +9,7 @@
     <div v-if="updateError" class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> \{{ updateError }}</div>
     <div v-if="deleteError" class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> \{{ deleteError }}</div>
 
-    <{{{titleUcFirst}}}Form v-if="item" :handle-submit="update" :values="item" :errors="violations" :initialValues="retrieved"></GatewayForm>
+    <{{{titleUcFirst}}}Form v-if="item" :handle-submit="update" :values="item" :errors="violations" :initialValues="retrieved"></{{{titleUcFirst}}}Form>
     <router-link v-if="item" :to="{ name: '{{{titleUcFirst}}}List' }" class="btn btn-default">Back to list</router-link>
     <button @click="del" class="btn btn-danger">Delete</button>
   </div>
