@@ -128,9 +128,6 @@ const mutations = {
     [{{{ uc }}}_UPDATE_UPDATE_ERROR] (state, payload) {
       state.updateError = payload.updateError;
     },
-    [{{{ uc }}}_UPDATE_UPDATE_LOADING] (state, payload) {
-      state.updateLoading = payload.updateLoading;
-    },
     [{{{ uc }}}_UPDATE_UPDATE_SUCCESS] (state, payload) {
       state.updated = payload.updated;
       state.violations = null;
