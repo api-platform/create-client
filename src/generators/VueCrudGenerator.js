@@ -35,10 +35,10 @@ export default class VueCrudGenerator {
     this.registerTemplate(templatePath, 'routes/foo.js');
 
     // entrypoint
-    this.registerTemplate(templatePath, 'api/_entrypoint.js');
+    this.registerTemplate(templatePath, 'config/_entrypoint.js');
 
     // utils
-    this.registerTemplate(templatePath, 'utils/helpers.js');
+    this.registerTemplate(templatePath, 'utils/fetch.js');
   }
 
   registerTemplate(templatePath, path) {
@@ -94,6 +94,7 @@ const router = new VueRouter({
     // Create directories
     // These directories may already exist
     mkdirp.sync(`${dir}/api`);
+    mkdirp.sync(`${dir}/config`);
     mkdirp.sync(`${dir}/routes`);
     mkdirp.sync(`${dir}/utils`);
 
@@ -119,8 +120,11 @@ const router = new VueRouter({
     this.createFile('components/foo/Update.vue', `${dir}/components/${lc}/Update.vue`, context);
     this.createFile('components/foo/Show.vue', `${dir}/components/${lc}/Show.vue`, context);
 
+    // config
+    this.createFile('config/_entrypoint.js', `${dir}/config/_entrypoint.js`, context);
+
     // routes
-    this.createFile('routes/foo.js', `${dir}/routes/${lc}.js`, context)
+    this.createFile('routes/foo.js', `${dir}/routes/${lc}.js`, context);
   }
 
   entrypoint(apiEntry, dir) {
@@ -133,11 +137,15 @@ const router = new VueRouter({
       path: pathname
     }
 
-    this.createFile('api/_entrypoint.js', `${dir}/api/_entrypoint.js`, context);
+    this.createFile('config/_entrypoint.js', `${dir}/config/_entrypoint.js`, context);
   }
 
   utils(dir) {
-    this.createFile('utils/helpers.js', `${dir}/utils/helpers.js`, null);
+    const context = {
+      hydraPrefix: this.hydraPrefix
+    }
+
+    this.createFile('utils/fetch.js', `${dir}/utils/fetch.js`, context);
   }
 
   getInputTypeFromField(field) {
