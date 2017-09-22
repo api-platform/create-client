@@ -54,6 +54,14 @@ export default class VueCrudGenerator {
 //import routes
 import ${titleLc}Routes from './routes/${titleLc}';
 
+// Add routes to VueRouter
+const router = new VueRouter({
+  // ...
+  routes: [
+      ...{ ${titleLc}Routes },
+  ]
+});
+
 // Add the modules in the store
 import { ${titleLc} from './store/modules/{ ${titleLc}/';
 
@@ -62,15 +70,6 @@ export const store = new Vuex.Store({
     modules: {
         { ${titleLc}
     }
-});
-
-
-// Add routes to VueRouter
-const router = new VueRouter({
-  // ...
-  routes: [
-      ...{ ${titleLc}Routes },
-  ]
 });
 `));
   }
