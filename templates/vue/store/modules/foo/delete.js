@@ -1,4 +1,4 @@
-import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
+import {{{ lc }}}Fetch from '../../../utils/fetch';
 import {
   {{{ uc }}}_DELETE_ERROR,
   {{{ uc }}}_DELETE_LOADING,

@@ -21,9 +21,6 @@ export default class VueCrudGenerator {
     this.registerTemplate(templatePath, 'store/modules/foo/show.js');
     this.registerTemplate(templatePath, 'store/modules/foo/mutation-types.js');
 
-    // api
-    this.registerTemplate(templatePath, 'api/fooFetch.js');
-
     // components
     this.registerTemplate(templatePath, 'components/foo/Create.vue');
     this.registerTemplate(templatePath, 'components/foo/Form.vue');
@@ -92,7 +89,6 @@ export const store = new Vuex.Store({
 
     // Create directories
     // These directories may already exist
-    mkdirp.sync(`${dir}/api`);
     mkdirp.sync(`${dir}/config`);
     mkdirp.sync(`${dir}/routes`);
     mkdirp.sync(`${dir}/utils`);
@@ -108,9 +104,6 @@ export const store = new Vuex.Store({
     this.createFile('store/modules/foo/update.js', `${dir}/store/modules/${lc}/update.js`, context);
     this.createFile('store/modules/foo/show.js', `${dir}/store/modules/${lc}/show.js`, context);
     this.createFile('store/modules/foo/mutation-types.js', `${dir}/store/modules/${lc}/mutation-types.js`, context);
-
-    // api
-    this.createFile('api/fooFetch.js', `${dir}/api/${lc}Fetch.js`, context);
 
     // components
     this.createFile('components/foo/Create.vue', `${dir}/components/${lc}/Create.vue`, context);

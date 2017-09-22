@@ -1,5 +1,5 @@
 import SubmissionError from '../../../error/SubmissionError';
-import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
+import {{{ lc }}}Fetch from '../../../utils/fetch';
 import {
   {{{ uc }}}_CREATE_ERROR,
   {{{ uc }}}_CREATE_LOADING,

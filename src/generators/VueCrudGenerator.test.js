@@ -29,8 +29,6 @@ test('Generate a Vue app', () => {
   });
   generator.generate(api, resource, tmpobj.name);
 
-  expect(fs.existsSync(tmpobj.name+'/api/abcFetch.js'), true);
-
   expect(fs.existsSync(tmpobj.name+'/components/abc/Create.vue'), true);
   expect(fs.existsSync(tmpobj.name+'/components/abc/Form.vue'), true);
   expect(fs.existsSync(tmpobj.name+'/components/abc/List.vue'), true);

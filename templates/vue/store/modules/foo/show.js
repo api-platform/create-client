@@ -1,4 +1,4 @@
-import {{{ lc }}}Fetch from '../../../api/{{{ lc }}}Fetch';
+import {{{ lc }}}Fetch from '../../../utils/fetch';
 import {
   {{{ uc }}}_SHOW_ERROR,
   {{{ uc }}}_SHOW_LOADING,
