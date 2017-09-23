@@ -1,5 +1,5 @@
 import SubmissionError from '../../../error/SubmissionError';
-import {{{ lc }}}Fetch from '../../../utils/fetch';
+import fetch from '../../../utils/fetch';
 import {
   {{{ uc }}}_UPDATE_RESET,
   {{{ uc }}}_UPDATE_UPDATE_ERROR,
@@ -69,7 +69,7 @@ const actions = {
   retrieve({ commit }, id) {
     commit(retrieveLoading(true));
 
-    return {{{ lc }}}Fetch(id)
+    return fetch(id)
       .then(response => response.json())
       .then(data => {
         commit(retrieveLoading(false));
@@ -84,7 +84,7 @@ const actions = {
     commit(updateError(null));
     commit(updateLoading(true));
 
-    return {{{ lc }}}Fetch(item['@id'], {
+    return fetch(item['@id'], {
         method: 'PUT',
         headers: new Headers({'Content-Type': 'application/ld+json'}),
         body: JSON.stringify(values),

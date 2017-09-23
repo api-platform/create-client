@@ -1,4 +1,4 @@
-import {{{ lc }}}Fetch from '../../../utils/fetch';
+import fetch from '../../../utils/fetch';
 import {
   {{{ uc }}}_SHOW_ERROR,
   {{{ uc }}}_SHOW_LOADING,
@@ -38,7 +38,7 @@ const actions = {
   retrieve({ commit }, id) {
     commit(loading(true));
 
-    return {{{ lc }}}Fetch(id)
+    return fetch(id)
       .then(response => response.json())
       .then(data => {
         commit(loading(false));

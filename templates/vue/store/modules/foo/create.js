@@ -1,5 +1,5 @@
 import SubmissionError from '../../../error/SubmissionError';
-import {{{ lc }}}Fetch from '../../../utils/fetch';
+import fetch from '../../../utils/fetch';
 import {
   {{{ uc }}}_CREATE_ERROR,
   {{{ uc }}}_CREATE_LOADING,
@@ -45,7 +45,7 @@ const actions = {
   create({ commit }, values) {
     commit(loading(true));
 
-    return {{{ lc }}}Fetch('/{{{ name }}}', {method: 'POST', body: JSON.stringify(values)})
+    return fetch('/{{{ name }}}', {method: 'POST', body: JSON.stringify(values)})
       .then(response => {
         commit(loading(false));
 

@@ -1,4 +1,4 @@
-import {{{ lc }}}Fetch from '../../../utils/fetch';
+import fetch from '../../../utils/fetch';
 import {
   {{{ uc }}}_DELETE_ERROR,
   {{{ uc }}}_DELETE_LOADING,
@@ -38,7 +38,7 @@ const actions = {
   delete({ commit }, item) {
     commit(loading(true));
 
-    return {{{ lc }}}Fetch(item['@id'], {method: 'DELETE'})
+    return fetch(item['@id'], {method: 'DELETE'})
       .then(() => {
         commit(loading(false));
         commit(success(item));

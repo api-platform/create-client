@@ -1,4 +1,4 @@
-import {{{ lc }}}Fetch from '../../../utils/fetch';
+import fetch from '../../../utils/fetch';
 import {
   {{{ uc }}}_LIST_ERROR,
   {{{ uc }}}_LIST_LOADING,
@@ -40,7 +40,7 @@ const actions = {
     getItems({ commit }, page = '/{{{ name }}}') {
       commit(loading(true));
 
-      {{{ lc }}}Fetch(page)
+      fetch(page)
         .then(response => response.json())
         .then(data => {
           commit(loading(false));
