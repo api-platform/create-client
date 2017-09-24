@@ -12,7 +12,7 @@ program
   .usage('entrypoint outputDirectory')
   .option('-r, --resource [resourceName]', 'Generate CRUD for the given resource')
   .option('-p, --hydra-prefix [hydraPrefix]', 'The hydra prefix used by the API', 'hydra:')
-  .option('-g, --generator [generator]', 'The generator to use, one of "react", "react-native", "angular", etc.', 'react')
+  .option('-g, --generator [generator]', 'The generator to use, one of "react", "react-native", "vue"', 'react')
   .option('-t, --template-directory [templateDirectory]', 'The templates directory base to use. Final directory will be ${templateDirectory}/${generator}', `${__dirname}/../templates/`)
   .parse(process.argv);
 
