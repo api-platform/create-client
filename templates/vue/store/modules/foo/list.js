@@ -31,6 +31,7 @@ function view(items) {
 }
 
 const getters = {
+  error: state => state.error,
   items: state => state.items,
   loading: state => state.loading,
   view: state => state.view

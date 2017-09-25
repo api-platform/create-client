@@ -75,18 +75,18 @@
 </template>
 
 <script>
-  import { createNamespacedHelpers } from 'vuex';
-
-  const { mapActions, mapGetters } = createNamespacedHelpers('{{{lc}}}/list');
+  import { mapActions, mapGetters } from 'vuex';
 
   export default {
-    computed: mapGetters([
-      'items',
-      'loading',
-      'view'
-    ]),
+    computed: mapGetters({
+      deletedItem: '{{{lc}}}/del/deleted',
+      error: '{{{lc}}}/list/error',
+      items: '{{{lc}}}/list/items',
+      loading: '{{{lc}}}/list/loading',
+      view: '{{{lc}}}/list/view'
+    }),
     methods: mapActions({
-      getPage: 'getItems'
+      getPage: '{{{lc}}}/list/getItems'
     }),
     created () {
       this.$store.dispatch('{{{lc}}}/list/getItems')

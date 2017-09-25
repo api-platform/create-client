@@ -34,6 +34,9 @@ export default class VueCrudGenerator {
     // entrypoint
     this.registerTemplate(templatePath, 'config/_entrypoint.js');
 
+    // error
+    this.registerTemplate(templatePath, 'error/SubmissionError.js');
+
     // utils
     this.registerTemplate(templatePath, 'utils/fetch.js');
   }
@@ -55,7 +58,7 @@ import ${titleLc}Routes from './routes/${titleLc}';
 const router = new VueRouter({
   // ...
   routes: [
-      ...{ ${titleLc}Routes },
+      ...${titleLc}Routes,
   ]
 });
 
@@ -63,10 +66,10 @@ const router = new VueRouter({
 import { ${titleLc} from './store/modules/{ ${titleLc}/';
 
 export const store = new Vuex.Store({
-    // ...
-    modules: {
-        { ${titleLc}
-    }
+  // ...
+  modules: {
+    ${titleLc}
+  }
 });
 `));
   }
@@ -90,6 +93,7 @@ export const store = new Vuex.Store({
     // Create directories
     // These directories may already exist
     mkdirp.sync(`${dir}/config`);
+    mkdirp.sync(`${dir}/error`);
     mkdirp.sync(`${dir}/routes`);
     mkdirp.sync(`${dir}/utils`);
 
@@ -114,6 +118,9 @@ export const store = new Vuex.Store({
 
     // config
     this.createFile('config/_entrypoint.js', `${dir}/config/_entrypoint.js`, context);
+
+    // error
+    this.createFile('error/SubmissionError.js', `${dir}/error/SubmissionError.js`, context);
 
     // routes
     this.createFile('routes/foo.js', `${dir}/routes/${lc}.js`, context);
