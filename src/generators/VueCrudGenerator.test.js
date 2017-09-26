@@ -37,6 +37,8 @@ test('Generate a Vue app', () => {
 
   expect(fs.existsSync(tmpobj.name+'/config/_entrypoint.js'), true);
 
+  expect(fs.existsSync(tmpobj.name+'/error/SubmissionError.js'), true);
+
   expect(fs.existsSync(tmpobj.name+'/store/modules/abc/create.js'), true);
   expect(fs.existsSync(tmpobj.name+'/store/modules/abc/delete.js'), true);
   expect(fs.existsSync(tmpobj.name+'/store/modules/abc/index.js'), true);
