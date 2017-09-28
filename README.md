@@ -4,7 +4,10 @@
 [![npm version](https://badge.fury.io/js/%40api-platform%2Fclient-generator.svg)](https://badge.fury.io/js/%40api-platform%2Fclient-generator)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
-A generator to scaffold a React/Redux app with Create-Retrieve-Update-Delete features for any API exposing a Hydra documentation.
+API Platform Client Generator is a generator to scaffold app with Create-Retrieve-Update-Delete features for any API exposing a Hydra documentation for:
+ * React/Redux
+ * Vue.js
+
 Works especially well with APIs built with the [API Platform](https://api-platform.com) framework.
 
 ## Installation
