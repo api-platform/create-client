@@ -1,6 +1,6 @@
 {
   "name": "@api-platform/client-generator",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Generate a CRUD application built with React, Redux and React Router from an Hydra-enabled API",
   "files": [
     "*.md",
