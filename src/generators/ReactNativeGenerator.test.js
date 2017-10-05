@@ -30,12 +30,14 @@ test('Generate a React app', () => {
   });
   generator.generate(api, resource, tmpobj.name);
 
+  expect(fs.existsSync(tmpobj.name+'/utils/fetch.js'), true);
+
+  expect(fs.existsSync(tmpobj.name+'/config/_entrypoint.js'), true);
+
   expect(fs.existsSync(tmpobj.name+'/actions/abc/create.js'), true);
   expect(fs.existsSync(tmpobj.name+'/actions/abc/delete.js'), true);
   expect(fs.existsSync(tmpobj.name+'/actions/abc/list.js'), true);
   expect(fs.existsSync(tmpobj.name+'/actions/abc/update.js'), true);
-
-  expect(fs.existsSync(tmpobj.name+'/api/abcFetch.js'), true);
 
   expect(fs.existsSync(tmpobj.name+'/components/abc/Create.js'), true);
   expect(fs.existsSync(tmpobj.name+'/components/abc/Form.js'), true);

@@ -1,5 +1,5 @@
 import { SubmissionError } from 'redux-form';
-import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
+import fetch from '../../utils/fetch';
 
 export function error(error) {
   return {type: '{{{ uc }}}_CREATE_ERROR', error};
@@ -17,7 +17,7 @@ export function create(values) {
   return (dispatch) => {
     dispatch(loading(true));
 
-    return {{{ lc }}}Fetch('/{{{ name }}}', {method: 'POST', body: JSON.stringify(values)})
+    return fetch('/{{{ name }}}', {method: 'POST', body: JSON.stringify(values)})
       .then(response => {
         dispatch(loading(false));
 

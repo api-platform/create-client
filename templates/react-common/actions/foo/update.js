@@ -1,5 +1,5 @@
 import { SubmissionError } from 'redux-form';
-import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
+import fetch from '../../utils/fetch';
 import { success as createSuccess } from './create';
 
 export function retrieveError(retrieveError) {
@@ -18,7 +18,7 @@ export function retrieve(id) {
   return (dispatch) => {
     dispatch(retrieveLoading(true));
 
-    return {{{ lc }}}Fetch(id)
+    return fetch(id)
       .then(response => response.json())
       .then(data => {
         dispatch(retrieveLoading(false));
@@ -49,7 +49,7 @@ export function update(item, values) {
     dispatch(createSuccess(null));
     dispatch(updateLoading(true));
 
-    return {{{ lc }}}Fetch(item['@id'], {
+    return fetch(item['@id'], {
         method: 'PUT',
         headers: new Headers({'Content-Type': 'application/ld+json'}),
         body: JSON.stringify(values),

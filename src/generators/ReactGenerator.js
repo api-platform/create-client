@@ -13,8 +13,8 @@ export default class extends BaseGenerator {
       'actions/foo/update.js',
       'actions/foo/show.js',
 
-      // api
-     'api/fooFetch.js',
+      // utils
+     'utils/fetch.js',
 
       // reducers
       'reducers/foo/create.js',
@@ -74,12 +74,12 @@ combineReducers(${titleLc},{/* ... */}),
       fields: resource.readableFields,
       formFields: this.buildFields(resource.writableFields),
       hydraPrefix: this.hydraPrefix,
-      titleUcFirst
+      titleUcFirst,
     };
 
     // Create directories
     // These directories may already exist
-    for (let dir of [`${dir}/api`, `${dir}/routes`, `${dir}/utils`]) {
+    for (let dir of [`${dir}/utils`, `${dir}/config`, `${dir}/routes`]) {
       this.createDir(dir, false);
     }
 
@@ -94,9 +94,6 @@ combineReducers(${titleLc},{/* ... */}),
       'actions/%s/list.js',
       'actions/%s/update.js',
       'actions/%s/show.js',
-
-      // api
-      'api/%sFetch.js',
 
       // components
       'components/%s/Create.js',
@@ -120,7 +117,11 @@ combineReducers(${titleLc},{/* ... */}),
       this.createFileFromPattern(pattern, dir, lc, context)
     }
 
-    this.createFile('utils/helpers.js', `${dir}/utils/helpers.js`, {}, false);
-    this.createEntrypoint(api.entrypoint, `${dir}/api/_entrypoint.js`)
+    // utils
+    for (let file of ['utils/helpers.js', 'utils/fetch.js']) {
+      this.createFile(file, `${dir}/${file}`, {}, false);
+    }
+
+    this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`)
   }
 }

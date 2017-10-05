@@ -3,7 +3,7 @@ import { API_HOST, API_PATH } from './_entrypoint';
 
 const jsonLdMimeType = 'application/ld+json';
 
-export default function {{{ lc }}}Fetch(url, options = {}) {
+export default function fetch(url, options = {}) {
   if ('undefined' === typeof options.headers) options.headers = new Headers();
   if (null === options.headers.get('Accept')) options.headers.set('Accept', jsonLdMimeType);
 
