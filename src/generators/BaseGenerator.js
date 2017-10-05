@@ -46,10 +46,9 @@ export default class {
 
   createEntrypoint(apiEntry, dest) {
     const url = urlapi.parse(apiEntry);
-    const {protocol, host, port, pathname} = url;
-    const hostUrl = `${protocol}//${host}${port ? `:${port}` : ''}`;
+    const {protocol, host, pathname} = url;
 
-    this.createFile('_entrypoint.js', dest, {host: hostUrl, path: pathname}, false);
+    this.createFile('_entrypoint.js', dest, {host: `${protocol}//${host}`, path: pathname}, false);
   }
 
   getHtmlInputTypeFromField(field) {
