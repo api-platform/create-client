@@ -3,11 +3,10 @@ import Resource from 'api-doc-parser/lib/Resource';
 import Field from 'api-doc-parser/lib/Field';
 import fs from 'fs';
 import tmp from 'tmp';
-import VueCrudGenerator from './VueCrudGenerator';
-
+import VueGenerator from './VueGenerator';
 
 test('Generate a Vue app', () => {
-  const generator = new VueCrudGenerator({hydraPrefix: 'hydra:', templateDirectory: `${__dirname}/../../templates`});
+  const generator = new VueGenerator({hydraPrefix: 'hydra:', templateDirectory: `${__dirname}/../../templates`});
   const tmpobj = tmp.dirSync({unsafeCleanup: true});
 
   const fields = [new Field('bar', {
@@ -24,6 +23,7 @@ test('Generate a Vue app', () => {
     writableFields: fields
   });
   const api = new Api('http://example.com', {
+    entrypoint: 'http://example.com:8080',
     title: 'My API',
     resources: [resource]
   });

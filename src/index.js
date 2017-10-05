@@ -29,23 +29,15 @@ const generator = generators(program.generator)({
 });
 const resourceToGenerate = program.resource ? program.resource.toLowerCase() : null;
 
-parseHydraDocumentation(entrypoint).then(api => {
-  for (let resource of api.api.resources) {
+parseHydraDocumentation(entrypoint).then(ret => {
+  for (let resource of ret.api.resources) {
     const nameLc = resource.name.toLowerCase();
     const titleLc = resource.title.toLowerCase();
 
     if (null === resourceToGenerate || nameLc === resourceToGenerate || titleLc === resourceToGenerate) {
-      generator.generate(api, resource, outputDirectory);
+      generator.generate(ret.api, resource, outputDirectory);
       generator.help(resource)
     }
-  }
-
-  if ('entrypoint' in generator) {
-    generator.entrypoint(entrypoint, outputDirectory);
-  }
-
-  if ('utils' in generator) {
-    generator.utils(outputDirectory);
   }
 }).catch((e) => {
   console.log(e);
