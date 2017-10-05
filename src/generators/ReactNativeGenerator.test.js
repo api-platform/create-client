@@ -3,11 +3,11 @@ import Resource from 'api-doc-parser/lib/Resource';
 import Field from 'api-doc-parser/lib/Field';
 import fs from 'fs';
 import tmp from 'tmp';
-import ReactCrudGenerator from './ReactCrudGenerator';
+import ReactNativeGenerator from './ReactNativeGenerator';
 
 
 test('Generate a React app', () => {
-  const generator = new ReactCrudGenerator({hydraPrefix: 'hydra:', templateDirectory: `${__dirname}/../../templates`});
+  const generator = new ReactNativeGenerator({hydraPrefix: 'hydra:', templateDirectory: `${__dirname}/../../templates`});
   const tmpobj = tmp.dirSync({unsafeCleanup: true});
 
   const fields = [new Field('bar', {
@@ -24,6 +24,7 @@ test('Generate a React app', () => {
     writableFields: fields
   });
   const api = new Api('http://example.com', {
+    entrypoint: 'http://example.com:8080',
     title: 'My API',
     resources: [resource]
   });

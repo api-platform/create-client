@@ -1,32 +1,24 @@
-import mkdirp from 'mkdirp';
-import handlebars from 'handlebars';
-import fs from 'fs';
+import BaseGenerator from './BaseGenerator';
 
-export default class TypescriptInterfaceGenerator {
-  templates = {};
+export default class TypescriptInterfaceGenerator extends BaseGenerator {
+  constructor(params) {
+    super(params);
 
-  constructor({templateDirectory}) {
-    const templatePath = `${templateDirectory}/typescript/`;
-    this.template = handlebars.compile(fs.readFileSync(`${templatePath}/interface.ts`).toString())
+    this.registerTemplates(`typescript/`, ['interface.ts']);
   }
 
-  help() {
+  help(resource) {
+    console.log('Interface for the "%s" resource type has been generated!', resource.title);
   }
 
   generate(api, resource, dir) {
-    const fields = this.parseFields(resource)
-    const name = resource.title
-    let dest = `${dir}/interfaces`
+    const dest = `${dir}/interfaces`;
 
-    try {
-      mkdirp.sync(dest);
-    } catch(e) {
-      // nothing
-    }
-
-    dest += `/${name.toLowerCase()}.ts`;
-
-    fs.writeFileSync(dest, this.template({fields, name}));
+    this.createDir(dest, false);
+    this.createFile('interface.ts', `${dest}/${resource.title.toLowerCase()}.ts`, {
+      fields: this.parseFields(resource),
+      name: resource.title
+    });
   }
 
   getType(field) {
@@ -84,7 +76,4 @@ export default class TypescriptInterfaceGenerator {
 
     return Object.keys(fields).map((e) => fields[e]);
   }
-
-  // createFile(template, dest, context) {
-  // }
 }

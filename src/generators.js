@@ -1,23 +1,21 @@
-import ReactCrudGenerator from './generators/ReactCrudGenerator';
-import ReactNativeCrudGenerator from './generators/ReactNativeCrudGenerator';
+import ReactGenerator from './generators/ReactGenerator';
+import ReactNativeGenerator from './generators/ReactNativeGenerator';
 import TypescriptInterfaceGenerator from './generators/TypescriptInterfaceGenerator';
-import VueCrudGenerator from './generators/VueCrudGenerator';
+import VueGenerator from './generators/VueGenerator';
 
 function wrap (cl) {
   return ({hydraPrefix, templateDirectory}) => new cl({hydraPrefix, templateDirectory})
 }
 
-function generators (generator = 'react') {
+export default function generators (generator = 'react') {
   switch (generator) {
     case 'react':
-      return wrap(ReactCrudGenerator);
+      return wrap(ReactGenerator);
     case 'react-native':
-      return wrap(ReactNativeCrudGenerator);
+      return wrap(ReactNativeGenerator);
     case 'typescript':
       return wrap(TypescriptInterfaceGenerator);
     case 'vue':
-      return wrap(VueCrudGenerator)
+      return wrap(VueGenerator)
   }
 }
-
-export default generators

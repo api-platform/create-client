@@ -34,6 +34,7 @@ test('Generate a typescript interface', () => {
   })]
   });
   const api = new Api('http://example.com', {
+    entrypoint: 'http://example.com:8080',
     title: 'My API',
     resources: [resource]
   });
