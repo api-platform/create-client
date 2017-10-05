@@ -7,26 +7,17 @@ export function itemToLinks(items) {
 }
 
 function createLink(item) {
-  if (typeof(item) === 'string' && item.includes(API_PATH) > 0) {
-    let route = null;
-    const routeTest = item.replace(API_PATH, '');
-    if( routeTest[0] === '/') {
-      route = item.replace(API_PATH, '').split('/')[1];
-    } else {
-      route = item.replace(API_PATH, '').split('/')[0];
-    }
-    return (
-      <span key={item}>
-        <Link to={`/${route}/show/${encodeURIComponent(item)}`}>
-          {item}
-        </Link>
-        <br/>
-      </span>
-    );
+  if ('string' !== typeof(item) || !item.includes(API_PATH)) {
+    return <span key={item}>{item}<br/></span>;
   }
-  return <span key={item}>{item}<br/></span>;
+
+  const routeWithoutPrefix = item.replace(API_PATH, '');
+  const splittedRoute = routeWithoutPrefix.split('/');
+  const route = '/' === routeWithoutPrefix[0] ? splittedRoute[1] : splittedRoute[0];
+
+  return <span><Link key={item} to={`/${route}/show/${encodeURIComponent(item)}`}>{item}</Link><br/></span>;
 }
 
 export function paginationRoute(item) {
-  return '/' + item.split('/').splice(-1,1);
+  return '/' + item.split('/').splice(-1, 1);
 }
