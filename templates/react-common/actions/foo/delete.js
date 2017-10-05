@@ -1,4 +1,4 @@
-import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
+import fetch from '../../utils/fetch';
 
 export function error(error) {
   return {type: '{{{ uc }}}_DELETE_ERROR', error};
@@ -16,7 +16,7 @@ export function del(item) {
   return (dispatch) => {
     dispatch(loading(true));
 
-    return {{{ lc }}}Fetch(item['@id'], {method: 'DELETE'})
+    return fetch(item['@id'], {method: 'DELETE'})
       .then(() => {
         dispatch(loading(false));
         dispatch(success(item))

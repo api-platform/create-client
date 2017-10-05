@@ -13,8 +13,8 @@ export default class extends BaseGenerator {
       'actions/foo/update.js',
       'actions/foo/show.js',
 
-      // api
-      'api/fooFetch.js',
+      // utils
+      'utils/fetch.js',
 
       // reducers
       'reducers/foo/create.js',
@@ -65,10 +65,11 @@ combineReducers(${titleLc},{/* ... */}),
       titleUcFirst
     };
 
-
     // Create directories
-    // This directories may already exist
-    this.createDir(`${dir}/api`, false);
+    // These directories may already exist
+    for (let dir of [`${dir}/utils`, `${dir}/config`]) {
+      this.createDir(dir, false);
+    }
 
     for (let dir of [`${dir}/actions/${lc}`, `${dir}/components/${lc}`, `${dir}/reducers/${lc}`]) {
       this.createDir(dir);
@@ -81,9 +82,6 @@ combineReducers(${titleLc},{/* ... */}),
       'actions/%s/list.js',
       'actions/%s/update.js',
       'actions/%s/show.js',
-
-      // api
-      'api/fooFetch.js',
 
       // components
       'components/%s/Create.js',
@@ -104,6 +102,7 @@ combineReducers(${titleLc},{/* ... */}),
       this.createFileFromPattern(pattern, dir, lc, context);
     }
 
-    this.createEntrypoint(api.entrypoint, `${dir}/api/_entrypoint.js`)
+    this.createFile('utils/fetch.js', `${dir}/utils/fetch.js`, {}, false);
+    this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`)
   }
 }

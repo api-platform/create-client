@@ -1,4 +1,4 @@
-import {{{ lc }}}Fetch from '../../api/{{{ lc }}}Fetch';
+import fetch from '../../utils/fetch';
 
 export function error(error) {
   return {type: '{{{ uc }}}_LIST_ERROR', error};
@@ -21,7 +21,7 @@ export function page(page) {
     dispatch(loading(true));
     dispatch(error(''));
 
-    {{{ lc }}}Fetch(page)
+    fetch(page)
       .then(response => response.json())
       .then(data => {
         dispatch(loading(false));
