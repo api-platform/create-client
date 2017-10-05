@@ -1,9 +1,9 @@
 import { SubmissionError } from 'redux-form';
-import { API_HOST, API_PATH } from './_entrypoint';
+import { API_HOST, API_PATH } from '../config/_entrypoint';
 
 const jsonLdMimeType = 'application/ld+json';
 
-export default function fetch(url, options = {}) {
+export default function (url, options = {}) {
   if ('undefined' === typeof options.headers) options.headers = new Headers();
   if (null === options.headers.get('Accept')) options.headers.set('Accept', jsonLdMimeType);
 
