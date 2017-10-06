@@ -2,7 +2,7 @@
 
 import 'isomorphic-fetch';
 import program from 'commander';
-import parseHydraDocumentation from 'api-doc-parser/lib/hydra/parseHydraDocumentation';
+import parseHydraDocumentation from '@api-platform/api-doc-parser/lib/hydra/parseHydraDocumentation';
 import {version} from '../package.json';
 import generators from './generators';
 
