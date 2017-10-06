@@ -8,15 +8,11 @@ export function loading(loading) {
   return {type: '{{{ uc }}}_LIST_LOADING', loading};
 }
 
-export function success(items) {
-  return {type: '{{{ uc }}}_LIST_SUCCESS', items};
+export function success(data) {
+  return {type: '{{{ uc }}}_LIST_SUCCESS', data};
 }
 
-export function view(items) {
-  return { type: '{{{ uc }}}_LIST_VIEW', items};
-}
-
-export function page(page) {
+export function list(page = '/{{{ name }}}') {
   return (dispatch) => {
     dispatch(loading(true));
     dispatch(error(''));
@@ -25,18 +21,13 @@ export function page(page) {
       .then(response => response.json())
       .then(data => {
         dispatch(loading(false));
-        dispatch(success(data['{{{ hydraPrefix }}}member']));
-        dispatch(view(data['{{{ hydraPrefix }}}view']));
+        dispatch(success(data));
       })
       .catch(e => {
         dispatch(loading(false));
         dispatch(error(e.message))
       });
   };
-}
-
-export function list() {
-  return page('/{{{ name }}}');
 }
 
 export function reset() {
