@@ -2,56 +2,26 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { list, reset, page } from '../../actions/{{{ lc }}}/list';
+import { list, reset } from '../../actions/{{{ lc }}}/list';
 import { success } from '../../actions/{{{ lc }}}/delete';
-import { paginationRoute, itemToLinks } from '../../utils/helpers';
+import { itemToLinks } from '../../utils/helpers';
 
 class List extends Component {
   static propTypes = {
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
-    items: PropTypes.array.isRequired,
+    data: PropTypes.object.isRequired,
     deletedItem: PropTypes.object,
     list: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
-    page: PropTypes.func.isRequired,
   };
 
-  pagination() {
-    return (
-      <span>
-        <button
-          type="button"
-          className="btn btn-basic btn-sm"
-          onClick={() => this.props.page(paginationRoute(this.props.view['{{{ hydraPrefix }}}first']))}
-          disabled={!this.props.view['{{{ hydraPrefix }}}previous']}
-        >First</button>
-        &nbsp;
-        <button
-          type="button"
-          className="btn btn-basic btn-sm"
-          onClick={() => this.props.page(paginationRoute(this.props.view['{{{ hydraPrefix }}}previous']))}
-          disabled={!this.props.view['{{{ hydraPrefix }}}previous']}
-        >Previous</button>
-        &nbsp;
-        <button
-          type="button" className="btn btn-basic btn-sm"
-          onClick={() => this.props.page(paginationRoute(this.props.view['{{{ hydraPrefix }}}next']))}
-          disabled={!this.props.view['{{{ hydraPrefix }}}next']}
-        >Next</button>
-        &nbsp;
-        <button
-          type="button" className="btn btn-basic btn-sm"
-          onClick={() => this.props.page(paginationRoute(this.props.view['{{{ hydraPrefix }}}last']))}
-          disabled={!this.props.view['{{{ hydraPrefix }}}next']}
-        >Last</button>
-        &nbsp;
-      </span>
-    );
+  componentDidMount() {
+    this.props.list(this.props.match.params.page && decodeURIComponent(this.props.match.params.page));
   }
 
-  componentDidMount() {
-    this.props.list();
+  componentWillReceiveProps(nextProps) {
+    if (this.props.match.params.page !== nextProps.match.params.page) nextProps.list(nextProps.match.params.page && decodeURIComponent(nextProps.match.params.page));
   }
 
   componentWillUnmount() {
@@ -65,7 +35,8 @@ class List extends Component {
       {this.props.loading && <div className="alert alert-info">Loading...</div>}
       {this.props.deletedItem && <div className="alert alert-success">{this.props.deletedItem['@id']} deleted.</div>}
       {this.props.error && <div className="alert alert-danger">{this.props.error}</div>}
-      {this.pagination()}
+
+      <p><Link to="create" className="btn btn-default">Create</Link></p>
 
       <div className="table-responsive">
           <table className="table table-striped table-hover">
@@ -80,7 +51,7 @@ class List extends Component {
             </tr>
           </thead>
           <tbody>
-          {this.props.items.map(item =>
+          {this.props.data['{{{ hydraPrefix }}}member'] && this.props.data['{{{ hydraPrefix }}}member'].map(item =>
             <tr className={item['@id']} key={item['@id']}>
               <td><Link to={`show/${encodeURIComponent(item['@id'])}`}>{item['@id']}</Link></td>
 {{#each fields}}
@@ -104,25 +75,37 @@ class List extends Component {
         </table>
       </div>
 
-      <Link to="create" className="btn btn-default">Create</Link>
+      {this.pagination()}
     </div>;
+  }
+
+  pagination() {
+    const view = this.props.data['hydra:view'];
+    if (!view) return;
+
+    const {'{{{ hydraPrefix }}}first': first, '{{{ hydraPrefix }}}previous': previous,'{{{ hydraPrefix }}}next': next, '{{{ hydraPrefix }}}last': last} = view;
+
+    return <nav aria-label="Page navigation">
+        <Link to='.' className={`btn btn-default${previous ? '' : ' disabled'}`}><span aria-hidden="true">&lArr;</span> First</Link>
+        <Link to={!previous || previous === first ? '.' : encodeURIComponent(previous)} className={`btn btn-default${previous ? '' : ' disabled'}`}><span aria-hidden="true">&larr;</span> Previous</Link>
+        <Link to={next ? encodeURIComponent(next) : '#'} className={`btn btn-default${next ? '' : ' disabled'}`}>Next <span aria-hidden="true">&rarr;</span></Link>
+        <Link to={last ? encodeURIComponent(last) : '#'} className={`btn btn-default${next ? '' : ' disabled'}`}>Last <span aria-hidden="true">&rArr;</span></Link>
+    </nav>;
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    items: state.{{{ lc }}}.list.items,
+    data: state.{{{ lc }}}.list.data,
     error: state.{{{ lc }}}.list.error,
     loading: state.{{{ lc }}}.list.loading,
     deletedItem: state.{{{ lc }}}.del.deleted,
-    view: state.{{{ lc }}}.list.view,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    list: () => dispatch(list()),
-    page: (arg) => dispatch(page(arg)),
+    list: (page) => dispatch(list(page)),
     reset: () => {
       dispatch(reset());
       dispatch(success(null));

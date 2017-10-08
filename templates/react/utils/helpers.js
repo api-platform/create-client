@@ -17,7 +17,3 @@ function createLink(item) {
 
   return <div><Link key={item} to={`/${route}/show/${encodeURIComponent(item)}`}>{item}</Link></div>;
 }
-
-export function paginationRoute(item) {
-  return '/' + item.split('/').splice(-1, 1);
-}
