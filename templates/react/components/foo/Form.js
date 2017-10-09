@@ -30,7 +30,7 @@ class Form extends Component {
       <Field component={this.renderField} name="{{{ name }}}" type="{{{ type }}}"{{#if step}} step="{{{ step }}}"{{/if}} placeholder="{{{ description }}}" {{#if required}}required={true}{{/if}}/>
 {{/each}}
 
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-success">Submit</button>
       </form>;
   }
 }

@@ -59,7 +59,7 @@ class Show extends Component {
           </tbody>
         </table>
       }
-      <Link to=".." className="btn btn-default">Back to list</Link>
+      <Link to=".." className="btn btn-primary">Back to list</Link>
       {item && <Link to={`/{{ name }}/edit/${encodeURIComponent(item['@id'])}`}>
         <button className="btn btn-warning">Edit</button>
         </Link>
