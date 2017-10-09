@@ -19,7 +19,7 @@ export default function (url, options = {}) {
     return response
       .json()
       .then(json => {
-        const error = json['{{{ hydraPrefix }}}description'] ? json['{{{ hydraPrefix }}}description'] : response.statusText;
+        const error = json['{{{ hydraPrefix }}}description'] || response.statusText;
         if (!json.violations) throw Error(error);
 
         let errors = {_error: error};

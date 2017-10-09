@@ -25,7 +25,7 @@ class Create extends Component {
       <h1>New {{{ title }}}</h1>
 
       {this.props.loading && <div className="alert alert-info" role="status">Loading...</div>}
-      {this.props.error && <div className="alert alert-danger" role="alert"><span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {this.props.error}</div>}
+      {this.props.error && <div className="alert alert-danger" role="alert"><span className="fa fa-exclamation-triangle" aria-hidden="true"></span> {this.props.error}</div>}
 
       <Form onSubmit={this.props.create} values={this.props.item}/>
       <Link to="." className="btn btn-default">Back to list</Link>
