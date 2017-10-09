@@ -35,15 +35,14 @@ class Show extends Component {
 
     const item = this.props.retrieved;
 
-    return (<div>
+    return <div>
       <h1>Show {item && item['@id']}</h1>
 
       {this.props.loading && <div className="alert alert-info" role="status">Loading...</div>}
-      {this.props.error && <div className="alert alert-danger" role="alert"><span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {this.props.error}</div>}
-      {this.props.deleteError && <div className="alert alert-danger" role="alert"><span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {this.props.deleteError}</div>}
+      {this.props.error && <div className="alert alert-danger" role="alert"><span className="fa fa-exclamation-triangle" aria-hidden="true"></span> {this.props.error}</div>}
+      {this.props.deleteError && <div className="alert alert-danger" role="alert"><span className="fa fa-exclamation-triangle" aria-hidden="true"></span> {this.props.deleteError}</div>}
 
-      {item && <div className="table-responsive">
-        <table className="table table-striped table-hover">
+      {item && <table className="table table-responsive table-striped table-hover">
           <thead>
             <tr>
               <th>Field</th>
@@ -53,13 +52,12 @@ class Show extends Component {
           <tbody>
 {{#each fields}}
             <tr>
-              <td>{{name}}</td>
+              <th scope="row">{{name}}</th>
               <td>{item['{{{ name }}}']}</td>
             </tr>
 {{/each }}
           </tbody>
         </table>
-      </div>
       }
       <Link to=".." className="btn btn-default">Back to list</Link>
       {item && <Link to={`/{{ name }}/edit/${encodeURIComponent(item['@id'])}`}>
@@ -67,7 +65,7 @@ class Show extends Component {
         </Link>
       }
       <button onClick={this.del} className="btn btn-danger">Delete</button>
-    </div>);
+    </div>;
   }
 }
 

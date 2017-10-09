@@ -38,42 +38,40 @@ class List extends Component {
 
       <p><Link to="create" className="btn btn-default">Create</Link></p>
 
-      <div className="table-responsive">
-          <table className="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>Id</th>
+        <table className="table table-responsive table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Id</th>
 {{#each fields}}
-              <th>{{name}}</th>
+            <th>{{name}}</th>
 {{/each}}
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-          {this.props.data['{{{ hydraPrefix }}}member'] && this.props.data['{{{ hydraPrefix }}}member'].map(item =>
-            <tr className={item['@id']} key={item['@id']}>
-              <td><Link to={`show/${encodeURIComponent(item['@id'])}`}>{item['@id']}</Link></td>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {this.props.data['{{{ hydraPrefix }}}member'] && this.props.data['{{{ hydraPrefix }}}member'].map(item =>
+          <tr key={item['@id']}>
+            <th scope="row"><Link to={`show/${encodeURIComponent(item['@id'])}`}>{item['@id']}</Link></th>
 {{#each fields}}
-              <td>{item['{{{ name }}}'] ? itemToLinks(item['{{{ name }}}']) : ''}</td>
+            <td>{item['{{{ name }}}'] ? itemToLinks(item['{{{ name }}}']) : ''}</td>
 {{/each}}
-              <td>
-                <Link to={`show/${encodeURIComponent(item['@id'])}`}>
-                  <span className="glyphicon glyphicon-search" aria-hidden="true"/>
-                  <span className="sr-only">Show</span>
-                </Link>
-              </td>
-              <td>
-                <Link to={`edit/${encodeURIComponent(item['@id'])}`}>
-                  <span className="glyphicon glyphicon-pencil" aria-hidden="true"/>
-                  <span className="sr-only">Edit</span>
-                </Link>
-              </td>
-            </tr>
-          )}
-          </tbody>
-        </table>
-      </div>
+            <td>
+              <Link to={`show/${encodeURIComponent(item['@id'])}`}>
+                <span className="fa fa-search" aria-hidden="true"/>
+                <span className="sr-only">Show</span>
+              </Link>
+            </td>
+            <td>
+              <Link to={`edit/${encodeURIComponent(item['@id'])}`}>
+                <span className="fa fa-pencil" aria-hidden="true"/>
+                <span className="sr-only">Edit</span>
+              </Link>
+            </td>
+          </tr>
+        )}
+        </tbody>
+      </table>
 
       {this.pagination()}
     </div>;

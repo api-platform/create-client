@@ -102,7 +102,7 @@ combineReducers(${titleLc},{/* ... */}),
       this.createFileFromPattern(pattern, dir, lc, context);
     }
 
-    this.createFile('utils/fetch.js', `${dir}/utils/fetch.js`, {}, false);
+    this.createFile('utils/fetch.js', `${dir}/utils/fetch.js`, context, false);
     this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`)
   }
 }

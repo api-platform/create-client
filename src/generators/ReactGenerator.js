@@ -119,7 +119,7 @@ combineReducers(${titleLc},{/* ... */}),
 
     // utils
     for (let file of ['utils/helpers.js', 'utils/fetch.js']) {
-      this.createFile(file, `${dir}/${file}`, {}, false);
+      this.createFile(file, `${dir}/${file}`, context, false);
     }
 
     this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`)

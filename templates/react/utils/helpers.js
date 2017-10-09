@@ -15,5 +15,5 @@ function createLink(item) {
   const splittedRoute = routeWithoutPrefix.split('/');
   const route = '/' === routeWithoutPrefix[0] ? splittedRoute[1] : splittedRoute[0];
 
-  return <div><Link key={item} to={`/${route}/show/${encodeURIComponent(item)}`}>{item}</Link></div>;
+  return <div key={item}><Link to={`/${route}/show/${encodeURIComponent(item)}`}>{item}</Link></div>;
 }
