@@ -36,7 +36,7 @@ class List extends Component {
       {this.props.deletedItem && <div className="alert alert-success">{this.props.deletedItem['@id']} deleted.</div>}
       {this.props.error && <div className="alert alert-danger">{this.props.error}</div>}
 
-      <p><Link to="create" className="btn btn-default">Create</Link></p>
+      <p><Link to="create" className="btn btn-primary">Create</Link></p>
 
         <table className="table table-responsive table-striped table-hover">
         <thead>
@@ -84,10 +84,10 @@ class List extends Component {
     const {'{{{ hydraPrefix }}}first': first, '{{{ hydraPrefix }}}previous': previous,'{{{ hydraPrefix }}}next': next, '{{{ hydraPrefix }}}last': last} = view;
 
     return <nav aria-label="Page navigation">
-        <Link to='.' className={`btn btn-default${previous ? '' : ' disabled'}`}><span aria-hidden="true">&lArr;</span> First</Link>
-        <Link to={!previous || previous === first ? '.' : encodeURIComponent(previous)} className={`btn btn-default${previous ? '' : ' disabled'}`}><span aria-hidden="true">&larr;</span> Previous</Link>
-        <Link to={next ? encodeURIComponent(next) : '#'} className={`btn btn-default${next ? '' : ' disabled'}`}>Next <span aria-hidden="true">&rarr;</span></Link>
-        <Link to={last ? encodeURIComponent(last) : '#'} className={`btn btn-default${next ? '' : ' disabled'}`}>Last <span aria-hidden="true">&rArr;</span></Link>
+        <Link to='.' className={`btn btn-primary${previous ? '' : ' disabled'}`}><span aria-hidden="true">&lArr;</span> First</Link>
+        <Link to={!previous || previous === first ? '.' : encodeURIComponent(previous)} className={`btn btn-primary${previous ? '' : ' disabled'}`}><span aria-hidden="true">&larr;</span> Previous</Link>
+        <Link to={next ? encodeURIComponent(next) : '#'} className={`btn btn-primary${next ? '' : ' disabled'}`}>Next <span aria-hidden="true">&rarr;</span></Link>
+        <Link to={last ? encodeURIComponent(last) : '#'} className={`btn btn-primary${next ? '' : ' disabled'}`}>Last <span aria-hidden="true">&rArr;</span></Link>
     </nav>;
   }
 }

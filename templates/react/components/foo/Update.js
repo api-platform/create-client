@@ -52,7 +52,7 @@ class Update extends Component {
       {this.props.deleteError && <div className="alert alert-danger" role="alert"><span className="fa fa-exclamation-triangle" aria-hidden="true"></span> {this.props.deleteError}</div>}
 
       {item && <Form onSubmit={values => this.props.update(item, values)} initialValues={item}/>}
-      <Link to=".." className="btn btn-default">Back to list</Link>
+      <Link to=".." className="btn btn-primary">Back to list</Link>
       <button onClick={this.del} className="btn btn-danger">Delete</button>
     </div>;
   }
