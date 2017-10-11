@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import {ScrollView, View, Text, StyleSheet} from 'react-native';
 import {List, ListItem} from 'react-native-elements';
 import {Actions} from 'react-native-router-flux';
-
-
+import Spinner from '../Spinner';
 import { list, reset } from '../../actions/{{{ lc }}}/list';
 import { success } from '../../actions/{{{ lc }}}/delete';
 

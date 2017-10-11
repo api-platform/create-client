@@ -33,6 +33,7 @@ export default class extends BaseGenerator {
       'components/foo/List.js',
       'components/foo/Update.js',
       'components/foo/Show.js',
+      'components/Spinner.js',
 
       // routes
       'routes/foo.js',
@@ -112,7 +113,7 @@ combineReducers(${titleLc},{/* ... */}),
     }
 
     // utils
-    for (let file of ['utils/helpers.js', 'utils/fetch.js']) {
+    for (let file of ['utils/helpers.js', 'utils/fetch.js', 'components/Spinner.js']) {
       this.createFile(file, `${dir}/${file}`, context, false);
     }
 
