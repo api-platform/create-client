@@ -29,14 +29,14 @@ class ListComponent extends Component {
 
   static show(id) {
     Actions.popAndPush();
-    Actions.BookShow({id});
+    Actions.{{name}}Show({id});
   }
 
   static renderRow(item) {
     return (
       <ListItem
         key={item['@id']}
-        onPressRightIcon={() => ListComponent.show(item['@id'])} //BookShow({id: item['@id']})}
+        onPressRightIcon={() => ListComponent.show(item['@id'])}
         subtitle={
           <View>
             {{#each fields}}

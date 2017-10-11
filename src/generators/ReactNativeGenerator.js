@@ -13,9 +13,6 @@ export default class extends BaseGenerator {
       'actions/foo/update.js',
       'actions/foo/show.js',
 
-      // utils
-      'utils/fetch.js',
-
       // reducers
       'reducers/foo/create.js',
       'reducers/foo/delete.js',
@@ -23,6 +20,9 @@ export default class extends BaseGenerator {
       'reducers/foo/list.js',
       'reducers/foo/update.js',
       'reducers/foo/show.js',
+
+      // utils
+      'utils/fetch.js',
     ]);
 
     this.registerTemplates(`react-native/`, [
@@ -33,6 +33,9 @@ export default class extends BaseGenerator {
       'components/foo/List.js',
       'components/foo/Update.js',
       'components/foo/Show.js',
+
+      // routes
+      'routes/foo.js',
 
       // utils
       'utils/helpers.js',
@@ -70,7 +73,7 @@ combineReducers(${titleLc},{/* ... */}),
 
     // Create directories
     // These directories may already exist
-    for (let dir of [`${dir}/utils`, `${dir}/config`]) {
+    for (let dir of [`${dir}/utils`, `${dir}/config`, `${dir}/routes`]) {
       this.createDir(dir, false);
     }
 
@@ -101,6 +104,9 @@ combineReducers(${titleLc},{/* ... */}),
       'reducers/%s/list.js',
       'reducers/%s/update.js',
       'reducers/%s/show.js',
+
+      // routes
+      'routes/%s.js'
     ]) {
       this.createFileFromPattern(pattern, dir, lc, context);
     }
