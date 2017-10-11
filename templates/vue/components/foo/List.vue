@@ -43,8 +43,7 @@
 {{#each fields}}
             <th>{{name}}</th>
 {{/each }}
-            <th></th>
-            <th></th>
+            <th colspan="2"></th>
           </tr>
         </thead>
         <tbody>

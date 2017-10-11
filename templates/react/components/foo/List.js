@@ -45,8 +45,7 @@ class List extends Component {
 {{#each fields}}
             <th>{{name}}</th>
 {{/each}}
-            <th></th>
-            <th></th>
+            <th colSpan={2}></th>
           </tr>
         </thead>
         <tbody>
