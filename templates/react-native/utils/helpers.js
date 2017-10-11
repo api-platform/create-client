@@ -33,7 +33,7 @@ export function pagination(view, page) {
         iconColor={view['hydra:next'] ? '#3faab4' : 'grey'}
         disabled={!view['hydra:next']}
         onPress={() => page(paginationRoute(view['hydra:last']))}
-        // style={{backgroundColor: 'black'}}
+        // style={ {backgroundColor: 'black'} }
         activityIndicatorStyle={ {backgroundColor:'red'} }
       />
     </View>
