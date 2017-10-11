@@ -6,7 +6,7 @@ import {List, ListItem} from 'react-native-elements';
 import {Actions} from 'react-native-router-flux';
 
 
-import { list, reset, page } from '../../actions/{{{ lc }}}/list';
+import { list, reset } from '../../actions/{{{ lc }}}/list';
 import { success } from '../../actions/{{{ lc }}}/delete';
 
 class ListComponent extends Component {
@@ -65,7 +65,7 @@ class ListComponent extends Component {
             {this.props.items.map(item => ListComponent.renderRow(item))}
           </List>
         </ScrollView>
-        {pagination(this.props.view, this.props.page)}
+        {pagination(this.props.view, this.props.list)}
       </View>
 
     );
@@ -84,8 +84,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    list: () => dispatch(list()),
-    page: (arg) => dispatch(page(arg)),
+    list: (page) => dispatch(list(page)),
     reset: () => {
       dispatch(reset());
       dispatch(success(null));
