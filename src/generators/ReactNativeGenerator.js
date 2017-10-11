@@ -25,7 +25,7 @@ export default class extends BaseGenerator {
       'reducers/foo/show.js',
     ]);
 
-    this.registerTemplates(`react/`, [
+    this.registerTemplates(`react-native/`, [
       // components
       'components/foo/Create.js',
       'components/foo/Form.js',
@@ -33,6 +33,9 @@ export default class extends BaseGenerator {
       'components/foo/List.js',
       'components/foo/Update.js',
       'components/foo/Show.js',
+
+      // utils
+      'utils/helpers.js',
     ]);
   }
 
@@ -102,7 +105,11 @@ combineReducers(${titleLc},{/* ... */}),
       this.createFileFromPattern(pattern, dir, lc, context);
     }
 
-    this.createFile('utils/fetch.js', `${dir}/utils/fetch.js`, context, false);
+    // utils
+    for (let file of ['utils/helpers.js', 'utils/fetch.js']) {
+      this.createFile(file, `${dir}/${file}`, context, false);
+    }
+
     this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`)
   }
 }
