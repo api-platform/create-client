@@ -6,7 +6,7 @@ import tmp from 'tmp';
 import AdminOnRestGenerator from './AdminOnRestGenerator';
 
 
-test('Generate a React app', () => {
+test('Generate a Admin On Rest app', () => {
   const generator = new AdminOnRestGenerator({hydraPrefix: 'hydra:', templateDirectory: `${__dirname}/../../templates`});
   const tmpobj = tmp.dirSync({unsafeCleanup: true});
 
@@ -33,6 +33,12 @@ test('Generate a React app', () => {
   expect(fs.existsSync(tmpobj.name+'/config/_entrypoint.js'), true);
 
   expect(fs.existsSync(tmpobj.name+'/components/abc/index.js'), true);
+
+  expect(fs.existsSync(tmpobj.name+'/config/abc.js'), true);
+
+  expect(fs.existsSync(tmpobj.name+'/resources/abc.js'), true);
+
+  expect(fs.existsSync(tmpobj.name+'/resource-import.js'), true);
 
   tmpobj.removeCallback();
 });

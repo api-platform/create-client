@@ -35,6 +35,7 @@
     "chalk": "^2.1.0",
     "commander": "^2.9.0",
     "handlebars": "^4.0.6",
+    "handlebars-helpers": "^0.9.8",
     "isomorphic-fetch": "^2.2.1",
     "mkdirp": "^0.5.1",
     "sprintf-js": "^1.1.1"

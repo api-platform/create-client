@@ -1,17 +1,28 @@
+import fs from 'fs';
 import BaseGenerator from './BaseGenerator';
+import handlebars from 'handlebars';
+import hbh_comparison from 'handlebars-helpers/lib/comparison';
 
 export default class extends BaseGenerator {
   constructor(params) {
     super(params);
 
     this.registerTemplates(`admin-on-rest/`, [
-      // components
       'components/foo/index.js',
+      'config/foo.js',
+      'resources/foo.js',
+      'resource-import.js',
     ]);
+
+    handlebars.registerHelper('compare', hbh_comparison.compare);
   }
 
   help(resource) {
     console.log('Code for the "%s" resource type has been generated!', resource.title);
+  }
+
+  appendFile(template, dest, context = {}) {
+      fs.appendFileSync(dest, this.templates[template](context));
   }
 
   generate(api, resource, dir) {
@@ -31,7 +42,7 @@ export default class extends BaseGenerator {
 
     // Create directories
     // These directories may already exist
-    for (let dir of [`${dir}/config`]) {
+    for (let dir of [`${dir}/config`, `${dir}/resources`]) {
       this.createDir(dir, false);
     }
 
@@ -40,11 +51,14 @@ export default class extends BaseGenerator {
     }
 
     for (let pattern of [
-      // components
       'components/%s/index.js',
+      'config/%s.js',
+      'resources/%s.js',
     ]) {
       this.createFileFromPattern(pattern, dir, lc, context)
     }
+
+    this.appendFile('resource-import.js', `${dir}/resource-import.js`, context);
 
     this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`)
   }
