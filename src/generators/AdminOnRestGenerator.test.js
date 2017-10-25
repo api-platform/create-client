@@ -32,7 +32,7 @@ test('Generate a Admin On Rest app', () => {
 
   expect(fs.existsSync(tmpobj.name+'/config/_entrypoint.js'), true);
 
-  expect(fs.existsSync(tmpobj.name+'/components/abc/index.js'), true);
+  expect(fs.existsSync(tmpobj.name+'/components/abc.js'), true);
 
   expect(fs.existsSync(tmpobj.name+'/config/abc.js'), true);
 

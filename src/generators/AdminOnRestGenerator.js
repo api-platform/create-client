@@ -8,7 +8,7 @@ export default class extends BaseGenerator {
     super(params);
 
     this.registerTemplates(`admin-on-rest/`, [
-      'components/foo/index.js',
+      'components/foo.js',
       'config/foo.js',
       'resources/foo.js',
       'resource-import.js',
@@ -42,16 +42,16 @@ export default class extends BaseGenerator {
 
     // Create directories
     // These directories may already exist
-    for (let dir of [`${dir}/config`, `${dir}/resources`]) {
+    for (let dir of [`${dir}/config`, `${dir}/resources`, `${dir}/components/`]) {
       this.createDir(dir, false);
     }
 
-    for (let dir of [`${dir}/components/${lc}`]) {
-      this.createDir(dir);
-    }
+    // for (let dir of [`${dir}/components/${lc}`]) {
+    //   this.createDir(dir);
+    // }
 
     for (let pattern of [
-      'components/%s/index.js',
+      'components/%s.js',
       'config/%s.js',
       'resources/%s.js',
     ]) {

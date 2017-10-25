@@ -6,7 +6,9 @@ export const configList = {
   buttons: {
     show: true,
     edit: true,
-    delete: true
+    create: true,
+    refresh: true,
+    delete: true,
   }
 }
 
@@ -15,6 +17,12 @@ export const configEdit = {
 {{#each fields}}
   {{{ name }}}: true,
 {{/each}}
+  buttons: {
+    show: true,
+    list: true,
+    delete: true,
+    refresh: true,
+  }
 }
 
 export const configCreate = {
@@ -22,6 +30,9 @@ export const configCreate = {
 {{#each fields}}
   {{{ name }}}: true,
 {{/each}}
+  buttons: {
+    list: true,
+  }
 }
 
 export const configShow = {
@@ -29,4 +40,10 @@ export const configShow = {
 {{#each fields}}
   {{{ name }}}: true,
 {{/each}}
+  buttons: {
+    edit: true,
+    list: true,
+    delete: true,
+    refresh: true,
+  }
 }
