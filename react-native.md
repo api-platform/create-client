@@ -1,53 +1,89 @@
-# React Native generator
+React Native generator
+======================
 
-Create a React Native application using  [Create React Native App](https://github.com/react-community/create-react-native-app):
+Create a React Native application using
+[React Community's Create React Native App ](https://github.com/react-community/create-react-native-app)
 
-    $ create-react-native-app my-app
-    $ cd my-app
-    
-Install React Native Elements, React Native Router Flux , Redux, React Redux, Redux Form and Redux Thunk (to handle AJAX requests):
+```bash
+$ create-react-native-app my-app
+$ cd my-app
+```
 
-    $ yarn add react-native-elements react-native-router-flux react-native-elements redux react-redux redux-thunk redux-form prop-types
-    
+Install Redux, React Redux, Redux Thunk, Redux Form, React Native
+Elements and React Native Router Flux
+
+```bash
+$ yarn add redux react-redux redux-thunk redux-form react-native-elements react-native-router-flux
+```
+
 Install the generator globally:
 
-    $ yarn global add @api-platform/client-generator
+```bash
+$ yarn global add @api-platform/client-generator
+```
 
 In the app directory, generate the files for the resource you want:
 
+```
     $ generate-api-platform-client https://demo.api-platform.com src/ -g react-native --resource foo
     # Replace the URL by the entrypoint of your Hydra-enabled API
     # Omit the resource flag to generate files for all resource types exposed by the API
+```
 
-The code is ready to be executed! Register the generated reducers and components in the `App.js` file, here is an example:
+
+Create **Router.js** file to import all routes
 
 ```javascript
-
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {Router, Stack} from 'react-native-router-flux';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
-    );
-  }
+import bookRoutes from './routes/book'
+
+
+const RouterComponent = () => {
+  return (
+    <Router>
+      <Stack key="root" hideNavBar>
+        {bookRoutes}
+        ...
+      </Stack>
+    </Router>
+  );
+};
+
+export default RouterComponent;
+```
+Change generated **App.js** content to:
+
+```javascript
+import React, {Component} from 'react';
+import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import thunk from 'redux-thunk'
+import {reducer as form} from 'redux-form';
+
+import book from './src/reducers/book/';
+import Router from './src/Router';
+
+export default class App extends Component {
+    render() {
+        const store = createStore(
+            combineReducers({
+                form,
+                book,
+            }),
+            compose(applyMiddleware(thunk)),
+        );
+        return (
+            <Provider store={store}>
+                <Router />
+            </Provider>
+        );
+    }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
 ```
+
 
 
 Previous chapter: [React](react.md)

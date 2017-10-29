@@ -45,7 +45,8 @@
     "build": "babel src -d lib --ignore '*.test.js'",
     "watch": "babel --watch src -d lib --ignore '*.test.js'",
     "test-gen": "rm -rf ./tmp && npm run build && ./lib/index.js  https://demo.api-platform.com ./tmp/react && ./lib/index.js https://demo.api-platform.com ./tmp/react-native -g react-native && ./lib/index.js https://demo.api-platform.com ./tmp/vue -g vue",
-    "test-gen-env": "rm -rf ./tmp && npm run build && API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT=https://demo.api-platform.com API_PLATFORM_CLIENT_GENERATOR_OUTPUT=./tmp ./lib/index.js"
+    "test-gen-env": "rm -rf ./tmp && npm run build && API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT=https://demo.api-platform.com API_PLATFORM_CLIENT_GENERATOR_OUTPUT=./tmp ./lib/index.js",
+    "test-gen-rn": "rm -rf ./tmp && npm run build && ./lib/index.js https://api-2.0.geomysiar.pl ./tmp/react-native -g react-native --resource book "
   },
   "bin": {
     "generate-api-platform-client": "./lib/index.js"

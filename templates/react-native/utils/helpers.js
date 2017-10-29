@@ -1,38 +1,39 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Button, Icon, Badge, SocialIcon} from 'react-native-elements';
+import {SocialIcon} from 'react-native-elements';
 
 export function paginationRoute(item) {
   return '/' + item.split('/').splice(-1, 1);
 }
 
 export function pagination(view, list) {
+  if (!view) return;
   return (
     <View style={ {flexDirection: 'row', alignSelf: 'center', alignContent: 'center'} }>
       <SocialIcon
         type='fast-backward'
-        iconColor={view['hydra:previous'] ? '#3faab4' : 'grey'}
-        onPress={() => list(paginationRoute(view['hydra:first']))}
-        disabled={!view['hydra:previous']}
+        iconColor={view['{{{ hydraPrefix }}}first'] ? '#3faab4' : 'grey'}
+        onPress={() => list(paginationRoute(view['{{{ hydraPrefix }}}first']))}
+        disabled={!view['{{{ hydraPrefix }}}first']}
       />
       <SocialIcon
         type='backward'
-        iconColor={view['hydra:previous'] ? '#3faab4' : 'grey'}
-        onPress={() => list(paginationRoute(view['hydra:previous']))}
-        disabled={!view['hydra:previous']}
+        iconColor={view['{{{ hydraPrefix }}}previous'] ? '#3faab4' : 'grey'}
+        onPress={() => list(paginationRoute(view['{{{ hydraPrefix }}}previous']))}
+        disabled={!view['{{{ hydraPrefix }}}previous']}
       />
       <SocialIcon
         type='forward'
-        iconColor={view['hydra:next'] ? '#3faab4' : 'grey'}
-        onPress={() => list(paginationRoute(view['hydra:next']))}
-        disabled={!view['hydra:next']}
+        iconColor={view['{{{ hydraPrefix }}}next'] ? '#3faab4' : 'grey'}
+        onPress={() => list(paginationRoute(view['{{{ hydraPrefix }}}next']))}
+        disabled={!view['{{{ hydraPrefix }}}next']}
       />
 
       <SocialIcon
         type='fast-forward'
-        iconColor={view['hydra:next'] ? '#3faab4' : 'grey'}
-        disabled={!view['hydra:next']}
-        onPress={() => list(paginationRoute(view['hydra:last']))}
+        iconColor={view['{{{ hydraPrefix }}}next'] ? '#3faab4' : 'grey'}
+        disabled={!view['{{{ hydraPrefix }}}next']}
+        onPress={() => list(paginationRoute(view['{{{ hydraPrefix }}}last']))}
         // style={ {backgroundColor: 'black'} }
         activityIndicatorStyle={ {backgroundColor:'red'} }
       />

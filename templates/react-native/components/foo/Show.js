@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
-import {ScrollView, Text} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {ScrollView, Alert, View, StyleSheet} from 'react-native';
+import {Card, List, ListItem, SocialIcon} from 'react-native-elements';
+import {Actions} from 'react-native-router-flux';
+import Spinner from '../Spinner';
 import {retrieve, reset} from '../../actions/{{{ lc }}}/show';
 import { del, loading, error } from '../../actions/{{{ lc }}}/delete';
 
@@ -19,24 +22,95 @@ class Show extends Component {
   };
 
   componentDidMount() {
-    this.props.retrieve(decodeURIComponent(this.props.match.params.id));
+    this.props.retrieve(this.props.id);
   }
 
   componentWillUnmount() {
     this.props.reset();
   }
 
-  // equivalent in RN
-  // del = () => {
-  //   if (window.confirm('Are you sure you want to delete this item?')) this.props.del(this.props.retrieved);
-  // };
+  remove()  {
+    const {del, retrieved} = this.props;
+    Alert.alert(
+      '',
+      'Are you sure you want to delete this item?',
+      [
+        {text: 'Cancel', style: 'cancel'},
+        {text: 'OK', onPress: () => del(retrieved)},
+      ],
+      { cancelable: false }
+    );
+  };
+
+  static renderRow(title, value) {
+    return (
+      <ListItem
+        key={value}
+        hideChevron={true}
+        title={title}
+        subtitle={value}
+        subtitleNumberOfLines={100}
+      />
+    );
+  }
+
+  actionButtons(id) {
+    return (
+      <View style={ {flexDirection: 'row', alignSelf: 'center', alignContent: 'center'} }>
+        <SocialIcon
+          type='plus-circle'
+          iconColor='#3faab4'
+          onPress={() => Actions.{{title}}Create()}
+        />
+        <SocialIcon
+          type='edit'
+          iconColor='#3faab4'
+          onPress={() => Actions.{{title}}Update({id})}
+        />
+        <SocialIcon
+          type='minus-circle'
+          iconColor='#3faab4'
+          onPress={() => this.remove()}
+        />
+      </View>
+    );
+  }
 
   render() {
+
+    if (this.props.loading) return <Spinner size="large"/>;
+
+    if (this.props.deleted) {
+      Alert.alert(
+        '',
+        'Item has been deleted!',
+        [
+          {text: 'OK', onPress: () => Actions.{{title}}List()},
+        ],
+        { cancelable: false }
+      );
+    }
+
+    const item = this.props.retrieved;
+
     return (
-      <ScrollView>
-        <Text>Show component {{lc}}</Text>
-      </ScrollView>
+      <View style={ {flex: 1} }>
+        <ScrollView>
+          {item &&
+          <Card title={item['@id']}>
+            <List>
+            {{#each fields}}
+              {Show.renderRow('{{{name}}}', item['{{{ name }}}'])}
+            {{/each}}
+            </List>
+          </Card>
+          }
+        </ScrollView>
+        {item && this.actionButtons(item['@id'])}
+      </View>
     );
+
+
   }
 }
 

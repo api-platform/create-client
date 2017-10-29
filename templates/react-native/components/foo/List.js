@@ -7,12 +7,13 @@ import {Actions} from 'react-native-router-flux';
 import Spinner from '../Spinner';
 import { list, reset } from '../../actions/{{{ lc }}}/list';
 import { success } from '../../actions/{{{ lc }}}/delete';
+import {pagination} from '../../utils/helpers';
 
 class ListComponent extends Component {
   static propTypes = {
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
-    items: PropTypes.array.isRequired,
+    data: PropTypes.object.isRequired,
     list: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
   };
@@ -28,7 +29,7 @@ class ListComponent extends Component {
 
   static show(id) {
     Actions.popAndPush();
-    Actions.{{name}}Show({id});
+    Actions.{{title}}Show({id});
   }
 
   static renderRow(item) {
@@ -55,16 +56,14 @@ class ListComponent extends Component {
       return <Spinner size="large"/>;
     }
 
-    {/*{this.props.error && <Text style={styles.error}>{this.props.error}</Text>}*/}
-
     return (
       <View style={ {flex: 1} }>
         <ScrollView contentInset={ {top: -24} } automaticallyAdjustContentInsets={false}>
           <List>
-            {this.props.items.map(item => ListComponent.renderRow(item))}
+            { this.props.data['{{{ hydraPrefix }}}member'] &&  this.props.data['{{{ hydraPrefix }}}member'].map(item => ListComponent.renderRow(item))}
           </List>
         </ScrollView>
-        {pagination(this.props.view, this.props.list)}
+        {pagination(this.props.data['{{{ hydraPrefix }}}view'], this.props.list)}
       </View>
 
     );
@@ -74,10 +73,9 @@ class ListComponent extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    items: state.{{{ lc }}}.list.items,
+    data: state.{{{ lc }}}.list.data,
     error: state.{{{ lc }}}.list.error,
     loading: state.{{{ lc }}}.list.loading,
-    view: state.{{{ lc }}}.list.view,
 };
 };
 
