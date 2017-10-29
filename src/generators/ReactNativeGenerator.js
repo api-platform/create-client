@@ -13,9 +13,6 @@ export default class extends BaseGenerator {
       'actions/foo/update.js',
       'actions/foo/show.js',
 
-      // utils
-      'utils/fetch.js',
-
       // reducers
       'reducers/foo/create.js',
       'reducers/foo/delete.js',
@@ -23,9 +20,12 @@ export default class extends BaseGenerator {
       'reducers/foo/list.js',
       'reducers/foo/update.js',
       'reducers/foo/show.js',
+
+      // utils
+      'utils/fetch.js',
     ]);
 
-    this.registerTemplates(`react/`, [
+    this.registerTemplates(`react-native/`, [
       // components
       'components/foo/Create.js',
       'components/foo/Form.js',
@@ -33,6 +33,13 @@ export default class extends BaseGenerator {
       'components/foo/List.js',
       'components/foo/Update.js',
       'components/foo/Show.js',
+      'components/Spinner.js',
+
+      // routes
+      'routes/foo.js',
+
+      // utils
+      'utils/helpers.js',
     ]);
   }
 
@@ -67,7 +74,7 @@ combineReducers(${titleLc},{/* ... */}),
 
     // Create directories
     // These directories may already exist
-    for (let dir of [`${dir}/utils`, `${dir}/config`]) {
+    for (let dir of [`${dir}/utils`, `${dir}/config`, `${dir}/routes`]) {
       this.createDir(dir, false);
     }
 
@@ -98,11 +105,18 @@ combineReducers(${titleLc},{/* ... */}),
       'reducers/%s/list.js',
       'reducers/%s/update.js',
       'reducers/%s/show.js',
+
+      // routes
+      'routes/%s.js'
     ]) {
       this.createFileFromPattern(pattern, dir, lc, context);
     }
 
-    this.createFile('utils/fetch.js', `${dir}/utils/fetch.js`, context, false);
+    // utils
+    for (let file of ['utils/helpers.js', 'utils/fetch.js', 'components/Spinner.js']) {
+      this.createFile(file, `${dir}/${file}`, context, false);
+    }
+
     this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`)
   }
 }

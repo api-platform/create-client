@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, Text} from 'react-native';
+import {View,ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './Form';
@@ -20,9 +20,11 @@ class Create extends Component {
 
   render() {
     return (
-      <ScrollView>
-        <Text>Create component {{lc}}</Text>
-      </ScrollView>
+      <View style={ {flex: 1} }>
+        <ScrollView>
+          <Form onSubmit={this.props.create} values={this.props.item}/>
+        </ScrollView>
+      </View>
     );
   }
 }
