@@ -46,10 +46,6 @@ export default class extends BaseGenerator {
       this.createDir(dir, false);
     }
 
-    // for (let dir of [`${dir}/components/${lc}`]) {
-    //   this.createDir(dir);
-    // }
-
     for (let pattern of [
       'components/%s.js',
       'config/%s.js',

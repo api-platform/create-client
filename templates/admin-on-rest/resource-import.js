@@ -1,1 +1,1 @@
-import {{{lc}}} from './resources/{{{lc}}}';
+export { default as {{lc}} } from './resources/{{{lc}}}';
