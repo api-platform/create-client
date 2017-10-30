@@ -35,6 +35,7 @@
     "chalk": "^2.1.0",
     "commander": "^2.9.0",
     "handlebars": "^4.0.6",
+    "handlebars-helpers": "^0.9.8",
     "isomorphic-fetch": "^2.2.1",
     "mkdirp": "^0.5.1",
     "sprintf-js": "^1.1.1"
@@ -44,7 +45,7 @@
     "lint": "eslint src",
     "build": "babel src -d lib --ignore '*.test.js'",
     "watch": "babel --watch src -d lib --ignore '*.test.js'",
-    "test-gen": "rm -rf ./tmp && npm run build && ./lib/index.js  https://demo.api-platform.com ./tmp/react && ./lib/index.js https://demo.api-platform.com ./tmp/react-native -g react-native && ./lib/index.js https://demo.api-platform.com ./tmp/vue -g vue",
+    "test-gen": "rm -rf ./tmp && npm run build && ./lib/index.js  https://demo.api-platform.com ./tmp/react && ./lib/index.js https://demo.api-platform.com ./tmp/react-native -g react-native && ./lib/index.js https://demo.api-platform.com ./tmp/vue -g vue && ./lib/index.js https://demo.api-platform.com ./tmp/admin-on-rest -g admin-on-rest",
     "test-gen-env": "rm -rf ./tmp && npm run build && API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT=https://demo.api-platform.com API_PLATFORM_CLIENT_GENERATOR_OUTPUT=./tmp ./lib/index.js"
   },
   "bin": {

@@ -1,3 +1,4 @@
+import AdminOnRestGenerator from './generators/AdminOnRestGenerator';
 import ReactGenerator from './generators/ReactGenerator';
 import ReactNativeGenerator from './generators/ReactNativeGenerator';
 import TypescriptInterfaceGenerator from './generators/TypescriptInterfaceGenerator';
@@ -9,6 +10,8 @@ function wrap (cl) {
 
 export default function generators (generator = 'react') {
   switch (generator) {
+    case 'admin-on-rest':
+      return wrap(AdminOnRestGenerator);
     case 'react':
       return wrap(ReactGenerator);
     case 'react-native':

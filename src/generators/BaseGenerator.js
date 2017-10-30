@@ -76,6 +76,9 @@ export default class {
       case 'http://www.w3.org/2001/XMLSchema#time':
         return {type: 'time'};
 
+      case 'http://www.w3.org/2001/XMLSchema#dateTime':
+        return {type: 'dateTime'};
+
       default:
         return {type: 'text'};
     }
