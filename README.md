@@ -35,7 +35,7 @@ Works especially well with APIs built with the [API Platform](https://api-platfo
 
 ## Documentation
 
-The documentation of API Platform's Client Generator can be browsed [on the official website](https://api-platform.com/docs/generate-crud/).
+The documentation of API Platform's Client Generator can be browsed [on the official website](https://api-platform.com/docs/client-generator).
 
 ## Credits
 
