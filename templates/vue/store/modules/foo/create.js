@@ -11,7 +11,8 @@ import {
 const state = {
   loading: false,
   error: '',
-  created: null
+  created: null,
+  violations: null
 };
 
 function error(error) {
