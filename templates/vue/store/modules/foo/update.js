@@ -123,7 +123,7 @@ const mutations = {
       state.retrieved = payload.retrieved;
     },
     [{{{ uc }}}_UPDATE_UPDATE_LOADING] (state, payload) {
-      state.updateLoading = payload.loading;
+      state.updateLoading = payload.updateLoading;
     },
     [{{{ uc }}}_UPDATE_UPDATE_ERROR] (state, payload) {
       state.updateError = payload.updateError;
