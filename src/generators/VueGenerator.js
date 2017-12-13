@@ -51,7 +51,7 @@ const router = new VueRouter({
 });
 
 // Add the modules in the store
-import { ${titleLc} } from './store/modules/${titleLc}/';
+import ${titleLc} from './store/modules/${titleLc}/';
 
 export const store = new Vuex.Store({
   // ...
