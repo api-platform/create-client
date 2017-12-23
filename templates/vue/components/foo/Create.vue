@@ -11,16 +11,16 @@
 </template>
 
 <script>
-  import {{{titleUcFirst}}}Form from './Form.vue';
-  import { createNamespacedHelpers } from 'vuex';
+  import {{{titleUcFirst}}}Form from './Form.vue'
+  import { createNamespacedHelpers } from 'vuex'
 
-  const { mapActions, mapGetters } = createNamespacedHelpers('{{{lc}}}/create');
+  const { mapGetters } = createNamespacedHelpers('{{{lc}}}/create')
 
   export default {
     components: {
       {{{titleUcFirst}}}Form
     },
-    data: function() {
+    data () {
       return {
         item: {}
       }
@@ -33,13 +33,13 @@
     ]),
     methods: {
       create: function(item) {
-        this.$store.dispatch('{{{lc}}}/create/create', item);
+        this.$store.dispatch('{{{lc}}}/create/create', item)
       }
     },
     watch: {
       created: function (created) {
         if (created) {
-          this.$router.push({ name: '{{{titleUcFirst}}}Update', params: { id: created['@id']} });
+          this.$router.push({ name: '{{{titleUcFirst}}}Update', params: { id: created['@id']} })
         }
       }
     }
