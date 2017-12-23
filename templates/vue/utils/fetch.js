@@ -1,11 +1,11 @@
-import SubmissionError from '../error/SubmissionError';
-import { API_HOST, API_PATH } from '../config/_entrypoint';
+import SubmissionError from '../error/SubmissionError'
+import { API_HOST, API_PATH } from '../config/_entrypoint'
 
-const jsonLdMimeType = 'application/ld+json';
+const jsonLdMimeType = 'application/ld+json'
 
 export default function (url, options = {}) {
-  if ('undefined' === typeof options.headers) options.headers = new Headers();
-  if (null === options.headers.get('Accept')) options.headers.set('Accept', jsonLdMimeType);
+  if ('undefined' === typeof options.headers) options.headers = new Headers()
+  if (null === options.headers.get('Accept')) options.headers.set('Accept', jsonLdMimeType)
 
   if ('undefined' !== options.body && !(options.body instanceof FormData) && null === options.headers.get('Content-Type')) {
     options.headers.set('Content-Type', jsonLdMimeType);
