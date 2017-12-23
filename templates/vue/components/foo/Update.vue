@@ -16,12 +16,12 @@
 </template>
 
 <script>
-  import {{{titleUcFirst}}}Form from './Form.vue';
-  import { mapGetters } from 'vuex';
+  import {{{titleUcFirst}}}Form from './Form.vue'
+  import { mapGetters } from 'vuex'
 
   export default {
     created () {
-      this.$store.dispatch('{{{lc}}}/update/retrieve', decodeURIComponent(this.$route.params.id));
+      this.$store.dispatch('{{{lc}}}/update/retrieve', decodeURIComponent(this.$route.params.id))
     },
     components: {
       {{{titleUcFirst}}}Form
@@ -48,28 +48,28 @@
     },
     methods: {
       update (values) {
-        this.$store.dispatch('{{{lc}}}/update/update', {item: this.retrieved, values: values });
+        this.$store.dispatch('{{{lc}}}/update/update', {item: this.retrieved, values: values })
       },
       del () {
-        if (window.confirm('Are you sure you want to delete this item?'))
-          this.$store.dispatch('{{{lc}}}/del/delete', this.retrieved);
+        if (window.confirm('Are you sure you want to delete this item?')) {
+          this.$store.dispatch('{{{lc}}}/del/delete', this.retrieved)
+        }
       },
       reset () {
-        this.$store.dispatch('{{{lc}}}/update/reset');
-        this.$store.dispatch('{{{lc}}}/del/reset');
-        this.$store.dispatch('{{{lc}}}/create/reset');
-
+        this.$store.dispatch('{{{lc}}}/update/reset')
+        this.$store.dispatch('{{{lc}}}/del/reset')
+        this.$store.dispatch('{{{lc}}}/create/reset')
       }
     },
     watch: {
       deleted: function (deleted) {
         if (deleted) {
-          this.$router.push({ name: '{{{titleUcFirst}}}List' });
+          this.$router.push({ name: '{{{titleUcFirst}}}List' })
         }
       }
     },
-    beforeDestroy() {
-      this.reset();
+    beforeDestroy () {
+      this.reset()
     }
   }
 </script>
