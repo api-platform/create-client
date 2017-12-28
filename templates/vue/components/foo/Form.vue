@@ -17,7 +17,7 @@
     props: {
       handleSubmit: {
         type: Function,
-        required: true,
+        required: true
       },
       values: {
         type: Object,
@@ -32,7 +32,7 @@
     },
     computed: {
       item: function () {
-        return this.initialValues ? this.initialValues : this.values;
+        return this.initialValues ? this.initialValues : this.values
       }
     }
   }

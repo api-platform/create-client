@@ -31,26 +31,27 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
+  import { mapGetters } from 'vuex'
 
   export default {
     computed: mapGetters({
       deleteError: '{{{lc}}}/del/error',
       error: '{{{lc}}}/show/error',
       loading: '{{{lc}}}/show/loading',
-      item: '{{{lc}}}/show/item',
+      item: '{{{lc}}}/show/item'
     }),
     methods: {
       deleteItem (item) {
-        if (window.confirm('Are you sure you want to delete this item?'))
-          this.$store.dispatch('{{{lc}}}/del/delete', item).then(response => this.$router.push({ name: '{{{titleUcFirst}}}List' }));
+        if (window.confirm('Are you sure you want to delete this item?')) {
+          this.$store.dispatch('{{{lc}}}/del/delete', item).then(response => this.$router.push({ name: '{{{titleUcFirst}}}List' }))
+        }
       }
     },
     created () {
-      this.$store.dispatch('{{{lc}}}/show/retrieve', decodeURIComponent(this.$route.params.id));
+      this.$store.dispatch('{{{lc}}}/show/retrieve', decodeURIComponent(this.$route.params.id))
     },
-    beforeDestroy() {
-      this.$store.dispatch('{{{lc}}}/show/reset');
+    beforeDestroy () {
+      this.$store.dispatch('{{{lc}}}/show/reset')
     }
   }
 </script>
