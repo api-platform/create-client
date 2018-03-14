@@ -29,25 +29,29 @@ test('Generate a Vue app', () => {
   });
   generator.generate(api, resource, tmpobj.name);
 
-  expect(fs.existsSync(tmpobj.name+'/components/abc/Create.vue'), true);
-  expect(fs.existsSync(tmpobj.name+'/components/abc/Form.vue'), true);
-  expect(fs.existsSync(tmpobj.name+'/components/abc/List.vue'), true);
-  expect(fs.existsSync(tmpobj.name+'/components/abc/Show.vue'), true);
-  expect(fs.existsSync(tmpobj.name+'/components/abc/Update.vue'), true);
+  expect(fs.existsSync(tmpobj.name+'/components/foo/Create.vue')).toBe(true);
+  expect(fs.existsSync(tmpobj.name+'/components/foo/Form.vue')).toBe(true);
+  expect(fs.existsSync(tmpobj.name+'/components/foo/List.vue')).toBe(true);
+  expect(fs.existsSync(tmpobj.name+'/components/foo/Show.vue')).toBe(true);
+  expect(fs.existsSync(tmpobj.name+'/components/foo/Update.vue')).toBe(true);
 
-  expect(fs.existsSync(tmpobj.name+'/config/_entrypoint.js'), true);
+  expect(fs.existsSync(tmpobj.name+'/config/_entrypoint.js')).toBe(true);
 
-  expect(fs.existsSync(tmpobj.name+'/error/SubmissionError.js'), true);
+  expect(fs.existsSync(tmpobj.name+'/error/SubmissionError.js')).toBe(true);
 
-  expect(fs.existsSync(tmpobj.name+'/store/modules/abc/create.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/store/modules/abc/delete.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/store/modules/abc/index.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/store/modules/abc/list.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/store/modules/abc/mutation-types.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/store/modules/abc/show.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/store/modules/abc/update.js'), true);
+  expect(fs.existsSync(tmpobj.name+'/router/foo.js')).toBe(true);
 
-  expect(fs.existsSync(tmpobj.name+'/utils/fetch.js'), true);
+  expect(fs.existsSync(tmpobj.name+'/store/modules/foo/index.js')).toBe(true);
+
+  ['create', 'delete', 'list', 'show', 'update'].forEach((action) => {
+    expect(fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/actions.js`)).toBe(true);
+    expect(fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/getters.js`)).toBe(true);
+    expect(fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/index.js`)).toBe(true);
+    expect(fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/mutation_types.js`)).toBe(true);
+    expect(fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/mutations.js`)).toBe(true);
+  });
+
+  expect(fs.existsSync(tmpobj.name+'/utils/fetch.js')).toBe(true);
 
   tmpobj.removeCallback();
 });
