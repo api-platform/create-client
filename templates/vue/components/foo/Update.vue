@@ -2,74 +2,131 @@
   <div>
     <h1>Edit \{{ item && item['@id'] }}</h1>
 
-    <div v-if="created" class="alert alert-success" role="status">\{{ created['@id'] }} created.</div>
-    <div v-if="updated" class="alert alert-success" role="status">\{{ updated['@id'] }} updated.</div>
-    <div v-if="retrieveLoading || updateLoading || deleteLoading"class="alert alert-info" role="status">Loading...</div>
-    <div v-if="retrieveError" class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> \{{ retrieveError }}</div>
-    <div v-if="updateError" class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> \{{ updateError }}</div>
-    <div v-if="deleteError" class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> \{{ deleteError }}</div>
+    <div
+      v-if="created"
+      class="alert alert-success"
+      role="status">\{{ created['@id'] }} created.</div>
+    <div
+      v-if="updated"
+      class="alert alert-success"
+      role="status">\{{ updated['@id'] }} updated.</div>
+    <div
+      v-if="isLoading || deleteLoading"
+      class="alert alert-info"
+      role="status">Loading...</div>
+    <div
+      v-if="error"
+      class="alert alert-danger"
+      role="alert">
+      <span
+        class="fa fa-exclamation-triangle"
+        aria-hidden="true" /> \{{ error }}
+    </div>
+    <div
+      v-if="deleteError"
+      class="alert alert-danger"
+      role="alert">
+      <span
+        class="fa fa-exclamation-triangle"
+        aria-hidden="true" /> \{{ deleteError }}
+    </div>
 
-    <{{{titleUcFirst}}}Form v-if="item" :handle-submit="update" :values="item" :errors="violations" :initialValues="retrieved"></{{{titleUcFirst}}}Form>
-    <router-link v-if="item" :to="{ name: '{{{titleUcFirst}}}List' }" class="btn btn-default">Back to list</router-link>
-    <button @click="del" class="btn btn-danger">Delete</button>
+    <{{{titleUcFirst}}}Form
+      v-if="item"
+      :handle-submit="onSendForm"
+      :handle-update-field="updateField"
+      :values="item"
+      :errors="violations"
+      :initial-values="retrieved" />
+
+    <router-link
+      v-if="item"
+      :to="{ name: '{{{titleUcFirst}}}List' }"
+      class="btn btn-default">Back to list</router-link>
+    <button
+      class="btn btn-danger"
+      @click="del">Delete</button>
   </div>
 </template>
 
 <script>
-  import {{{titleUcFirst}}}Form from './Form.vue'
-  import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import {{{titleUcFirst}}}Form from './Form.vue'
 
-  export default {
-    created () {
-      this.$store.dispatch('{{{lc}}}/update/retrieve', decodeURIComponent(this.$route.params.id))
-    },
-    components: {
-      {{{titleUcFirst}}}Form
-    },
-    computed: {
-      ...mapGetters({
-        retrieveError: '{{{lc}}}/update/retrieveError',
-        retrieveLoading: '{{{lc}}}/update/retrieveLoading',
-        updateError: '{{{lc}}}/update/updateError',
-        updateLoading: '{{{lc}}}/update/updateLoading',
-        deleteError: '{{{lc}}}/del/error',
-        deleteLoading: '{{{lc}}}/del/loading',
-        created: '{{{lc}}}/create/created',
-        deleted: '{{{lc}}}/del/deleted',
-        retrieved: '{{{lc}}}/update/retrieved',
-        updated: '{{{lc}}}/update/updated',
-        violations: '{{{lc}}}/update/violations'
-      })
-    },
-    data: function() {
-      return {
-        item: {}
+export default {
+  components: {
+    {{{titleUcFirst}}}Form
+  },
+
+  data () {
+    return {
+      item: {}
+    }
+  },
+
+  computed: {
+    ...mapGetters({
+      isLoading: '{{{lc}}}/update/isLoading',
+      error: '{{{lc}}}/update/error',
+      deleteError: '{{{lc}}}/del/error',
+      deleteLoading: '{{{lc}}}/del/isLoading',
+      created: '{{{lc}}}/create/created',
+      deleted: '{{{lc}}}/del/deleted',
+      retrieved: '{{{lc}}}/update/retrieved',
+      updated: '{{{lc}}}/update/updated',
+      violations: '{{{lc}}}/update/violations'
+    })
+  },
+
+  watch: {
+    // eslint-disable-next-line object-shorthand,func-names
+    deleted: function (deleted) {
+      if (!deleted) {
+        return
+      }
+
+      this.$router.push({ name: '{{{titleUcFirst}}}List' })
+    }
+  },
+
+  beforeDestroy () {
+    this.reset()
+  },
+
+  created () {
+    this.retrieve(decodeURIComponent(this.$route.params.id))
+  },
+
+  methods: {
+    ...mapActions({
+      createReset: '{{{lc}}}/create/reset',
+      deleteItem: '{{{lc}}}/del/del',
+      delReset: '{{{lc}}}/del/reset',
+      retrieve: '{{{lc}}}/update/retrieve',
+      updateReset: '{{{lc}}}/update/reset',
+      update: '{{{lc}}}/update/update',
+      updateRetrieved: '{{{lc}}}/update/updateRetrieved'
+    }),
+
+    del () {
+      if (window.confirm('Are you sure you want to delete this {{{ lc }}} ?')) {
+        this.deleteItem(this.retrieved)
       }
     },
-    methods: {
-      update (values) {
-        this.$store.dispatch('{{{lc}}}/update/update', {item: this.retrieved, values: values })
-      },
-      del () {
-        if (window.confirm('Are you sure you want to delete this item?')) {
-          this.$store.dispatch('{{{lc}}}/del/delete', this.retrieved)
-        }
-      },
-      reset () {
-        this.$store.dispatch('{{{lc}}}/update/reset')
-        this.$store.dispatch('{{{lc}}}/del/reset')
-        this.$store.dispatch('{{{lc}}}/create/reset')
-      }
+
+    reset () {
+      this.updateReset()
+      this.delReset()
+      this.createReset()
     },
-    watch: {
-      deleted: function (deleted) {
-        if (deleted) {
-          this.$router.push({ name: '{{{titleUcFirst}}}List' })
-        }
-      }
+
+    onSendForm () {
+      this.update()
     },
-    beforeDestroy () {
-      this.reset()
+
+    updateField (field, value) {
+      this.updateRetrieved({ [field]: value })
     }
   }
+}
 </script>

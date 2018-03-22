@@ -2,46 +2,78 @@
   <div>
     <h1>New {{{ title }}}</h1>
 
-    <div v-if="loading" class="alert alert-info" role="status">Loading...</div>
-    <div v-if="error" class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> \{{ error }}</div>
+    <div
+      v-if="isLoading"
+      class="alert alert-info"
+      role="status">Loading...</div>
+    <div
+      v-if="error"
+      class="alert alert-danger"
+      role="alert">
+      <span
+        class="fa fa-exclamation-triangle"
+        aria-hidden="true" /> \{{ error }}
+    </div>
 
-    <{{{titleUcFirst}}}Form :handle-submit="create" :values="item" :errors="violations"></{{{titleUcFirst}}}Form>
-    <router-link :to="{ name: '{{{titleUcFirst}}}List' }" class="btn btn-default">Back to list</router-link>
+    <{{{titleUcFirst}}}Form
+      :handle-submit="onSendForm"
+      :handle-update-field="updateField"
+      :values="item"
+      :errors="violations" />
+
+    <router-link
+      :to="{ name: '{{{titleUcFirst}}}List' }"
+      class="btn btn-default">Back to list</router-link>
   </div>
 </template>
 
 <script>
-  import {{{titleUcFirst}}}Form from './Form.vue'
-  import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+import {{{titleUcFirst}}}Form from './Form'
 
-  const { mapGetters } = createNamespacedHelpers('{{{lc}}}/create')
+const { mapGetters, mapActions } = createNamespacedHelpers('{{{lc}}}/create')
 
-  export default {
-    components: {
-      {{{titleUcFirst}}}Form
-    },
-    data () {
-      return {
-        item: {}
+export default {
+  components: {
+    {{{titleUcFirst}}}Form
+  },
+
+  data () {
+    return {
+      item: {}
+    }
+  },
+
+  computed: mapGetters([
+    'error',
+    'isLoading',
+    'created',
+    'violations'
+  ]),
+
+  watch: {
+    // eslint-disable-next-line object-shorthand,func-names
+    created: function (created) {
+      if (!created) {
+        return
       }
-    },
-    computed: mapGetters([
-      'error',
-      'loading',
-      'created',
-      'violations'
+
+      this.$router.push({ name: '{{{titleUcFirst}}}Update', params: { id: created['@id'] } })
+    }
+  },
+
+  methods: {
+    ...mapActions([
+      'create'
     ]),
-    methods: {
-      create: function(item) {
-        this.$store.dispatch('{{{lc}}}/create/create', item)
-      }
+
+    onSendForm () {
+      this.create(this.item)
     },
-    watch: {
-      created: function (created) {
-        if (created) {
-          this.$router.push({ name: '{{{titleUcFirst}}}Update', params: { id: created['@id']} })
-        }
-      }
+
+    updateField (field, value) {
+      Object.assign(this.item, { [field]: value })
     }
   }
+}
 </script>
