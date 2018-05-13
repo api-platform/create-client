@@ -3,6 +3,7 @@
 import 'isomorphic-fetch';
 import program from 'commander';
 import parseHydraDocumentation from '@api-platform/api-doc-parser/lib/hydra/parseHydraDocumentation';
+import parseSwaggerDocumentation from '@api-platform/api-doc-parser/lib/swagger/parseSwaggerDocumentation';
 import {version} from '../package.json';
 import generators from './generators';
 
@@ -14,6 +15,7 @@ program
   .option('-p, --hydra-prefix [hydraPrefix]', 'The hydra prefix used by the API', 'hydra:')
   .option('-g, --generator [generator]', 'The generator to use, one of "react", "react-native", "vue", "admin-on-rest"', 'react')
   .option('-t, --template-directory [templateDirectory]', 'The templates directory base to use. Final directory will be ${templateDirectory}/${generator}', `${__dirname}/../templates/`)
+  .option('-s, --resource-type [resourceType]', 'Hydra or Swagger', 'hydra')
   .parse(process.argv);
 
 if (2 !== program.args.length && (!process.env.API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT || !process.env.API_PLATFORM_CLIENT_GENERATOR_OUTPUT)) {
@@ -29,7 +31,14 @@ const generator = generators(program.generator)({
 });
 const resourceToGenerate = program.resource ? program.resource.toLowerCase() : null;
 
-parseHydraDocumentation(entrypoint).then(ret => {
+const parser = entrypoint => {
+  if (program.resourceType && program.resourceType === 'swagger') {
+    return parseSwaggerDocumentation(entrypoint)
+  }
+  return parseHydraDocumentation(entrypoint)
+}
+
+parser(entrypoint).then(ret => {
   for (let resource of ret.api.resources) {
     const nameLc = resource.name.toLowerCase();
     const titleLc = resource.title.toLowerCase();
