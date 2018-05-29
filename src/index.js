@@ -30,15 +30,19 @@ const generator = generators(program.generator)({
 const resourceToGenerate = program.resource ? program.resource.toLowerCase() : null;
 
 parseHydraDocumentation(entrypoint).then(ret => {
-  for (let resource of ret.api.resources) {
+  ret.api.resources.filter(({deprecated}) => !deprecated).forEach(resource => {
     const nameLc = resource.name.toLowerCase();
     const titleLc = resource.title.toLowerCase();
 
     if (null === resourceToGenerate || nameLc === resourceToGenerate || titleLc === resourceToGenerate) {
+      resource.fields = resource.fields.filter(({deprecated}) => !deprecated);
+      resource.readableFields = resource.readableFields.filter(({deprecated}) => !deprecated);
+      resource.writableFields = resource.writableFields.filter(({deprecated}) => !deprecated);
+
       generator.generate(ret.api, resource, outputDirectory);
       generator.help(resource)
     }
-  }
+  })
 }).catch((e) => {
   console.log(e);
 });
