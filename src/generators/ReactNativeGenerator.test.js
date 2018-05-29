@@ -18,8 +18,8 @@ test('Generate a React app', () => {
     description: 'An URL'
   })];
   const resource = new Resource('abc', 'http://example.com/foos', {
-    id: 'foo',
-    title: 'Foo',
+    id: 'abc',
+    title: 'abc',
     readableFields: fields,
     writableFields: fields
   });
@@ -30,25 +30,35 @@ test('Generate a React app', () => {
   });
   generator.generate(api, resource, tmpobj.name);
 
-  expect(fs.existsSync(tmpobj.name+'/utils/fetch.js'), true);
+  [
+    '/utils/fetch.js',
+    '/config/_entrypoint.js',
 
-  expect(fs.existsSync(tmpobj.name+'/config/_entrypoint.js'), true);
+    '/actions/abc/create.js',
+    '/actions/abc/delete.js',
+    '/actions/abc/list.js',
+    '/actions/abc/show.js',
+    '/actions/abc/update.js',
 
-  expect(fs.existsSync(tmpobj.name+'/actions/abc/create.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/actions/abc/delete.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/actions/abc/list.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/actions/abc/update.js'), true);
+    '/components/abc/Create.js',
+    '/components/abc/Update.js',
 
-  expect(fs.existsSync(tmpobj.name+'/components/abc/Create.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/components/abc/Form.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/components/abc/List.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/components/abc/Update.js'), true);
+    '/reducers/abc/create.js',
+    '/reducers/abc/delete.js',
+    '/reducers/abc/index.js',
+    '/reducers/abc/list.js',
+    '/reducers/abc/show.js',
+    '/reducers/abc/update.js',
+  ].forEach(file => expect(fs.existsSync(tmpobj.name+file)).toBe(true));
 
-  expect(fs.existsSync(tmpobj.name+'/reducers/abc/create.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/reducers/abc/delete.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/reducers/abc/index.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/reducers/abc/list.js'), true);
-  expect(fs.existsSync(tmpobj.name+'/reducers/abc/update.js'), true);
+  [
+    '/components/abc/Form.js',
+    '/components/abc/List.js',
+    '/components/abc/Show.js',
+  ].forEach(file => {
+    expect(fs.existsSync(tmpobj.name+file)).toBe(true);
+    expect(fs.readFileSync(tmpobj.name+file, 'utf8')).toMatch(/bar/);
+  });
 
   tmpobj.removeCallback();
 });

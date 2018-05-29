@@ -5,7 +5,6 @@ import fs from 'fs';
 import tmp from 'tmp';
 import TypescriptInterfaceGenerator from './TypescriptInterfaceGenerator';
 
-
 test('Generate a typescript interface', () => {
   const generator = new TypescriptInterfaceGenerator({templateDirectory: `${__dirname}/../../templates`});
   const tmpobj = tmp.dirSync({unsafeCleanup: true});
@@ -40,9 +39,9 @@ test('Generate a typescript interface', () => {
   });
   generator.generate(api, resource, tmpobj.name);
 
-  expect(fs.existsSync(tmpobj.name+'/interfaces/foo.ts'), true);
+  expect(fs.existsSync(tmpobj.name+'/interfaces/foo.ts')).toBe(true);
 
-const res = `interface Foo {
+  const res = `interface Foo {
   '@id'?: string;
   id: string;
   foo: any;

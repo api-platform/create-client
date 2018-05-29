@@ -5,7 +5,6 @@ import fs from 'fs';
 import tmp from 'tmp';
 import AdminOnRestGenerator from './AdminOnRestGenerator';
 
-
 test('Generate a Admin On Rest app', () => {
   const generator = new AdminOnRestGenerator({hydraPrefix: 'hydra:', templateDirectory: `${__dirname}/../../templates`});
   const tmpobj = tmp.dirSync({unsafeCleanup: true});
@@ -18,8 +17,8 @@ test('Generate a Admin On Rest app', () => {
     description: 'An URL'
   })];
   const resource = new Resource('abc', 'http://example.com/foos', {
-    id: 'foo',
-    title: 'Foo',
+    id: 'abc',
+    title: 'abc',
     readableFields: fields,
     writableFields: fields
   });
@@ -30,15 +29,19 @@ test('Generate a Admin On Rest app', () => {
   });
   generator.generate(api, resource, tmpobj.name);
 
-  expect(fs.existsSync(tmpobj.name+'/config/_entrypoint.js'), true);
+  [
+    '/config/_entrypoint.js',
+    '/resources/abc.js',
+    '/resource-import.js',
+  ].forEach(file => expect(fs.existsSync(tmpobj.name+file)).toBe(true));
 
-  expect(fs.existsSync(tmpobj.name+'/components/abc.js'), true);
-
-  expect(fs.existsSync(tmpobj.name+'/config/abc.js'), true);
-
-  expect(fs.existsSync(tmpobj.name+'/resources/abc.js'), true);
-
-  expect(fs.existsSync(tmpobj.name+'/resource-import.js'), true);
+  [
+    '/components/abc.js',
+    '/config/abc.js',
+  ].forEach(file => {
+    expect(fs.existsSync(tmpobj.name+file)).toBe(true)
+    expect(fs.readFileSync(tmpobj.name+file, 'utf8')).toMatch(/bar/);
+  });
 
   tmpobj.removeCallback();
 });
