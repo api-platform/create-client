@@ -44,7 +44,7 @@ export default class extends BaseGenerator {
       resource.title
     );
     console.log(
-      "Paste the following definitions in your application configuration:"
+      "Paste the following definitions in your application configuration (`client/src/index.js` by default):"
     );
     console.log(
       chalk.green(`
