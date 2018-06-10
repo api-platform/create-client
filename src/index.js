@@ -15,7 +15,7 @@ program
   .option('-p, --hydra-prefix [hydraPrefix]', 'The hydra prefix used by the API', 'hydra:')
   .option('-g, --generator [generator]', 'The generator to use, one of "react", "react-native", "vue", "admin-on-rest"', 'react')
   .option('-t, --template-directory [templateDirectory]', 'The templates directory base to use. Final directory will be ${templateDirectory}/${generator}', `${__dirname}/../templates/`)
-  .option('-s, --resource-type [resourceType]', 'Hydra or Swagger', 'hydra')
+  .option('-f, --format [hydra|swagger]', '"hydra" or "swagger', 'hydra')
   .parse(process.argv);
 
 if (2 !== program.args.length && (!process.env.API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT || !process.env.API_PLATFORM_CLIENT_GENERATOR_OUTPUT)) {
@@ -32,10 +32,9 @@ const generator = generators(program.generator)({
 const resourceToGenerate = program.resource ? program.resource.toLowerCase() : null;
 
 const parser = entrypoint => {
-  if (program.resourceType && program.resourceType === 'swagger') {
-    return parseSwaggerDocumentation(entrypoint)
-  }
-  return parseHydraDocumentation(entrypoint)
+  const parseDocumentation = 'swagger' === program.format ? parseSwaggerDocumentation : parseHydraDocumentation;
+
+  return parseDocumentation(entrypoint)
 }
 
 parser(entrypoint).then(ret => {
