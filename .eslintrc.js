@@ -6,12 +6,16 @@ module.exports = {
   },
   'parser': 'babel-eslint',
   'parserOptions': {
-    ecmaVersion: 7,
-    sourceType: 'module'
+    'ecmaVersion': 7,
+    'sourceType': 'module'
   },
   'plugins': ['import'],
-  'extends': 'eslint:recommended',
-  'rules':{
+  'extends': [
+    'plugin:prettier/recommended',
+    'eslint:recommended',
+  ],
+  'rules': {
+    'prettier/prettier': 'error',
     'no-console': 0,
   }
 };
