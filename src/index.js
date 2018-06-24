@@ -32,11 +32,7 @@ program
     "The templates directory base to use. Final directory will be ${templateDirectory}/${generator}",
     `${__dirname}/../templates/`
   )
-  .option(
-    "-f, --format [hydra|swagger]", 
-    '"hydra" or "swagger', 
-    "hydra"
-  )
+  .option("-f, --format [hydra|swagger]", '"hydra" or "swagger', "hydra")
   .parse(process.argv);
 
 if (
@@ -61,12 +57,13 @@ const resourceToGenerate = program.resource
   : null;
 
 const parser = entrypoint => {
-  const parseDocumentation = 'swagger' === program.format 
-    ? parseSwaggerDocumentation 
-    : parseHydraDocumentation;
+  const parseDocumentation =
+    "swagger" === program.format
+      ? parseSwaggerDocumentation
+      : parseHydraDocumentation;
 
-  return parseDocumentation(entrypoint)
-}
+  return parseDocumentation(entrypoint);
+};
 
 parser(entrypoint)
   .then(ret => {
