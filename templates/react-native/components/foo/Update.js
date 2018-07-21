@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, Text} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './Form';
@@ -25,23 +25,23 @@ class Update extends Component {
   };
 
   componentDidMount() {
-    this.props.retrieve(decodeURIComponent(this.props.match.params.id));
+    this.props.retrieve(this.props.id);
   }
 
   componentWillUnmount() {
     this.props.reset();
   }
 
-  // equivalent in RN
-  // del = () => {
-  //   if (window.confirm('Are you sure you want to delete this item?')) this.props.del(this.props.retrieved);
-  // };
 
   render() {
+    const item = this.props.updated ? this.props.updated : this.props.retrieved;
+
     return (
-      <ScrollView>
-        <Text>Update component {{lc}}</Text>
-      </ScrollView>
+      <View style={ {flex: 1} }>
+        <ScrollView>
+          {item && <Form onSubmit={values => this.props.update(item, values)} initialValues={item}/>}
+        </ScrollView>
+      </View>
     );
   }
 

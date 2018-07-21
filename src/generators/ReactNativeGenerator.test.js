@@ -45,6 +45,10 @@ test("Generate a React app", () => {
     "/actions/abc/update.js",
 
     "/components/abc/Create.js",
+    "/components/abc/Form.js",
+    "/components/abc/index.js",
+    "/components/abc/List.js",
+    "/components/abc/Show.js",
     "/components/abc/Update.js",
 
     "/reducers/abc/create.js",
@@ -54,15 +58,6 @@ test("Generate a React app", () => {
     "/reducers/abc/show.js",
     "/reducers/abc/update.js"
   ].forEach(file => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
-
-  [
-    "/components/abc/Form.js",
-    "/components/abc/List.js",
-    "/components/abc/Show.js"
-  ].forEach(file => {
-    expect(fs.existsSync(tmpobj.name + file)).toBe(true);
-    expect(fs.readFileSync(tmpobj.name + file, "utf8")).toMatch(/abc/);
-  });
 
   tmpobj.removeCallback();
 });
