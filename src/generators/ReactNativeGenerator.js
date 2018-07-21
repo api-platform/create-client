@@ -25,7 +25,7 @@ export default class extends BaseGenerator {
       "reducers/foo/show.js"
     ]);
 
-    this.registerTemplates(`react/`, [
+    this.registerTemplates(`react-native/`, [
       // components
       "components/foo/Create.js",
       "components/foo/Form.js",
