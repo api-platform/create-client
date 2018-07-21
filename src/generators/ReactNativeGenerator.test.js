@@ -61,7 +61,7 @@ test("Generate a React app", () => {
     "/components/abc/Show.js"
   ].forEach(file => {
     expect(fs.existsSync(tmpobj.name + file)).toBe(true);
-    expect(fs.readFileSync(tmpobj.name + file, "utf8")).toMatch(/bar/);
+    expect(fs.readFileSync(tmpobj.name + file, "utf8")).toMatch(/abc/);
   });
 
   tmpobj.removeCallback();
