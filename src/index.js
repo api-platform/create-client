@@ -3,6 +3,7 @@
 import "isomorphic-fetch";
 import program from "commander";
 import parseHydraDocumentation from "@api-platform/api-doc-parser/lib/hydra/parseHydraDocumentation";
+import parseSwaggerDocumentation from "@api-platform/api-doc-parser/lib/swagger/parseSwaggerDocumentation";
 import { version } from "../package.json";
 import generators from "./generators";
 
@@ -31,6 +32,7 @@ program
     "The templates directory base to use. Final directory will be ${templateDirectory}/${generator}",
     `${__dirname}/../templates/`
   )
+  .option("-f, --format [hydra|swagger]", '"hydra" or "swagger', "hydra")
   .parse(process.argv);
 
 if (
@@ -54,7 +56,16 @@ const resourceToGenerate = program.resource
   ? program.resource.toLowerCase()
   : null;
 
-parseHydraDocumentation(entrypoint)
+const parser = entrypoint => {
+  const parseDocumentation =
+    "swagger" === program.format
+      ? parseSwaggerDocumentation
+      : parseHydraDocumentation;
+
+  return parseDocumentation(entrypoint);
+};
+
+parser(entrypoint)
   .then(ret => {
     ret.api.resources
       .filter(({ deprecated }) => !deprecated)
