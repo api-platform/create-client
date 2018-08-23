@@ -32,7 +32,7 @@
         @click="getPage(view['hydra:next'])">Next</button>
       &nbsp;
       <button
-        :disabled="view['hydra:last']"
+        :disabled="!view['hydra:last']"
         type="button"
         class="btn btn-basic btn-sm"
         @click="getPage(view['hydra:last'])">Last</button>
