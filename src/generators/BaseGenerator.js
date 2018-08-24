@@ -1,22 +1,26 @@
-import fs from 'fs';
-import handlebars from 'handlebars';
-import mkdirp from 'mkdirp';
-import { sprintf } from 'sprintf-js';
-import urlapi from 'url';
+import fs from "fs";
+import handlebars from "handlebars";
+import mkdirp from "mkdirp";
+import { sprintf } from "sprintf-js";
+import urlapi from "url";
 
 export default class {
   templates = {};
 
-  constructor({hydraPrefix, templateDirectory}) {
+  constructor({ hydraPrefix, templateDirectory }) {
     this.hydraPrefix = hydraPrefix;
     this.templateDirectory = templateDirectory;
 
-    this.registerTemplates('', ['_entrypoint.js']);
+    this.registerTemplates("", ["_entrypoint.js"]);
   }
 
   registerTemplates(basePath, paths) {
     for (let path of paths) {
-      this.templates[path] = handlebars.compile(fs.readFileSync(`${this.templateDirectory}/${basePath}${path}`).toString());
+      this.templates[path] = handlebars.compile(
+        fs
+          .readFileSync(`${this.templateDirectory}/${basePath}${path}`)
+          .toString()
+      );
     }
   }
 
@@ -31,7 +35,11 @@ export default class {
   }
 
   createFileFromPattern(pattern, dir, lc, context) {
-    this.createFile(sprintf(pattern, 'foo'), sprintf(`${dir}/${pattern}`, lc), context);
+    this.createFile(
+      sprintf(pattern, "foo"),
+      sprintf(`${dir}/${pattern}`, lc),
+      context
+    );
   }
 
   createFile(template, dest, context = {}, warn = true) {
@@ -46,41 +54,46 @@ export default class {
 
   createEntrypoint(apiEntry, dest) {
     const url = urlapi.parse(apiEntry);
-    const {protocol, host, pathname} = url;
+    const { protocol, host, pathname } = url;
 
-    this.createFile('_entrypoint.js', dest, {host: `${protocol}//${host}`, path: pathname}, false);
+    this.createFile(
+      "_entrypoint.js",
+      dest,
+      { host: `${protocol}//${host}`, path: pathname },
+      false
+    );
   }
 
   getHtmlInputTypeFromField(field) {
     switch (field.id) {
-      case 'http://schema.org/email':
-        return {type: 'email'};
+      case "http://schema.org/email":
+        return { type: "email" };
 
-      case 'http://schema.org/url':
-        return {type: 'url'};
+      case "http://schema.org/url":
+        return { type: "url" };
     }
 
     switch (field.range) {
-      case 'http://www.w3.org/2001/XMLSchema#integer':
-        return {type: 'number'};
+      case "http://www.w3.org/2001/XMLSchema#integer":
+        return { type: "number" };
 
-      case 'http://www.w3.org/2001/XMLSchema#decimal':
-        return {type: 'number', step: '0.1'};
+      case "http://www.w3.org/2001/XMLSchema#decimal":
+        return { type: "number", step: "0.1" };
 
-      case 'http://www.w3.org/2001/XMLSchema#boolean':
-        return {type: 'checkbox'};
+      case "http://www.w3.org/2001/XMLSchema#boolean":
+        return { type: "checkbox" };
 
-      case 'http://www.w3.org/2001/XMLSchema#date':
-        return {type: 'date'};
+      case "http://www.w3.org/2001/XMLSchema#date":
+        return { type: "date" };
 
-      case 'http://www.w3.org/2001/XMLSchema#time':
-        return {type: 'time'};
+      case "http://www.w3.org/2001/XMLSchema#time":
+        return { type: "time" };
 
-      case 'http://www.w3.org/2001/XMLSchema#dateTime':
-        return {type: 'dateTime'};
+      case "http://www.w3.org/2001/XMLSchema#dateTime":
+        return { type: "dateTime" };
 
       default:
-        return {type: 'text'};
+        return { type: "text" };
     }
   }
 
@@ -92,7 +105,7 @@ export default class {
       field.name = apiField.name;
       field.description = apiField.description.replace(/"/g, "'"); // fix for Form placeholder description
 
-      fields.push(field)
+      fields.push(field);
     }
 
     return fields;

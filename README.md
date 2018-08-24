@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/%40api-platform%2Fclient-generator.svg)](https://badge.fury.io/js/%40api-platform%2Fclient-generator)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
-API Platform Client Generator is a generator to scaffold app with Create-Retrieve-Update-Delete features for any API exposing a Hydra documentation for:
+API Platform Client Generator is a generator to scaffold app with Create-Retrieve-Update-Delete features for any API exposing a Hydra or Swagger documentation for:
  * React/Redux
  * Vue.js
 
@@ -16,7 +16,15 @@ Works especially well with APIs built with the [API Platform](https://api-platfo
 
 ## Usage
 
-    generate-api-platform-client https://demo.api-platform.com/ output/ --resource Book
+**Hydra**
+```sh
+generate-api-platform-client https://demo.api-platform.com/ output/ --resource Book
+```
+
+**Swagger**
+```sh
+generate-api-platform-client https://demo.api-platform.com/ output/ --resource Book --format swagger
+```
 
 ## Features
 
@@ -25,7 +33,7 @@ Works especially well with APIs built with the [API Platform](https://api-platfo
   * A creation form
   * An edition form
   * A deletion button
-* Use the Hydra API documentation to generate the code
+* Use the Hydra or Swagger API documentation to generate the code
 * Generate the suitable HTML5 input type (`number`, `date`...) according to the type of the API property
 * Display of the server-side validation errors under the related input (if using API Platform Core)
 * Client-side validation (`required` attributes)
