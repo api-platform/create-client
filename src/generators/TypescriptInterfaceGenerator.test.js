@@ -42,7 +42,7 @@ test('Generate a typescript interface', () => {
 
   expect(fs.existsSync(tmpobj.name+'/interfaces/foo.ts'), true);
 
-const res = `interface Foo {
+const res = `export interface Foo {
   '@id'?: string;
   id: string;
   foo: any;
