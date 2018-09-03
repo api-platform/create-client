@@ -1,9 +1,17 @@
 import chalk from "chalk";
+import handlebars from "handlebars";
 import BaseGenerator from "./BaseGenerator";
 
 export default class extends BaseGenerator {
   constructor(params) {
     super(params);
+
+    handlebars.registerHelper("ifNotResource", function(item, options) {
+      if (item === null) {
+        return options.fn(this);
+      }
+      return options.inverse(this);
+    });
 
     this.registerTemplates(`react-common/`, [
       // actions
@@ -134,8 +142,6 @@ combineReducers(${titleLc},{/* ... */}),
       this.createFile(file, `${dir}/${file}`);
     }
 
-    // this.createFile("utils/fetch.js", `${dir}/utils/fetch.js`, context, false);
-    // this.createFile("utils/helpers.js", `${dir}/utils/helpers.js`, context, false);
     this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`);
   }
 }

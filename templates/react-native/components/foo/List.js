@@ -48,11 +48,13 @@ class ListComponent extends Component {
             onPressRightIcon={() => ListComponent.show(item['@id'])}
             subtitle={
               <View>
-{{#each formFields}}
+{{#each fields}}
+  {{#ifNotResource reference }}
                 <View style={viewList}>
                   <Text style={listRowLeft}>{{{name}}}: </Text>
                   <Text style={[listRowRight, {fontWeight: 'bold'}]}>{item['{{{name}}}']}</Text>
                 </View>
+  {{/ifNotResource}}
 {{/each}}
               </View>
             }
