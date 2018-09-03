@@ -1,21 +1,23 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {ScrollView, View, Text, StyleSheet} from 'react-native';
-import {List, ListItem} from 'react-native-elements';
-import {Actions} from 'react-native-router-flux';
+import { ScrollView, View, Text } from 'react-native';
+import { List, ListItem } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import Spinner from '../Spinner';
-import { list, reset } from '../../actions/{{{ lc }}}/list';
-import { success } from '../../actions/{{{ lc }}}/delete';
-import {pagination} from '../../utils/helpers';
+import { list, reset } from '../../actions/{{{lc}}}/list';
+import { success } from '../../actions/{{{lc}}}/delete';
+import { pagination } from '../../utils/helpers';
 
 class ListComponent extends Component {
+
   static propTypes = {
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
     data: PropTypes.object.isRequired,
     list: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
+    refresh:PropTypes.number
   };
 
   componentDidMount() {
@@ -23,31 +25,38 @@ class ListComponent extends Component {
     this.props.list();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.refresh !== this.props.refresh) {
+      this.props.list();
+    }
+  }
+
   componentWillUnmount() {
     this.props.reset();
   }
 
   static show(id) {
-    Actions.popAndPush();
-    Actions.{{title}}Show({id});
+    Actions.{{{lc}}}Show({id});
   }
 
   static renderRow(item) {
+    const {listRowLeft, listRowRight, viewList} = styles;
+
     return (
-      <ListItem
-        key={item['@id']}
-        onPressRightIcon={() => ListComponent.show(item['@id'])}
-        subtitle={
-          <View>
-            {{#each fields}}
-            <View style={ {flexDirection: 'row'} }>
-              <Text style={styles.listRow}>{{name}}: </Text>
-              <Text style={styles.listRow}>{item['{{{ name }}}']}</Text>
-            </View>
-            {{/each}}
-          </View>
-        }
-      />
+        <ListItem
+            key={Math.random()}
+            onPressRightIcon={() => ListComponent.show(item['@id'])}
+            subtitle={
+              <View>
+{{#each formFields}}
+                <View style={viewList}>
+                  <Text style={listRowLeft}>{{{name}}}: </Text>
+                  <Text style={[listRowRight, {fontWeight: 'bold'}]}>{item['{{{name}}}']}</Text>
+                </View>
+{{/each}}
+              </View>
+            }
+        />
     );
   }
 
@@ -57,29 +66,27 @@ class ListComponent extends Component {
     }
 
     return (
-      <View style={ {flex: 1} }>
-        <ScrollView contentInset={ {top: -24} } automaticallyAdjustContentInsets={false}>
-          <List>
-            { this.props.data['{{{ hydraPrefix }}}member'] &&  this.props.data['{{{ hydraPrefix }}}member'].map(item => ListComponent.renderRow(item))}
-          </List>
-        </ScrollView>
-        {pagination(this.props.data['{{{ hydraPrefix }}}view'], this.props.list)}
-      </View>
-
+        <View style={ {flex: 1} }>
+          <ScrollView contentInset={ {top: -24} }
+                      automaticallyAdjustContentInsets>
+            <List>
+              {this.props.data['hydra:member'] &&
+              this.props.data['hydra:member'].map(
+                  item => ListComponent.renderRow(item))}
+            </List>
+          </ScrollView>
+          {pagination(this.props.data['hydra:view'], this.props.list)}
+        </View>
     );
   }
-
 }
 
-const mapStateToProps = (state) => {
-  return {
-    data: state.{{{ lc }}}.list.data,
-    error: state.{{{ lc }}}.list.error,
-    loading: state.{{{ lc }}}.list.loading,
-};
+const mapStateToProps = state => {
+  const {data, error, loading} = state.{{{lc}}}.list;
+  return {data, error, loading};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     list: (page) => dispatch(list(page)),
     reset: () => {
@@ -89,29 +96,29 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const styles = StyleSheet.create({
-  loading: {
-    color: 'green',
-    fontWeight: 'bold',
-  },
-  error: {
-    color: 'red',
-    fontWeight: 'bold',
-  },
-  delete: {
-    color: 'orange',
-    fontWeight: 'bold',
-  },
-  listRow: {
-    borderBottomWidth: 1,
-    padding: 1,
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    borderColor: '#ddd',
-    position: 'relative',
+const styles = {
+  viewList: {
     flex: 1,
     overflow: 'hidden',
+    flexDirection: 'row',
   },
-});
+  listRowLeft: {
+    flex: 1,
+    borderBottomWidth: 1,
+    padding: 5,
+    justifyContent: 'flex-start',
+    position: 'relative',
+    color: 'gray',
+    fontSize: 16,
+  },
+  listRowRight: {
+    flex: 1,
+    borderBottomWidth: 1,
+    padding: 5,
+    justifyContent: 'flex-start',
+    position: 'relative',
+    fontSize: 18,
+  },
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListComponent);
