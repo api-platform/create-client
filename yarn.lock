@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@api-platform/api-doc-parser@^0.4":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@api-platform/api-doc-parser/-/api-doc-parser-0.4.0.tgz#92f24a445aaa2a8fac78e3a2069a78414854e9bb"
+"@api-platform/api-doc-parser@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@api-platform/api-doc-parser/-/api-doc-parser-0.5.0.tgz#c8d2d860937d5c795577dec33f7914567f5ec9eb"
   dependencies:
     babel-runtime "^6.23.0"
     jsonld "^0.4.11"

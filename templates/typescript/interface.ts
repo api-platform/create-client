@@ -1,4 +1,4 @@
-interface {{ name }} {
+export interface {{ name }} {
   '@id'?: string;
   id: string;
 {{#each fields}}
