@@ -20,14 +20,14 @@ class Form extends Component {
             {data.input.name}
         </FormLabel>
         <FormInput containerStyle={ {flexDirection:'row'} }
-          inputStyle={ {color: 'black', flex:1} }
-          {...data.input}
-          step={data.step}
-          required={data.required}
-          placeholder={data.placeholder}
-          id={`{{{lc}}}_${data.input.name}`}
-          multiline={true}
-          keyboardType='numeric'
+                   inputStyle={ {color: 'black', flex:1} }
+                   {...data.input}
+                   step={data.step}
+                   required={data.required}
+                   placeholder={data.placeholder}
+                   id={`{{{lc}}}_${data.input.name}`}
+                   multiline={true}
+                   keyboardType='numeric'
         />
         {hasError &&
           <FormValidationMessage>{data.meta.error}</FormValidationMessage> }
@@ -37,18 +37,18 @@ class Form extends Component {
 
   render() {
     const {handleSubmit, mySubmit} = this.props;
+
     return (
       <View style={ {backgroundColor: 'white', paddingBottom: 20} }>
 {{#each formFields}}
         <Field component={this.renderField} name="{{{ name }}}" type="{{{ type }}}"
           placeholder="{{{ description }}}"{{#if required}} required={true}{{/if}} />
 {{/each}}
-
         <Button buttonStyle={styles.button}
           title='SAVE'
           onPress={handleSubmit(mySubmit)}
         />
-      </View>
+      </View>;
     );
   }
 }

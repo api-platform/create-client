@@ -35,14 +35,6 @@ const Confirm = ({children, visible, onAccept, onDecline}) => {
   );
 };
 
-Confirm.propTypes = {
-  onDecline: PropTypes.func,
-  onAccept: PropTypes.func,
-  visible: PropTypes.bool,
-  children:PropTypes.string,
-};
-
-
 const styles = {
   textStyle: {
     flex: 1,
@@ -84,6 +76,13 @@ const styles = {
     paddingTop:10,
     paddingBottom:10,
   },
+};
+
+Confirm.propTypes = {
+  onDecline: PropTypes.func,
+  onAccept: PropTypes.func,
+  visible: PropTypes.bool,
+  children: PropTypes.string,
 };
 
 export { Confirm };

@@ -4,28 +4,14 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import Form from './Form';
+import Spinner from '../Spinner';
 import { success } from '../../actions/{{{lc}}}/create';
 import { retrieve, update, reset } from '../../actions/{{{lc}}}/update';
 import { loading, error } from '../../actions/{{{lc}}}/delete';
 import { delayRefresh } from '../../utils/helpers';
-import Spinner from '../Spinner';
+
 
 class Update extends Component {
-
-  static propTypes = {
-    retrieveError: PropTypes.string,
-    retrieveLoading: PropTypes.{{{lc}}}.isRequired,
-    updateError: PropTypes.string,
-    updateLoading: PropTypes.bool.isRequired,
-    retrieved: PropTypes.object,
-    updated: PropTypes.object,
-    deleted: PropTypes.object,
-    retrieve: PropTypes.func.isRequired,
-    update: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
-    id: PropTypes.string,
-    created:PropTypes.func,
-  };
 
   componentDidMount() {
     this.props.retrieve(this.props.id);
@@ -48,6 +34,7 @@ class Update extends Component {
     const item = this.props.updated ? this.props.updated : this.props.retrieved;
 
     const {viewStyle, textStyleAlert, textStyleSuccess} = styles;
+
     return (
         <View style={ {flex: 1} }>
           <ScrollView keyboardShouldPersistTaps='always'>
@@ -107,6 +94,21 @@ const styles = {
     color: 'green',
     textAlign: 'center',
   },
+};
+
+Update.propTypes = {
+  retrieveError: PropTypes.string,
+  retrieveLoading: PropTypes.{{{lc}}}.isRequired,
+  updateError: PropTypes.string,
+  updateLoading: PropTypes.bool.isRequired,
+  retrieved: PropTypes.object,
+  updated: PropTypes.object,
+  deleted: PropTypes.object,
+  retrieve: PropTypes.func.isRequired,
+  update: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  id: PropTypes.string,
+  created:PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Update);

@@ -11,15 +11,6 @@ import { pagination } from '../../utils/helpers';
 
 class ListComponent extends Component {
 
-  static propTypes = {
-    error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-    data: PropTypes.object.isRequired,
-    list: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
-    refresh:PropTypes.number
-  };
-
   componentDidMount() {
     this.props.reset();
     this.props.list();
@@ -63,9 +54,12 @@ class ListComponent extends Component {
   }
 
   render() {
-    if (this.props.loading) {
-      return <Spinner size="large"/>;
-    }
+    if (this.props.loading) return <Spinner size="large"/>;
+
+    if (this.props.error) {
+      return <View style={ {flex: 1} }>
+         <Text style={styles.textStyle}>{this.props.error}</Text>
+      </View>;
 
     return (
         <View style={ {flex: 1} }>
@@ -121,6 +115,22 @@ const styles = {
     position: 'relative',
     fontSize: 18,
   },
+  textStyle: {
+    textAlign: 'center',
+    marginTop: 20,
+    fontSize: 18,
+    color: 'red',
+    fontWeight: 'bold',
+  },
+};
+
+ListComponent.propTypes = {
+  error: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+  data: PropTypes.object.isRequired,
+  list: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  refresh: PropTypes.number
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListComponent);

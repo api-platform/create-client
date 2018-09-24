@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 const Spinner = ({size}) => {
   return (
     <View style={styles.spinnerStyle} >
-<ActivityIndicator size={size || 'large'} />
-  </View>
-);
+       <ActivityIndicator size={size || 'large'} />
+    </View>
+  );
 };
 
 const styles = {

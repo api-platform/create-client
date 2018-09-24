@@ -7,29 +7,13 @@ import { Actions } from 'react-native-router-flux';
 import Spinner from '../Spinner';
 import { retrieve, reset } from '../../actions/{{{lc}}}/show';
 import { del, loading, error } from '../../actions/{{{lc}}}/delete';
-import {list } from '../../actions/{{{lc}}}/list';
+import { list } from '../../actions/{{{lc}}}/list';
 import { Confirm } from '../Confirm';
-import {delayRefresh} from '../../utils/helpers';
+import { delayRefresh } from '../../utils/helpers';
 
 class Show extends Component {
 
-  static propTypes = {
-    error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-    retrieved: PropTypes.object,
-    retrieve: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
-    deleteError: PropTypes.string,
-    deleteLoading: PropTypes.bool.isRequired,
-    deleted: PropTypes.object,
-    del: PropTypes.func.isRequired,
-    showModal:PropTypes.bool,
-    refresh:PropTypes.number,
-    id:PropTypes.string,
-    list: PropTypes.func.isRequired,
-  };
-
-  state = {showModal: false};
+  state = { showModal: false };
 
   componentDidMount() {
     this.props.retrieve(this.props.id);
@@ -135,7 +119,6 @@ class Show extends Component {
           </Confirm>
         </View>
     );
-
   }
 }
 
@@ -183,6 +166,22 @@ const styles = {
     alignSelf: 'center',
     alignContent: 'center',
   }
+};
+
+Show.propTypes = {
+  error: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+  retrieved: PropTypes.object,
+  retrieve: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  deleteError: PropTypes.string,
+  deleteLoading: PropTypes.bool.isRequired,
+  deleted: PropTypes.object,
+  del: PropTypes.func.isRequired,
+  showModal:PropTypes.bool,
+  refresh:PropTypes.number,
+  id:PropTypes.string,
+  list: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Show);

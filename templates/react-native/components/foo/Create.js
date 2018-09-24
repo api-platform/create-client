@@ -8,13 +8,6 @@ import { Actions } from 'react-native-router-flux';
 import { delayRefresh } from '../../utils/helpers';
 
 class Create extends Component {
-  static propTypes = {
-    error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-    created: PropTypes.object,
-    create: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
-  };
 
   componentWillUnmount() {
     this.props.reset();
@@ -76,6 +69,14 @@ const styles = {
     color: 'red',
     textAlign: 'center',
   },
+};
+
+Create.propTypes = {
+  error: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+  created: PropTypes.object,
+  create: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);
