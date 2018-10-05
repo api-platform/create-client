@@ -1,32 +1,77 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { View } from 'react-native';
+import {
+  FormLabel,
+  FormInput,
+  FormValidationMessage,
+  Button,
+} from 'react-native-elements';
+
 
 class Form extends Component {
+
   renderField(data) {
     const hasError = data.meta.touched && !!data.meta.error;
-    if (hasError) {
-      data.input['aria-describedby'] = `{{{ lc }}}_${data.input.name}_helpBlock`;
-      data.input['aria-invalid'] = true;
-    }
-
-    return <div className={`form-group${hasError ? ' has-error' : ''}`}>
-      <label htmlFor={`{{{ lc }}}_${data.input.name}`} className="control-label">{data.input.name}</label>
-      <input {...data.input} type={data.type} step={data.step} required={data.required} placeholder={data.placeholder} id={`{{{ lc }}}_${data.input.name}`} className="form-control"/>
-      {hasError && <span className="help-block" id={`{{{ lc }}}_${data.input.name}_helpBlock`}>{data.meta.error}</span>}
-    </div>;
+    data.input.value = data.input.value.toString();
+    return (
+      <View>
+        <FormLabel labelStyle={ {color: 'gray', fontSize: 20} }>
+            {data.input.name}
+        </FormLabel>
+        <FormInput containerStyle={ {flexDirection:'row'} }
+                   inputStyle={ {color: 'black', flex:1} }
+                   {...data.input}
+                   step={data.step}
+                   required={data.required}
+                   placeholder={data.placeholder}
+                   id={`{{{lc}}}_${data.input.name}`}
+                   multiline={true}
+                   keyboardType='numeric'
+        />
+        {hasError &&
+          <FormValidationMessage>{data.meta.error}</FormValidationMessage> }
+      </View>
+    );
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const {handleSubmit, mySubmit} = this.props;
 
-    return <form onSubmit={handleSubmit}>
+    return (
+      <View style={ {backgroundColor: 'white', paddingBottom: 20} }>
 {{#each formFields}}
-      <Field component={this.renderField} name="{{{ name }}}" type="{{{ type }}}"{{#if step}} step="{{{ step }}}"{{/if}} placeholder="{{{ description }}}" {{#if required}}required={true}{{/if}}/>
+        <Field component={this.renderField} name="{{{ name }}}" type="{{{ type }}}"
+          placeholder="{{{ description }}}"{{#if required}} required={true}{{/if}} />
 {{/each}}
-
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>;
+        <Button buttonStyle={styles.button}
+          title='SAVE'
+          onPress={handleSubmit(mySubmit)}
+        />
+      </View>;
+    );
   }
 }
 
-export default reduxForm({form: '{{{ lc }}}', enableReinitialize: true, keepDirtyOnReinitialize: true})(Form);
+const styles = {
+  button: {
+    flex: 1,
+    backgroundColor: '#3faab4',
+    borderRadius: 5,
+    borderWidth: 0,
+    borderColor: 'transparent',
+    width: 300,
+    height: 50,
+    margin: 20,
+  },
+  placeholderStyle:{
+    paddingRight:10
+  }
+};
+
+export default reduxForm(
+    {
+      form: '{{{lc}}}',
+      enableReinitialize: true, keepDirtyOnReinitialize: true,
+    })(
+    Form);

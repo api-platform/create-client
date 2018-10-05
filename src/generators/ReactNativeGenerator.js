@@ -1,9 +1,17 @@
 import chalk from "chalk";
+import handlebars from "handlebars";
 import BaseGenerator from "./BaseGenerator";
 
 export default class extends BaseGenerator {
   constructor(params) {
     super(params);
+
+    handlebars.registerHelper("ifNotResource", function(item, options) {
+      if (item === null) {
+        return options.fn(this);
+      }
+      return options.inverse(this);
+    });
 
     this.registerTemplates(`react-common/`, [
       // actions
@@ -25,14 +33,22 @@ export default class extends BaseGenerator {
       "reducers/foo/show.js"
     ]);
 
-    this.registerTemplates(`react/`, [
+    this.registerTemplates(`react-native/`, [
       // components
       "components/foo/Create.js",
       "components/foo/Form.js",
       "components/foo/index.js",
       "components/foo/List.js",
       "components/foo/Update.js",
-      "components/foo/Show.js"
+      "components/foo/Show.js",
+      "components/Spinner.js",
+      "components/Confirm.js",
+
+      // routes
+      "routes/foo.js",
+
+      // helpers
+      "utils/helpers.js"
     ]);
   }
 
@@ -75,7 +91,7 @@ combineReducers(${titleLc},{/* ... */}),
 
     // Create directories
     // These directories may already exist
-    for (let dir of [`${dir}/utils`, `${dir}/config`]) {
+    for (let dir of [`${dir}/utils`, `${dir}/config`, `${dir}/routes`]) {
       this.createDir(dir, false);
     }
 
@@ -109,12 +125,23 @@ combineReducers(${titleLc},{/* ... */}),
       "reducers/%s/index.js",
       "reducers/%s/list.js",
       "reducers/%s/update.js",
-      "reducers/%s/show.js"
+      "reducers/%s/show.js",
+
+      // routes
+      "routes/%s.js"
     ]) {
       this.createFileFromPattern(pattern, dir, lc, context);
     }
 
-    this.createFile("utils/fetch.js", `${dir}/utils/fetch.js`, context, false);
+    for (let file of [
+      "utils/fetch.js",
+      "utils/helpers.js",
+      "components/Spinner.js",
+      "components/Confirm.js"
+    ]) {
+      this.createFile(file, `${dir}/${file}`);
+    }
+
     this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`);
   }
 }

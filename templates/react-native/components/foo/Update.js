@@ -1,72 +1,72 @@
-import React, {Component} from 'react';
-import {ScrollView, Text} from 'react-native';
+import React, { Component } from 'react';
+import { View, ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import Form from './Form';
-import { success } from '../../actions/{{{ lc }}}/create';
-import { retrieve, update, reset } from '../../actions/{{{ lc }}}/update';
-import { del, loading, error } from '../../actions/{{{ lc }}}/delete';
+import Spinner from '../Spinner';
+import { success } from '../../actions/{{{lc}}}/create';
+import { retrieve, update, reset } from '../../actions/{{{lc}}}/update';
+import { loading, error } from '../../actions/{{{lc}}}/delete';
+import { delayRefresh } from '../../utils/helpers';
+
 
 class Update extends Component {
-  static propTypes = {
-    retrieveError: PropTypes.string,
-    retrieveLoading: PropTypes.bool.isRequired,
-    updateError: PropTypes.string,
-    updateLoading: PropTypes.bool.isRequired,
-    deleteError: PropTypes.string,
-    deleteLoading: PropTypes.bool.isRequired,
-    retrieved: PropTypes.object,
-    updated: PropTypes.object,
-    deleted: PropTypes.object,
-    retrieve: PropTypes.func.isRequired,
-    update: PropTypes.func.isRequired,
-    del: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
-  };
 
   componentDidMount() {
-    this.props.retrieve(decodeURIComponent(this.props.match.params.id));
+    this.props.retrieve(this.props.id);
   }
 
   componentWillUnmount() {
     this.props.reset();
   }
 
-  // equivalent in RN
-  // del = () => {
-  //   if (window.confirm('Are you sure you want to delete this item?')) this.props.del(this.props.retrieved);
-  // };
+  onSubmit = (item, values) => {
+    this.props.update(item, values);
+    Actions.pop();
+    delayRefresh();
+  };
 
   render() {
+
+    if (this.props.deleted) return Actions.pop();
+
+    const item = this.props.updated ? this.props.updated : this.props.retrieved;
+
+    const {viewStyle, textStyleAlert, textStyleSuccess} = styles;
+
     return (
-      <ScrollView>
-        <Text>Update component {{lc}}</Text>
-      </ScrollView>
+        <View style={ {flex: 1} }>
+          <ScrollView keyboardShouldPersistTaps='always'>
+            {this.props.created && <View style={viewStyle}><Text style={textStyleAlert}>{this.props.created['@id']} created.</Text></View>}
+            {this.props.updated && <View style={viewStyle}><Text style={textStyleSuccess}>{this.props.updated['@id']} updated</Text></View>}
+            {(this.props.retrieveLoading || this.props.updateLoading) && <View style={viewStyle}><Spinner size='large'/></View>}
+            {this.props.retrieveError && <View style={viewStyle}><Text style={textStyleAlert}>{this.props.retrieveError}</Text></View>}
+            {this.props.updateError && <View style={viewStyle}><Text style={textStyleAlert}> {this.props.updateError}</Text></View>}
+            {item && <Form mySubmit={values => this.onSubmit(item, values)} initialValues={item}/>}
+          </ScrollView>
+        </View>
     );
   }
-
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    retrieveError: state.{{{ lc }}}.update.retrieveError,
-    retrieveLoading: state.{{{ lc }}}.update.retrieveLoading,
-    updateError: state.{{{ lc }}}.update.updateError,
-    updateLoading: state.{{{ lc }}}.update.updateLoading,
-    deleteError: state.{{{ lc }}}.del.error,
-    deleteLoading: state.{{{ lc }}}.del.loading,
-    created: state.{{{ lc }}}.create.created,
-    deleted: state.{{{ lc }}}.del.deleted,
-    retrieved: state.{{{ lc }}}.update.retrieved,
-    updated: state.{{{ lc }}}.update.updated,
-};
+    retrieveError: state.{{{lc}}}.update.retrieveError,
+    retrieveLoading: state.{{{lc}}}.update.retrieveLoading,
+    updateError: state.{{{lc}}}.update.updateError,
+    updateLoading: state.{{{lc}}}.update.updateLoading,
+    created: state.{{{lc}}}.create.created,
+    deleted: state.{{{lc}}}.del.deleted,
+    retrieved: state.{{{lc}}}.update.retrieved,
+    updated: state.{{{lc}}}.update.updated,
+  };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     retrieve: id => dispatch(retrieve(id)),
     update: (item, values) => dispatch(update(item, values)),
-    del: item => dispatch(del(item)),
     reset: () => {
       dispatch(reset());
       dispatch(error(null));
@@ -74,6 +74,41 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(success(null));
     },
   };
+};
+
+const styles = {
+  viewStyle: {
+    borderBottomWidth: 1,
+    padding: 5,
+    backgroundColor: '#fff',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    borderColor: '#ddd',
+    position: 'relative',
+  },
+  textStyleAlert: {
+    color: 'red',
+    textAlign: 'center',
+  },
+  textStyleSuccess: {
+    color: 'green',
+    textAlign: 'center',
+  },
+};
+
+Update.propTypes = {
+  retrieveError: PropTypes.string,
+  retrieveLoading: PropTypes.{{{lc}}}.isRequired,
+  updateError: PropTypes.string,
+  updateLoading: PropTypes.bool.isRequired,
+  retrieved: PropTypes.object,
+  updated: PropTypes.object,
+  deleted: PropTypes.object,
+  retrieve: PropTypes.func.isRequired,
+  update: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  id: PropTypes.string,
+  created:PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Update);
