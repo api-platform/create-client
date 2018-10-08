@@ -60,6 +60,7 @@ class ListComponent extends Component {
       return <View style={ {flex: 1} }>
          <Text style={styles.textStyle}>{this.props.error}</Text>
       </View>;
+    } 
 
     return (
         <View style={ {flex: 1} }>

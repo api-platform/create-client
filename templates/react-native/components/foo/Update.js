@@ -98,7 +98,7 @@ const styles = {
 
 Update.propTypes = {
   retrieveError: PropTypes.string,
-  retrieveLoading: PropTypes.{{{lc}}}.isRequired,
+  retrieveLoading: PropTypes.bool.isRequired,
   updateError: PropTypes.string,
   updateLoading: PropTypes.bool.isRequired,
   retrieved: PropTypes.object,
