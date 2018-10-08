@@ -48,7 +48,7 @@ class Form extends Component {
           title='SAVE'
           onPress={handleSubmit(mySubmit)}
         />
-      </View>;
+      </View>
     );
   }
 }

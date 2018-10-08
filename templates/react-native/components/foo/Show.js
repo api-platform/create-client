@@ -53,7 +53,7 @@ class Show extends Component {
             key={value}
             hideChevron={true}
             title={title}
-            subtitle={value}
+            subtitle={Array.isArray(value) ? value.length.toString() : value}
             subtitleNumberOfLines={100}
         />
     );
@@ -99,8 +99,10 @@ class Show extends Component {
             {item &&
             <Card title="{{{title}}}">
               <List title="title">
-{{#each formFields}}
+{{#each fields}}
+    {{#ifNotResource reference }}
                 {Show.renderRow('{{{ name }}}', item['{{{ name }}}'])}
+    {{/ifNotResource}}
 {{/each}}
               </List>
             </Card>
