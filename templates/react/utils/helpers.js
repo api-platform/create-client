@@ -1,17 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { API_PATH } from '../config/_entrypoint';
+import { API_ENTRYPOINT } from '../config/_entrypoint';
 
 export function itemToLinks(items) {
   return Array.isArray(items) ? items.map(item => createLink(item)) : createLink(items);
 }
 
 function createLink(item) {
-  if ('string' !== typeof(item) || !item.includes(API_PATH)) {
+  const apiPathname = (new URL(API_ENTRYPOINT).pathname);
+  if ('string' !== typeof(item) || !item.includes(apiPathname)) {
     return <div key={item}>{item}</div>;
   }
 
-  const routeWithoutPrefix = item.replace(API_PATH, '');
+  const routeWithoutPrefix = item.replace(apiPathname, '');
   const splittedRoute = routeWithoutPrefix.split('/');
   const route = '/' === routeWithoutPrefix[0] ? splittedRoute[1] : splittedRoute[0];
 

@@ -2,7 +2,6 @@ import fs from "fs";
 import handlebars from "handlebars";
 import mkdirp from "mkdirp";
 import { sprintf } from "sprintf-js";
-import urlapi from "url";
 
 export default class {
   templates = {};
@@ -52,16 +51,8 @@ export default class {
     if (warn) console.log(`The file "${dest}" already exists`);
   }
 
-  createEntrypoint(apiEntry, dest) {
-    const url = urlapi.parse(apiEntry);
-    const { protocol, host, pathname } = url;
-
-    this.createFile(
-      "_entrypoint.js",
-      dest,
-      { host: `${protocol}//${host}`, path: pathname },
-      false
-    );
+  createEntrypoint(entrypoint, dest) {
+    this.createFile("_entrypoint.js", dest, { entrypoint }, false);
   }
 
   getHtmlInputTypeFromField(field) {
