@@ -36,7 +36,7 @@
       {{#each fields}}
           <tr>
             <td>{{name}}</td>
-            <td>\{{ item['{{{ name }}}'] }}</td>
+            <td>\{{ item['{{{name}}}'] }}</td>
           </tr>
       {{/each }}
         </tbody>

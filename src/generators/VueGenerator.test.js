@@ -40,7 +40,7 @@ test("Generate a Vue app", () => {
   expect(fs.existsSync(tmpobj.name + "/components/foo/Show.vue")).toBe(true);
   expect(fs.existsSync(tmpobj.name + "/components/foo/Update.vue")).toBe(true);
 
-  expect(fs.existsSync(tmpobj.name + "/config/_entrypoint.js")).toBe(true);
+  expect(fs.existsSync(tmpobj.name + "/config/entrypoint.js")).toBe(true);
 
   expect(fs.existsSync(tmpobj.name + "/error/SubmissionError.js")).toBe(true);
 

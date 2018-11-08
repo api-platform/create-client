@@ -3,24 +3,24 @@
 {{#each formFields}}
     <div class="form-group">
       <label
-        for="{{{ ../lc }}}_{{{ name }}}"
-        class="form-control-label">{{{ name }}}</label>
+        for="{{{../lc}}}_{{{name}}}"
+        class="form-control-label">{{{name}}}</label>
       <input
-        id="{{{ ../lc }}}_{{{ name }}}"
-        v-model="item.{{{ name }}}"
-        :class="['form-control', isInvalid('{{{ name }}}') ? 'is-invalid' : '']"
-        type="{{{ type }}}"
+        id="{{{../lc}}}_{{{name}}}"
+        v-model="item.{{{name}}}"
+        :class="['form-control', isInvalid('{{{name}}}') ? 'is-invalid' : '']"
+        type="{{{type}}}"
 {{#if step}}
-        step="{{{ step }}}"
+        step="{{{step}}}"
 {{/if~}}
 {{#if required}}
         required="true"
 {{/if}}
-        placeholder="{{{ description }}}"
-        @input="handleUpdateField('{{{ name }}}', $event.target.value)">
+        placeholder="{{{description}}}"
+        @input="handleUpdateField('{{{name}}}', $event.target.value)">
       <div
-        v-if="isInvalid('{{{ name }}}')"
-        class="invalid-feedback">\{{ violations.{{{ name }}} }}</div>
+        v-if="isInvalid('{{{name}}}')"
+        class="invalid-feedback">\{{ violations.{{{name}}} }}</div>
     </div>
 {{/each}}
 

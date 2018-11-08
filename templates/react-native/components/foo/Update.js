@@ -50,29 +50,22 @@ class Update extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    retrieveError: state.{{{lc}}}.update.retrieveError,
-    retrieveLoading: state.{{{lc}}}.update.retrieveLoading,
-    updateError: state.{{{lc}}}.update.updateError,
-    updateLoading: state.{{{lc}}}.update.updateLoading,
-    created: state.{{{lc}}}.create.created,
-    deleted: state.{{{lc}}}.del.deleted,
-    retrieved: state.{{{lc}}}.update.retrieved,
-    updated: state.{{{lc}}}.update.updated,
-  };
-};
+const mapStateToProps = state => ({
+  retrieveError: state.{{{lc}}}.update.retrieveError,
+  retrieveLoading: state.{{{lc}}}.update.retrieveLoading,
+  updateError: state.{{{lc}}}.update.updateError,
+  updateLoading: state.{{{lc}}}.update.updateLoading,
+  created: state.{{{lc}}}.create.created,
+  deleted: state.{{{lc}}}.del.deleted,
+  retrieved: state.{{{lc}}}.update.retrieved,
+  updated: state.{{{lc}}}.update.updated,
+});
 
 const mapDispatchToProps = dispatch => {
   return {
     retrieve: id => dispatch(retrieve(id)),
     update: (item, values) => dispatch(update(item, values)),
-    reset: () => {
-      dispatch(reset());
-      dispatch(error(null));
-      dispatch(loading(false));
-      dispatch(success(null));
-    },
+    reset: () => dispatch(reset()),
   };
 };
 

@@ -101,7 +101,7 @@ class Show extends Component {
               <List title="title">
 {{#each fields}}
     {{#ifNotResource reference }}
-                {Show.renderRow('{{{ name }}}', item['{{{ name }}}'])}
+                {Show.renderRow('{{{name}}}', item['{{{name}}}'])}
     {{/ifNotResource}}
 {{/each}}
               </List>
@@ -135,19 +135,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     retrieve: id => dispatch(retrieve(id)),
-    list: page =>dispatch(list(page)),
+    list: page => dispatch(list(page)),
     del: item => dispatch(del(item)),
-    reset: () => {
-      dispatch(reset());
-      dispatch(error(null));
-      dispatch(loading(false));
-    },
+    reset: () => dispatch(reset()),
   };
 };
-
 
 const styles = {
   viewStyle: {

@@ -22,7 +22,7 @@ export default class extends BaseGenerator {
       "actions/foo/show.js",
 
       // utils
-      "utils/fetch.js",
+      "utils/dataAccess.js",
 
       // reducers
       "reducers/foo/create.js",
@@ -68,7 +68,7 @@ export default class extends BaseGenerator {
 import ${titleLc} from './reducers/${titleLc}/';
 
 // Add the reducer
-combineReducers(${titleLc},{/* ... */}),
+combineReducers({ ${titleLc}, /* ... */ }),
 `)
     );
   }
@@ -91,19 +91,17 @@ combineReducers(${titleLc},{/* ... */}),
 
     // Create directories
     // These directories may already exist
-    for (let dir of [`${dir}/utils`, `${dir}/config`, `${dir}/routes`]) {
-      this.createDir(dir, false);
-    }
+    [`${dir}/utils`, `${dir}/config`, `${dir}/routes`].forEach(dir =>
+      this.createDir(dir, false)
+    );
 
-    for (let dir of [
+    [
       `${dir}/actions/${lc}`,
       `${dir}/components/${lc}`,
       `${dir}/reducers/${lc}`
-    ]) {
-      this.createDir(dir);
-    }
+    ].forEach(dir => this.createDir(dir));
 
-    for (let pattern of [
+    [
       // actions
       "actions/%s/create.js",
       "actions/%s/delete.js",
@@ -129,19 +127,15 @@ combineReducers(${titleLc},{/* ... */}),
 
       // routes
       "routes/%s.js"
-    ]) {
-      this.createFileFromPattern(pattern, dir, lc, context);
-    }
+    ].forEach(pattern => this.createFileFromPattern(pattern, dir, lc, context));
 
-    for (let file of [
-      "utils/fetch.js",
+    [
+      "utils/dataAccess.js",
       "utils/helpers.js",
       "components/Spinner.js",
       "components/Confirm.js"
-    ]) {
-      this.createFile(file, `${dir}/${file}`);
-    }
+    ].forEach(file => this.createFile(file, `${dir}/${file}`));
 
-    this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`);
+    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
   }
 }

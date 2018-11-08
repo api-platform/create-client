@@ -1,7 +1,7 @@
 export const configList = {
   '@id': true,
 {{#each fields}}
-  {{{ name }}}: true,
+  {{{name}}}: true,
 {{/each}}
   buttons: {
     show: true,
@@ -15,7 +15,7 @@ export const configList = {
 export const configEdit = {
   '@id': true,
 {{#each fields}}
-  {{{ name }}}: true,
+  {{{name}}}: true,
 {{/each}}
   buttons: {
     show: true,
@@ -28,7 +28,7 @@ export const configEdit = {
 export const configCreate = {
   '@id': true,
 {{#each fields}}
-  {{{ name }}}: true,
+  {{{name}}}: true,
 {{/each}}
   buttons: {
     list: true,
@@ -38,7 +38,7 @@ export const configCreate = {
 export const configShow = {
   '@id': true,
 {{#each fields}}
-  {{{ name }}}: true,
+  {{{name}}}: true,
 {{/each}}
   buttons: {
     edit: true,

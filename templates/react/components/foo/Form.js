@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import PropTypes from 'prop-types';
 
 class Form extends Component {
-  renderField = (data) => {
+  static propTypes = {
+    handleSubmit: PropTypes.func.isRequired,
+    error: PropTypes.string
+  };
+
+  renderField = data => {
     data.input.className = 'form-control';
 
     const isInvalid = data.meta.touched && !!data.meta.error;
@@ -15,24 +21,52 @@ class Form extends Component {
       data.input.className += ' is-valid';
     }
 
-    return <div className={`form-group`}>
-      <label htmlFor={`{{{ lc }}}_${data.input.name}`} className="form-control-label">{data.input.name}</label>
-      <input {...data.input} type={data.type} step={data.step} required={data.required} placeholder={data.placeholder} id={`{{{ lc }}}_${data.input.name}`}/>
-      {isInvalid && <div className="invalid-feedback">{data.meta.error}</div>}
-    </div>;
-  }
+    return (
+      <div className={`form-group`}>
+        <label
+          htmlFor={`{{{lc}}}_${data.input.name}`}
+          className="form-control-label"
+        >
+          {data.input.name}
+        </label>
+        <input
+          {...data.input}
+          type={data.type}
+          step={data.step}
+          required={data.required}
+          placeholder={data.placeholder}
+          id={`{{{lc}}}_${data.input.name}`}
+        />
+        {isInvalid && <div className="invalid-feedback">{data.meta.error}</div>}
+      </div>
+    );
+  };
 
   render() {
-    const { handleSubmit } = this.props;
-
-    return <form onSubmit={handleSubmit}>
+    return (
+      <form onSubmit={this.props.handleSubmit}>
 {{#each formFields}}
-      <Field component={this.renderField} name="{{{ name }}}" type="{{{ type }}}"{{#if step}} step="{{{ step }}}"{{/if}} placeholder="{{{ description }}}" {{#if required}}required={true}{{/if}}/>
+        <Field
+          component={this.renderField}
+          name="{{{name}}}"
+          type="{{{type}}}"{{#if step}}
+          step="{{{step}}}"{{/if}}
+          placeholder="{{{description}}}"{{#if required}}
+          required={true}{{/if}}{{#if reference}}{{#unless maxCardinality}}
+          normalize={v => v.split(',')}{{/unless}}{{/if}}
+        />
 {{/each}}
 
-        <button type="submit" className="btn btn-success">Submit</button>
-      </form>;
+        <button type="submit" className="btn btn-success">
+          Submit
+        </button>
+      </form>
+    );
   }
 }
 
-export default reduxForm({form: '{{{ lc }}}', enableReinitialize: true, keepDirtyOnReinitialize: true})(Form);
+export default reduxForm({
+  form: '{{{lc}}}',
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: true
+})(Form);

@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './Form';
-import { create, loading, error } from '../../actions/{{{lc}}}/create';
+import { create, loading, error, reset } from '../../actions/{{{lc}}}/create';
 import { Actions } from 'react-native-router-flux';
 import { delayRefresh } from '../../utils/helpers';
 
@@ -38,22 +38,14 @@ class Create extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    created: state.{{{lc}}}.create.created,
-    error: state.{{{lc}}}.create.error,
-    loading: state.{{{lc}}}.create.loading,
-  };
+  const {created, error, loading} = state.{{{lc}}}.create;
+  return {created, error, loading};
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    create: values => dispatch(create(values)),
-    reset: () => {
-      dispatch(loading(false));
-      dispatch(error(null));
-    },
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  create: values => dispatch(create(values)),
+  reset: () => dispatch(reset()),
+});
 
 const styles = {
   viewStyle: {

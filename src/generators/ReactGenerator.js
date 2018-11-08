@@ -5,7 +5,7 @@ export default class extends BaseGenerator {
   constructor(params) {
     super(params);
 
-    this.registerTemplates(`react-common/`, [
+    this.registerTemplates("react-common/", [
       // actions
       "actions/foo/create.js",
       "actions/foo/delete.js",
@@ -14,7 +14,7 @@ export default class extends BaseGenerator {
       "actions/foo/show.js",
 
       // utils
-      "utils/fetch.js",
+      "utils/dataAccess.js",
 
       // reducers
       "reducers/foo/create.js",
@@ -35,10 +35,7 @@ export default class extends BaseGenerator {
       "components/foo/Show.js",
 
       // routes
-      "routes/foo.js",
-
-      // utils
-      "utils/helpers.js"
+      "routes/foo.js"
     ]);
   }
 
@@ -61,7 +58,7 @@ import ${titleLc} from './reducers/${titleLc}/';
 import ${titleLc}Routes from './routes/${titleLc}';
 
 // Add the reducer
-combineReducers(${titleLc},{/* ... */}),
+combineReducers({ ${titleLc},/* ... */ }),
 
 // Add routes to <Switch>
 { ${titleLc}Routes }
@@ -87,19 +84,17 @@ combineReducers(${titleLc},{/* ... */}),
 
     // Create directories
     // These directories may already exist
-    for (let dir of [`${dir}/utils`, `${dir}/config`, `${dir}/routes`]) {
-      this.createDir(dir, false);
-    }
+    [`${dir}/utils`, `${dir}/config`, `${dir}/routes`].forEach(dir =>
+      this.createDir(dir, false)
+    );
 
-    for (let dir of [
+    [
       `${dir}/actions/${lc}`,
       `${dir}/components/${lc}`,
       `${dir}/reducers/${lc}`
-    ]) {
-      this.createDir(dir);
-    }
+    ].forEach(dir => this.createDir(dir));
 
-    for (let pattern of [
+    [
       // actions
       "actions/%s/create.js",
       "actions/%s/delete.js",
@@ -125,15 +120,16 @@ combineReducers(${titleLc},{/* ... */}),
 
       // routes
       "routes/%s.js"
-    ]) {
-      this.createFileFromPattern(pattern, dir, lc, context);
-    }
+    ].forEach(pattern => this.createFileFromPattern(pattern, dir, lc, context));
 
     // utils
-    for (let file of ["utils/helpers.js", "utils/fetch.js"]) {
-      this.createFile(file, `${dir}/${file}`, context, false);
-    }
+    this.createFile(
+      "utils/dataAccess.js",
+      `${dir}/utils/dataAccess.js`,
+      context,
+      false
+    );
 
-    this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`);
+    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
   }
 }

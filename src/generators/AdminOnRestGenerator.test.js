@@ -34,11 +34,9 @@ test("Generate a Admin On Rest app", () => {
   });
   generator.generate(api, resource, tmpobj.name);
 
-  [
-    "/config/_entrypoint.js",
-    "/resources/abc.js",
-    "/resource-import.js"
-  ].forEach(file => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
+  ["/config/entrypoint.js", "/resources/abc.js", "/resource-import.js"].forEach(
+    file => expect(fs.existsSync(tmpobj.name + file)).toBe(true)
+  );
 
   ["/components/abc.js", "/config/abc.js"].forEach(file => {
     expect(fs.existsSync(tmpobj.name + file)).toBe(true);
