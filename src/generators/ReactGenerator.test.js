@@ -35,9 +35,8 @@ test("Generate a React app", () => {
   generator.generate(api, resource, tmpobj.name);
 
   [
-    "/utils/fetch.js",
-    "/utils/helpers.js",
-    "/config/_entrypoint.js",
+    "/utils/dataAccess.js",
+    "/config/entrypoint.js",
 
     "/actions/abc/create.js",
     "/actions/abc/delete.js",

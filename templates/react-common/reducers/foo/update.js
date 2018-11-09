@@ -1,11 +1,14 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 
 export function retrieveError(state = null, action) {
   switch (action.type) {
-    case '{{{ uc }}}_UPDATE_RETRIEVE_ERROR':
+    case '{{{uc}}}_UPDATE_RETRIEVE_ERROR':
       return action.retrieveError;
 
-    case '{{{ uc }}}_UPDATE_RESET':
+    case '{{{uc}}}_UPDATE_MERCURE_DELETED':
+      return `${action.retrieved['@id']} has been deleted by another user.`;
+
+    case '{{{uc}}}_UPDATE_RESET':
       return null;
 
     default:
@@ -15,10 +18,10 @@ export function retrieveError(state = null, action) {
 
 export function retrieveLoading(state = false, action) {
   switch (action.type) {
-    case '{{{ uc }}}_UPDATE_RETRIEVE_LOADING':
+    case '{{{uc}}}_UPDATE_RETRIEVE_LOADING':
       return action.retrieveLoading;
 
-    case '{{{ uc }}}_UPDATE_RESET':
+    case '{{{uc}}}_UPDATE_RESET':
       return false;
 
     default:
@@ -28,10 +31,11 @@ export function retrieveLoading(state = false, action) {
 
 export function retrieved(state = null, action) {
   switch (action.type) {
-    case '{{{ uc }}}_UPDATE_RETRIEVE_SUCCESS':
+    case '{{{uc}}}_UPDATE_RETRIEVE_SUCCESS':
+    case '{{{uc}}}_UPDATE_MERCURE_MESSAGE':
       return action.retrieved;
 
-    case '{{{ uc }}}_UPDATE_RESET':
+    case '{{{uc}}}_UPDATE_RESET':
       return null;
 
     default:
@@ -41,10 +45,10 @@ export function retrieved(state = null, action) {
 
 export function updateError(state = null, action) {
   switch (action.type) {
-    case '{{{ uc }}}_UPDATE_UPDATE_ERROR':
+    case '{{{uc}}}_UPDATE_UPDATE_ERROR':
       return action.updateError;
 
-    case '{{{ uc }}}_UPDATE_RESET':
+    case '{{{uc}}}_UPDATE_RESET':
       return null;
 
     default:
@@ -54,10 +58,10 @@ export function updateError(state = null, action) {
 
 export function updateLoading(state = false, action) {
   switch (action.type) {
-    case '{{{ uc }}}_UPDATE_UPDATE_LOADING':
+    case '{{{uc}}}_UPDATE_UPDATE_LOADING':
       return action.updateLoading;
 
-    case '{{{ uc }}}_UPDATE_RESET':
+    case '{{{uc}}}_UPDATE_RESET':
       return false;
 
     default:
@@ -67,10 +71,10 @@ export function updateLoading(state = false, action) {
 
 export function updated(state = null, action) {
   switch (action.type) {
-    case '{{{ uc }}}_UPDATE_UPDATE_SUCCESS':
+    case '{{{uc}}}_UPDATE_UPDATE_SUCCESS':
       return action.updated;
 
-    case '{{{ uc }}}_UPDATE_RESET':
+    case '{{{uc}}}_UPDATE_RESET':
       return null;
 
     default:
@@ -78,4 +82,25 @@ export function updated(state = null, action) {
   }
 }
 
-export default combineReducers({retrieveError, retrieveLoading, retrieved, updateError, updateLoading, updated});
+export function eventSource(state = null, action) {
+  switch (action.type) {
+    case '{{{uc}}}_UPDATE_MERCURE_OPEN':
+      return action.eventSource;
+
+    case '{{{uc}}}_UPDATE_RESET':
+      return null;
+
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({
+  retrieveError,
+  retrieveLoading,
+  retrieved,
+  updateError,
+  updateLoading,
+  updated,
+  eventSource
+});

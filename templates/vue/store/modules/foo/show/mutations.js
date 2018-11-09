@@ -1,7 +1,7 @@
 import * as types from './mutation_types'
 
 export default {
-  [types.{{{ uc }}}_SHOW_RESET] (state) {
+  [types.{{{uc}}}_SHOW_RESET] (state) {
     Object.assign(state, {
       error: '',
       isLoading: false,
@@ -9,15 +9,15 @@ export default {
     })
   },
 
-  [types.{{{ uc }}}_SHOW_SET_ERROR] (state, error) {
+  [types.{{{uc}}}_SHOW_SET_ERROR] (state, error) {
     Object.assign(state, { error })
   },
 
-  [types.{{{ uc }}}_SHOW_SET_RETRIEVED] (state, retrieved) {
+  [types.{{{uc}}}_SHOW_SET_RETRIEVED] (state, retrieved) {
     Object.assign(state, { retrieved })
   },
 
-  [types.{{{ uc }}}_SHOW_TOGGLE_LOADING] (state) {
+  [types.{{{uc}}}_SHOW_TOGGLE_LOADING] (state) {
     Object.assign(state, { isLoading: !state.isLoading })
   }
 

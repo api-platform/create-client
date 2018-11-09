@@ -1,8 +1,8 @@
 language: node_js
 node_js:
+- '11'
 - '10'
 - '8'
-- '6'
 
 cache:
   directories:
@@ -13,6 +13,7 @@ script:
 - yarn test
 - yarn lint
 - yarn test-gen
+- yarn test-gen-cs
 - yarn test-gen-env
 - yarn check
 

@@ -64,6 +64,6 @@ export default class extends BaseGenerator {
 
     this.appendFile("resource-import.js", `${dir}/resource-import.js`, context);
 
-    this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`);
+    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
   }
 }

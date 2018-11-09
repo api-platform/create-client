@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>New {{{ title }}}</h1>
+    <h1>New {{{title}}}</h1>
 
     <div
       v-if="isLoading"

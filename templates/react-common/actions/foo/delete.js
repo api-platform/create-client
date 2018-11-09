@@ -1,29 +1,29 @@
-import fetch from '../../utils/fetch';
+import { fetch } from '../../utils/dataAccess';
 
 export function error(error) {
-  return {type: '{{{ uc }}}_DELETE_ERROR', error};
+  return { type: '{{{uc}}}_DELETE_ERROR', error };
 }
 
 export function loading(loading) {
-  return {type: '{{{ uc }}}_DELETE_LOADING', loading};
+  return { type: '{{{uc}}}_DELETE_LOADING', loading };
 }
 
 export function success(deleted) {
-  return {type: '{{{ uc }}}_DELETE_SUCCESS', deleted};
+  return { type: '{{{uc}}}_DELETE_SUCCESS', deleted };
 }
 
 export function del(item) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(loading(true));
 
-    return fetch(item['@id'], {method: 'DELETE'})
+    return fetch(item['@id'], { method: 'DELETE' })
       .then(() => {
         dispatch(loading(false));
-        dispatch(success(item))
+        dispatch(success(item));
       })
       .catch(e => {
         dispatch(loading(false));
-        dispatch(error(e.message))
+        dispatch(error(e.message));
       });
   };
 }

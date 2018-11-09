@@ -1,11 +1,14 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 
 export function error(state = null, action) {
   switch (action.type) {
-    case '{{{ uc }}}_SHOW_ERROR':
+    case '{{{uc}}}_SHOW_ERROR':
       return action.error;
 
-    case '{{{ uc }}}_SHOW_RESET':
+    case '{{{uc}}}_SHOW_MERCURE_DELETED':
+      return `${action.retrieved['@id']} has been deleted by another user.`;
+
+    case '{{{uc}}}_SHOW_RESET':
       return null;
 
     default:
@@ -15,10 +18,10 @@ export function error(state = null, action) {
 
 export function loading(state = false, action) {
   switch (action.type) {
-    case '{{{ uc }}}_SHOW_LOADING':
+    case '{{{uc}}}_SHOW_LOADING':
       return action.loading;
 
-    case '{{{ uc }}}_SHOW_RESET':
+    case '{{{uc}}}_SHOW_RESET':
       return false;
 
     default:
@@ -28,10 +31,11 @@ export function loading(state = false, action) {
 
 export function retrieved(state = null, action) {
   switch (action.type) {
-    case '{{{ uc }}}_SHOW_RETRIEVED_SUCCESS':
+    case '{{{uc}}}_SHOW_SUCCESS':
+    case '{{{uc}}}_SHOW_MERCURE_MESSAGE':
       return action.retrieved;
 
-    case '{{{ uc }}}_SHOW_RESET':
+    case '{{{uc}}}_SHOW_RESET':
       return null;
 
     default:
@@ -39,4 +43,17 @@ export function retrieved(state = null, action) {
   }
 }
 
-export default combineReducers({error, loading, retrieved});
+export function eventSource(state = null, action) {
+  switch (action.type) {
+    case '{{{uc}}}_SHOW_MERCURE_OPEN':
+      return action.eventSource;
+
+    case '{{{uc}}}_SHOW_RESET':
+      return null;
+
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({ error, loading, retrieved, eventSource });

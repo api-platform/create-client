@@ -1,113 +1,179 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { list, reset } from '../../actions/{{{ lc }}}/list';
-import { success } from '../../actions/{{{ lc }}}/delete';
-import { itemToLinks } from '../../utils/helpers';
+import { list, reset } from '../../actions/{{{lc}}}/list';
 
 class List extends Component {
   static propTypes = {
-    error: PropTypes.string,
+    retrieved: PropTypes.object,
     loading: PropTypes.bool.isRequired,
-    data: PropTypes.object.isRequired,
+    error: PropTypes.string,
+    eventSource: PropTypes.instanceOf(EventSource),
     deletedItem: PropTypes.object,
     list: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired
   };
 
   componentDidMount() {
-    this.props.list(this.props.match.params.page && decodeURIComponent(this.props.match.params.page));
+    this.props.list(
+      this.props.match.params.page &&
+        decodeURIComponent(this.props.match.params.page)
+    );
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.page !== nextProps.match.params.page) nextProps.list(nextProps.match.params.page && decodeURIComponent(nextProps.match.params.page));
+    if (this.props.match.params.page !== nextProps.match.params.page)
+      nextProps.list(
+        nextProps.match.params.page &&
+          decodeURIComponent(nextProps.match.params.page)
+      );
   }
 
   componentWillUnmount() {
-    this.props.reset();
+    this.props.reset(this.props.eventSource);
   }
 
   render() {
-    return <div>
-      <h1>{{{ title }}} List</h1>
+    return (
+      <div>
+        <h1>{{{title}}} List</h1>
 
-      {this.props.loading && <div className="alert alert-info">Loading...</div>}
-      {this.props.deletedItem && <div className="alert alert-success">{this.props.deletedItem['@id']} deleted.</div>}
-      {this.props.error && <div className="alert alert-danger">{this.props.error}</div>}
+        {this.props.loading && (
+          <div className="alert alert-info">Loading...</div>
+        )}
+        {this.props.deletedItem && (
+          <div className="alert alert-success">
+            {this.props.deletedItem['@id']} deleted.
+          </div>
+        )}
+        {this.props.error && (
+          <div className="alert alert-danger">{this.props.error}</div>
+        )}
 
-      <p><Link to="create" className="btn btn-primary">Create</Link></p>
+        <p>
+          <Link to="create" className="btn btn-primary">
+            Create
+          </Link>
+        </p>
 
         <table className="table table-responsive table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Id</th>
+          <thead>
+            <tr>
+              <th>id</th>
 {{#each fields}}
-            <th>{{name}}</th>
+              <th>{{name}}</th>
 {{/each}}
-            <th colSpan={2}></th>
-          </tr>
-        </thead>
-        <tbody>
-        {this.props.data['{{{ hydraPrefix }}}member'] && this.props.data['{{{ hydraPrefix }}}member'].map(item =>
-          <tr key={item['@id']}>
-            <th scope="row"><Link to={`show/${encodeURIComponent(item['@id'])}`}>{item['@id']}</Link></th>
+              <th colSpan={2} />
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.retrieved &&
+              this.props.retrieved['hydra:member'].map(item => (
+                <tr key={item['@id']}>
+                  <th scope="row">
+                    <Link to={`show/${encodeURIComponent(item['@id'])}`}>
+                      {item['@id']}
+                    </Link>
+                  </th>
 {{#each fields}}
-            <td>{item['{{{ name }}}'] ? itemToLinks(item['{{{ name }}}']) : ''}</td>
+                  <td>{{#if reference}}{this.renderLinks('{{{reference.name}}}', item['{{{name}}}'])}{{else}}{item['{{{name}}}']}{{/if}}</td>
 {{/each}}
-            <td>
-              <Link to={`show/${encodeURIComponent(item['@id'])}`}>
-                <span className="fa fa-search" aria-hidden="true"/>
-                <span className="sr-only">Show</span>
-              </Link>
-            </td>
-            <td>
-              <Link to={`edit/${encodeURIComponent(item['@id'])}`}>
-                <span className="fa fa-pencil" aria-hidden="true"/>
-                <span className="sr-only">Edit</span>
-              </Link>
-            </td>
-          </tr>
-        )}
-        </tbody>
-      </table>
+                  <td>
+                    <Link to={`show/${encodeURIComponent(item['@id'])}`}>
+                      <span className="fa fa-search" aria-hidden="true" />
+                      <span className="sr-only">Show</span>
+                    </Link>
+                  </td>
+                  <td>
+                    <Link to={`edit/${encodeURIComponent(item['@id'])}`}>
+                      <span className="fa fa-pencil" aria-hidden="true" />
+                      <span className="sr-only">Edit</span>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
 
-      {this.pagination()}
-    </div>;
+        {this.pagination()}
+      </div>
+    );
   }
 
   pagination() {
-    const view = this.props.data['hydra:view'];
+    const view = this.props.retrieved && this.props.retrieved['hydra:view'];
     if (!view) return;
 
-    const {'{{{ hydraPrefix }}}first': first, '{{{ hydraPrefix }}}previous': previous,'{{{ hydraPrefix }}}next': next, '{{{ hydraPrefix }}}last': last} = view;
+    const {
+      'hydra:first': first,
+      'hydra:previous': previous,
+      'hydra:next': next,
+      'hydra:last': last
+    } = view;
 
-    return <nav aria-label="Page navigation">
-        <Link to='.' className={`btn btn-primary${previous ? '' : ' disabled'}`}><span aria-hidden="true">&lArr;</span> First</Link>
-        <Link to={!previous || previous === first ? '.' : encodeURIComponent(previous)} className={`btn btn-primary${previous ? '' : ' disabled'}`}><span aria-hidden="true">&larr;</span> Previous</Link>
-        <Link to={next ? encodeURIComponent(next) : '#'} className={`btn btn-primary${next ? '' : ' disabled'}`}>Next <span aria-hidden="true">&rarr;</span></Link>
-        <Link to={last ? encodeURIComponent(last) : '#'} className={`btn btn-primary${next ? '' : ' disabled'}`}>Last <span aria-hidden="true">&rArr;</span></Link>
-    </nav>;
+    return (
+      <nav aria-label="Page navigation">
+        <Link
+          to="."
+          className={`btn btn-primary${previous ? '' : ' disabled'}`}
+        >
+          <span aria-hidden="true">&lArr;</span> First
+        </Link>
+        <Link
+          to={
+            !previous || previous === first ? '.' : encodeURIComponent(previous)
+          }
+          className={`btn btn-primary${previous ? '' : ' disabled'}`}
+        >
+          <span aria-hidden="true">&larr;</span> Previous
+        </Link>
+        <Link
+          to={next ? encodeURIComponent(next) : '#'}
+          className={`btn btn-primary${next ? '' : ' disabled'}`}
+        >
+          Next <span aria-hidden="true">&rarr;</span>
+        </Link>
+        <Link
+          to={last ? encodeURIComponent(last) : '#'}
+          className={`btn btn-primary${next ? '' : ' disabled'}`}
+        >
+          Last <span aria-hidden="true">&rArr;</span>
+        </Link>
+      </nav>
+    );
   }
+
+  renderLinks = (type, items) => {
+    if (Array.isArray(items)) {
+      return items.map((item, i) => (
+        <div key={i}>{this.renderLinks(type, item)}</div>
+      ));
+    }
+
+    return (
+      <Link to={`../${type}/show/${encodeURIComponent(items)}`}>{items}</Link>
+    );
+  };
 }
 
-const mapStateToProps = (state) => {
-  return {
-    data: state.{{{ lc }}}.list.data,
-    error: state.{{{ lc }}}.list.error,
-    loading: state.{{{ lc }}}.list.loading,
-    deletedItem: state.{{{ lc }}}.del.deleted,
-  };
+const mapStateToProps = state => {
+  const {
+    retrieved,
+    loading,
+    error,
+    eventSource,
+    deletedItem
+  } = state.{{{lc}}}.list;
+  return { retrieved, loading, error, eventSource, deletedItem };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    list: (page) => dispatch(list(page)),
-    reset: () => {
-      dispatch(reset());
-      dispatch(success(null));
-    },
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  list: page => dispatch(list(page)),
+  reset: eventSource => dispatch(reset(eventSource))
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(List);

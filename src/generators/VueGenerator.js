@@ -177,7 +177,7 @@ export const store = new Vuex.Store({
       false
     );
 
-    this.createEntrypoint(api.entrypoint, `${dir}/config/_entrypoint.js`);
+    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
     this.createFile(
       "utils/fetch.js",
       `${dir}/utils/fetch.js`,

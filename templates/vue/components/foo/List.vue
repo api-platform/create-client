@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{{ title }}} List</h1>
+    <h1>{{{title}}} List</h1>
 
     <div
       v-if="isLoading"
@@ -66,7 +66,7 @@
               <router-link
                 v-if="item"
                 :to="{name: '{{{../titleUcFirst}}}Show', params: { id: item['@id'] }}">
-                \{{ item['{{{ name }}}'] }}
+                \{{ item['{{{name}}}'] }}
               </router-link>
             </td>
 {{/each}}

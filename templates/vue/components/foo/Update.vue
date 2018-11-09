@@ -109,7 +109,7 @@ export default {
     }),
 
     del () {
-      if (window.confirm('Are you sure you want to delete this {{{ lc }}} ?')) {
+      if (window.confirm('Are you sure you want to delete this {{{lc}}} ?')) {
         this.deleteItem(this.retrieved)
       }
     },

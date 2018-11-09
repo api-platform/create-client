@@ -23,7 +23,7 @@ class ListComponent extends Component {
   }
 
   componentWillUnmount() {
-    this.props.reset();
+    this.props.reset(this.props.eventSource);
   }
 
   static show(id) {
@@ -60,38 +60,32 @@ class ListComponent extends Component {
       return <View style={ {flex: 1} }>
          <Text style={styles.textStyle}>{this.props.error}</Text>
       </View>;
-    } 
+    }
 
     return (
-        <View style={ {flex: 1} }>
+        this.props.retrieved && <View style={ {flex: 1} }>
           <ScrollView contentInset={ {top: -24} }
                       automaticallyAdjustContentInsets>
             <List>
-              {this.props.data['hydra:member'] &&
-              this.props.data['hydra:member'].map(
+              {this.props.retrieved['hydra:member'].map(
                   item => ListComponent.renderRow(item))}
             </List>
           </ScrollView>
-          {pagination(this.props.data['hydra:view'], this.props.list)}
+          {pagination(this.props.retrieved['hydra:view'], this.props.list)}
         </View>
     );
   }
 }
 
 const mapStateToProps = state => {
-  const {data, error, loading} = state.{{{lc}}}.list;
-  return {data, error, loading};
+  const {retrieved, error, loading, eventSource} = state.{{{lc}}}.list;
+  return {retrieved, error, loading, eventSource};
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    list: (page) => dispatch(list(page)),
-    reset: () => {
-      dispatch(reset());
-      dispatch(success(null));
-    },
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  list: page => dispatch(list(page)),
+  reset: eventSource => dispatch(reset(eventSource)),
+});
 
 const styles = {
   viewList: {
@@ -128,7 +122,8 @@ const styles = {
 ListComponent.propTypes = {
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  data: PropTypes.object.isRequired,
+  retrieved: PropTypes.object,
+  eventSource: PropTypes.object,
   list: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   refresh: PropTypes.number

@@ -10,7 +10,7 @@ export default class {
     this.hydraPrefix = hydraPrefix;
     this.templateDirectory = templateDirectory;
 
-    this.registerTemplates("", ["_entrypoint.js"]);
+    this.registerTemplates("", ["entrypoint.js"]);
   }
 
   registerTemplates(basePath, paths) {
@@ -52,7 +52,7 @@ export default class {
   }
 
   createEntrypoint(entrypoint, dest) {
-    this.createFile("_entrypoint.js", dest, { entrypoint }, false);
+    this.createFile("entrypoint.js", dest, { entrypoint }, false);
   }
 
   getHtmlInputTypeFromField(field) {
@@ -88,17 +88,11 @@ export default class {
     }
   }
 
-  buildFields(apiFields) {
-    let fields = [];
-    for (let apiField of apiFields) {
-      let field = this.getHtmlInputTypeFromField(apiField);
-      field.required = apiField.required;
-      field.name = apiField.name;
-      field.description = apiField.description.replace(/"/g, "'"); // fix for Form placeholder description
-
-      fields.push(field);
-    }
-
-    return fields;
+  buildFields(fields) {
+    return fields.map(field => ({
+      ...field,
+      ...this.getHtmlInputTypeFromField(field),
+      description: field.description.replace(/"/g, "'") // fix for Form placeholder description
+    }));
   }
 }
