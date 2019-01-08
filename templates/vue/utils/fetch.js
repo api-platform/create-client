@@ -12,11 +12,6 @@ export default function (id, options = {}) {
     options.headers.set('Content-Type', MIME_TYPE)
   }
 
-  const pathName = new URL(ENTRYPOINT).pathname;
-  if (pathName !== '/') {
-    id = pathName + id;
-  }
-
   return fetch(new URL(id, ENTRYPOINT).toString(), options).then((response) => {
     if (response.ok) return response
 
