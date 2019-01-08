@@ -48,7 +48,7 @@ let entrypoint =
 const outputDirectory =
   program.args[1] || process.env.API_PLATFORM_CLIENT_GENERATOR_OUTPUT;
 
-entrypoint = entrypoint.replace(/\/?$/, '/');
+entrypoint = entrypoint.replace(/\/?$/, "/");
 
 const generator = generators(program.generator)({
   hydraPrefix: program.hydraPrefix,
