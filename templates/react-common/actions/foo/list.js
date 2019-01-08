@@ -18,7 +18,7 @@ export function success(retrieved) {
   return { type: '{{{uc}}}_LIST_SUCCESS', retrieved };
 }
 
-export function list(page = '/{{{name}}}') {
+export function list(page = '{{{name}}}') {
   return dispatch => {
     dispatch(loading(true));
     dispatch(error(''));
