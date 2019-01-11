@@ -35,7 +35,7 @@ export function list(page = '{{{name}}}') {
         dispatch(loading(false));
         dispatch(success(retrieved));
 
-        if (hubURL)
+        if (hubURL && retrieved['hydra:member'].length)
           dispatch(
             mercureSubscribe(
               hubURL,
