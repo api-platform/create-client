@@ -6,7 +6,7 @@ export const create = ({ commit }, values) => {
   commit(types.{{{uc}}}_CREATE_SET_ERROR, '')
   commit(types.{{{uc}}}_CREATE_TOGGLE_LOADING)
 
-  return fetch('/{{{name}}}', { method: 'POST', body: JSON.stringify(values) })
+  return fetch('{{{name}}}', { method: 'POST', body: JSON.stringify(values) })
     .then((response) => {
       commit(types.{{{uc}}}_CREATE_TOGGLE_LOADING)
 

@@ -48,6 +48,10 @@ const entrypoint =
 const outputDirectory =
   program.args[1] || process.env.API_PLATFORM_CLIENT_GENERATOR_OUTPUT;
 
+const entrypointWithSlash = entrypoint.endsWith("/")
+  ? entrypoint
+  : entrypoint + "/";
+
 const generator = generators(program.generator)({
   hydraPrefix: program.hydraPrefix,
   templateDirectory: program.templateDirectory
@@ -56,16 +60,16 @@ const resourceToGenerate = program.resource
   ? program.resource.toLowerCase()
   : null;
 
-const parser = entrypoint => {
+const parser = entrypointWithSlash => {
   const parseDocumentation =
     "swagger" === program.format
       ? parseSwaggerDocumentation
       : parseHydraDocumentation;
 
-  return parseDocumentation(entrypoint);
+  return parseDocumentation(entrypointWithSlash);
 };
 
-parser(entrypoint)
+parser(entrypointWithSlash)
   .then(ret => {
     ret.api.resources
       .filter(({ deprecated }) => !deprecated)
