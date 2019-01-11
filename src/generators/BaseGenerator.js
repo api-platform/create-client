@@ -66,10 +66,10 @@ export default class {
 
     switch (field.range) {
       case "http://www.w3.org/2001/XMLSchema#integer":
-        return { type: "number" };
+        return { type: "number", number: true };
 
       case "http://www.w3.org/2001/XMLSchema#decimal":
-        return { type: "number", step: "0.1" };
+        return { type: "number", step: "0.1", number: true };
 
       case "http://www.w3.org/2001/XMLSchema#boolean":
         return { type: "checkbox" };
