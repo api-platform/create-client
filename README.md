@@ -22,7 +22,7 @@ Works especially well with APIs built with the [API Platform](https://api-platfo
 generate-api-platform-client https://demo.api-platform.com/ output/ --resource Book
 ```
 
-**Swagger**
+**OpenAPI** (experimental)
 ```sh
 generate-api-platform-client https://demo.api-platform.com/ output/ --resource Book --format swagger
 ```
