@@ -53,7 +53,7 @@ class Form extends Component {
           step="{{{step}}}"{{/if}}
           placeholder="{{{description}}}"{{#if required}}
           required={true}{{/if}}{{#if reference}}{{#unless maxCardinality}}
-          normalize={v => v.split(',')}{{/unless}}{{/if}}
+          normalize={v => v === '' ? [] : v.split(',')}{{/unless}}{{/if}}
         />
 {{/each}}
 
