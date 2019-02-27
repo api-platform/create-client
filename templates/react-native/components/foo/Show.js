@@ -99,6 +99,7 @@ class Show extends Component {
             {item &&
             <Card title="{{{title}}}">
               <List title="title">
+                {Show.renderRow('id', item['@id'])}
 {{#each fields}}
     {{#ifNotResource reference }}
                 {Show.renderRow('{{{name}}}', item['{{{name}}}'])}
