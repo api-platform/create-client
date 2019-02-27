@@ -39,6 +39,10 @@ class ListComponent extends Component {
             onPressRightIcon={() => ListComponent.show(item['@id'])}
             subtitle={
               <View>
+                <View style={viewList}>
+                  <Text style={listRowLeft}>id</Text>
+                  <Text style={[listRowRight, {fontWeight: 'bold'}]}>{item['@id']}</Text>
+                </View>
 {{#each fields}}
   {{#ifNotResource reference }}
                 <View style={viewList}>
