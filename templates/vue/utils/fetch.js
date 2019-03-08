@@ -3,6 +3,20 @@ import { ENTRYPOINT } from '../config/entrypoint';
 
 const MIME_TYPE = 'application/ld+json'
 
+function buildURL(entrypoint, id) {
+  entrypoint = entrypoint.replace(/\/+$/, '');
+
+  let splittedEntrypointPath = new URL(entrypoint).pathname.replace(/^\/+/, '').split('/');
+  let splittedId = id.replace(/^\/+/, '').split('/');
+
+  while (splittedEntrypointPath[0] === splittedId[0]) {
+    splittedEntrypointPath = splittedEntrypointPath.slice(1);
+    splittedId = splittedId.slice(1);
+  }
+
+  return `${entrypoint}/${splittedId.join('/')}`;
+}
+
 export default function (id, options = {}) {
   if (typeof options.headers === 'undefined') Object.assign(options, { headers: new Headers() })
 
@@ -12,7 +26,7 @@ export default function (id, options = {}) {
     options.headers.set('Content-Type', MIME_TYPE)
   }
 
-  return fetch(new URL(id, ENTRYPOINT).toString(), options).then((response) => {
+  return fetch(buildURL(ENTRYPOINT, id), options).then((response) => {
     if (response.ok) return response
 
     return response
