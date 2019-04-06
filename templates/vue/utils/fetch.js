@@ -12,7 +12,9 @@ export default function (id, options = {}) {
     options.headers.set('Content-Type', MIME_TYPE)
   }
 
-  return fetch(new URL(id, ENTRYPOINT).toString(), options).then((response) => {
+  const entryPoint = ENTRYPOINT + (ENTRYPOINT.endsWith('/') ? '' : '/')
+
+  return fetch(new URL(id, entryPoint), options).then((response) => {
     if (response.ok) return response
 
     return response
