@@ -20,47 +20,33 @@ Then, if it appears that it's a real bug, you may report it using Github by foll
 
 ## Pull requests
 
-### Writing a Pull Request
-
-First of all, you must decide on what branch your changes will be based. If the changes your are going to make are
-fully backward-compatible, you should base your changes on the latest stable branch.
-Otherwise, you should base your changes on the `master` branch.
-
 ### Installing the source version
 
-To install the source version of API Platform Admin in your project and contribute a patch, run the following command:
+To install the source version of the API Platform Client Generator in your project and contribute a patch, run the following commands:
 
-    # Link the source version of API Platform admin
-    $ cd ..
-    $ git clone git@github.com:api-platform/admin.git -b the-latest-stable-branch
-    $ cd admin
-    $ yarn link
-    $ cd ../yourpoject
-    $ yarn link api-platform-admin
-    # Use the React version of your project to build API Platform admin
-    $ cd node_modules/react
-    $ yarn link
-    $ cd ../../../admin
-    $ yarn link react
-    $ yarn watch
+```console
+$ git clone git@github.com:api-platform/client-generator.git
+$ cd client-generator
+$ yarn watch
+```
 
-You can now hack in the cloned repository of `api-platform-admin`.
+You can now hack in the cloned repository of `client-generator`. If you want to test your work, a `lib/index.js` file containing your last changes will be created each time you invoke `yarn build`. You can also use `yarn watch` to make it created each time a change is performed in your code!
 
 ### Testing your changes
 
 Before sending a Pull Request, make sure the tests pass correctly:
 
-```bash
-yarn test
+```console
+$ yarn test
 ```
 
 ### Matching coding standards
 
-The API Platform Admin project is inspired by the [Airbnb JavaScript style guide](https://github.com/airbnb/javascript).
+The API Platform Client Generator project is inspired by the [Airbnb JavaScript style guide](https://github.com/airbnb/javascript).
 But don't worry, you can fix CS issues automatically using [ESLint](https://eslint.org/) tool:
 
-```bash
-yarn fix
+```console
+$ yarn fix
 ```
 
 And then, add fixed file to your commit before push.
@@ -70,11 +56,10 @@ Be sure to add only **your modified files**. If another files are fixed by cs to
 
 When you send a PR, just make sure that:
 
-* You add valid test cases (Behat and PHPUnit).
+* You add valid test cases (you can run them using `yarn test`).
 * Tests are green.
 * You make a PR on the related documentation in the [api-platform/doc](https://github.com/api-platform/doc) repository.
-* You make the PR on the same branch you based your changes on. If you see commits
-that you did not make in your PR, you're doing it wrong.
+* You make the PR on the same branch you based your changes on. If you see commits that you did not make in your PR, you're doing it wrong.
 * Also don't forget to add a comment when you update a PR with a ping to [the maintainer](https://github.com/orgs/api-platform/people), so he/she will get a notification.
 * Squash your commits into one commit. (see the next chapter)
 
@@ -97,8 +82,8 @@ All Pull Requests must include the following header:
 
 If you have 3 commits. So start with:
 
-```bash
-git rebase -i HEAD~3
+```console
+$ git rebase -i HEAD~3
 ```
 
 An editor will be opened with your 3 commits, all prefixed by `pick`.
@@ -111,34 +96,34 @@ After that, all your commits where squashed into the first one and the commit me
 
 If you would like to rename your commit message type:
 
-```bash
-git commit --amend
+```console
+$ git commit --amend
 ```
 
 Now force push to update your PR:
 
-```bash
-git push --force
+```console
+$ git push --force
 ```
 
 # Tag a new version (contributors only)
 
 Always test before releasing a new one:
 
-```
-yarn build
-yarn test
-yarn lint
+```console
+$ yarn build
+$ yarn test
+$ yarn lint
 ```
 
 To fix linting errors, you can use `yarn fix`.
 
 To release a new version:
 
-```bash
-yarn version # this creates a tag
-git push
-git push --tags
+```console
+$ yarn version # this creates a tag
+$ git push
+$ git push --tags
 ```
 
 Travis will then publish the version on npm.
