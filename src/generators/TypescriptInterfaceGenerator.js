@@ -16,13 +16,15 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
 
   generate(api, resource, dir) {
     const dest = `${dir}/interfaces`;
+    const { fields, imports } = this.parseFields(resource);
 
     this.createDir(dest, false);
     this.createFile(
       "interface.ts",
       `${dest}/${resource.title.toLowerCase()}.ts`,
       {
-        fields: this.parseFields(resource),
+        fields,
+        imports,
         name: resource.title
       }
     );
@@ -63,7 +65,8 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
         name: field.name,
         type: this.getType(field),
         description: this.getDescription(field),
-        readonly: false
+        readonly: false,
+        reference: field.reference
       };
     }
 
@@ -77,10 +80,26 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
         name: field.name,
         type: this.getType(field),
         description: this.getDescription(field),
-        readonly: true
+        readonly: true,
+        reference: field.reference
       };
     }
 
-    return Object.keys(fields).map(e => fields[e]);
+    // Parse fields to add relevant imports, required for Typescript
+    const fieldsArray = Object.keys(fields).map(e => fields[e]);
+    const imports = {};
+
+    for (const field of fieldsArray) {
+      if (field.reference) {
+        imports[field.type] = {
+          type: field.type,
+          file: "./" + field.type.toLowerCase()
+        };
+      }
+    }
+
+    const importsArray = Object.keys(imports).map(e => imports[e]);
+
+    return { fields: fieldsArray, imports: importsArray };
   }
 }
