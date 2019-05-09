@@ -24,7 +24,7 @@ generate-api-platform-client https://demo.api-platform.com/ output/ --resource B
 
 **OpenAPI** (experimental)
 ```sh
-generate-api-platform-client https://demo.api-platform.com/ output/ --resource Book --format swagger
+generate-api-platform-client https://demo.api-platform.com/docs.json output/ --resource Book --format swagger
 ```
 
 ## Features
