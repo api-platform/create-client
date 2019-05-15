@@ -11,20 +11,20 @@ API Platform Client Generator is a generator to scaffold app with Create-Retriev
 
 Works especially well with APIs built with the [API Platform](https://api-platform.com) framework.
 
-## Installation
+## Documentation
 
-    yarn global add @api-platform/client-generator
+The documentation of API Platform's Client Generator can be browsed [on the official website](https://api-platform.com/docs/client-generator).
 
 ## Usage
 
 **Hydra**
 ```sh
-generate-api-platform-client https://demo.api-platform.com/ output/ --resource Book
+npx @api-platform/client-generator https://demo.api-platform.com/ output/ --resource Book
 ```
 
 **OpenAPI** (experimental)
 ```sh
-generate-api-platform-client https://demo.api-platform.com/docs.json output/ --resource Book --format swagger
+npx @api-platform/client-generator https://demo.api-platform.com/docs.json output/ --resource Book --format swagger
 ```
 
 ## Features
@@ -41,10 +41,6 @@ generate-api-platform-client https://demo.api-platform.com/docs.json output/ --r
 * The generated HTML is compatible with [Bootstrap](https://getbootstrap.com/) and include mandatory classes
 * The generated HTML code is accessible to people with disabilities ([ARIA](https://www.w3.org/WAI/intro/aria) support)
 * The Redux and the React Router configuration is also generated
-
-## Documentation
-
-The documentation of API Platform's Client Generator can be browsed [on the official website](https://api-platform.com/docs/client-generator).
 
 ## Credits
 
