@@ -1,4 +1,5 @@
 import AdminOnRestGenerator from "./generators/AdminOnRestGenerator";
+import NextGenerator from "./generators/NextGenerator";
 import ReactGenerator from "./generators/ReactGenerator";
 import ReactNativeGenerator from "./generators/ReactNativeGenerator";
 import TypescriptInterfaceGenerator from "./generators/TypescriptInterfaceGenerator";
@@ -14,6 +15,8 @@ export default function generators(generator = "react") {
   switch (generator) {
     case "admin-on-rest":
       return wrap(AdminOnRestGenerator);
+    case "next":
+      return wrap(NextGenerator);
     case "react":
       return wrap(ReactGenerator);
     case "react-native":

@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import fs from "fs";
 import handlebars from "handlebars";
 import mkdirp from "mkdirp";
@@ -30,7 +31,9 @@ export default class {
       return;
     }
 
-    if (warn) console.log(`The directory "${dir}" already exists`);
+    if (warn) {
+      console.log(chalk.yellow(`The directory "${dir}" already exists`));
+    }
   }
 
   createFileFromPattern(pattern, dir, lc, context) {
@@ -53,6 +56,34 @@ export default class {
 
   createEntrypoint(entrypoint, dest) {
     this.createFile("entrypoint.js", dest, { entrypoint }, false);
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  checkDependencies(dir) {}
+
+  getTargetDependencies(dir) {
+    const packageFilePath = `${dir}/package.json`;
+    let packageFile;
+    let dependencies = [];
+    try {
+      if (!fs.existsSync(packageFilePath)) {
+        throw new Error();
+      }
+      packageFile = fs.readFileSync(packageFilePath);
+      const configuration = JSON.parse(packageFile.toString());
+      dependencies = Object.keys({
+        ...configuration.dependencies,
+        ...configuration.devDependencies
+      });
+    } catch (e) {
+      console.log(
+        chalk.yellow(
+          "There's no readable package file in the target directory. Generator can't check dependencies."
+        )
+      );
+    }
+
+    return dependencies;
   }
 
   getHtmlInputTypeFromField(field) {

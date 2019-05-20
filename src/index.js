@@ -69,33 +69,37 @@ const parser = entrypointWithSlash => {
   return parseDocumentation(entrypointWithSlash);
 };
 
+// check generator dependencies
+generator.checkDependencies(outputDirectory);
+
 parser(entrypointWithSlash)
   .then(ret => {
     ret.api.resources
       .filter(({ deprecated }) => !deprecated)
-      .forEach(resource => {
+      .filter(resource => {
         const nameLc = resource.name.toLowerCase();
         const titleLc = resource.title.toLowerCase();
 
-        if (
+        return (
           null === resourceToGenerate ||
           nameLc === resourceToGenerate ||
           titleLc === resourceToGenerate
-        ) {
-          resource.fields = resource.fields.filter(
-            ({ deprecated }) => !deprecated
-          );
-          resource.readableFields = resource.readableFields.filter(
-            ({ deprecated }) => !deprecated
-          );
-          resource.writableFields = resource.writableFields.filter(
-            ({ deprecated }) => !deprecated
-          );
+        );
+      })
+      .map(resource => {
+        const filterDeprecated = list =>
+          list.filter(({ deprecated }) => !deprecated);
 
-          generator.generate(ret.api, resource, outputDirectory);
-          generator.help(resource);
-        }
-      });
+        resource.fields = filterDeprecated(resource.fields);
+        resource.readableFields = filterDeprecated(resource.readableFields);
+        resource.writableFields = filterDeprecated(resource.writableFields);
+
+        generator.generate(ret.api, resource, outputDirectory);
+
+        return resource;
+      })
+      // display helps after all resources have been generated to check relation dependency for example
+      .forEach(resource => generator.help(resource, outputDirectory));
   })
   .catch(e => {
     console.log(e);
