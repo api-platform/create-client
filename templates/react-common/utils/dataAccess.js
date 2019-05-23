@@ -26,13 +26,19 @@ export function fetch(id, options = {}) {
       if (!json.violations) throw Error(error);
 
       let errors = { _error: error };
-      json.violations.map(
-        violation => (errors[violation.propertyPath] = violation.message)
+      json.violations.forEach(violation =>
+        errors[violation.propertyPath]
+          ? (errors[violation.propertyPath] +=
+              '\n' + errors[violation.propertyPath])
+          : (errors[violation.propertyPath] = violation.message)
       );
 
       throw new SubmissionError(errors);
+    })
+    .catch(() => {
+      throw new Error(response.statusText);
     });
-  });
+});
 }
 
 export function mercureSubscribe(url, topics) {
