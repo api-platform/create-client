@@ -41,14 +41,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   computed: mapGetters({
-    deleteError: "{{{lc}}}/del/error",
-    error: "{{{lc}}}/show/error",
-    isLoading: "{{{lc}}}/show/isLoading",
-    item: "{{{lc}}}/show/retrieved"
+    deleteError: '{{{lc}}}/del/error',
+    error: '{{{lc}}}/show/error',
+    isLoading: '{{{lc}}}/show/isLoading',
+    item: '{{{lc}}}/show/retrieved',
   }),
 
   beforeDestroy() {
@@ -92,16 +92,16 @@ export default {
 
   methods: {
     ...mapActions({
-      del: "{{{lc}}}/del/del",
-      reset: "{{{lc}}}/show/reset",
-      retrieve: "{{{lc}}}/show/retrieve",
+      del: '{{{lc}}}/del/del',
+      reset: '{{{lc}}}/show/reset',
+      retrieve: '{{{lc}}}/show/retrieve',
     }),
 
-    deleteItem(item) {
-      if (window.confirm(this.$t("Are you sure you want to delete this item?")) {
-        this.del(item).then(() => this.$router.push({ name: "{{{titleUcFirst}}}List" }));
+    deleteItem() {
+      if (window.confirm(this.$t('Are you sure you want to delete this item?'))) {
+        this.del(this.item).then(() => this.$router.push({ name: '{{{titleUcFirst}}}List' }));
       }
-    }
-  }
+    },
+  },
 };
 </script>

@@ -49,8 +49,8 @@ export default {
       deleted: '{{{lc}}}/del/deleted',
       retrieved: '{{{lc}}}/update/retrieved',
       updated: '{{{lc}}}/update/updated',
-      violations: '{{{lc}}}/update/violations'
-    })
+      violations: '{{{lc}}}/update/violations',
+    }),
   },
 
   watch: {
@@ -130,7 +130,6 @@ export default {
       retrieve: '{{{lc}}}/update/retrieve',
       updateReset: '{{{lc}}}/update/reset',
       update: '{{{lc}}}/update/update',
-      updateRetrieved: '{{{lc}}}/update/updateRetrieved'
     }),
 
     del() {
@@ -146,7 +145,7 @@ export default {
     },
 
     onSendForm() {
-      this.update();
+      this.update(this.item);
     },
 
     resetForm() {

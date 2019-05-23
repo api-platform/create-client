@@ -17,7 +17,7 @@ export default {
     Object.assign(state, {
       deleted: null,
       error: '',
-      isLoading: false
+      isLoading: false,
     });
-  }
+  },
 };

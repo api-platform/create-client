@@ -9,10 +9,10 @@ export const del = ({ commit }, item) => {
       commit(types.{{{uc}}}_DELETE_TOGGLE_LOADING);
       commit(types.{{{uc}}}_DELETE_SET_DELETED, item);
     })
-    .catch((e) => {
+    .catch(e => {
       commit(types.{{{uc}}}_DELETE_TOGGLE_LOADING);
       commit(types.{{{uc}}}_DELETE_SET_ERROR, e.message);
-    })
+    });
 };
 
 export const reset = ({ commit }) => {

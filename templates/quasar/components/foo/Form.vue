@@ -1,13 +1,14 @@
 <template>
   <q-form class="q-gutter-md">
     {{#each formFields}}
+
     <q-input
       v-model="item.{{{name}}}"
       filled
       type="{{{type}}}"
       {{#if step}}
       step="{{{step}}}"
-      {{/if~}}
+      {{/if}}
       :label="$t('{{{name}}}')"
       lazy-rules
       :rules="[{{#if required}}val => !!val || $t('Field is required'), {{/if}}isInvalid('{{{name}}}')]"
@@ -21,18 +22,18 @@ export default {
   props: {
     values: {
       type: Object,
-      required: true
+      required: true,
     },
 
     errors: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
 
     initialValues: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
 
   computed: {
@@ -43,7 +44,7 @@ export default {
 
     violations() {
       return this.errors || {};
-    }
+    },
   },
 
   methods: {

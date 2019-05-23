@@ -47,9 +47,17 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
+  created() {
+    this.breadcrumbList = this.$route.meta.breadcrumb;
+    this.onRequest({
+      pagination: this.pagination,
+      filter: undefined,
+    });
+  },
+
   data() {
     return {
       pagination: {
@@ -61,9 +69,9 @@ export default {
       },
       columns: [
         { name: 'action' },
-        { name: 'id', field: '@id', label: 'id' },
+        { name: 'id', field: '@id', label: this.$t('id') },
         {{#each fields}}
-          { name: '{{name}}', field: '{{name}}', label: this.$t('{{name}}') },
+        { name: '{{name}}', field: '{{name}}', label: this.$t('{{name}}') },
         {{/each }}
       ],
       breadcrumbList: [],
@@ -110,21 +118,13 @@ export default {
   },
 
   computed: mapGetters({
-    deletedItem: "{{{lc}}}/del/deleted",
-    error: "{{{lc}}}/list/error",
-    items: "{{{lc}}}/list/items",
-    isLoading: "{{{lc}}}/list/isLoading",
-    view: "{{{lc}}}/list/view",
+    deletedItem: '{{{lc}}}/del/deleted',
+    error: '{{{lc}}}/list/error',
+    items: '{{{lc}}}/list/items',
+    isLoading: '{{{lc}}}/list/isLoading',
+    view: '{{{lc}}}/list/view',
     totalItems: 'user/list/totalItems',
   }),
-
-  created() {
-    this.breadcrumbList = this.$route.meta.breadcrumb;
-    this.onRequest({
-      pagination: this.pagination,
-      filter: undefined,
-    });
-  },
 
   methods: {
     ...mapActions({

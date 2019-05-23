@@ -7,15 +7,15 @@ export const create = ({ commit }, values) => {
   commit(types.{{{uc}}}_CREATE_TOGGLE_LOADING);
 
   return fetch('{{{name}}}', { method: 'POST', body: JSON.stringify(values) })
-    .then((response) => {
+    .then(response => {
       commit(types.{{{uc}}}_CREATE_TOGGLE_LOADING);
 
       return response.json();
     })
-    .then((data) => {
+    .then(data => {
       commit(types.{{{uc}}}_CREATE_SET_CREATED, data);
     })
-    .catch((e) => {
+    .catch(e => {
       commit(types.{{{uc}}}_CREATE_TOGGLE_LOADING);
 
       if (e instanceof SubmissionError) {
@@ -26,7 +26,7 @@ export const create = ({ commit }, values) => {
       }
 
       commit(types.{{{uc}}}_CREATE_SET_ERROR, e.message);
-    })
+    });
 };
 
 export const reset = ({ commit }) => {

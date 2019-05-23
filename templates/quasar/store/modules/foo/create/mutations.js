@@ -22,7 +22,7 @@ export default {
       created: null,
       error: '',
       isLoading: false,
-      violations: null
+      violations: null,
     });
   },
 };

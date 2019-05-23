@@ -6,11 +6,11 @@ export const retrieve = ({ commit }, id) => {
 
   return fetch(id)
     .then(response => response.json())
-    .then((data) => {
+    .then(data => {
       commit(types.{{{uc}}}_SHOW_TOGGLE_LOADING);
       commit(types.{{{uc}}}_SHOW_SET_RETRIEVED, data);
     })
-    .catch((e) => {
+    .catch(e => {
       commit(types.{{{uc}}}_SHOW_TOGGLE_LOADING);
       commit(types.{{{uc}}}_SHOW_SET_ERROR, e.message);
     });

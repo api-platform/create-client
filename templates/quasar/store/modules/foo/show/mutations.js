@@ -5,7 +5,7 @@ export default {
     Object.assign(state, {
       error: '',
       isLoading: false,
-      retrieved: null
+      retrieved: null,
     });
   },
 
@@ -19,6 +19,5 @@ export default {
 
   [types.{{{uc}}}_SHOW_TOGGLE_LOADING](state) {
     Object.assign(state, { isLoading: !state.isLoading });
-  }
-
+  },
 };
