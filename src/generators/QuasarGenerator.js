@@ -1,5 +1,7 @@
 import chalk from 'chalk';
 import BaseGenerator from './BaseGenerator';
+import handlebars from "handlebars";
+import hbh_comparison from "handlebars-helpers/lib/comparison";
 
 export default class extends BaseGenerator {
   constructor(params) {
@@ -50,6 +52,8 @@ export default class extends BaseGenerator {
       // utils
       'utils/fetch.js',
     ]);
+
+    handlebars.registerHelper("compare", hbh_comparison.compare);
   }
 
   help(resource) {
@@ -73,6 +77,10 @@ export default class extends BaseGenerator {
   'QForm',
   'QSelect',
   'QMarkupTable',
+  'QDate',
+  'QTime',
+  'QCheckbox',
+
 // 2. in 'framework.config', customize later
 notify: {
   position: 'top',
