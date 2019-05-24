@@ -6,7 +6,8 @@ import VueGenerator from "./generators/VueGenerator";
 import QuasarGenerator from "./generators/QuasarGenerator";
 
 function wrap(cl) {
-  return ({ hydraPrefix, templateDirectory }) => new cl({ hydraPrefix, templateDirectory });
+  return ({ hydraPrefix, templateDirectory }) =>
+    new cl({ hydraPrefix, templateDirectory });
 }
 
 export default function generators(generator = "react") {

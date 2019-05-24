@@ -50,7 +50,7 @@ export default class extends BaseGenerator {
       "error/SubmissionError.js",
 
       // utils
-      "utils/fetch.js",
+      "utils/fetch.js"
     ]);
 
     handlebars.registerHelper("compare", hbh_comparison.compare);
@@ -59,8 +59,13 @@ export default class extends BaseGenerator {
   help(resource) {
     const titleLc = resource.title.toLowerCase();
 
-    console.log("Code for the \"%s\" resource type has been generated!", resource.title);
-    console.log("Paste the following definitions in your application configuration:");
+    console.log(
+      'Code for the "%s" resource type has been generated!',
+      resource.title
+    );
+    console.log(
+      "Paste the following definitions in your application configuration:"
+    );
     console.log(
       chalk.green(`
 //Add to quasar.conf
@@ -115,13 +120,14 @@ export const store = new Vuex.Store({
     ${titleLc}
   }
 });
-`),
+`)
     );
   }
 
   generate(api, resource, dir) {
     const lc = resource.title.toLowerCase();
-    const titleUcFirst = resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
+    const titleUcFirst =
+      resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
 
     const context = {
       title: resource.title,
@@ -131,12 +137,17 @@ export const store = new Vuex.Store({
       fields: resource.readableFields,
       formFields: this.buildFields(resource.writableFields),
       hydraPrefix: this.hydraPrefix,
-      titleUcFirst,
+      titleUcFirst
     };
 
     // Create directories
     // These directories may already exist
-    for (let dir of [`${dir}/config`, `${dir}/error`, `${dir}/router`, `${dir}/utils`]) {
+    for (let dir of [
+      `${dir}/config`,
+      `${dir}/error`,
+      `${dir}/router`,
+      `${dir}/utils`
+    ]) {
       this.createDir(dir, false);
     }
 
@@ -147,7 +158,7 @@ export const store = new Vuex.Store({
       `${dir}/store/modules/${lc}/list`,
       `${dir}/store/modules/${lc}/show`,
       `${dir}/store/modules/${lc}/update`,
-      `${dir}/components/${lc}`,
+      `${dir}/components/${lc}`
     ]) {
       this.createDir(dir);
     }
@@ -189,20 +200,25 @@ export const store = new Vuex.Store({
       "components/%s/Show.vue",
 
       // routes
-      "router/%s.js",
+      "router/%s.js"
     ]) {
       this.createFileFromPattern(pattern, dir, lc, context);
     }
 
     // error
-    this.createFile("error/SubmissionError.js", `${dir}/error/SubmissionError.js`, context, false);
+    this.createFile(
+      "error/SubmissionError.js",
+      `${dir}/error/SubmissionError.js`,
+      context,
+      false
+    );
 
     this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
     this.createFile(
       "utils/fetch.js",
       `${dir}/utils/fetch.js`,
       { hydraPrefix: this.hydraPrefix },
-      false,
+      false
     );
   }
 }
