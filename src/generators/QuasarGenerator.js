@@ -80,6 +80,7 @@ export default class extends BaseGenerator {
   'QDate',
   'QTime',
   'QCheckbox',
+  'QPopupProxy',
 
 // 2. in 'framework.config', customize later
 notify: {
@@ -87,6 +88,12 @@ notify: {
   multiLine: true,
   timeout: 0,
 },
+
+// 3. in 'framework.directives
+  'ClosePopup'
+
+// 4. in 'framework.plugins
+  'Notify'
 
 //import routes
 import ${titleLc}Routes from './router/${titleLc}';

@@ -26,7 +26,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import {{{titleUcFirst}}}Form from './Form';
-
+import { date } from 'quasar';
 const { mapGetters, mapActions } = createNamespacedHelpers('{{{lc}}}/create');
 
 export default {
@@ -40,7 +40,19 @@ export default {
 
   data() {
     return {
-      item: {},
+      item: {
+        {{#each formFields}}
+          {{#compare type "==" "time" }}
+        {{{name}}}: date.formatDate(Date.now(), 'HH:mm'),
+          {{/compare}}
+          {{#compare type "==" "date" }}
+        {{{name}}}: date.formatDate(Date.now(), 'YYYY-MM-DD'),
+          {{/compare}}
+          {{#compare type "==" "dateTime" }}
+        {{{name}}}: date.formatDate(Date.now(), 'YYYY-MM-DD HH:mm'),
+          {{/compare}}
+        {{/each}}
+      },
       breadcrumbList: [],
     };
   },
