@@ -59,7 +59,7 @@ export default class extends BaseGenerator {
   help(resource) {
     const titleLc = resource.title.toLowerCase();
 
-    console.log("Code for the "%s" resource type has been generated!", resource.title);
+    console.log("Code for the \"%s\" resource type has been generated!", resource.title);
     console.log("Paste the following definitions in your application configuration:");
     console.log(
       chalk.green(`
