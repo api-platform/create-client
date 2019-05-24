@@ -54,7 +54,7 @@ test("Generate a typescript interface", () => {
 
 export interface Foo {
   '@id'?: string;
-  id: string;
+  id?: string;
   foo: any;
   foobar?: FooBar;
   readonly bar: string;
@@ -106,7 +106,7 @@ test("Generate a typescript interface without references to other interfaces", (
 
   const res = `export interface Foo {
   '@id'?: string;
-  id: string;
+  id?: string;
   foo: any;
   readonly bar: string;
 }

@@ -24,7 +24,7 @@ program
   )
   .option(
     "-g, --generator [generator]",
-    'The generator to use, one of "react", "react-native", "vue", "admin-on-rest"',
+    'The generator to use, one of "react", "react-native", "vue", "admin-on-rest", "typescript"',
     "react"
   )
   .option(
