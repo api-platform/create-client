@@ -69,8 +69,8 @@ export const normalize = (data: any) => {
   );
 }
 
-export const atob = (hash: string) => {
-  return typeof window !== 'undefined' ? window.atob(hash) : Buffer.from(hash, 'base64').toString('ascii');
+export const atob = (id: string) => {
+  return typeof window !== 'undefined' ? window.atob(id) : Buffer.from(id, 'base64').toString('ascii');
 }
 
 export const btoa = (str: string) => {

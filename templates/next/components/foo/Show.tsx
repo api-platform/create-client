@@ -7,7 +7,7 @@ interface Props {
   {{{lc}}}: {{{ucf}}};
 }
 
-export const {{{ucf}}}Show: NextFunctionComponent<Props> = ({ {{{lc}}} }) => (
+export const Show: NextFunctionComponent<Props> = ({ {{{lc}}} }) => (
   <div>
     <h1>Show { {{{lc}}}['@id'] }</h1>
     <table className="table table-responsive table-striped table-hover">

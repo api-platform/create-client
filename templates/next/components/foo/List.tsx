@@ -6,7 +6,7 @@ interface Props {
   {{{name}}}: {{{ucf}}}[];
 }
 
-export const {{{ucf}}}List: NextFunctionComponent<Props> = ({ {{{name}}} }) => (
+export const List: NextFunctionComponent<Props> = ({ {{{name}}} }) => (
   <div>
     <h1>{{{ucf}}} List</h1>
     <table className="table table-responsive table-striped table-hover">

@@ -32,35 +32,39 @@ export default class NextGenerator extends BaseGenerator {
   checkDependencies(dir) {
     const dependencies = this.getTargetDependencies(dir);
 
-    if (dependencies.length) {
-      if (!dependencies.includes("@zeit/next-typescript")) {
-        console.log(
-          chalk.yellow(
-            "It seems next-typescript is not installed but generator needs typescript to work efficiently."
-          )
-        );
-      }
+    if (!dependencies.length) {
+      return;
+    }
 
-      if (!dependencies.includes("express")) {
-        console.log(
-          chalk.yellow(
-            "It seems express is not installed but generator needs a custom express server to work efficiently."
-          )
-        );
-      }
+    if (!dependencies.includes("@zeit/next-typescript")) {
+      console.log(
+        chalk.yellow(
+          "It seems next-typescript is not installed but generator needs typescript to work efficiently."
+        )
+      );
+    }
+
+    if (!dependencies.includes("express")) {
+      console.log(
+        chalk.yellow(
+          "It seems express is not installed but generator needs a custom express server to work efficiently."
+        )
+      );
     }
   }
 
   checkImports(directory, imports, extension = ".ts") {
     imports.forEach(({ file }) => {
       if (!fs.existsSync(directory + file + extension)) {
-        console.log(
-          chalk.yellow(
-            'An import for the file  "%s" has been generated but the file doesn\'t exists.'
-          ),
-          file
-        );
+        return;
       }
+
+      console.log(
+        chalk.yellow(
+          'An import for the file  "%s" has been generated but the file doesn\'t exists.'
+        ),
+        file
+      );
     });
   }
 
@@ -79,8 +83,8 @@ export default class NextGenerator extends BaseGenerator {
     console.log("Paste the following route to your server configuration file:");
     console.log(
       chalk.green(`
-server.get('/${lc}/:hash', (req, res) => {
-  return app.render(req, res, '/${lc}', { hash: req.params.hash })
+server.get('/${lc}/:id', (req, res) => {
+  return app.render(req, res, '/${lc}', { id: req.params.id })
 });
 `)
     );
@@ -155,73 +159,50 @@ server.get('/${lc}/:hash', (req, res) => {
     this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.ts`);
   }
 
-  getType(field) {
-    if (field.reference) {
-      return field.reference.title;
-    }
-
-    switch (field.range) {
-      case "http://www.w3.org/2001/XMLSchema#integer":
-      case "http://www.w3.org/2001/XMLSchema#decimal":
-        return "number";
-      case "http://www.w3.org/2001/XMLSchema#boolean":
-        return "boolean";
-      case "http://www.w3.org/2001/XMLSchema#date":
-      case "http://www.w3.org/2001/XMLSchema#dateTime":
-      case "http://www.w3.org/2001/XMLSchema#time":
-        return "Date";
-      case "http://www.w3.org/2001/XMLSchema#string":
-        return "string";
-    }
-
-    return "any";
-  }
-
   getDescription(field) {
     return field.description ? field.description.replace(/"/g, "'") : "";
   }
 
   parseFields(resource) {
-    const fields = {};
-
-    for (let field of resource.writableFields) {
-      fields[field.name] = {
-        notrequired: !field.required,
-        name: field.name,
-        type: this.getType(field),
-        description: this.getDescription(field),
-        readonly: false,
-        reference: field.reference
-      };
-    }
-
-    for (let field of resource.readableFields) {
-      if (fields[field.name] !== undefined) {
-        continue;
+    const fields = [
+      ...resource.writableFields,
+      ...resource.readableFields
+    ].reduce((list, field) => {
+      if (list[field.name]) {
+        return list;
       }
 
-      fields[field.name] = {
-        notrequired: !field.required,
-        name: field.name,
-        type: this.getType(field),
-        description: this.getDescription(field),
-        readonly: true,
-        reference: field.reference
+      return {
+        ...list,
+        [field.name]: {
+          notrequired: !field.required,
+          name: field.name,
+          type: this.getType(field),
+          description: this.getDescription(field),
+          readonly: false,
+          reference: field.reference
+        }
       };
-    }
+    }, {});
 
     // Parse fields to add relevant imports, required for Typescript
     const fieldsArray = Object.values(fields);
-    const imports = {};
+    const imports = Object.values(fields).reduce(
+      (list, { reference, type }) => {
+        if (!reference) {
+          return list;
+        }
 
-    for (const field of fieldsArray) {
-      if (field.reference) {
-        imports[field.type] = {
-          type: field.type,
-          file: "./" + field.type
+        return {
+          ...list,
+          [type]: {
+            type,
+            file: "./" + type
+          }
         };
-      }
-    }
+      },
+      {}
+    );
 
     return { fields: fieldsArray, imports: Object.values(imports) };
   }

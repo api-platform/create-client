@@ -20,11 +20,11 @@ export const ReferenceLinks: NextFunctionComponent<Props> = ({items, type, useIc
   }
 
   // to avoid routes like "/book/books/d4s5s1-qd5sd5d-qsd5qsd4sd" we prefer enconding it
-  const hash = btoa(items);
+  const id = btoa(items);
   const resourceName = type.toLowerCase();
 
   return (
-    <Link href={`/${resourceName}?hash=${hash}`} as={`/${resourceName}/${hash}`}><a>
+    <Link href={`/${resourceName}?id=${id}`} as={`/${resourceName}/${id}`}><a>
       {useIcon ? (
         <Fragment>
           <span className="fa fa-search" aria-hidden="true" />

@@ -119,6 +119,28 @@ export default class {
     }
   }
 
+  getType(field) {
+    if (field.reference) {
+      return field.reference.title;
+    }
+
+    switch (field.range) {
+      case "http://www.w3.org/2001/XMLSchema#integer":
+      case "http://www.w3.org/2001/XMLSchema#decimal":
+        return "number";
+      case "http://www.w3.org/2001/XMLSchema#boolean":
+        return "boolean";
+      case "http://www.w3.org/2001/XMLSchema#date":
+      case "http://www.w3.org/2001/XMLSchema#dateTime":
+      case "http://www.w3.org/2001/XMLSchema#time":
+        return "Date";
+      case "http://www.w3.org/2001/XMLSchema#string":
+        return "string";
+    }
+
+    return "any";
+  }
+
   buildFields(fields) {
     return fields.map(field => ({
       ...field,
