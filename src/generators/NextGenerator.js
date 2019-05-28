@@ -1,11 +1,13 @@
 import chalk from "chalk";
 import fs from "fs";
 import BaseGenerator from "./BaseGenerator";
+import { parse, print, types } from "recast";
 
 export default class NextGenerator extends BaseGenerator {
   constructor(params) {
     super(params);
 
+    this.routeAddedtoServer = false;
     this.registerTemplates(`next/`, [
       // components
       "components/common/ReferenceLinks.tsx",
@@ -29,7 +31,7 @@ export default class NextGenerator extends BaseGenerator {
     ]);
   }
 
-  checkDependencies(dir) {
+  checkDependencies(dir, serverPath) {
     const dependencies = this.getTargetDependencies(dir);
 
     if (!dependencies.length) {
@@ -51,11 +53,23 @@ export default class NextGenerator extends BaseGenerator {
         )
       );
     }
+
+    if (serverPath) {
+      if (!fs.existsSync(serverPath)) {
+        console.log(chalk.red("Express server file doesn't exists."));
+        return;
+      }
+
+      const { mode } = fs.statSync(serverPath);
+      if ("200" !== (mode & parseInt("200", 8)).toString(8)) {
+        console.log(chalk.red("Express server file is not writable."));
+      }
+    }
   }
 
   checkImports(directory, imports, extension = ".ts") {
     imports.forEach(({ file }) => {
-      if (!fs.existsSync(directory + file + extension)) {
+      if (fs.existsSync(directory + file + extension)) {
         return;
       }
 
@@ -79,18 +93,16 @@ export default class NextGenerator extends BaseGenerator {
     this.checkImports(`${dir}/interfaces/`, imports);
 
     // server route configuration
-    const lc = resource.title.toLowerCase();
-    console.log("Paste the following route to your server configuration file:");
-    console.log(
-      chalk.green(`
-server.get('/${lc}/:id', (req, res) => {
-  return app.render(req, res, '/${lc}', { id: req.params.id })
-});
-`)
-    );
+    if (!this.routeAddedtoServer) {
+      const lc = resource.title.toLowerCase();
+      console.log(
+        "Paste the following route to your server configuration file:"
+      );
+      console.log(chalk.green(this.getShowRoute(lc)));
+    }
   }
 
-  generate(api, resource, dir) {
+  generate(api, resource, dir, serverPath) {
     const lc = resource.title.toLowerCase();
     const ucf = this.ucFirst(resource.title);
     const { fields, imports } = this.parseFields(resource);
@@ -157,6 +169,48 @@ server.get('/${lc}/:id', (req, res) => {
 
     // API config
     this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.ts`);
+
+    if (serverPath) {
+      this.createExpressRoute(serverPath, lc, this.getShowRoute(lc));
+    }
+  }
+
+  getShowRoute(name) {
+    return `server.get('/${name}/:id', (req, res) => {
+  return app.render(req, res, '/${name}', { id: req.params.id })
+});`;
+  }
+
+  createExpressRoute(path, resourceName, toInsert) {
+    const content = fs.readFileSync(path, "utf-8");
+    const code = parse(content);
+    const { namedTypes } = types;
+
+    types.visit(code, {
+      visitExpressionStatement: function(path) {
+        const args = path.value.expression.arguments;
+        if (
+          2 === args.length &&
+          namedTypes.Literal.check(args[0]) &&
+          "*" === args[0].value &&
+          namedTypes.ArrowFunctionExpression.check(args[1])
+        ) {
+          // insert route before "*" route
+          path.parent.value.body.splice(path.name, 0, toInsert);
+
+          return false;
+        }
+
+        this.traverse(path);
+      }
+    });
+
+    fs.writeFileSync(path, print(code).code);
+    console.log(
+      chalk.green("'Show' route for %s has been added to your server"),
+      resourceName
+    );
+    this.routeAddedtoServer = true;
   }
 
   getDescription(field) {

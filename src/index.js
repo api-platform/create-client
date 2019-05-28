@@ -24,7 +24,7 @@ program
   )
   .option(
     "-g, --generator [generator]",
-    'The generator to use, one of "react", "react-native", "vue", "admin-on-rest", "typescript"',
+    'The generator to use, one of "react", "react-native", "vue", "admin-on-rest", "typescript", "next"',
     "react"
   )
   .option(
@@ -33,6 +33,10 @@ program
     `${__dirname}/../templates/`
   )
   .option("-f, --format [hydra|swagger]", '"hydra" or "swagger', "hydra")
+  .option(
+    "-s, --server-path [serverPath]",
+    "Path to express server file to allow route dynamic addition (Next.js generator only)"
+  )
   .parse(process.argv);
 
 if (
@@ -59,6 +63,7 @@ const generator = generators(program.generator)({
 const resourceToGenerate = program.resource
   ? program.resource.toLowerCase()
   : null;
+const serverPath = program.serverPath ? program.serverPath.toLowerCase() : null;
 
 const parser = entrypointWithSlash => {
   const parseDocumentation =
@@ -70,7 +75,7 @@ const parser = entrypointWithSlash => {
 };
 
 // check generator dependencies
-generator.checkDependencies(outputDirectory);
+generator.checkDependencies(outputDirectory, serverPath);
 
 parser(entrypointWithSlash)
   .then(ret => {
@@ -94,7 +99,7 @@ parser(entrypointWithSlash)
         resource.readableFields = filterDeprecated(resource.readableFields);
         resource.writableFields = filterDeprecated(resource.writableFields);
 
-        generator.generate(ret.api, resource, outputDirectory);
+        generator.generate(ret.api, resource, outputDirectory, serverPath);
 
         return resource;
       })
