@@ -3,6 +3,7 @@ import ReactGenerator from "./generators/ReactGenerator";
 import ReactNativeGenerator from "./generators/ReactNativeGenerator";
 import TypescriptInterfaceGenerator from "./generators/TypescriptInterfaceGenerator";
 import VueGenerator from "./generators/VueGenerator";
+import QuasarGenerator from "./generators/QuasarGenerator";
 
 function wrap(cl) {
   return ({ hydraPrefix, templateDirectory }) =>
@@ -21,5 +22,7 @@ export default function generators(generator = "react") {
       return wrap(TypescriptInterfaceGenerator);
     case "vue":
       return wrap(VueGenerator);
+    case "quasar":
+      return wrap(QuasarGenerator);
   }
 }
