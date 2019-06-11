@@ -80,7 +80,6 @@ describe("generate", () => {
       "/error/SubmissionError.ts",
       "/interfaces/Abc.ts",
       "/interfaces/Collection.ts",
-      "/utils/dataAccess.ts",
       "/pages/abc.tsx",
       "/pages/abcs.tsx",
       "/utils/dataAccess.ts"

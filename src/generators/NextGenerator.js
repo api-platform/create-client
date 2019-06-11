@@ -251,7 +251,7 @@ export default class NextGenerator extends BaseGenerator {
           ...list,
           [type]: {
             type,
-            file: "./" + type
+            file: `./${type}`
           }
         };
       },
