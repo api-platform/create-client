@@ -27,15 +27,26 @@
           <tr>
             <th>\{{ $t('Field') }}</th>
             <th>\{{ $t('Value') }}</th>
+
+            <th>\{{ $t('Field') }}</th>
+            <th>\{{ $t('Value') }}</th>
           </tr>
         </thead>
         <tbody>
-          {{#each fields}}
+          {{#forEach fields}}
+          {{#ifOdd index}}
           <tr>
+          {{/ifOdd}}
             <td>\{{ $t('{{{name}}}') }}</td>
             <td>\{{ item['{{{name}}}'] }}</td>
+          {{#ifEven index}}
           </tr>
-          {{/each }}
+          {{/ifEven}}
+          {{#if isLast}}{{#ifOdd index}}
+            <td></td>
+          </tr>
+          {{/ifOdd}}{{/if}}
+          {{/forEach }}
         </tbody>
       </q-markup-table>
     </div>
