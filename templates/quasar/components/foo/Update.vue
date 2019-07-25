@@ -7,11 +7,13 @@
         <q-breadcrumbs-el
           v-for="(breadcrumb, idx) in breadcrumbList"
           :key="idx"
-          :label="breadcrumb.label"
+          :label="
+            breadcrumb.label +
+              (idx === breadcrumbList.length - 1 && item && item['@id'] ? item['@id'] : '')
+          "
           :icon="breadcrumb.icon"
           :to="breadcrumb.to"
         />
-        <q-breadcrumbs-el v-if="item && item['@id']" :label="item['@id']" />
       </q-breadcrumbs>
       <q-space />
       <div>
@@ -20,7 +22,6 @@
         <q-btn :label="$t('Delete')" color="primary" flat class="q-ml-sm" @click="del" />
       </div>
     </q-toolbar>
-
     <{{{titleUcFirst}}}Form v-if="item" :values="item" :errors="violations" />
   </div>
 </template>
@@ -30,6 +31,8 @@ import { mapActions, mapGetters } from 'vuex';
 import {{{titleUcFirst}}}Form from './Form.vue';
 
 export default {
+  name: '{{{titleUcFirst}}}Update',
+
   components: {
     {{{titleUcFirst}}}Form,
   },
@@ -145,7 +148,11 @@ export default {
     },
 
     onSendForm() {
-      this.update(this.item);
+      this.$refs.createForm.$children[0].validate().then(success => {
+        if (success) {
+          this.update(this.item);
+        }
+      });
     },
 
     resetForm() {

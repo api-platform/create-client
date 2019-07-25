@@ -1,12 +1,9 @@
 import * as types from './mutation_types';
+import initState from './state';
 
 export default {
   [types.{{{uc}}}_SHOW_RESET](state) {
-    Object.assign(state, {
-      error: '',
-      isLoading: false,
-      retrieved: null,
-    });
+    Object.assign(state, initState);
   },
 
   [types.{{{uc}}}_SHOW_SET_ERROR](state, error) {

@@ -3,6 +3,9 @@ import { ENTRYPOINT } from '../config/entrypoint';
 
 const MIME_TYPE = 'application/ld+json';
 
+// make query string array of values
+const makeParamArray = (key, arr) => arr.map(val => `${key}[]=${val}`).join('&');
+
 export default function(id, options = {}) {
   if (typeof options.headers === 'undefined') Object.assign(options, { headers: new Headers() });
 
@@ -18,10 +21,20 @@ export default function(id, options = {}) {
 
   if (options.params) {
     var queryString = Object.keys(options.params)
-      .map(key => key + '=' + options.params[key])
+      .map(key =>
+        Array.isArray(options.params[key])
+          ? makeParamArray(key, options.params[key])
+          : `${key}=${options.params[key]}`,
+      )
       .join('&');
     id = `${id}?${queryString}`;
   }
+
+  // enable CORS for all requests
+  Object.assign(options, {
+    mode: 'cors',
+    credentials: 'include',
+  });
 
   const entryPoint = ENTRYPOINT + (ENTRYPOINT.endsWith('/') ? '' : '/');
 

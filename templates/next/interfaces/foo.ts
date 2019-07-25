@@ -4,9 +4,10 @@ import { {{type}} } from "{{file}}";
 {{#if imports.length}}
 
 {{/if}}
-export interface {{{name}}} {
+export interface {{{ucf}}} {
   '@id'?: string;
+  id?: string;
 {{#each fields}}
- {{#if readonly}} readonly{{/if}} {{{name}}}{{#if notrequired}}?{{/if}}: {{{type}}};
+ {{#if readonly}}readonly{{/if}} {{{name}}}?: {{{type}}};
 {{/each}}
 }

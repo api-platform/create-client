@@ -30,28 +30,6 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
     );
   }
 
-  getType(field) {
-    if (field.reference) {
-      return field.reference.title;
-    }
-
-    switch (field.range) {
-      case "http://www.w3.org/2001/XMLSchema#integer":
-      case "http://www.w3.org/2001/XMLSchema#decimal":
-        return "number";
-      case "http://www.w3.org/2001/XMLSchema#boolean":
-        return "boolean";
-      case "http://www.w3.org/2001/XMLSchema#date":
-      case "http://www.w3.org/2001/XMLSchema#dateTime":
-      case "http://www.w3.org/2001/XMLSchema#time":
-        return "Date";
-      case "http://www.w3.org/2001/XMLSchema#string":
-        return "string";
-    }
-
-    return "any";
-  }
-
   getDescription(field) {
     return field.description ? field.description.replace(/"/g, "'") : "";
   }
@@ -82,6 +60,17 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
         description: this.getDescription(field),
         readonly: true,
         reference: field.reference
+      };
+    }
+
+    // If id is not present, add it manually with default values
+    if (!("id" in fields)) {
+      fields["id"] = {
+        notrequired: true,
+        name: "id",
+        type: "string",
+        description: null,
+        readonly: false
       };
     }
 

@@ -7,11 +7,13 @@
         <q-breadcrumbs-el
           v-for="(breadcrumb, idx) in breadcrumbList"
           :key="idx"
-          :label="breadcrumb.label"
+          :label="
+            breadcrumb.label +
+              (idx === breadcrumbList.length - 1 && item && item['@id'] ? item['@id'] : '')
+          "
           :icon="breadcrumb.icon"
           :to="breadcrumb.to"
         />
-        <q-breadcrumbs-el v-if="item && item['@id']" :label="item['@id']" />
       </q-breadcrumbs>
       <q-space />
       <div>
@@ -41,14 +43,16 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 
 export default {
+  name: "{{{titleUcFirst}}}Show",
+
   computed: mapGetters({
-    deleteError: '{{{lc}}}/del/error',
-    error: '{{{lc}}}/show/error',
-    isLoading: '{{{lc}}}/show/isLoading',
-    item: '{{{lc}}}/show/retrieved',
+    deleteError: "{{{lc}}}/del/error",
+    error: "{{{lc}}}/show/error",
+    isLoading: "{{{lc}}}/show/isLoading",
+    item: "{{{lc}}}/show/retrieved"
   }),
 
   beforeDestroy() {
@@ -73,9 +77,9 @@ export default {
       message &&
         this.$q.notify({
           message,
-          color: 'red',
-          icon: 'error',
-          closeBtn: this.$t('Close'),
+          color: "red",
+          icon: "error",
+          closeBtn: this.$t("Close")
         });
     },
 
@@ -83,25 +87,29 @@ export default {
       message &&
         this.$q.notify({
           message,
-          color: 'red',
-          icon: 'error',
-          closeBtn: this.$t('Close'),
+          color: "red",
+          icon: "error",
+          closeBtn: this.$t("Close")
         });
-    },
+    }
   },
 
   methods: {
     ...mapActions({
-      del: '{{{lc}}}/del/del',
-      reset: '{{{lc}}}/show/reset',
-      retrieve: '{{{lc}}}/show/retrieve',
+      del: "{{{lc}}}/del/del",
+      reset: "{{{lc}}}/show/reset",
+      retrieve: "{{{lc}}}/show/retrieve"
     }),
 
     deleteItem() {
-      if (window.confirm(this.$t('Are you sure you want to delete this item?'))) {
-        this.del(this.item).then(() => this.$router.push({ name: '{{{titleUcFirst}}}List' }));
+      if (
+        window.confirm(this.$t("Are you sure you want to delete this item?"))
+      ) {
+        this.del(this.item).then(() =>
+          this.$router.push({ name: "{{{titleUcFirst}}}List" })
+        );
       }
-    },
-  },
+    }
+  }
 };
 </script>

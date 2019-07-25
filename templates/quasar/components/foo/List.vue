@@ -13,8 +13,24 @@
         />
       </q-breadcrumbs>
       <q-space />
-      <div><q-btn flat round dense icon="add" :to="{ name: '{{{titleUcFirst}}}Create' }" /></div>
+      <div>
+        <q-btn flat round dense icon="add" :to="{ name: '{{{titleUcFirst}}}Create' }" />
+      </div>
     </q-toolbar>
+
+    {{#if parameters.length}}
+    <q-expansion-item icon="search" label="Filters" v-model="filtersExpanded">
+      <q-card>
+        <q-card-section>
+          <UserFilterForm ref="filterForm" :values="filters" />
+        </q-card-section>
+        <q-card-section>
+          <q-btn :label="$t('Filter')" color="primary" @click="onSendFilter" />
+          <q-btn :label="$t('Reset')" color="primary" flat class="q-ml-sm" @click="resetFilter" />
+        </q-card-section>
+      </q-card>
+    </q-expansion-item>
+    {{/if}}
 
     <q-table
       :data="items"
@@ -48,13 +64,17 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import {{{titleUcFirst}}}FilterForm from './Filter';
 
 export default {
+  name: '{{{titleUcFirst}}}List',
+  components: {
+    {{{titleUcFirst}}}FilterForm,
+  },
   created() {
     this.breadcrumbList = this.$route.meta.breadcrumb;
     this.onRequest({
-      pagination: this.pagination,
-      filter: undefined,
+      pagination: this.pagination
     });
   },
 
@@ -76,6 +96,10 @@ export default {
       ],
       breadcrumbList: [],
       nextPage: null,
+      {{#if parameters.length}}
+      filters: {},
+      filtersExpanded: false,
+      {{/if}}
     };
   },
 
@@ -123,19 +147,33 @@ export default {
     items: '{{{lc}}}/list/items',
     isLoading: '{{{lc}}}/list/isLoading',
     view: '{{{lc}}}/list/view',
-    totalItems: 'user/list/totalItems',
+    totalItems: '{{{lc}}}/list/totalItems',
   }),
 
   methods: {
     ...mapActions({
-      getPage: 'user/list/default',
+      getPage: '{{{lc}}}/list/getItems',
     }),
 
     onRequest(props) {
-      let { page, rowsPerPage } = props.pagination;
+      const {
+        pagination: { page, rowsPerPage: itemsPerPage },
+      } = props;
       this.nextPage = page;
-      this.getPage({ params: { itemsPerPage: rowsPerPage, page } });
+      this.getPage({ params: { itemsPerPage, page, ...this.filters } });
     },
+
+    {{#if parameters.length}}
+    onSendFilter() {
+      this.onRequest({
+        pagination: this.pagination,
+      });
+    },
+
+    resetFilter() {
+      this.filters = {};
+    },
+    {{/if}}
   },
 };
 </script>

@@ -1,6 +1,6 @@
 {
   "name": "@api-platform/client-generator",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "Generate a CRUD application built with React, Redux and React Router from an Hydra-enabled API",
   "files": [
     "*.md",
@@ -41,6 +41,7 @@
     "handlebars-helpers": "^0.10.0",
     "isomorphic-fetch": "^2.2.1",
     "mkdirp": "^0.5.1",
+    "recast": "^0.18.1",
     "sprintf-js": "^1.1.1"
   },
   "scripts": {
