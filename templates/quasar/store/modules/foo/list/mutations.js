@@ -1,14 +1,9 @@
 import * as types from './mutation_types';
+import initState from './state';
 
 export default {
   [types.RESET](state) {
-    Object.assign(state, {
-      error: '',
-      isLoading: false,
-      items: [],
-      view: [],
-      totalItems: 10,
-    });
+    Object.assign(state, initState);
   },
 
   [types.SET_ERROR](state, error) {
@@ -17,6 +12,10 @@ export default {
 
   [types.SET_ITEMS](state, items) {
     Object.assign(state, { items });
+  },
+
+  [types.SET_SELECT_ITEMS](state, selectItems) {
+    Object.assign(state, { selectItems });
   },
 
   [types.TOGGLE_LOADING](state) {

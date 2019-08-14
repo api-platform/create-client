@@ -1,4 +1,5 @@
 import * as types from './mutation_types';
+import initState from './state';
 
 export default {
   [types.{{{uc}}}_CREATE_SET_ERROR](state, error) {
@@ -18,11 +19,6 @@ export default {
   },
 
   [types.{{{uc}}}_CREATE_RESET](state) {
-    Object.assign(state, {
-      created: null,
-      error: '',
-      isLoading: false,
-      violations: null,
-    });
+    Object.assign(state, initState);
   },
 };

@@ -18,7 +18,6 @@
         <q-btn :label="$t('Reset')" color="primary" flat class="q-ml-sm" @click="resetForm" />
       </div>
     </q-toolbar>
-
     <{{{titleUcFirst}}}Form ref="createForm" :values="item" :errors="violations" />
   </div>
 </template>
@@ -26,10 +25,13 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import {{{titleUcFirst}}}Form from './Form';
+{{#if containsDate}}
 import { date } from 'quasar';
+{{/if}}
 const { mapGetters, mapActions } = createNamespacedHelpers('{{{lc}}}/create');
 
 export default {
+  name: '{{{titleUcFirst}}}Create',
   components: {
     {{{titleUcFirst}}}Form,
   },
@@ -92,7 +94,11 @@ export default {
     ...mapActions(['create']),
 
     onSendForm() {
-      this.create(this.item);
+      this.$refs.createForm.$children[0].validate().then(success => {
+        if (success) {
+          this.create(this.item);
+        }
+      });
     },
 
     resetForm() {

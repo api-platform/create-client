@@ -1,4 +1,5 @@
 import * as types from './mutation_types';
+import initState from './state';
 
 export default {
   [types.{{{uc}}}_DELETE_SET_DELETED](state, deleted) {
@@ -14,10 +15,6 @@ export default {
   },
 
   [types.{{{uc}}}_DELETE_RESET](state) {
-    Object.assign(state, {
-      deleted: null,
-      error: '',
-      isLoading: false,
-    });
+    Object.assign(state, initState);
   },
 };

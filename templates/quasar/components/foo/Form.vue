@@ -1,70 +1,70 @@
 <template>
-  <q-form class="q-gutter-md">
-    {{#each formFields}}
-
+  <q-form class="q-pa-md q-col-gutter-y-md">
+    {{#forEach formFields}}
+    {{#ifOdd index}}
+    <div class="row q-gutter-md">
+    {{/ifOdd}}
     {{#compare type "==" "checkbox" }}
-    <q-checkbox v-model="item.{{{name}}}" :label="$t('{{{name}}}')" />
+      <q-checkbox v-model="item.{{{name}}}" :label="$t('{{{name}}}')" class="col-12 col-md" />
     {{/compare}}
     {{#compare type "==" "date" }}
-    <q-input
-      filled
-      v-model="item.{{{name}}}"
-      mask="date"
-      :rules="['date']"
-      :label="$t('{{{name}}}')"
-    >
-      <template v-slot:append>
-        <q-icon name="event" class="cursor-pointer">
-          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-            <q-date v-model="item.{{{name}}}" @input="() => $refs.qDateProxy.hide()" />
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-    </q-input>
+      <q-input
+        filled
+        v-model="item.{{{name}}}"
+        mask="date"
+        :rules="['date']"
+        :label="$t('{{{name}}}')"
+        class="col-12 col-md"
+      >
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+              <q-date v-model="item.{{{name}}}" @input="() => $refs.qDateProxy.hide()" />
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
     {{/compare}}
     {{#compare type "==" "time" }}
-    <q-input
-      filled
-      v-model="item.{{{name}}}"
-      mask="time"
-      :rules="['time']"
-      :label="$t('{{{name}}}')"
-    >
-      <template v-slot:append>
-        <q-icon name="access_time" class="cursor-pointer">
-          <q-popup-proxy transition-show="scale" transition-hide="scale">
-            <q-time v-model="item.{{{name}}}" />
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-    </q-input>
+      <q-input
+        filled
+        v-model="item.{{{name}}}"
+        mask="time"
+        :rules="['time']"
+        :label="$t('{{{name}}}')"
+        class="col-12 col-md"
+      >
+        <template v-slot:append>
+          <q-icon name="access_time" class="cursor-pointer">
+            <q-popup-proxy transition-show="scale" transition-hide="scale">
+              <q-time v-model="item.{{{name}}}" />
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
     {{/compare}}
     {{#compare type "==" "dateTime" }}
-    <q-input
-      filled
-      v-model="item.{{{name}}}"
-      :label="$t('{{{name}}}')"
-    >
-      <template v-slot:prepend>
-        <q-icon name="event" class="cursor-pointer">
-          <q-popup-proxy transition-show="scale" transition-hide="scale">
-            <q-date v-model="item.{{{name}}}" mask="YYYY-MM-DD HH:mm" />
-          </q-popup-proxy>
-        </q-icon>
-      </template>
+      <q-input filled v-model="item.{{{name}}}" :label="$t('{{{name}}}')" class="col-12 col-md">
+        <template v-slot:prepend>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy transition-show="scale" transition-hide="scale">
+              <q-date v-model="item.{{{name}}}" mask="YYYY-MM-DD HH:mm" />
+            </q-popup-proxy>
+          </q-icon>
+        </template>
 
-      <template v-slot:append>
-        <q-icon name="access_time" class="cursor-pointer">
-          <q-popup-proxy transition-show="scale" transition-hide="scale">
-            <q-time v-model="item.{{{name}}}" mask="YYYY-MM-DD HH:mm" format24h />
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-    </q-input>
+        <template v-slot:append>
+          <q-icon name="access_time" class="cursor-pointer">
+            <q-popup-proxy transition-show="scale" transition-hide="scale">
+              <q-time v-model="item.{{{name}}}" mask="YYYY-MM-DD HH:mm" format24h />
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
     {{/compare}}
     {{#compare type "==" "number" }}
-    <q-input
-      v-model="item.{{{name}}}"
+      <q-input
+      v-model.number="item.{{{name}}}"
       filled
       type="{{{type}}}"
       {{#if step}}
@@ -73,52 +73,85 @@
       :label="$t('{{{name}}}')"
       lazy-rules
       :rules="[{{#if required}}val => !!val || $t('Field is required'), {{/if}}isInvalid('{{{name}}}')]"
-    />
+      class="col-12 col-md"
+      />
     {{/compare}}
     {{#compare type "==" "text" }}
-      {{#if reference}}
-    <q-select
-      v-model="item.{{{name}}}"
-      filled
-      :label="$t('{{{name}}}')"
-      lazy-rules
-      :rules="[{{#if required}}val => !!val || $t('Field is required'), {{/if}}isInvalid('{{{name}}}')]"
-    />
-      {{else}}
-    <q-input
-      v-model="item.{{{name}}}"
-      filled
-      type="{{{type}}}"
-      :label="$t('{{{name}}}')"
-      lazy-rules
-      :rules="[{{#if required}}val => !!val || $t('Field is required'), {{/if}}isInvalid('{{{name}}}')]"
-    />
-      {{/if}}
+    {{#if reference}}
+      <q-select
+        v-model="item.{{{name}}}"
+        filled
+        :label="$t('{{{name}}}')"
+        lazy-rules
+        :rules="[{{#if required}}val => !!val || $t('Field is required'), {{/if}}isInvalid('{{{name}}}')]"
+        @filter="{{{name}}}FilterFn"
+        :options="{{{name}}}SelectItems"
+        option-value="id"
+        option-label="name"
+        class="col-12 col-md"
+      >
+        <template v-slot:no-option>
+          <q-item>
+            <q-item-section class="text-grey">\{{ $t('No results') }}</q-item-section>
+          </q-item>
+        </template>
+      </q-select>
+    {{else}}
+      <q-input
+        v-model="item.{{{name}}}"
+        filled
+        type="{{{type}}}"
+        :label="$t('{{{name}}}')"
+        lazy-rules
+        :rules="[{{#if required}}val => !!val || $t('Field is required'), {{/if}}isInvalid('{{{name}}}')]"
+        class="col-12 col-md"
+      />
+    {{/if}}
     {{/compare}}
-    {{/each}}
+    {{#ifEven index}}
+    </div>
+    {{/ifEven}}
+    {{#if isLast}}{{#ifOdd index}}
+      <div class="col-12 col-md"></div>
+    </div>
+    {{/ifOdd}}{{/if}}
+    {{/forEach}}
   </q-form>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
+  name: '{{{titleUcFirst}}}Form',
   props: {
     values: {
       type: Object,
-      required: true,
+      required: true
     },
 
     errors: {
       type: Object,
-      default: () => {},
+      default: () => {}
     },
 
     initialValues: {
       type: Object,
-      default: () => {},
-    },
+      default: () => {}
+    }
   },
 
   computed: {
+    ...mapGetters({
+      {{#each formFields}}
+      {{#compare type "==" "text" }}
+      {{#if reference}}
+      {{{name}}}SelectItems: '{{{name}}}/list/selectItems',
+      {{/if}}
+      {{/compare}}
+      {{/each}}
+    }),
+
     // eslint-disable-next-line
     item() {
       return this.initialValues || this.values;
@@ -126,16 +159,47 @@ export default {
 
     violations() {
       return this.errors || {};
-    },
+    }
   },
 
   methods: {
+    ...mapActions({
+      {{#each formFields}}
+      {{#compare type "==" "text" }}
+      {{#if reference}}
+      {{{name}}}GetSelectItems: '{{{name}}}/list/getSelectItems',
+      {{/if}}
+      {{/compare}}
+      {{/each}}
+    }),
+
     isInvalid(key) {
       return val => {
-        if (!(val && val.length > 0)) return this.$t('Please type something');
-        return Object.keys(this.violations).length === 0 && !this.violations[key];
+        if (typeof val == "number") {
+          if (val > 0) {
+            return true;
+          } else {
+            return this.$t("Please, insert a value bigger than zero!");
+          }
+        }
+        if (!(val && val.length > 0)) return this.$t("Please type something");
+        return (
+          Object.keys(this.violations).length === 0 && !this.violations[key]
+        );
       };
     },
-  },
+
+    {{#each formFields}}
+    {{#compare type "==" "text" }}
+    {{#if reference}}
+    {{{name}}}FilterFn(val, update /* , abort */) {
+      return this.{{{name}}}SelectItems !== null
+        ? update()
+        : this.{{{name}}}GetSelectItems({}).then(update());
+    },
+    {{/if}}
+    {{/compare}}
+    {{/each}}
+  }
 };
 </script>

@@ -2,6 +2,7 @@ import chalk from "chalk";
 import BaseGenerator from "./BaseGenerator";
 import handlebars from "handlebars";
 import hbh_comparison from "handlebars-helpers/lib/comparison";
+import hbh_array from "handlebars-helpers/lib/array";
 
 export default class extends BaseGenerator {
   constructor(params) {
@@ -15,29 +16,35 @@ export default class extends BaseGenerator {
       "store/modules/foo/create/index.js",
       "store/modules/foo/create/mutation_types.js",
       "store/modules/foo/create/mutations.js",
+      "store/modules/foo/create/state.js",
       "store/modules/foo/delete/actions.js",
       "store/modules/foo/delete/getters.js",
       "store/modules/foo/delete/index.js",
       "store/modules/foo/delete/mutation_types.js",
       "store/modules/foo/delete/mutations.js",
+      "store/modules/foo/delete/state.js",
       "store/modules/foo/list/actions.js",
       "store/modules/foo/list/getters.js",
       "store/modules/foo/list/index.js",
       "store/modules/foo/list/mutation_types.js",
       "store/modules/foo/list/mutations.js",
+      "store/modules/foo/list/state.js",
       "store/modules/foo/show/actions.js",
       "store/modules/foo/show/getters.js",
       "store/modules/foo/show/index.js",
       "store/modules/foo/show/mutation_types.js",
       "store/modules/foo/show/mutations.js",
+      "store/modules/foo/show/state.js",
       "store/modules/foo/update/actions.js",
       "store/modules/foo/update/getters.js",
       "store/modules/foo/update/index.js",
       "store/modules/foo/update/mutation_types.js",
       "store/modules/foo/update/mutations.js",
+      "store/modules/foo/update/state.js",
 
       // components
       "components/foo/Create.vue",
+      "components/foo/Filter.vue",
       "components/foo/Form.vue",
       "components/foo/List.vue",
       "components/foo/Update.vue",
@@ -54,6 +61,9 @@ export default class extends BaseGenerator {
     ]);
 
     handlebars.registerHelper("compare", hbh_comparison.compare);
+    handlebars.registerHelper("ifEven", hbh_comparison.ifEven);
+    handlebars.registerHelper("ifOdd", hbh_comparison.ifOdd);
+    handlebars.registerHelper("forEach", hbh_array.forEach);
   }
 
   help(resource) {
@@ -125,9 +135,24 @@ export const store = new Vuex.Store({
   }
 
   generate(api, resource, dir) {
+    return resource.getParameters().then(params => {
+      params = params.map(param => ({
+        ...param,
+        ...this.getHtmlInputTypeFromField(param)
+      }));
+      this.generateFiles(api, resource, dir, params);
+    });
+  }
+
+  generateFiles(api, resource, dir, parameters) {
     const lc = resource.title.toLowerCase();
     const titleUcFirst =
       resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
+
+    const formFields = this.buildFields(resource.writableFields);
+
+    const dateTypes = ["time", "date", "dateTime"];
+    const containsDate = formFields.some(e => dateTypes.includes(e.type));
 
     const context = {
       title: resource.title,
@@ -135,7 +160,9 @@ export const store = new Vuex.Store({
       lc,
       uc: resource.title.toUpperCase(),
       fields: resource.readableFields,
-      formFields: this.buildFields(resource.writableFields),
+      parameters,
+      formFields,
+      containsDate,
       hydraPrefix: this.hydraPrefix,
       titleUcFirst
     };
@@ -171,29 +198,35 @@ export const store = new Vuex.Store({
       "store/modules/%s/create/index.js",
       "store/modules/%s/create/mutation_types.js",
       "store/modules/%s/create/mutations.js",
+      "store/modules/%s/create/state.js",
       "store/modules/%s/delete/actions.js",
       "store/modules/%s/delete/getters.js",
       "store/modules/%s/delete/index.js",
       "store/modules/%s/delete/mutation_types.js",
       "store/modules/%s/delete/mutations.js",
+      "store/modules/%s/delete/state.js",
       "store/modules/%s/list/actions.js",
       "store/modules/%s/list/getters.js",
       "store/modules/%s/list/index.js",
       "store/modules/%s/list/mutation_types.js",
       "store/modules/%s/list/mutations.js",
+      "store/modules/%s/list/state.js",
       "store/modules/%s/show/actions.js",
       "store/modules/%s/show/getters.js",
       "store/modules/%s/show/index.js",
       "store/modules/%s/show/mutation_types.js",
       "store/modules/%s/show/mutations.js",
+      "store/modules/%s/show/state.js",
       "store/modules/%s/update/actions.js",
       "store/modules/%s/update/getters.js",
       "store/modules/%s/update/index.js",
       "store/modules/%s/update/mutation_types.js",
       "store/modules/%s/update/mutations.js",
+      "store/modules/%s/update/state.js",
 
       // components
       "components/%s/Create.vue",
+      "components/%s/Filter.vue",
       "components/%s/Form.vue",
       "components/%s/List.vue",
       "components/%s/Update.vue",
@@ -202,6 +235,12 @@ export const store = new Vuex.Store({
       // routes
       "router/%s.js"
     ]) {
+      if (
+        pattern === "components/%s/Filter.vue" &&
+        !context.parameters.length
+      ) {
+        continue;
+      }
       this.createFileFromPattern(pattern, dir, lc, context);
     }
 
