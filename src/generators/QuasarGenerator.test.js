@@ -36,11 +36,15 @@ test("Generate a Quasar app", () => {
     resources: [resource]
   });
   generator.generate(api, resource, tmpobj.name).then(() => {
-    expect(fs.existsSync(tmpobj.name + "/components/foo/Create.vue")).toBe(true);
+    expect(fs.existsSync(tmpobj.name + "/components/foo/Create.vue")).toBe(
+      true
+    );
     expect(fs.existsSync(tmpobj.name + "/components/foo/Form.vue")).toBe(true);
     expect(fs.existsSync(tmpobj.name + "/components/foo/List.vue")).toBe(true);
     expect(fs.existsSync(tmpobj.name + "/components/foo/Show.vue")).toBe(true);
-    expect(fs.existsSync(tmpobj.name + "/components/foo/Update.vue")).toBe(true);
+    expect(fs.existsSync(tmpobj.name + "/components/foo/Update.vue")).toBe(
+      true
+    );
 
     expect(fs.existsSync(tmpobj.name + "/config/entrypoint.js")).toBe(true);
 
@@ -48,7 +52,9 @@ test("Generate a Quasar app", () => {
 
     expect(fs.existsSync(tmpobj.name + "/router/foo.js")).toBe(true);
 
-    expect(fs.existsSync(tmpobj.name + "/store/modules/foo/index.js")).toBe(true);
+    expect(fs.existsSync(tmpobj.name + "/store/modules/foo/index.js")).toBe(
+      true
+    );
 
     ["create", "delete", "list", "show", "update"].forEach(action => {
       expect(
@@ -69,11 +75,7 @@ test("Generate a Quasar app", () => {
         fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/mutations.js`)
       ).toBe(true);
     });
-  
     expect(fs.existsSync(tmpobj.name + "/utils/fetch.js")).toBe(true);
-  
     tmpobj.removeCallback();
-  })
-
-  
+  });
 });
