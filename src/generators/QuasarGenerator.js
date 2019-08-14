@@ -135,7 +135,7 @@ export const store = new Vuex.Store({
   }
 
   generate(api, resource, dir) {
-    resource.getParameters().then(params => {
+    return resource.getParameters().then(params => {
       params = params.map(param => ({
         ...param,
         ...this.getHtmlInputTypeFromField(param)
