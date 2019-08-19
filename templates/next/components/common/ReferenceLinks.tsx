@@ -1,14 +1,12 @@
-import { NextFunctionComponent } from 'next';
 import Link from 'next/link';
-import { Fragment } from 'react';
-import { btoa } from '../../utils/dataAccess';
+import { Fragment, FunctionComponent } from 'react';
 
 interface Props {
   items: string|string[];
   type: string;
   useIcon?: boolean
 }
-export const ReferenceLinks: NextFunctionComponent<Props> = ({items, type, useIcon = false}) => {
+export const ReferenceLinks: FunctionComponent<Props> = ({items, type, useIcon = false}) => {
   if (Array.isArray(items)) {
     return (
       <Fragment>
@@ -19,12 +17,8 @@ export const ReferenceLinks: NextFunctionComponent<Props> = ({items, type, useIc
     );
   }
 
-  // to avoid routes like "/book/books/d4s5s1-qd5sd5d-qsd5qsd4sd" we prefer enconding it
-  const id = btoa(items);
-  const resourceName = type.toLowerCase();
-
   return (
-    <Link href={`/${resourceName}?id=${id}`} as={`/${resourceName}/${id}`}><a>
+    <Link href={items}><a>
       {useIcon ? (
         <Fragment>
           <span className="fa fa-search" aria-hidden="true" />

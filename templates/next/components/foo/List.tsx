@@ -1,4 +1,4 @@
-import { NextFunctionComponent } from 'next';
+import { FunctionComponent } from 'react';
 import { ListItem } from './ListItem';
 import { {{{ucf}}} } from '../../interfaces/{{{ucf}}}';
 
@@ -6,7 +6,7 @@ interface Props {
   {{{name}}}: {{{ucf}}}[];
 }
 
-export const List: NextFunctionComponent<Props> = ({ {{{name}}} }) => (
+export const List: FunctionComponent<Props> = ({ {{{name}}} }) => (
   <div>
     <h1>{{{ucf}}} List</h1>
     <table className="table table-responsive table-striped table-hover">

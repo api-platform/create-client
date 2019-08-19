@@ -14,37 +14,6 @@ afterEach(() => {
   jest.resetAllMocks();
 });
 
-describe("checkDependencies", () => {
-  let getDependenciesSpy;
-  let consoleSpy;
-
-  beforeEach(() => {
-    getDependenciesSpy = jest
-      .spyOn(generator, "getTargetDependencies")
-      .mockReturnValue(["express", "@zeit/next-typescript"]);
-    consoleSpy = jest.spyOn(console, "log").mockImplementation(() => null);
-  });
-
-  test("should not warn if dependencies are installed", () => {
-    generator.checkDependencies("");
-    expect(consoleSpy).not.toHaveBeenCalled();
-  });
-
-  test("should warn if express is not installed", () => {
-    getDependenciesSpy.mockReturnValue(["@zeit/next-typescript"]);
-    generator.checkDependencies("");
-    expect(consoleSpy).toHaveBeenCalledTimes(1);
-    expect(consoleSpy.mock.calls[0][0]).toContain("express");
-  });
-
-  test("should warn if typescript is not installed", () => {
-    getDependenciesSpy.mockReturnValue(["express"]);
-    generator.checkDependencies("");
-    expect(consoleSpy).toHaveBeenCalledTimes(1);
-    expect(consoleSpy.mock.calls[0][0]).toContain("typescript");
-  });
-});
-
 describe("generate", () => {
   test("Generate a Next app", () => {
     const tmpobj = tmp.dirSync({ unsafeCleanup: true });
@@ -80,8 +49,8 @@ describe("generate", () => {
       "/error/SubmissionError.ts",
       "/interfaces/Abc.ts",
       "/interfaces/Collection.ts",
-      "/pages/abc.tsx",
-      "/pages/abcs.tsx",
+      "/pages/abcs/[id].tsx",
+      "/pages/abcs/index.tsx",
       "/utils/dataAccess.ts"
     ].forEach(file => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
 
