@@ -1,4 +1,4 @@
-import { NextFunctionComponent } from 'next';
+import { FunctionComponent } from 'react';
 import { {{{ucf}}} } from '../../interfaces/{{{ucf}}}';
 import { ReferenceLinks } from '../common/ReferenceLinks';
 
@@ -6,7 +6,7 @@ interface Props {
   {{{lc}}}: {{{ucf}}}
 }
 
-export const ListItem: NextFunctionComponent<Props> = ({ {{{lc}}} }: Props) => (
+export const ListItem: FunctionComponent<Props> = ({ {{{lc}}} }: Props) => (
   <tr>
     <th scope="row"><ReferenceLinks items={ {{{lc}}}['@id'] } type="{{{lc}}}" /></th>
 {{#each fields}}

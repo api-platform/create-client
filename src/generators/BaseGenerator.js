@@ -121,7 +121,11 @@ export default class {
 
   getType(field) {
     if (field.reference) {
-      return field.reference.title;
+      if (field.maxCardinality !== 1) {
+        return "string[]";
+      }
+
+      return "string";
     }
 
     switch (field.range) {

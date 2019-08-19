@@ -12,7 +12,7 @@ interface Violation {
   propertyPath: string;
 }
 
-export const fetch = (id: USVString, init: RequestInit = {}) => {
+export const fetch = (id: string, init: RequestInit = {}) => {
   if ('undefined' === typeof init.headers) {
     init.headers = {};
   }
@@ -67,12 +67,4 @@ export const normalize = (data: any) => {
       ? value.map(v => get(v, '@id', v))
       : get(value, '@id', value)
   );
-}
-
-export const atob = (id: string) => {
-  return typeof window !== 'undefined' ? window.atob(id) : Buffer.from(id, 'base64').toString('ascii');
-}
-
-export const btoa = (str: string) => {
-  return typeof window !== 'undefined' ? window.btoa(str) : Buffer.from(str).toString('base64');
 }
