@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@api-platform/api-doc-parser@^0.7.2":
+"@api-platform/api-doc-parser@^0.7.3":
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/@api-platform/api-doc-parser/-/api-doc-parser-0.7.2.tgz#c5ca5913fa6ee319016a635df5225e0db5ecc9ab"
   integrity sha512-FHzAldq1/ZZZhRyI8sgfxIrf3NtKLNgaW6P8Z12cjK3qWDuYCjsQZ1H2Z4WGZk0tGhDxA3lVJXcw4HHD5kjTrQ==

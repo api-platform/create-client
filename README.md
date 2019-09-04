@@ -27,6 +27,11 @@ npx @api-platform/client-generator https://demo.api-platform.com/ output/ --reso
 npx @api-platform/client-generator https://demo.api-platform.com/docs.json output/ --resource Book --format swagger
 ```
 
+**Swagger** (experimental)
+```sh
+npx @api-platform/client-generator https://demo.api-platform.com/docs.json?spec_version=3 output/ --resource Book --format openapi3
+```
+
 ## Features
 
 * Generate high-quality ES6 components and files built with [React](https://facebook.github.io/react/), [Redux](http://redux.js.org), [React Router](https://reacttraining.com/react-router/) and [Redux Form](http://redux-form.com/) including:
