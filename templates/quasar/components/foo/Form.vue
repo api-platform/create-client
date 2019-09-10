@@ -89,6 +89,8 @@
         option-value="id"
         option-label="name"
         class="col-12 col-md"
+        emit-value
+        map-options
       >
         <template v-slot:no-option>
           <q-item>
@@ -195,7 +197,11 @@ export default {
     {{{name}}}FilterFn(val, update /* , abort */) {
       return this.{{{name}}}SelectItems !== null
         ? update()
-        : this.{{{name}}}GetSelectItems({}).then(update());
+        : this.{{{name}}}GetSelectItems({}).then(() =>
+          setTimeout(() => {
+            update();
+          }, 500),
+        );
     },
     {{/if}}
     {{/compare}}

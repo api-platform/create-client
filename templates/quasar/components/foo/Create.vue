@@ -7,7 +7,7 @@
         <q-breadcrumbs-el
           v-for="(breadcrumb, idx) in breadcrumbList"
           :key="idx"
-          :label="breadcrumb.label"
+          :label="$t(breadcrumb.label)"
           :icon="breadcrumb.icon"
           :to="breadcrumb.to"
         />
@@ -25,7 +25,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import {{{titleUcFirst}}}Form from './Form';
-{{#if containsDate}}
+{{#if formContainsDate}}
 import { date } from 'quasar';
 {{/if}}
 const { mapGetters, mapActions } = createNamespacedHelpers('{{{lc}}}/create');

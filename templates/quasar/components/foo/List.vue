@@ -7,7 +7,7 @@
         <q-breadcrumbs-el
           v-for="(breadcrumb, idx) in breadcrumbList"
           :key="idx"
-          :label="breadcrumb.label"
+          :label="$t(breadcrumb.label)"
           :icon="breadcrumb.icon"
           :to="breadcrumb.to"
         />
@@ -22,7 +22,7 @@
     <q-expansion-item icon="search" label="Filters" v-model="filtersExpanded">
       <q-card>
         <q-card-section>
-          <UserFilterForm ref="filterForm" :values="filters" />
+          <{{{titleUcFirst}}}FilterForm ref="filterForm" :values="filters" />
         </q-card-section>
         <q-card-section>
           <q-btn :label="$t('Filter')" color="primary" @click="onSendFilter" />
@@ -64,12 +64,19 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+{{#if parameters.length }}
 import {{{titleUcFirst}}}FilterForm from './Filter';
+{{/if}}
+{{#if listContainsDate}}
+import { date } from 'quasar';
+{{/if}}
 
 export default {
   name: '{{{titleUcFirst}}}List',
   components: {
+    {{#if parameters.length }}
     {{{titleUcFirst}}}FilterForm,
+    {{/if}}
   },
   created() {
     this.breadcrumbList = this.$route.meta.breadcrumb;
@@ -91,7 +98,34 @@ export default {
         { name: 'action' },
         { name: 'id', field: '@id', label: this.$t('id') },
         {{#each fields}}
+          {{#inArray ../dateTypes type}}
+            {{#compare type "==" "time" }}
+        { 
+          name: '{{name}}', 
+          field: '{{name}}', 
+          label: this.$t('{{name}}'),
+          format: val => date.formatDate(val, 'HH:mm'),
+        },
+            {{/compare}}
+            {{#compare type "==" "date" }}
+        {
+          name: '{{name}}', 
+          field: '{{name}}', 
+          label: this.$t('{{name}}'),
+          format: val => date.formatDate(val, 'DD.MM.YY'),
+        },
+            {{/compare}}
+            {{#compare type "==" "dateTime" }}
+        { 
+          name: '{{name}}', 
+          field: '{{name}}', 
+          label: this.$t('{{name}}'),
+          format: val => date.formatDate(val, 'DD.MM.YY HH:mm'),
+        },
+            {{/compare}}
+          {{else}}
         { name: '{{name}}', field: '{{name}}', label: this.$t('{{name}}') },
+          {{/inArray}}
         {{/each }}
       ],
       breadcrumbList: [],

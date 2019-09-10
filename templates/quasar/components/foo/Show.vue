@@ -8,7 +8,8 @@
           v-for="(breadcrumb, idx) in breadcrumbList"
           :key="idx"
           :label="
-            breadcrumb.label +
+            $t(breadcrumb.label) +
+              ' ' +
               (idx === breadcrumbList.length - 1 && item && item['@id'] ? item['@id'] : '')
           "
           :icon="breadcrumb.icon"

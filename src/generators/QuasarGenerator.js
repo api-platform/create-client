@@ -63,6 +63,7 @@ export default class extends BaseGenerator {
     handlebars.registerHelper("compare", hbh_comparison.compare);
     handlebars.registerHelper("ifEven", hbh_comparison.ifEven);
     handlebars.registerHelper("ifOdd", hbh_comparison.ifOdd);
+    handlebars.registerHelper("inArray", hbh_array.inArray);
     handlebars.registerHelper("forEach", hbh_array.forEach);
   }
 
@@ -152,17 +153,27 @@ export const store = new Vuex.Store({
     const formFields = this.buildFields(resource.writableFields);
 
     const dateTypes = ["time", "date", "dateTime"];
-    const containsDate = formFields.some(e => dateTypes.includes(e.type));
+    const formContainsDate = formFields.some(e => dateTypes.includes(e.type));
+
+    const fields = this.buildFields(resource.readableFields);
+    const listContainsDate = fields.some(e => dateTypes.includes(e.type));
+
+    const paramsHaveRefs = parameters.some(
+      e => e.type === "text" && e.reference
+    );
 
     const context = {
       title: resource.title,
       name: resource.name,
       lc,
       uc: resource.title.toUpperCase(),
-      fields: resource.readableFields,
+      fields,
+      dateTypes,
+      listContainsDate,
+      paramsHaveRefs,
       parameters,
       formFields,
-      containsDate,
+      formContainsDate,
       hydraPrefix: this.hydraPrefix,
       titleUcFirst
     };

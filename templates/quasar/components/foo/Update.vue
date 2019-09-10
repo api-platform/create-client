@@ -8,7 +8,8 @@
           v-for="(breadcrumb, idx) in breadcrumbList"
           :key="idx"
           :label="
-            breadcrumb.label +
+            $t(breadcrumb.label) +
+              ' ' +
               (idx === breadcrumbList.length - 1 && item && item['@id'] ? item['@id'] : '')
           "
           :icon="breadcrumb.icon"
@@ -22,7 +23,7 @@
         <q-btn :label="$t('Delete')" color="primary" flat class="q-ml-sm" @click="del" />
       </div>
     </q-toolbar>
-    <{{{titleUcFirst}}}Form v-if="item" :values="item" :errors="violations" />
+    <{{{titleUcFirst}}}Form ref="updateForm" v-if="item" :values="item" :errors="violations" />
   </div>
 </template>
 
@@ -111,7 +112,16 @@ export default {
       });
     },
 
-    retrieved(val) {
+    async retrieved(val) {
+      {{#each formFields}}
+      {{#compare type "==" "text" }}
+      {{#if reference}}
+      if (val.{{{name}}}) {
+        await this.{{{name}}}GetSelectItems({});
+      }
+      {{/if}}
+      {{/compare}}
+      {{/each}}
       this.item = { ...val };
     },
   },
@@ -133,6 +143,13 @@ export default {
       retrieve: '{{{lc}}}/update/retrieve',
       updateReset: '{{{lc}}}/update/reset',
       update: '{{{lc}}}/update/update',
+      {{#each formFields}}
+      {{#compare type "==" "text" }}
+      {{#if reference}}
+      {{{name}}}GetSelectItems: '{{{name}}}/list/getSelectItems',
+      {{/if}}
+      {{/compare}}
+      {{/each}}
     }),
 
     del() {
@@ -148,7 +165,7 @@ export default {
     },
 
     onSendForm() {
-      this.$refs.createForm.$children[0].validate().then(success => {
+      this.$refs.updateForm.$children[0].validate().then(success => {
         if (success) {
           this.update(this.item);
         }
