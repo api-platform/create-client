@@ -50,12 +50,10 @@ test("Generate a typescript interface", () => {
 
   expect(fs.existsSync(tmpobj.name + "/interfaces/foo.ts")).toBe(true);
 
-  const res = `import { FooBar } from "./foobar";
-
-export interface Foo {
+  const res = `export interface Foo {
   '@id'?: string;
   foo: any;
-  foobar?: FooBar;
+  foobar?: string[];
   readonly bar: string;
   id?: string;
 }
