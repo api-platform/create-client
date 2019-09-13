@@ -1,6 +1,5 @@
 <template>
   <div>
-    <q-ajax-bar ref="bar" position="top" color="accent" size="10px" skip-hijack />
     <q-toolbar class="q-my-md">
       <q-breadcrumbs class="q-mr-sm">
         <q-breadcrumbs-el icon="home" to="/" />
@@ -19,6 +18,9 @@
       </div>
     </q-toolbar>
     <{{{titleUcFirst}}}Form ref="createForm" :values="item" :errors="violations" />
+    <q-inner-loading :showing="isLoading">
+      <q-spinner size="50px" color="primary" />
+    </q-inner-loading>
   </div>
 </template>
 
@@ -69,14 +71,6 @@ export default {
       }
 
       this.$router.push({ name: '{{{titleUcFirst}}}Update', params: { id: created['@id'] } });
-    },
-
-    isLoading(val) {
-      if (val) {
-        this.$refs.bar.start();
-      } else {
-        this.$refs.bar.stop();
-      }
     },
 
     error(message) {

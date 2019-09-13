@@ -1,6 +1,5 @@
 <template>
   <div>
-    <q-ajax-bar ref="bar" position="top" color="accent" size="10px" skip-hijack />
     <q-toolbar class="q-my-md">
       <q-breadcrumbs class="q-mr-sm">
         <q-breadcrumbs-el icon="home" to="/" />
@@ -51,6 +50,9 @@
         </tbody>
       </q-markup-table>
     </div>
+    <q-inner-loading :showing="isLoading">
+      <q-spinner size="50px" color="primary" />
+    </q-inner-loading>
   </div>
 </template>
 
@@ -77,14 +79,6 @@ export default {
   },
 
   watch: {
-    isLoading(val) {
-      if (val) {
-        this.$refs.bar.start();
-      } else {
-        this.$refs.bar.stop();
-      }
-    },
-
     error(message) {
       message &&
         this.$q.notify({

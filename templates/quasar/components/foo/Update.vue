@@ -1,6 +1,5 @@
 <template>
   <div>
-    <q-ajax-bar ref="bar" position="top" color="accent" size="10px" skip-hijack />
     <q-toolbar class="q-my-md">
       <q-breadcrumbs class="q-mr-sm">
         <q-breadcrumbs-el icon="home" to="/" />
@@ -24,6 +23,9 @@
       </div>
     </q-toolbar>
     <{{{titleUcFirst}}}Form ref="updateForm" v-if="item" :values="item" :errors="violations" />
+    <q-inner-loading :showing="isLoading">
+      <q-spinner size="50px" color="primary" />
+    </q-inner-loading>
   </div>
 </template>
 
@@ -67,14 +69,6 @@ export default {
       this.$router.push({ name: '{{{titleUcFirst}}}List' });
     },
 
-    isLoading(val) {
-      if (val) {
-        this.$refs.bar.start();
-      } else {
-        this.$refs.bar.stop();
-      }
-    },
-
     deleteLoading(val) {
       if (val) {
         this.$refs.bar.start();
@@ -112,16 +106,7 @@ export default {
       });
     },
 
-    async retrieved(val) {
-      {{#each formFields}}
-      {{#compare type "==" "text" }}
-      {{#if reference}}
-      if (val.{{{name}}}) {
-        await this.{{{name}}}GetSelectItems({});
-      }
-      {{/if}}
-      {{/compare}}
-      {{/each}}
+    retrieved(val) {
       this.item = { ...val };
     },
   },

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <q-ajax-bar ref="bar" position="top" color="accent" size="10px" skip-hijack />
     <q-toolbar class="q-my-md">
       <q-breadcrumbs class="q-mr-sm">
         <q-breadcrumbs-el icon="home" to="/" />
@@ -38,7 +37,11 @@
       :pagination.sync="pagination"
       @request="onRequest"
       row-key="id"
+      :no-data-label="$t('Data unavailable')"
+      :no-results-label="$t('No results')"
+      :loading-label="$t('Loading...')"
       flat
+      :loading="isLoading"
     >
       <q-td slot="body-cell-action" slot-scope="props" :props="props">
         <q-btn
@@ -138,14 +141,6 @@ export default {
   },
 
   watch: {
-    isLoading(val) {
-      if (val) {
-        this.$refs.bar.start();
-      } else {
-        this.$refs.bar.stop();
-      }
-    },
-
     error(message) {
       message &&
         this.$q.notify({
@@ -158,6 +153,7 @@ export default {
 
     items() {
       this.pagination.page = this.nextPage;
+      this.pagination.rowsNumber = this.totalItems;
       this.nextPage = null;
     },
 
@@ -168,10 +164,6 @@ export default {
         icon: 'tag_faces',
         closeBtn: this.$t('Close'),
       });
-    },
-
-    totalItems(val) {
-      this.pagination.rowsNumber = val;
     },
   },
 

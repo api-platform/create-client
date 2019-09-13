@@ -18,11 +18,11 @@ export const getItems = ({ commit }, { page = '{{{name}}}', params = {} }) => {
     });
 };
 
-export const getSelectItems = (
-  { commit },
-  { page = '{{{name}}}', params = { properties: ['id', 'name'] } },
-) => {
+export const getSelectItems = ({ commit }, { page = '{{{name}}}', params = {} }) => {
   commit(types.TOGGLE_LOADING);
+
+  const defaultParams = { properties: ['id', 'name'] };
+  params = { ...defaultParams, ...params };
 
   fetch(page, { params })
     .then(response => response.json())

@@ -97,6 +97,8 @@ export default class extends BaseGenerator {
   'QTime',
   'QCheckbox',
   'QPopupProxy',
+  'QSpinner',
+  'QInnerLoading',
 
 // 2. in 'framework.config', customize later
 notify: {
