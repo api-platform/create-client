@@ -1,19 +1,8 @@
 <template>
   <div>
     <q-toolbar class="q-my-md">
-      <q-breadcrumbs class="q-mr-sm">
-        <q-breadcrumbs-el icon="home" to="/" />
-        <q-breadcrumbs-el
-          v-for="(breadcrumb, idx) in breadcrumbList"
-          :key="idx"
-          :label="$t(breadcrumb.label)"
-          :icon="breadcrumb.icon"
-          :to="breadcrumb.to"
-        />
-      </q-breadcrumbs>
-
+      <Breadcrumb :values="breadcrumbList" />
       <q-space />
-
       <div>
         <q-btn flat round dense icon="add" :to="{ name: '{{{titleUcFirst}}}Create' }" />
       </div>
@@ -76,6 +65,8 @@ import {{{titleUcFirst}}}FilterForm from './Filter';
 {{#if listContainsDate}}
 import { extractDate } from '../../utils/dates';
 {{/if}}
+import notify from '../../utils/notify';
+import Breadcrumb from '../common/Breadcrumb.vue';
 
 export default {
   name: '{{{titleUcFirst}}}List',
@@ -83,6 +74,7 @@ export default {
     {{#if parameters.length }}
     {{{titleUcFirst}}}FilterForm,
     {{/if}}
+    Breadcrumb,
   },
   created() {
     this.breadcrumbList = this.$route.meta.breadcrumb;
@@ -154,13 +146,7 @@ export default {
 
   watch: {
     error(message) {
-      message &&
-        this.$q.notify({
-          message,
-          color: 'red',
-          icon: 'error',
-          closeBtn: this.$t('{{{labels.close}}}'),
-        });
+      message && notify.error(message, this.$t('{{{labels.close}}}'));
     },
 
     items() {
@@ -170,12 +156,10 @@ export default {
     },
 
     deletedItem(val) {
-      this.$q.notify({
-        message: `${val['@id']} ${this.$t('deleted')}.`,
-        color: 'green',
-        icon: 'tag_faces',
-        closeBtn: this.$t('{{{labels.close}}}'),
-      });
+      notify.success(
+        `${val['@id']} ${this.$t('deleted')}.`,
+        this.$t('{{{labels.close}}}')
+      );
     },
   },
 

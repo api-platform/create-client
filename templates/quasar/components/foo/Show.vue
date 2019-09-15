@@ -1,23 +1,10 @@
 <template>
   <div>
     <q-toolbar class="q-my-md">
-      <q-breadcrumbs class="q-mr-sm">
-        <q-breadcrumbs-el icon="home" to="/" />
-        <q-breadcrumbs-el
-          v-for="(breadcrumb, idx) in breadcrumbList"
-          :key="idx"
-          :label="
-            $t(breadcrumb.label) +
-              ' ' +
-              (idx === breadcrumbList.length - 1 && item && item['@id'] ? item['@id'] : '')
-          "
-          :icon="breadcrumb.icon"
-          :to="breadcrumb.to"
-        />
-      </q-breadcrumbs>
+      <Breadcrumb :values="breadcrumbList" :item="item" />
       <q-space />
       <div>
-        <q-btn :label="$t('{{{labels.delete}}}')" color="primary" flat class="q-ml-sm" @click="deleteItem" />
+        <q-btn :label="$t('{{{labels.delete}}}')" color="primary" flat class="q-ml-sm" @click="confirmDelete = true" />
       </div>
     </q-toolbar>
 
@@ -65,6 +52,19 @@
     <q-inner-loading :showing="isLoading">
       <q-spinner size="50px" color="primary" />
     </q-inner-loading>
+    <q-dialog v-model="confirmDelete" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="warning" color="primary" text-color="white" />
+          <span class="q-ml-sm">\{{ $t('Are you sure you want to delete this item?') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Delete" color="primary" v-close-popup @click="deleteItem" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -73,9 +73,20 @@ import { mapActions, mapGetters } from 'vuex';
 {{#if listContainsDate}}
 import { extractDate } from '../../utils/dates';
 {{/if}}
+import Breadcrumb from '../common/Breadcrumb.vue';
 
 export default {
   name: '{{{titleUcFirst}}}Show',
+
+  components: {
+    Breadcrumb,
+  },
+
+  data() {
+    return {
+      confirmDelete: false,
+    };
+  },
 
   computed: mapGetters({
     deleteError: '{{{lc}}}/del/error',
@@ -129,9 +140,7 @@ export default {
     {{/if}}
 
     deleteItem() {
-      if (window.confirm(this.$t('{{{labels.confirmDelete}}}'))) {
-        this.del(this.item).then(() => this.$router.push({ name: '{{{titleUcFirst}}}List' }));
-      }
+      this.deleteItem(this.item).then(() => this.$router.push({ name: '{{{titleUcFirst}}}List' }));
     },
   },
 };

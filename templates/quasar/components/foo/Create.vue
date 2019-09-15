@@ -1,16 +1,7 @@
 <template>
   <div>
     <q-toolbar class="q-my-md">
-      <q-breadcrumbs class="q-mr-sm">
-        <q-breadcrumbs-el icon="home" to="/" />
-        <q-breadcrumbs-el
-          v-for="(breadcrumb, idx) in breadcrumbList"
-          :key="idx"
-          :label="$t(breadcrumb.label)"
-          :icon="breadcrumb.icon"
-          :to="breadcrumb.to"
-        />
-      </q-breadcrumbs>
+      <Breadcrumb :values="breadcrumbList" />
       <q-space />
       <div>
         <q-btn :label="$t('{{{labels.submit}}}')" color="primary" @click="onSendForm" />
@@ -31,11 +22,14 @@ import {{{titleUcFirst}}}Form from './Form';
 import { extractDate } from '../../utils/dates';
 {{/if}}
 const { mapGetters, mapActions } = createNamespacedHelpers('{{{lc}}}/create');
+import notify from '../../utils/notify';
+import Breadcrumb from '../common/Breadcrumb.vue';
 
 export default {
   name: '{{{titleUcFirst}}}Create',
   components: {
     {{{titleUcFirst}}}Form,
+    Breadcrumb,
   },
 
   created() {
@@ -74,13 +68,7 @@ export default {
     },
 
     error(message) {
-      message &&
-        this.$q.notify({
-          message,
-          color: 'red',
-          icon: 'error',
-          closeBtn: this.$t('{{{labels.close}}}'),
-        });
+      message && notify.error(message, this.$t('{{{labels.close}}}'));
     },
   },
 

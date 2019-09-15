@@ -1,47 +1,57 @@
 <template>
   <div>
     <q-toolbar class="q-my-md">
-      <q-breadcrumbs class="q-mr-sm">
-        <q-breadcrumbs-el icon="home" to="/" />
-        <q-breadcrumbs-el
-          v-for="(breadcrumb, idx) in breadcrumbList"
-          :key="idx"
-          :label="
-            $t(breadcrumb.label) +
-              ' ' +
-              (idx === breadcrumbList.length - 1 && item && item['@id'] ? item['@id'] : '')
-          "
-          :icon="breadcrumb.icon"
-          :to="breadcrumb.to"
-        />
-      </q-breadcrumbs>
+      <Breadcrumb :values="breadcrumbList" :item="item" />
       <q-space />
       <div>
         <q-btn :label="$t('{{{labels.submit}}}')" color="primary" @click="onSendForm" />
         <q-btn :label="$t('{{{labels.reset}}}')" color="primary" flat class="q-ml-sm" @click="resetForm" />
-        <q-btn :label="$t('{{{labels.delete}}}')" color="primary" flat class="q-ml-sm" @click="del" />
+        <q-btn
+          :label="$t('{{{labels.delete}}}')"
+          color="primary"
+          flat
+          class="q-ml-sm"
+          @click="confirmDelete = true"
+        />
       </div>
     </q-toolbar>
     <{{{titleUcFirst}}}Form ref="updateForm" v-if="item" :values="item" :errors="violations" />
-    <q-inner-loading :showing="isLoading">
+    <q-inner-loading :showing="isLoading || deleteLoading">
       <q-spinner size="50px" color="primary" />
     </q-inner-loading>
+    <q-dialog v-model="confirmDelete" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="warning" color="primary" text-color="white" />
+          <span class="q-ml-sm">\{{ $t('Are you sure you want to delete this item?') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Delete" color="primary" v-close-popup @click="del" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import {{{titleUcFirst}}}Form from './Form.vue';
+import notify from '../../utils/notify';
+import Breadcrumb from '../common/Breadcrumb.vue';
 
 export default {
   name: '{{{titleUcFirst}}}Update',
 
   components: {
     {{{titleUcFirst}}}Form,
+    Breadcrumb,
   },
 
   data() {
     return {
+      confirmDelete: false,
       item: {},
     };
   },
@@ -69,41 +79,19 @@ export default {
       this.$router.push({ name: '{{{titleUcFirst}}}List' });
     },
 
-    deleteLoading(val) {
-      if (val) {
-        this.$refs.bar.start();
-      } else {
-        this.$refs.bar.stop();
-      }
-    },
-
     error(message) {
-      message &&
-        this.$q.notify({
-          message,
-          color: 'red',
-          icon: 'error',
-          closeBtn: this.$t('{{{labels.close}}}'),
-        });
+      message && notify.error(message, this.$t('{{{labels.close}}}'));
     },
 
     deleteError(message) {
-      message &&
-        this.$q.notify({
-          message,
-          color: 'red',
-          icon: 'error',
-          closeBtn: this.$t('{{{labels.close}}}'),
-        });
+      message && notify.error(message, this.$t('{{{labels.close}}}'));
     },
 
     updated(val) {
-      this.$q.notify({
-        message: `${val['@id']} ${this.$t('updated')}.`,
-        color: 'green',
-        icon: 'tag_faces',
-        closeBtn: this.$t('{{{labels.close}}}'),
-      });
+      notify.success(
+        `${val['@id']} ${this.$t('{{{labels.updated}}}')}.`,
+        this.$t('{{{labels.close}}}'),
+      );
     },
 
     retrieved(val) {
@@ -138,9 +126,7 @@ export default {
     }),
 
     del() {
-      if (window.confirm(this.$t('{{{labels.confirmDelete}}}'))) {
-        this.deleteItem(this.retrieved);
-      }
+      this.deleteItem(this.retrieved).then(() => this.$router.push({ name: '{{{titleUcFirst}}}List' }));
     },
 
     reset() {

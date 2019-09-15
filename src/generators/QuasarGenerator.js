@@ -50,6 +50,7 @@ export default class extends BaseGenerator {
       "components/foo/List.vue",
       "components/foo/Update.vue",
       "components/foo/Show.vue",
+      "components/common/Breadcrumb.vue",
 
       // routes
       "router/foo.js",
@@ -60,6 +61,7 @@ export default class extends BaseGenerator {
       // utils
       "utils/fetch.js",
       "utils/dates.js",
+      "utils/notify.js",
 
       // i18n
       "i18n/index.js"
@@ -332,9 +334,14 @@ export const store = new Vuex.Store({
       `${dir}/store/modules/${lc}/list`,
       `${dir}/store/modules/${lc}/show`,
       `${dir}/store/modules/${lc}/update`,
-      `${dir}/components/${lc}`
+      `${dir}/components/${lc}`,
+      `${dir}/components/common`
     ]) {
       this.createDir(dir);
+    }
+
+    for (let common of ["components/common/Breadcrumb.vue"]) {
+      this.createFile(common, `${dir}/${common}`, context, false);
     }
 
     for (let pattern of [
@@ -408,6 +415,7 @@ export const store = new Vuex.Store({
     );
 
     this.createFile("utils/dates.js", `${dir}/utils/dates.js`, {}, false);
+    this.createFile("utils/notify.js", `${dir}/utils/notify.js`, {}, false);
 
     this.createFile(
       "i18n/index.js",
@@ -442,7 +450,7 @@ export const store = new Vuex.Store({
       confirmDelete: "Are you sure you want to delete this item?",
       noresults: "No results",
       close: "Close",
-      update: "Updated",
+      updated: "Updated",
       field: "Field",
       value: "Value",
       filters: "Filters",
