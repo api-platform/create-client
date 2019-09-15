@@ -11,21 +11,23 @@
           :to="breadcrumb.to"
         />
       </q-breadcrumbs>
+
       <q-space />
+
       <div>
         <q-btn flat round dense icon="add" :to="{ name: '{{{titleUcFirst}}}Create' }" />
       </div>
     </q-toolbar>
 
     {{#if parameters.length}}
-    <q-expansion-item icon="search" label="Filters" v-model="filtersExpanded">
+    <q-expansion-item icon="search" :label="$t('{{{labels.filters}}}')" v-model="filtersExpanded">
       <q-card>
         <q-card-section>
           <{{{titleUcFirst}}}FilterForm ref="filterForm" :values="filters" />
         </q-card-section>
         <q-card-section>
-          <q-btn :label="$t('Filter')" color="primary" @click="onSendFilter" />
-          <q-btn :label="$t('Reset')" color="primary" flat class="q-ml-sm" @click="resetFilter" />
+          <q-btn :label="$t('{{{labels.filter}}}')" color="primary" @click="onSendFilter" />
+          <q-btn :label="$t('{{{labels.reset}}}')" color="primary" flat class="q-ml-sm" @click="resetFilter" />
         </q-card-section>
       </q-card>
     </q-expansion-item>
@@ -37,9 +39,10 @@
       :pagination.sync="pagination"
       @request="onRequest"
       row-key="id"
-      :no-data-label="$t('Data unavailable')"
-      :no-results-label="$t('No results')"
-      :loading-label="$t('Loading...')"
+      :no-data-label="$t('{{{labels.unavail}}}')"
+      :no-results-label="$t('{{{labels.noresults}}}')"
+      :loading-label="$t('{{{labels.loading}}}')"
+      :rows-per-page-label="$t('{{{labels.recPerPage}}}')"
       flat
       :loading="isLoading"
     >
@@ -71,7 +74,7 @@ import { mapActions, mapGetters } from 'vuex';
 import {{{titleUcFirst}}}FilterForm from './Filter';
 {{/if}}
 {{#if listContainsDate}}
-import { date } from 'quasar';
+import { extractDate } from '../../utils/dates';
 {{/if}}
 
 export default {
@@ -84,7 +87,7 @@ export default {
   created() {
     this.breadcrumbList = this.$route.meta.breadcrumb;
     this.onRequest({
-      pagination: this.pagination
+      pagination: this.pagination,
     });
   },
 
@@ -103,31 +106,40 @@ export default {
         {{#each fields}}
           {{#inArray ../dateTypes type}}
             {{#compare type "==" "time" }}
-        { 
-          name: '{{name}}', 
-          field: '{{name}}', 
+        {
+          name: '{{name}}',
+          field: '{{name}}',
           label: this.$t('{{name}}'),
-          format: val => date.formatDate(val, 'HH:mm'),
+          format: val => this.formatDateTime(val, 'HH:mm'),
         },
             {{/compare}}
             {{#compare type "==" "date" }}
         {
-          name: '{{name}}', 
-          field: '{{name}}', 
+          name: '{{name}}',
+          field: '{{name}}',
           label: this.$t('{{name}}'),
-          format: val => date.formatDate(val, 'DD.MM.YY'),
+          format: val => this.formatDateTime(val, 'short'),
         },
             {{/compare}}
             {{#compare type "==" "dateTime" }}
-        { 
-          name: '{{name}}', 
-          field: '{{name}}', 
+        {
+          name: '{{name}}',
+          field: '{{name}}',
           label: this.$t('{{name}}'),
-          format: val => date.formatDate(val, 'DD.MM.YY HH:mm'),
+          format: val => this.formatDateTime(val, 'long'),
         },
             {{/compare}}
           {{else}}
+            {{#compare type "==" "number" }}
+        {
+          name: '{{name}}',
+          field: '{{name}}',
+          label: this.$t('{{name}}'),
+          format: val => this.$n(val),
+        },
+            {{else}}
         { name: '{{name}}', field: '{{name}}', label: this.$t('{{name}}') },
+            {{/compare}}
           {{/inArray}}
         {{/each }}
       ],
@@ -147,7 +159,7 @@ export default {
           message,
           color: 'red',
           icon: 'error',
-          closeBtn: this.$t('Close'),
+          closeBtn: this.$t('{{{labels.close}}}'),
         });
     },
 
@@ -162,7 +174,7 @@ export default {
         message: `${val['@id']} ${this.$t('deleted')}.`,
         color: 'green',
         icon: 'tag_faces',
-        closeBtn: this.$t('Close'),
+        closeBtn: this.$t('{{{labels.close}}}'),
       });
     },
   },
@@ -188,6 +200,12 @@ export default {
       this.nextPage = page;
       this.getPage({ params: { itemsPerPage, page, ...this.filters } });
     },
+
+    {{#if listContainsDate}}
+    formatDateTime(val, format) {
+      return val ? this.$d(extractDate(val), format) : '';
+    },
+    {{/if}}
 
     {{#if parameters.length}}
     onSendFilter() {

@@ -17,9 +17,9 @@
       </q-breadcrumbs>
       <q-space />
       <div>
-        <q-btn :label="$t('Submit')" color="primary" @click="onSendForm" />
-        <q-btn :label="$t('Reset')" color="primary" flat class="q-ml-sm" @click="resetForm" />
-        <q-btn :label="$t('Delete')" color="primary" flat class="q-ml-sm" @click="del" />
+        <q-btn :label="$t('{{{labels.submit}}}')" color="primary" @click="onSendForm" />
+        <q-btn :label="$t('{{{labels.reset}}}')" color="primary" flat class="q-ml-sm" @click="resetForm" />
+        <q-btn :label="$t('{{{labels.delete}}}')" color="primary" flat class="q-ml-sm" @click="del" />
       </div>
     </q-toolbar>
     <{{{titleUcFirst}}}Form ref="updateForm" v-if="item" :values="item" :errors="violations" />
@@ -83,7 +83,7 @@ export default {
           message,
           color: 'red',
           icon: 'error',
-          closeBtn: this.$t('Close'),
+          closeBtn: this.$t('{{{labels.close}}}'),
         });
     },
 
@@ -93,7 +93,7 @@ export default {
           message,
           color: 'red',
           icon: 'error',
-          closeBtn: this.$t('Close'),
+          closeBtn: this.$t('{{{labels.close}}}'),
         });
     },
 
@@ -102,7 +102,7 @@ export default {
         message: `${val['@id']} ${this.$t('updated')}.`,
         color: 'green',
         icon: 'tag_faces',
-        closeBtn: this.$t('Close'),
+        closeBtn: this.$t('{{{labels.close}}}'),
       });
     },
 
@@ -131,14 +131,14 @@ export default {
       {{#each formFields}}
       {{#compare type "==" "text" }}
       {{#if reference}}
-      {{{name}}}GetSelectItems: '{{{name}}}/list/getSelectItems',
+      {{{name}}}GetSelectItems: '{{{downcase reference.title}}}/list/getSelectItems',
       {{/if}}
       {{/compare}}
       {{/each}}
     }),
 
     del() {
-      if (window.confirm(this.$t('Are you sure you want to delete this {{{lc}}} ?'))) {
+      if (window.confirm(this.$t('{{{labels.confirmDelete}}}'))) {
         this.deleteItem(this.retrieved);
       }
     },

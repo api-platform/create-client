@@ -72,7 +72,7 @@
       {{/if}}
       :label="$t('{{{name}}}')"
       lazy-rules
-      :rules="[{{#if required}}val => !!val || $t('Field is required'), {{/if}}isInvalid('{{{name}}}')]"
+      :rules="[{{#if required}}val => !!val || $t('{{{labels.required}}}'), {{/if}}isInvalid('{{{name}}}')]"
       class="col-12 col-md"
       />
     {{/compare}}
@@ -83,10 +83,10 @@
         filled
         :label="$t('{{{name}}}')"
         lazy-rules
-        :rules="[{{#if required}}val => !!val || $t('Field is required'), {{/if}}isInvalid('{{{name}}}')]"
+        :rules="[{{#if required}}val => !!val || $t('{{{labels.required}}}'), {{/if}}isInvalid('{{{name}}}')]"
         @filter="{{{name}}}FilterFn"
         :options="{{{name}}}SelectItems"
-        option-value="id"
+        option-value="@id"
         option-label="name"
         class="col-12 col-md"
         emit-value
@@ -94,7 +94,7 @@
       >
         <template v-slot:no-option>
           <q-item>
-            <q-item-section class="text-grey">\{{ $t('No results') }}</q-item-section>
+            <q-item-section class="text-grey">\{{ $t('{{{labels.noresults}}}') }}</q-item-section>
           </q-item>
         </template>
       </q-select>
@@ -105,7 +105,7 @@
         type="{{{type}}}"
         :label="$t('{{{name}}}')"
         lazy-rules
-        :rules="[{{#if required}}val => !!val || $t('Field is required'), {{/if}}isInvalid('{{{name}}}')]"
+        :rules="[{{#if required}}val => !!val || $t('{{{labels.required}}}'), {{/if}}isInvalid('{{{name}}}')]"
         class="col-12 col-md"
       />
     {{/if}}
@@ -122,25 +122,25 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: '{{{titleUcFirst}}}Form',
   props: {
     values: {
       type: Object,
-      required: true
+      required: true,
     },
 
     errors: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
 
     initialValues: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
 
   computed: {
@@ -148,7 +148,7 @@ export default {
       {{#each formFields}}
       {{#compare type "==" "text" }}
       {{#if reference}}
-      {{{name}}}SelectItems: '{{{name}}}/list/selectItems',
+      {{{name}}}SelectItems: '{{{downcase reference.title}}}/list/selectItems',
       {{/if}}
       {{/compare}}
       {{/each}}
@@ -161,7 +161,7 @@ export default {
 
     violations() {
       return this.errors || {};
-    }
+    },
   },
 
   methods: {
@@ -169,7 +169,7 @@ export default {
       {{#each formFields}}
       {{#compare type "==" "text" }}
       {{#if reference}}
-      {{{name}}}GetSelectItems: '{{{name}}}/list/getSelectItems',
+      {{{name}}}GetSelectItems: '{{{downcase reference.title}}}/list/getSelectItems',
       {{/if}}
       {{/compare}}
       {{/each}}
@@ -177,17 +177,15 @@ export default {
 
     isInvalid(key) {
       return val => {
-        if (typeof val == "number") {
+        if (typeof val == 'number') {
           if (val > 0) {
             return true;
           } else {
-            return this.$t("Please, insert a value bigger than zero!");
+            return this.$t('{{{labels.numValidation}}}');
           }
         }
-        if (!(val && val.length > 0)) return this.$t("Please type something");
-        return (
-          Object.keys(this.violations).length === 0 && !this.violations[key]
-        );
+        if (!(val && val.length > 0)) return this.$t('{{{labels.stringValidation}}}');
+        return Object.keys(this.violations).length === 0 && !this.violations[key];
       };
     },
 
@@ -198,14 +196,14 @@ export default {
       return this.{{{name}}}SelectItems !== null
         ? update()
         : this.{{{name}}}GetSelectItems({}).then(() =>
-          setTimeout(() => {
-            update();
-          }, 500),
-        );
+            setTimeout(() => {
+              update();
+            }, 500),
+          );
     },
     {{/if}}
     {{/compare}}
     {{/each}}
-  }
+  },
 };
 </script>

@@ -13,8 +13,8 @@
       </q-breadcrumbs>
       <q-space />
       <div>
-        <q-btn :label="$t('Submit')" color="primary" @click="onSendForm" />
-        <q-btn :label="$t('Reset')" color="primary" flat class="q-ml-sm" @click="resetForm" />
+        <q-btn :label="$t('{{{labels.submit}}}')" color="primary" @click="onSendForm" />
+        <q-btn :label="$t('{{{labels.reset}}}')" color="primary" flat class="q-ml-sm" @click="resetForm" />
       </div>
     </q-toolbar>
     <{{{titleUcFirst}}}Form ref="createForm" :values="item" :errors="violations" />
@@ -28,7 +28,7 @@
 import { createNamespacedHelpers } from 'vuex';
 import {{{titleUcFirst}}}Form from './Form';
 {{#if formContainsDate}}
-import { date } from 'quasar';
+import { extractDate } from '../../utils/dates';
 {{/if}}
 const { mapGetters, mapActions } = createNamespacedHelpers('{{{lc}}}/create');
 
@@ -50,10 +50,10 @@ export default {
         {{{name}}}: date.formatDate(Date.now(), 'HH:mm'),
           {{/compare}}
           {{#compare type "==" "date" }}
-        {{{name}}}: date.formatDate(Date.now(), 'YYYY-MM-DD'),
+        {{{name}}}: this.formatDateTime(Date.now(), 'short'),
           {{/compare}}
           {{#compare type "==" "dateTime" }}
-        {{{name}}}: date.formatDate(Date.now(), 'YYYY-MM-DD HH:mm'),
+        {{{name}}}: this.formatDateTime(Date.now(), 'long'),
           {{/compare}}
         {{/each}}
       },
@@ -79,13 +79,19 @@ export default {
           message,
           color: 'red',
           icon: 'error',
-          closeBtn: this.$t('Close'),
+          closeBtn: this.$t('{{{labels.close}}}'),
         });
     },
   },
 
   methods: {
     ...mapActions(['create']),
+    {{#if formContainsDate}}
+    
+    formatDateTime(val, format) {
+      return val ? this.$d(extractDate(val), format) : '';
+    },
+    {{/if}}
 
     onSendForm() {
       this.$refs.createForm.$children[0].validate().then(success => {

@@ -5,20 +5,20 @@
     <div class="row q-col-gutter-x-md">
     {{/ifOdd}}
     {{#compare type "==" "checkbox" }}
-      <q-checkbox v-model="item.{{{variable}}}" :label="$t('{{{variable}}}')" class="col-12 col-md" />
+      <q-checkbox v-model="item.{{{name}}}" :label="$t('{{{name}}}')" class="col-12 col-md" />
     {{/compare}}
     {{#compare type "==" "date" }}
       <q-input
         filled
-        v-model="item.{{{variable}}}"
+        v-model="item.{{{name}}}"
         mask="date"
-        :label="$t('{{{variable}}}')"
+        :label="$t('{{{name}}}')"
         class="col-12 col-md"
       >
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-              <q-date v-model="item.{{{variable}}}" @input="() => $refs.qDateProxy.hide()" />
+              <q-date v-model="item.{{{name}}}" @input="() => $refs.qDateProxy.hide()" />
             </q-popup-proxy>
           </q-icon>
         </template>
@@ -27,26 +27,26 @@
     {{#compare type "==" "time" }}
       <q-input
         filled
-        v-model="item.{{{variable}}}"
+        v-model="item.{{{name}}}"
         mask="time"
-        :label="$t('{{{variable}}}')"
+        :label="$t('{{{name}}}')"
         class="col-12 col-md"
       >
         <template v-slot:append>
           <q-icon name="access_time" class="cursor-pointer">
             <q-popup-proxy transition-show="scale" transition-hide="scale">
-              <q-time v-model="item.{{{variable}}}" />
+              <q-time v-model="item.{{{name}}}" />
             </q-popup-proxy>
           </q-icon>
         </template>
       </q-input>
     {{/compare}}
     {{#compare type "==" "dateTime" }}
-      <q-input filled v-model="item.{{{variable}}}" :label="$t('{{{variable}}}')" class="col-12 col-md">
+      <q-input filled v-model="item.{{{name}}}" :label="$t('{{{name}}}')" class="col-12 col-md">
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy transition-show="scale" transition-hide="scale">
-              <q-date v-model="item.{{{variable}}}" mask="YYYY-MM-DD HH:mm" />
+              <q-date v-model="item.{{{name}}}" mask="YYYY-MM-DD HH:mm" />
             </q-popup-proxy>
           </q-icon>
         </template>
@@ -54,7 +54,7 @@
         <template v-slot:append>
           <q-icon name="access_time" class="cursor-pointer">
             <q-popup-proxy transition-show="scale" transition-hide="scale">
-              <q-time v-model="item.{{{variable}}}" mask="YYYY-MM-DD HH:mm" format24h />
+              <q-time v-model="item.{{{name}}}" mask="YYYY-MM-DD HH:mm" format24h />
             </q-popup-proxy>
           </q-icon>
         </template>
@@ -62,40 +62,41 @@
     {{/compare}}
     {{#compare type "==" "number" }}
       <q-input
-      v-model.number="item.{{{variable}}}"
+      v-model.number="item.{{{name}}}"
       filled
       type="{{{type}}}"
       {{#if step}}
       step="{{{step}}}"
       {{/if}}
-      :label="$t('{{{variable}}}')"
+      :label="$t('{{{name}}}')"
       class="col-12 col-md"
       />
     {{/compare}}
     {{#compare type "==" "text" }}
     {{#if reference}}
       <q-select
-        v-model="item.{{{variable}}}"
+        v-model="item.{{{name}}}"
         filled
-        :label="$t('{{{variable}}}')"
-        @filter="{{{variable}}}FilterFn"
-        :options="{{{variable}}}SelectItems"
-        option-value="id"
+        :label="$t('{{{name}}}')"
+        @filter="{{{name}}}FilterFn"
+        :options="{{{name}}}SelectItems"
+        option-value="@id"
         option-label="name"
         class="col-12 col-md"
+        {{#if multiple}}multiple{{/if}}
       >
         <template v-slot:no-option>
           <q-item>
-            <q-item-section class="text-grey">\{{ $t('No results') }}</q-item-section>
+            <q-item-section class="text-grey">\{{ $t('{{{labels.noresults}}}') }}</q-item-section>
           </q-item>
         </template>
       </q-select>
     {{else}}
       <q-input
-        v-model="item.{{{variable}}}"
+        v-model="item.{{{name}}}"
         filled
         type="{{{type}}}"
-        :label="$t('{{{variable}}}')"
+        :label="$t('{{{name}}}')"
         class="col-12 col-md"
       />
     {{/if}}
@@ -132,7 +133,7 @@ export default {
       {{#each parameters}}
       {{#compare type "==" "text" }}
       {{#if reference}}
-      {{{variable}}}SelectItems: '{{{variable}}}/list/selectItems',
+      {{{name}}}SelectItems: '{{{downcase reference.title}}}/list/selectItems',
       {{/if}}
       {{/compare}}
       {{/each}}
@@ -149,7 +150,7 @@ export default {
       {{#each parameters}}
       {{#compare type "==" "text" }}
       {{#if reference}}
-      {{{variable}}}GetSelectItems: '{{{variable}}}/list/getSelectItems',
+      {{{name}}}GetSelectItems: '{{{downcase reference.title}}}/list/getSelectItems',
       {{/if}}
       {{/compare}}
       {{/each}}
@@ -158,10 +159,10 @@ export default {
     {{#each parameters}}
     {{#compare type "==" "text" }}
     {{#if reference}}
-    {{{variable}}}FilterFn(val, update /* , abort */) {
-      return this.{{{variable}}}SelectItems !== null
+    {{{name}}}FilterFn(val, update /* , abort */) {
+      return this.{{{name}}}SelectItems !== null
         ? update()
-        : this.{{{variable}}}GetSelectItems({}).then(update());
+        : this.{{{name}}}GetSelectItems({}).then(update());
     },
     {{/if}}
     {{/compare}}
