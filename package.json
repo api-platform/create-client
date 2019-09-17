@@ -31,7 +31,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "jest": "^24.0.0",
     "prettier": "^1.14.3",
-    "tmp": "^0.0.33"
+    "tmp": "^0.1.0"
   },
   "dependencies": {
     "@api-platform/api-doc-parser": "^0.8.0",
