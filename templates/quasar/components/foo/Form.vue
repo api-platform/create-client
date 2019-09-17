@@ -8,59 +8,52 @@
       <q-checkbox v-model="item.{{{name}}}" :label="$t('{{{name}}}')" class="col-12 col-md" />
     {{/compare}}
     {{#compare type "==" "date" }}
-      <q-input
+      <InputDate
+        readonly
         filled
-        v-model="item.{{{name}}}"
-        mask="date"
-        :rules="['date']"
+        :value="item.{{{name}}}"
+        :set="
+          v => {
+            item.{{{name}}} = v;
+          }
+        "
         :label="$t('{{{name}}}')"
         class="col-12 col-md"
-      >
-        <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-              <q-date v-model="item.{{{name}}}" @input="() => $refs.qDateProxy.hide()" />
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
+        kind="date"
+        :rules="['date']"
+      />
     {{/compare}}
     {{#compare type "==" "time" }}
-      <q-input
+      <InputDate
+        readonly
         filled
-        v-model="item.{{{name}}}"
-        mask="time"
-        :rules="['time']"
+        :value="item.{{{name}}}"
+        :set="
+          v => {
+            item.{{{name}}} = v;
+          }
+        "
         :label="$t('{{{name}}}')"
         class="col-12 col-md"
-      >
-        <template v-slot:append>
-          <q-icon name="access_time" class="cursor-pointer">
-            <q-popup-proxy transition-show="scale" transition-hide="scale">
-              <q-time v-model="item.{{{name}}}" />
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
+        kind="time"
+        :rules="['time']"
+      />
     {{/compare}}
     {{#compare type "==" "dateTime" }}
-      <q-input filled v-model="item.{{{name}}}" :label="$t('{{{name}}}')" class="col-12 col-md">
-        <template v-slot:prepend>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy transition-show="scale" transition-hide="scale">
-              <q-date v-model="item.{{{name}}}" mask="YYYY-MM-DD HH:mm" />
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-
-        <template v-slot:append>
-          <q-icon name="access_time" class="cursor-pointer">
-            <q-popup-proxy transition-show="scale" transition-hide="scale">
-              <q-time v-model="item.{{{name}}}" mask="YYYY-MM-DD HH:mm" format24h />
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
+      <InputDate
+        readonly
+        filled
+        :value="item.{{{name}}}"
+        :set="
+          v => {
+            item.{{{name}}} = new Date(v).toISOString();
+          }
+        "
+        :label="$t('{{{name}}}')"
+        class="col-12 col-md"
+        kind="datetime"
+        :rules="['datetime']"
+      />
     {{/compare}}
     {{#compare type "==" "number" }}
       <q-input
@@ -123,9 +116,19 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+{{#if formContainsDate}}
+import InputDate from '../common/InputDate';
+{{/if}}
 
 export default {
   name: '{{{titleUcFirst}}}Form',
+  {{#if formContainsDate}}
+
+  components: {
+    InputDate,
+  },
+  {{/if}}
+
   props: {
     values: {
       type: Object,
@@ -175,18 +178,19 @@ export default {
       {{/each}}
     }),
 
-    isInvalid(key) {
-      return val => {
-        if (typeof val == 'number') {
-          if (val > 0) {
-            return true;
-          } else {
-            return this.$t('{{{labels.numValidation}}}');
-          }
-        }
-        if (!(val && val.length > 0)) return this.$t('{{{labels.stringValidation}}}');
-        return Object.keys(this.violations).length === 0 && !this.violations[key];
-      };
+    isInvalid(/* key */) {
+      return true;
+      // return val => {
+      //   if (typeof val == 'number') {
+      //     if (val > 0) {
+      //       return true;
+      //     } else {
+      //       return this.$t('{{{labels.numValidation}}}');
+      //     }
+      //   }
+      //   if (!(val && val.length > 0)) return this.$t('{{{labels.stringValidation}}}');
+      //   return Object.keys(this.violations).length === 0 && !this.violations[key];
+      // };
     },
 
     {{#each formFields}}

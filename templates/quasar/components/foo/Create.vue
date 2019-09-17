@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-toolbar class="q-my-md">
-      <Breadcrumb :values="breadcrumbList" />
+      <Breadcrumb :values="$route.meta.breadcrumb" />
       <q-space />
       <div>
         <q-btn :label="$t('{{{labels.submit}}}')" color="primary" @click="onSendForm" />
@@ -18,11 +18,8 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import {{{titleUcFirst}}}Form from './Form';
-{{#if formContainsDate}}
-import { extractDate } from '../../utils/dates';
-{{/if}}
 const { mapGetters, mapActions } = createNamespacedHelpers('{{{lc}}}/create');
-import notify from '../../utils/notify';
+import { error } from '../../utils/notify';
 import Breadcrumb from '../common/Breadcrumb.vue';
 
 export default {
@@ -32,26 +29,21 @@ export default {
     Breadcrumb,
   },
 
-  created() {
-    this.breadcrumbList = this.$route.meta.breadcrumb;
-  },
-
   data() {
     return {
       item: {
         {{#each formFields}}
           {{#compare type "==" "time" }}
-        {{{name}}}: date.formatDate(Date.now(), 'HH:mm'),
+        {{{name}}}: '',
           {{/compare}}
           {{#compare type "==" "date" }}
-        {{{name}}}: this.formatDateTime(Date.now(), 'short'),
+        {{{name}}}: new Date().toISOString(),,
           {{/compare}}
           {{#compare type "==" "dateTime" }}
-        {{{name}}}: this.formatDateTime(Date.now(), 'long'),
+        {{{name}}}: new Date().toISOString(),
           {{/compare}}
         {{/each}}
       },
-      breadcrumbList: [],
     };
   },
 
@@ -68,19 +60,13 @@ export default {
     },
 
     error(message) {
-      message && notify.error(message, this.$t('{{{labels.close}}}'));
+      message && error(message, this.$t('{{{labels.close}}}'));
     },
   },
 
   methods: {
     ...mapActions(['create']),
-    {{#if formContainsDate}}
     
-    formatDateTime(val, format) {
-      return val ? this.$d(extractDate(val), format) : '';
-    },
-    {{/if}}
-
     onSendForm() {
       this.$refs.createForm.$children[0].validate().then(success => {
         if (success) {

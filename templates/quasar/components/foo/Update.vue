@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-toolbar class="q-my-md">
-      <Breadcrumb :values="breadcrumbList" :item="item" />
+      <Breadcrumb :values="$route.meta.breadcrumb" :item="item" />
       <q-space />
       <div>
         <q-btn :label="$t('{{{labels.submit}}}')" color="primary" @click="onSendForm" />
@@ -38,7 +38,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import {{{titleUcFirst}}}Form from './Form.vue';
-import notify from '../../utils/notify';
+import { error, success } from '../../utils/notify';
 import Breadcrumb from '../common/Breadcrumb.vue';
 
 export default {
@@ -80,15 +80,15 @@ export default {
     },
 
     error(message) {
-      message && notify.error(message, this.$t('{{{labels.close}}}'));
+      message && error(message, this.$t('{{{labels.close}}}'));
     },
 
     deleteError(message) {
-      message && notify.error(message, this.$t('{{{labels.close}}}'));
+      message && error(message, this.$t('{{{labels.close}}}'));
     },
 
     updated(val) {
-      notify.success(
+      success(
         `${val['@id']} ${this.$t('{{{labels.updated}}}')}.`,
         this.$t('{{{labels.close}}}'),
       );
@@ -104,7 +104,6 @@ export default {
   },
 
   created() {
-    this.breadcrumbList = this.$route.meta.breadcrumb;
     this.retrieve(decodeURIComponent(this.$route.params.id));
   },
 

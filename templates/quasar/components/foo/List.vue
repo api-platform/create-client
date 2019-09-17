@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-toolbar class="q-my-md">
-      <Breadcrumb :values="breadcrumbList" />
+      <Breadcrumb :values="$route.meta.breadcrumb" />
       <q-space />
       <div>
         <q-btn flat round dense icon="add" :to="{ name: '{{{titleUcFirst}}}Create' }" />
@@ -65,7 +65,7 @@ import {{{titleUcFirst}}}FilterForm from './Filter';
 {{#if listContainsDate}}
 import { extractDate } from '../../utils/dates';
 {{/if}}
-import notify from '../../utils/notify';
+import { error, success } from '../../utils/notify';
 import Breadcrumb from '../common/Breadcrumb.vue';
 
 export default {
@@ -77,7 +77,6 @@ export default {
     Breadcrumb,
   },
   created() {
-    this.breadcrumbList = this.$route.meta.breadcrumb;
     this.onRequest({
       pagination: this.pagination,
     });
@@ -135,7 +134,6 @@ export default {
           {{/inArray}}
         {{/each }}
       ],
-      breadcrumbList: [],
       nextPage: null,
       {{#if parameters.length}}
       filters: {},
@@ -146,7 +144,7 @@ export default {
 
   watch: {
     error(message) {
-      message && notify.error(message, this.$t('{{{labels.close}}}'));
+      message && error(message, this.$t('{{{labels.close}}}'));
     },
 
     items() {
@@ -156,7 +154,7 @@ export default {
     },
 
     deletedItem(val) {
-      notify.success(
+      success(
         `${val['@id']} ${this.$t('deleted')}.`,
         this.$t('{{{labels.close}}}')
       );

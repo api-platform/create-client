@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-toolbar class="q-my-md">
-      <Breadcrumb :values="breadcrumbList" :item="item" />
+      <Breadcrumb :values="$route.meta.breadcrumb" :item="item" />
       <q-space />
       <div>
         <q-btn :label="$t('{{{labels.delete}}}')" color="primary" flat class="q-ml-sm" @click="confirmDelete = true" />
@@ -25,7 +25,7 @@
           <tr>
           {{/ifOdd}}
             <td>\{{ $t('{{{name}}}') }}</td>
-            <td></td>{{#switch type}}
+            <td>{{#switch type}}
             {{#case "dateTime"}}\{{ formatDateTime(item['{{{name}}}'], 'long') }}{{/case~}}
             {{#case "date"}}\{{ formatDateTime(item['{{{name}}}'], 'short') }}{{/case~}}
             {{#case "number"}}\{{ $n(item['{{{name}}}']) }}{{/case~}}
@@ -36,7 +36,8 @@
             \{{ item['{{{name}}}'] }}
               {{/if}}
             {{/default~}}
-            {{/switch}}</td>
+            {{/switch}}
+            </td>
 
           {{#ifEven index}}
           </tr>
@@ -100,7 +101,6 @@ export default {
   },
 
   created() {
-    this.breadcrumbList = this.$route.meta.breadcrumb;
     this.retrieve(decodeURIComponent(this.$route.params.id));
   },
 

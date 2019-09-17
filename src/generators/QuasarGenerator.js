@@ -51,6 +51,7 @@ export default class extends BaseGenerator {
       "components/foo/Update.vue",
       "components/foo/Show.vue",
       "components/common/Breadcrumb.vue",
+      "components/common/InputDate.vue",
 
       // routes
       "router/foo.js",
@@ -340,7 +341,10 @@ export const store = new Vuex.Store({
       this.createDir(dir);
     }
 
-    for (let common of ["components/common/Breadcrumb.vue"]) {
+    for (let common of [
+      "components/common/Breadcrumb.vue",
+      "components/common/InputDate.vue"
+    ]) {
       this.createFile(common, `${dir}/${common}`, context, false);
     }
 
