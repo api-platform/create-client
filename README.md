@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/%40api-platform%2Fclient-generator.svg)](https://badge.fury.io/js/%40api-platform%2Fclient-generator)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
-API Platform Client Generator is a generator to scaffold app with Create-Retrieve-Update-Delete features for any API exposing a Hydra or Swagger documentation for:
+API Platform Client Generator is a generator to scaffold app with Create-Retrieve-Update-Delete features for any API exposing a [Hydra](http://www.hydra-cg.com/spec/latest/core/) or [OpenAPI](https://www.openapis.org/) documentation for:
  * React/Redux
  * React Native
  * Vue.js
@@ -22,9 +22,20 @@ The documentation of API Platform's Client Generator can be browsed [on the offi
 npx @api-platform/client-generator https://demo.api-platform.com/ output/ --resource Book
 ```
 
-**OpenAPI** (experimental)
+**OpenAPI v2 (formerly known as Swagger)** (experimental)
 ```sh
 npx @api-platform/client-generator https://demo.api-platform.com/docs.json output/ --resource Book --format swagger
+```
+
+or
+
+```sh
+npx @api-platform/client-generator https://demo.api-platform.com/docs.json output/ --resource Book --format openapi2
+```
+
+**OpenAPI v3** (experimental)
+```sh
+npx @api-platform/client-generator https://demo.api-platform.com/docs.json?spec_version=3 output/ --resource Book --format openapi3
 ```
 
 ## Features

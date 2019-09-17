@@ -4,6 +4,7 @@ import "isomorphic-fetch";
 import program from "commander";
 import parseHydraDocumentation from "@api-platform/api-doc-parser/lib/hydra/parseHydraDocumentation";
 import parseSwaggerDocumentation from "@api-platform/api-doc-parser/lib/swagger/parseSwaggerDocumentation";
+import parseOpenApi3Documentation from "@api-platform/api-doc-parser/lib/openapi3/parseOpenApi3Documentation";
 import { version } from "../package.json";
 import generators from "./generators";
 
@@ -66,12 +67,14 @@ const resourceToGenerate = program.resource
 const serverPath = program.serverPath ? program.serverPath.toLowerCase() : null;
 
 const parser = entrypointWithSlash => {
-  const parseDocumentation =
-    "swagger" === program.format
-      ? parseSwaggerDocumentation
-      : parseHydraDocumentation;
-
-  return parseDocumentation(entrypointWithSlash);
+  switch (program.format) {
+    case "swagger":
+      return parseSwaggerDocumentation(entrypointWithSlash);
+    case "openapi3":
+      return parseOpenApi3Documentation(entrypointWithSlash);
+    default:
+      return parseHydraDocumentation(entrypointWithSlash);
+  }
 };
 
 // check generator dependencies
