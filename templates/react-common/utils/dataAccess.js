@@ -21,17 +21,28 @@ export function fetch(id, options = {}) {
   return global.fetch(new URL(id, ENTRYPOINT), options).then(response => {
     if (response.ok) return response;
 
-    return response.json().then(json => {
-      const error = json['hydra:description'] || response.statusText;
-      if (!json.violations) throw Error(error);
+    return response.json().then(
+      json => {
+        const error =
+          json['hydra:description'] ||
+          json['hydra:title'] ||
+          'An error occurred.';
+        if (!json.violations) throw Error(error);
 
-      let errors = { _error: error };
-      json.violations.map(
-        violation => (errors[violation.propertyPath] = violation.message)
-      );
+        let errors = { _error: error };
+        json.violations.forEach(violation =>
+          errors[violation.propertyPath]
+            ? (errors[violation.propertyPath] +=
+                '\n' + errors[violation.propertyPath])
+            : (errors[violation.propertyPath] = violation.message)
+        );
 
-      throw new SubmissionError(errors);
-    });
+        throw new SubmissionError(errors);
+      },
+      () => {
+        throw new Error(response.statusText || 'An error occurred.');
+      }
+    );
   });
 }
 
