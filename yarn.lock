@@ -3,9 +3,9 @@
 
 
 "@api-platform/api-doc-parser@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@api-platform/api-doc-parser/-/api-doc-parser-0.8.0.tgz#b1c867d39398f730b928e8ba2cc406da5dda07ba"
-  integrity sha512-YujQoC4871BmabCj7pzgxO1tG2E5F0GNKcyP8IVJLpK4bb/IO7hMrXUGzB1E3dxXAzVetQ574MM6Bo7iOIyFMg==
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@api-platform/api-doc-parser/-/api-doc-parser-0.8.1.tgz#256cd7719d85b1f54440841a77679c19c9b97058"
+  integrity sha512-AfyeuQL58zjayiiB5fysY88twkDfGTWCYr7R/mtWxGJVXJHp0nJwaNWHQD00VzFYLoDXcDq1l/dZjOZA79YUAg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     jsonld "^1.5.0"
