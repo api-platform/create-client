@@ -35,7 +35,7 @@
       flat
       :loading="isLoading"
     >
-      <q-td slot="body-cell-action" slot-scope="props" :props="props">
+      <q-td slot="body-cell-action" slot-scope="props" :props="props" auto-width>
         <q-btn
           flat
           round

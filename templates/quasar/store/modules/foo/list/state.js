@@ -5,4 +5,5 @@ export default {
   view: [],
   totalItems: 10,
   selectItems: null,
+  selectItemsTemplate: '',
 };

@@ -65,7 +65,7 @@
       {{/if}}
       :label="$t('{{{name}}}')"
       lazy-rules
-      :rules="[{{#if required}}val => !!val || $t('{{{labels.required}}}'), {{/if}}isInvalid('{{{name}}}')]"
+      :rules="[{{#if required}}val => !!val || $t('{{{../labels.required}}}'), {{/if}}isInvalid('{{{name}}}')]"
       class="col-12 col-md"
       />
     {{/compare}}
@@ -76,7 +76,7 @@
         filled
         :label="$t('{{{name}}}')"
         lazy-rules
-        :rules="[{{#if required}}val => !!val || $t('{{{labels.required}}}'), {{/if}}isInvalid('{{{name}}}')]"
+        :rules="[{{#if required}}val => !!val || $t('{{{../labels.required}}}'), {{/if}}isInvalid('{{{name}}}')]"
         @filter="{{{name}}}FilterFn"
         :options="{{{name}}}SelectItems"
         option-value="@id"
@@ -87,7 +87,7 @@
       >
         <template v-slot:no-option>
           <q-item>
-            <q-item-section class="text-grey">\{{ $t('{{{labels.noresults}}}') }}</q-item-section>
+            <q-item-section class="text-grey">\{{ $t('{{{../labels.noresults}}}') }}</q-item-section>
           </q-item>
         </template>
       </q-select>
@@ -98,7 +98,7 @@
         type="{{{type}}}"
         :label="$t('{{{name}}}')"
         lazy-rules
-        :rules="[{{#if required}}val => !!val || $t('{{{labels.required}}}'), {{/if}}isInvalid('{{{name}}}')]"
+        :rules="[{{#if required}}val => !!val || $t('{{{../labels.required}}}'), {{/if}}isInvalid('{{{name}}}')]"
         class="col-12 col-md"
       />
     {{/if}}
@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 {{#if formContainsDate}}
 import InputDate from '../common/InputDate';
 {{/if}}
@@ -152,6 +152,7 @@ export default {
       {{#compare type "==" "text" }}
       {{#if reference}}
       {{{name}}}SelectItems: '{{{downcase reference.title}}}/list/selectItems',
+      {{{name}}}SelectItemsTemplate: '{{{downcase reference.title}}}/list/selectItemsTemplate',
       {{/if}}
       {{/compare}}
       {{/each}}
@@ -178,6 +179,16 @@ export default {
       {{/each}}
     }),
 
+    ...mapMutations({
+      {{#each formFields}}
+      {{#compare type "==" "text" }}
+      {{#if reference}}
+      {{{name}}}SetSelectItemsTemplate: '{{{downcase reference.title}}}/list/{{{../uc}}}_LIST_SET_SELECT_ITEMS_TEMPLATE',
+      {{/if}}
+      {{/compare}}
+      {{/each}}
+    }),
+
     isInvalid(/* key */) {
       return true;
       // return val => {
@@ -197,13 +208,19 @@ export default {
     {{#compare type "==" "text" }}
     {{#if reference}}
     {{{name}}}FilterFn(val, update /* , abort */) {
-      return this.{{{name}}}SelectItems !== null
+      const params = {
+        '{{{name}}}[exists]': false,
+      };
+      const template = JSON.stringify(params);
+
+      return this.{{{name}}}SelectItems !== null && this.{{{name}}}SelectItemsTemplate === template
         ? update()
-        : this.{{{name}}}GetSelectItems({}).then(() =>
+        : this.{{{name}}}GetSelectItems({ params }).then(() => {
+            this.{{{name}}}SetSelectItemsTemplate(template);
             setTimeout(() => {
               update();
-            }, 500),
-          );
+            }, 500);
+          });
     },
     {{/if}}
     {{/compare}}

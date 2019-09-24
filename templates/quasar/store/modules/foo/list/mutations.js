@@ -18,6 +18,10 @@ export default {
     Object.assign(state, { selectItems });
   },
 
+  [types.SET_SELECT_ITEMS_TEMPLATE](state, selectItemsTemplate) {
+    Object.assign(state, { selectItemsTemplate });
+  },
+
   [types.TOGGLE_LOADING](state) {
     Object.assign(state, { isLoading: !state.isLoading });
   },
