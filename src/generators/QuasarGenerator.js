@@ -227,7 +227,7 @@ export const store = new Vuex.Store({
         ...param,
         ...this.getHtmlInputTypeFromField(param)
       }));
-      
+
       params = this.cleanupParams(params);
       this.generateFiles(api, resource, dir, params);
     });
