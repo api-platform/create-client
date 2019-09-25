@@ -115,10 +115,20 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { form } from '../../utils/vuexer';
 {{#if formContainsDate}}
 import InputDate from '../common/InputDate';
 {{/if}}
+
+const { getters, actions, mutations } = form([
+{{#each formFields}}
+  {{#compare type "==" "text" }}
+  {{#if reference}}
+  { name: '{{{name}}}', module: '{{{downcase reference.title}}}'},
+  {{/if}}
+  {{/compare}}
+{{/each}}
+]);
 
 export default {
   name: '{{{titleUcFirst}}}Form',
@@ -147,16 +157,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-      {{#each formFields}}
-      {{#compare type "==" "text" }}
-      {{#if reference}}
-      {{{name}}}SelectItems: '{{{downcase reference.title}}}/list/selectItems',
-      {{{name}}}SelectItemsTemplate: '{{{downcase reference.title}}}/list/selectItemsTemplate',
-      {{/if}}
-      {{/compare}}
-      {{/each}}
-    }),
+    ...getters,
 
     // eslint-disable-next-line
     item() {
@@ -169,25 +170,8 @@ export default {
   },
 
   methods: {
-    ...mapActions({
-      {{#each formFields}}
-      {{#compare type "==" "text" }}
-      {{#if reference}}
-      {{{name}}}GetSelectItems: '{{{downcase reference.title}}}/list/getSelectItems',
-      {{/if}}
-      {{/compare}}
-      {{/each}}
-    }),
-
-    ...mapMutations({
-      {{#each formFields}}
-      {{#compare type "==" "text" }}
-      {{#if reference}}
-      {{{name}}}SetSelectItemsTemplate: '{{{downcase reference.title}}}/list/{{{../uc}}}_LIST_SET_SELECT_ITEMS_TEMPLATE',
-      {{/if}}
-      {{/compare}}
-      {{/each}}
-    }),
+    ...actions,
+    ...mutations,
 
     isInvalid(/* key */) {
       return true;

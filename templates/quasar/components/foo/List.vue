@@ -1,25 +1,13 @@
 <template>
   <div>
-    <q-toolbar class="q-my-md">
-      <Breadcrumb :values="$route.meta.breadcrumb" />
-      <q-space />
-      <div>
-        <q-btn flat round dense icon="add" :to="{ name: '{{{titleUcFirst}}}Create' }" />
-      </div>
-    </q-toolbar>
+    <Toolbar :handle-add="addHandler">
+      <Breadcrumb :values="$route.meta.breadcrumb" slot="left" />
+    </Toolbar>
 
     {{#if parameters.length}}
-    <q-expansion-item icon="search" :label="$t('{{{labels.filters}}}')" v-model="filtersExpanded">
-      <q-card>
-        <q-card-section>
-          <{{{titleUcFirst}}}FilterForm ref="filterForm" :values="filters" />
-        </q-card-section>
-        <q-card-section>
-          <q-btn :label="$t('{{{labels.filter}}}')" color="primary" @click="onSendFilter" />
-          <q-btn :label="$t('{{{labels.reset}}}')" color="primary" flat class="q-ml-sm" @click="resetFilter" />
-        </q-card-section>
-      </q-card>
-    </q-expansion-item>
+    <DataFilter :handle-filter="onSendFilter" :handle-reset="resetFilter">
+      <{{{titleUcFirst}}}FilterForm ref="filterForm" :values="filters" slot="filter" />
+    </DataFilter>
     {{/if}}
 
     <q-table
@@ -35,62 +23,44 @@
       flat
       :loading="isLoading"
     >
-      <q-td slot="body-cell-action" slot-scope="props" :props="props" auto-width>
-        <q-btn
-          flat
-          round
-          dense
-          color="secondary"
-          :to="{ name: '{{{titleUcFirst}}}Show', params: { id: props.row['@id'] } }"
-          icon="format_align_justify"
-        />
-        <q-btn
-          flat
-          round
-          dense
-          color="secondary"
-          :to="{ name: '{{{titleUcFirst}}}Update', params: { id: props.row['@id'] } }"
-          icon="edit"
-        />
-      </q-td>
+      <ActionCell
+        slot="body-cell-action"
+        slot-scope="props"
+        :handle-show="() => showHandler(props.row)"
+        :handle-edit="() => editHandler(props.row)"
+        :handle-delete="() => deleteHandler(props.row)"
+      />
     </q-table>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { list } from '../../utils/vuexer';
 {{#if parameters.length }}
 import {{{titleUcFirst}}}FilterForm from './Filter';
+import { DataFilter } from '../common';
 {{/if}}
-{{#if listContainsDate}}
-import { extractDate } from '../../utils/dates';
-{{/if}}
-import { error, success } from '../../utils/notify';
-import Breadcrumb from '../common/Breadcrumb.vue';
+import { ActionCell, Breadcrumb, Toolbar } from '../common';
+import ListMixin from '../mixins/ListMixin';
+const servicePrefix = '{{{titleUcFirst}}}';
+const { getters, actions } = list(servicePrefix.toLowerCase());
 
 export default {
   name: '{{{titleUcFirst}}}List',
+  servicePrefix,
+  mixins: [ListMixin],
   components: {
     {{#if parameters.length }}
     {{{titleUcFirst}}}FilterForm,
+    DataFilter,
     {{/if}}
     Breadcrumb,
-  },
-  created() {
-    this.onRequest({
-      pagination: this.pagination,
-    });
+    ActionCell,
+    Toolbar,
   },
 
   data() {
     return {
-      pagination: {
-        // sortBy: 'name',
-        // descending: false,
-        page: 1, // page to be displayed
-        rowsPerPage: 3, // maximum displayed rows
-        rowsNumber: 10, // virtualy the max number of rows
-      },
       columns: [
         { name: 'action' },
         { name: 'id', field: '@id', label: this.$t('id') },
@@ -134,72 +104,10 @@ export default {
           {{/inArray}}
         {{/each }}
       ],
-      nextPage: null,
-      {{#if parameters.length}}
-      filters: {},
-      filtersExpanded: false,
-      {{/if}}
     };
   },
 
-  watch: {
-    error(message) {
-      message && error(message, this.$t('{{{labels.close}}}'));
-    },
-
-    items() {
-      this.pagination.page = this.nextPage;
-      this.pagination.rowsNumber = this.totalItems;
-      this.nextPage = null;
-    },
-
-    deletedItem(val) {
-      success(
-        `${val['@id']} ${this.$t('deleted')}.`,
-        this.$t('{{{labels.close}}}')
-      );
-    },
-  },
-
-  computed: mapGetters({
-    deletedItem: '{{{lc}}}/del/deleted',
-    error: '{{{lc}}}/list/error',
-    items: '{{{lc}}}/list/items',
-    isLoading: '{{{lc}}}/list/isLoading',
-    view: '{{{lc}}}/list/view',
-    totalItems: '{{{lc}}}/list/totalItems',
-  }),
-
-  methods: {
-    ...mapActions({
-      getPage: '{{{lc}}}/list/getItems',
-    }),
-
-    onRequest(props) {
-      const {
-        pagination: { page, rowsPerPage: itemsPerPage },
-      } = props;
-      this.nextPage = page;
-      this.getPage({ params: { itemsPerPage, page, ...this.filters } });
-    },
-
-    {{#if listContainsDate}}
-    formatDateTime(val, format) {
-      return val ? this.$d(extractDate(val), format) : '';
-    },
-    {{/if}}
-
-    {{#if parameters.length}}
-    onSendFilter() {
-      this.onRequest({
-        pagination: this.pagination,
-      });
-    },
-
-    resetFilter() {
-      this.filters = {};
-    },
-    {{/if}}
-  },
+  computed: getters,
+  methods: actions,
 };
 </script>

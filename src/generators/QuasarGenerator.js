@@ -50,8 +50,22 @@ export default class extends BaseGenerator {
       "components/foo/List.vue",
       "components/foo/Update.vue",
       "components/foo/Show.vue",
+
+      //common components
+      "components/common/index.js",
+      "components/common/ActionCell.vue",
       "components/common/Breadcrumb.vue",
+      "components/common/ConfirmDelete.vue",
+      "components/common/DataFilter.vue",
       "components/common/InputDate.vue",
+      "components/common/Loading.vue",
+      "components/common/Toolbar.vue",
+
+      // components mixins
+      "components/mixins/CreateMixin.js",
+      "components/mixins/ListMixin.js",
+      "components/mixins/ShowMixin.js",
+      "components/mixins/UpdateMixin.js",
 
       // routes
       "router/foo.js",
@@ -63,6 +77,7 @@ export default class extends BaseGenerator {
       "utils/fetch.js",
       "utils/dates.js",
       "utils/notify.js",
+      "utils/vuexer.js",
 
       // i18n
       "i18n/index.js"
@@ -212,6 +227,7 @@ export const store = new Vuex.Store({
         ...param,
         ...this.getHtmlInputTypeFromField(param)
       }));
+      
       params = this.cleanupParams(params);
       this.generateFiles(api, resource, dir, params);
     });
@@ -234,6 +250,9 @@ export const store = new Vuex.Store({
     params.forEach(p => {
       if (p.variable.endsWith("[exists]")) {
         return; // removed for the moment, it can help to add null option to select
+      }
+      if (p.variable.startsWith("order[")) {
+        return; // removed for the moment, it can help to sorting data
       }
       if (!stats[p.variable] && p.variable.endsWith("[]")) {
         if (stats[p.variable.slice(0, -2)] === 1) {
@@ -336,14 +355,30 @@ export const store = new Vuex.Store({
       `${dir}/store/modules/${lc}/show`,
       `${dir}/store/modules/${lc}/update`,
       `${dir}/components/${lc}`,
-      `${dir}/components/common`
+      `${dir}/components/common`,
+      `${dir}/components/mixins`
     ]) {
       this.createDir(dir);
     }
 
     for (let common of [
+      "components/common/index.js",
+      "components/common/ActionCell.vue",
       "components/common/Breadcrumb.vue",
-      "components/common/InputDate.vue"
+      "components/common/ConfirmDelete.vue",
+      "components/common/DataFilter.vue",
+      "components/common/InputDate.vue",
+      "components/common/Loading.vue",
+      "components/common/Toolbar.vue",
+
+      "components/mixins/CreateMixin.js",
+      "components/mixins/ListMixin.js",
+      "components/mixins/ShowMixin.js",
+      "components/mixins/UpdateMixin.js",
+
+      "utils/dates.js",
+      "utils/notify.js",
+      "utils/vuexer.js"
     ]) {
       this.createFile(common, `${dir}/${common}`, context, false);
     }
@@ -417,9 +452,6 @@ export const store = new Vuex.Store({
       { hydraPrefix: this.hydraPrefix },
       false
     );
-
-    this.createFile("utils/dates.js", `${dir}/utils/dates.js`, {}, false);
-    this.createFile("utils/notify.js", `${dir}/utils/notify.js`, {}, false);
 
     this.createFile(
       "i18n/index.js",
