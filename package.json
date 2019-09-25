@@ -28,7 +28,7 @@
     "@babel/preset-env": "^7.6.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.0.0",
     "prettier": "^1.14.3",
     "tmp": "^0.1.0"
@@ -37,7 +37,7 @@
     "@api-platform/api-doc-parser": "^0.8.0",
     "@babel/runtime": "^7.0.0",
     "chalk": "^2.4.1",
-    "commander": "^2.18.0",
+    "commander": "^3.0.1",
     "handlebars": "^4.0.12",
     "handlebars-helpers": "^0.10.0",
     "isomorphic-fetch": "^2.2.1",
