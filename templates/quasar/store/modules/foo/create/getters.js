@@ -1,4 +1,2 @@
-export const created = state => state.created;
-export const error = state => state.error;
-export const isLoading = state => state.isLoading;
-export const violations = state => state.violations;
+import { error, isLoading, created, violations } from '../../../../common/store/create/getters';
+export { error, isLoading, created, violations };

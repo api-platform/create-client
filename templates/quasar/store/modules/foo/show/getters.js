@@ -1,3 +1,3 @@
-export const error = state => state.error;
-export const isLoading = state => state.isLoading;
-export const retrieved = state => state.retrieved;
+import getters from '../../../../common/store/show/getters';
+const { error, isLoading, retrieved } = getters;
+export { error, isLoading, retrieved };

@@ -11,8 +11,8 @@
 <script>
 import { create } from '../../utils/vuexer';
 import {{{titleUcFirst}}}Form from './Form';
-import { Breadcrumb, Toolbar, Loading } from '../common';
-import CreateMixin from '../mixins/CreateMixin';
+import { Breadcrumb, Toolbar, Loading } from '../../common/components';
+import CreateMixin from '../../common/mixins/CreateMixin';
 const servicePrefix = '{{{titleUcFirst}}}';
 const { getters, actions } = create(servicePrefix.toLowerCase());
 

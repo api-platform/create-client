@@ -52,8 +52,8 @@
 
 <script>
 import { show } from '../../utils/vuexer';
-import { Breadcrumb, Toolbar, Loading } from '../common';
-import ShowMixin from '../mixins/ShowMixin';
+import { Breadcrumb, Toolbar, Loading } from '../../common/components';
+import ShowMixin from '../../common/mixins/ShowMixin';
 const servicePrefix = '{{{titleUcFirst}}}';
 const { getters, actions } = show(servicePrefix.toLowerCase());
 

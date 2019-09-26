@@ -38,10 +38,10 @@
 import { list } from '../../utils/vuexer';
 {{#if parameters.length }}
 import {{{titleUcFirst}}}FilterForm from './Filter';
-import { DataFilter } from '../common';
+import { DataFilter } from '../../common/components';
 {{/if}}
-import { ActionCell, Breadcrumb, Toolbar } from '../common';
-import ListMixin from '../mixins/ListMixin';
+import { ActionCell, Breadcrumb, Toolbar } from '../../common/components';
+import ListMixin from '../../common/mixins/ListMixin';
 const servicePrefix = '{{{titleUcFirst}}}';
 const { getters, actions } = list(servicePrefix.toLowerCase());
 

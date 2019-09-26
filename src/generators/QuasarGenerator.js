@@ -43,6 +43,34 @@ export default class extends BaseGenerator {
       "store/modules/foo/update/mutations.js",
       "store/modules/foo/update/state.js",
 
+      // common for modules
+      "common/store/mutation_types.js",
+      "common/store/create/actions.js",
+      "common/store/create/getters.js",
+      "common/store/create/mutation_types.js",
+      "common/store/create/mutations.js",
+      "common/store/create/state.js",
+      "common/store/delete/actions.js",
+      "common/store/delete/getters.js",
+      "common/store/delete/mutation_types.js",
+      "common/store/delete/mutations.js",
+      "common/store/delete/state.js",
+      "common/store/list/actions.js",
+      "common/store/list/getters.js",
+      "common/store/list/mutation_types.js",
+      "common/store/list/mutations.js",
+      "common/store/list/state.js",
+      "common/store/show/actions.js",
+      "common/store/show/getters.js",
+      "common/store/show/mutation_types.js",
+      "common/store/show/mutations.js",
+      "common/store/show/state.js",
+      "common/store/update/actions.js",
+      "common/store/update/getters.js",
+      "common/store/update/mutation_types.js",
+      "common/store/update/mutations.js",
+      "common/store/update/state.js",
+
       // components
       "components/foo/Create.vue",
       "components/foo/Filter.vue",
@@ -52,20 +80,20 @@ export default class extends BaseGenerator {
       "components/foo/Show.vue",
 
       //common components
-      "components/common/index.js",
-      "components/common/ActionCell.vue",
-      "components/common/Breadcrumb.vue",
-      "components/common/ConfirmDelete.vue",
-      "components/common/DataFilter.vue",
-      "components/common/InputDate.vue",
-      "components/common/Loading.vue",
-      "components/common/Toolbar.vue",
+      "common/components/index.js",
+      "common/components/ActionCell.vue",
+      "common/components/Breadcrumb.vue",
+      "common/components/ConfirmDelete.vue",
+      "common/components/DataFilter.vue",
+      "common/components/InputDate.vue",
+      "common/components/Loading.vue",
+      "common/components/Toolbar.vue",
 
       // components mixins
-      "components/mixins/CreateMixin.js",
-      "components/mixins/ListMixin.js",
-      "components/mixins/ShowMixin.js",
-      "components/mixins/UpdateMixin.js",
+      "common/mixins/CreateMixin.js",
+      "common/mixins/ListMixin.js",
+      "common/mixins/ShowMixin.js",
+      "common/mixins/UpdateMixin.js",
 
       // routes
       "router/foo.js",
@@ -342,7 +370,17 @@ export const store = new Vuex.Store({
       `${dir}/router`,
       `${dir}/utils`,
       `${dir}/i18n`,
-      `${dir}/i18n/en-us`
+      `${dir}/i18n/en-us`,
+
+      `${dir}/common`,
+      `${dir}/common/components`,
+      `${dir}/common/mixins`,
+      `${dir}/common/store`,
+      `${dir}/common/store/create`,
+      `${dir}/common/store/delete`,
+      `${dir}/common/store/list`,
+      `${dir}/common/store/show`,
+      `${dir}/common/store/update`
     ]) {
       this.createDir(dir, false);
     }
@@ -354,27 +392,53 @@ export const store = new Vuex.Store({
       `${dir}/store/modules/${lc}/list`,
       `${dir}/store/modules/${lc}/show`,
       `${dir}/store/modules/${lc}/update`,
-      `${dir}/components/${lc}`,
-      `${dir}/components/common`,
-      `${dir}/components/mixins`
+
+      `${dir}/components/${lc}`
     ]) {
       this.createDir(dir);
     }
 
     for (let common of [
-      "components/common/index.js",
-      "components/common/ActionCell.vue",
-      "components/common/Breadcrumb.vue",
-      "components/common/ConfirmDelete.vue",
-      "components/common/DataFilter.vue",
-      "components/common/InputDate.vue",
-      "components/common/Loading.vue",
-      "components/common/Toolbar.vue",
+      "common/components/index.js",
+      "common/components/ActionCell.vue",
+      "common/components/Breadcrumb.vue",
+      "common/components/ConfirmDelete.vue",
+      "common/components/DataFilter.vue",
+      "common/components/InputDate.vue",
+      "common/components/Loading.vue",
+      "common/components/Toolbar.vue",
 
-      "components/mixins/CreateMixin.js",
-      "components/mixins/ListMixin.js",
-      "components/mixins/ShowMixin.js",
-      "components/mixins/UpdateMixin.js",
+      "common/mixins/CreateMixin.js",
+      "common/mixins/ListMixin.js",
+      "common/mixins/ShowMixin.js",
+      "common/mixins/UpdateMixin.js",
+
+      "common/store/mutation_types.js",
+      "common/store/create/actions.js",
+      "common/store/create/getters.js",
+      "common/store/create/mutation_types.js",
+      "common/store/create/mutations.js",
+      "common/store/create/state.js",
+      "common/store/delete/actions.js",
+      "common/store/delete/getters.js",
+      "common/store/delete/mutation_types.js",
+      "common/store/delete/mutations.js",
+      "common/store/delete/state.js",
+      "common/store/list/actions.js",
+      "common/store/list/getters.js",
+      "common/store/list/mutation_types.js",
+      "common/store/list/mutations.js",
+      "common/store/list/state.js",
+      "common/store/show/actions.js",
+      "common/store/show/getters.js",
+      "common/store/show/mutation_types.js",
+      "common/store/show/mutations.js",
+      "common/store/show/state.js",
+      "common/store/update/actions.js",
+      "common/store/update/getters.js",
+      "common/store/update/mutation_types.js",
+      "common/store/update/mutations.js",
+      "common/store/update/state.js",
 
       "utils/dates.js",
       "utils/notify.js",
@@ -486,6 +550,7 @@ export const store = new Vuex.Store({
       confirmDelete: "Are you sure you want to delete this item?",
       noresults: "No results",
       close: "Close",
+      cancel: "Cancel",
       updated: "Updated",
       field: "Field",
       value: "Value",
