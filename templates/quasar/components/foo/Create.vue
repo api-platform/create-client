@@ -14,7 +14,7 @@ import {{{titleUcFirst}}}Form from './Form';
 import { Breadcrumb, Toolbar, Loading } from '../../common/components';
 import CreateMixin from '../../common/mixins/CreateMixin';
 const servicePrefix = '{{{titleUcFirst}}}';
-const { getters, actions } = create(servicePrefix.toLowerCase());
+const { getters, actions } = create(servicePrefix);
 
 export default {
   name: '{{{titleUcFirst}}}Create',

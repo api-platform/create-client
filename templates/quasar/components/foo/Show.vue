@@ -55,7 +55,7 @@ import { show } from '../../utils/vuexer';
 import { Breadcrumb, Toolbar, Loading } from '../../common/components';
 import ShowMixin from '../../common/mixins/ShowMixin';
 const servicePrefix = '{{{titleUcFirst}}}';
-const { getters, actions } = show(servicePrefix.toLowerCase());
+const { getters, actions } = show(servicePrefix);
 
 export default {
   name: '{{{titleUcFirst}}}Show',

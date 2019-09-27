@@ -124,7 +124,7 @@ const { getters, actions, mutations } = form([
 {{#each formFields}}
   {{#compare type "==" "text" }}
   {{#if reference}}
-  { name: '{{{name}}}', module: '{{{downcase reference.title}}}'},
+  { name: '{{{name}}}', module: '{{{reference.title}}}'},
   {{/if}}
   {{/compare}}
 {{/each}}

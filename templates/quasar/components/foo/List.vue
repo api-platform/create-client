@@ -43,7 +43,7 @@ import { DataFilter } from '../../common/components';
 import { ActionCell, Breadcrumb, Toolbar } from '../../common/components';
 import ListMixin from '../../common/mixins/ListMixin';
 const servicePrefix = '{{{titleUcFirst}}}';
-const { getters, actions } = list(servicePrefix.toLowerCase());
+const { getters, actions } = list(servicePrefix);
 
 export default {
   name: '{{{titleUcFirst}}}List',

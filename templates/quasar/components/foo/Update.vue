@@ -14,7 +14,7 @@ import {{{titleUcFirst}}}Form from './Form.vue';
 import { Breadcrumb, Toolbar, Loading } from '../../common/components';
 import UpdateMixin from '../../common/mixins/UpdateMixin';
 const servicePrefix = '{{{titleUcFirst}}}';
-const { getters, actions } = update(servicePrefix.toLowerCase());
+const { getters, actions } = update(servicePrefix);
 
 export default {
   name: '{{{titleUcFirst}}}Update',
