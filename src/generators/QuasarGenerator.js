@@ -3,6 +3,7 @@ import BaseGenerator from "./BaseGenerator";
 import handlebars from "handlebars";
 import hbh_comparison from "handlebars-helpers/lib/comparison";
 import hbh_array from "handlebars-helpers/lib/array";
+import hbh_string from "handlebars-helpers/lib/string";
 
 export default class extends BaseGenerator {
   constructor(params) {
@@ -42,6 +43,34 @@ export default class extends BaseGenerator {
       "store/modules/foo/update/mutations.js",
       "store/modules/foo/update/state.js",
 
+      // common for modules
+      "common/store/mutation_types.js",
+      "common/store/create/actions.js",
+      "common/store/create/getters.js",
+      "common/store/create/mutation_types.js",
+      "common/store/create/mutations.js",
+      "common/store/create/state.js",
+      "common/store/delete/actions.js",
+      "common/store/delete/getters.js",
+      "common/store/delete/mutation_types.js",
+      "common/store/delete/mutations.js",
+      "common/store/delete/state.js",
+      "common/store/list/actions.js",
+      "common/store/list/getters.js",
+      "common/store/list/mutation_types.js",
+      "common/store/list/mutations.js",
+      "common/store/list/state.js",
+      "common/store/show/actions.js",
+      "common/store/show/getters.js",
+      "common/store/show/mutation_types.js",
+      "common/store/show/mutations.js",
+      "common/store/show/state.js",
+      "common/store/update/actions.js",
+      "common/store/update/getters.js",
+      "common/store/update/mutation_types.js",
+      "common/store/update/mutations.js",
+      "common/store/update/state.js",
+
       // components
       "components/foo/Create.vue",
       "components/foo/Filter.vue",
@@ -50,6 +79,22 @@ export default class extends BaseGenerator {
       "components/foo/Update.vue",
       "components/foo/Show.vue",
 
+      //common components
+      "common/components/index.js",
+      "common/components/ActionCell.vue",
+      "common/components/Breadcrumb.vue",
+      "common/components/ConfirmDelete.vue",
+      "common/components/DataFilter.vue",
+      "common/components/InputDate.vue",
+      "common/components/Loading.vue",
+      "common/components/Toolbar.vue",
+
+      // components mixins
+      "common/mixins/CreateMixin.js",
+      "common/mixins/ListMixin.js",
+      "common/mixins/ShowMixin.js",
+      "common/mixins/UpdateMixin.js",
+
       // routes
       "router/foo.js",
 
@@ -57,13 +102,23 @@ export default class extends BaseGenerator {
       "error/SubmissionError.js",
 
       // utils
-      "utils/fetch.js"
+      "utils/fetch.js",
+      "utils/dates.js",
+      "utils/notify.js",
+      "utils/vuexer.js",
+
+      // i18n
+      "i18n/index.js"
     ]);
 
     handlebars.registerHelper("compare", hbh_comparison.compare);
     handlebars.registerHelper("ifEven", hbh_comparison.ifEven);
     handlebars.registerHelper("ifOdd", hbh_comparison.ifOdd);
+    handlebars.registerHelper("inArray", hbh_array.inArray);
     handlebars.registerHelper("forEach", hbh_array.forEach);
+    handlebars.registerHelper("downcase", hbh_string.downcase);
+
+    this.registerSwitchHelper();
   }
 
   help(resource) {
@@ -84,7 +139,6 @@ export default class extends BaseGenerator {
   'QTh',
   'QTr',
   'QTd',
-  'QAjaxBar',
   'QBreadcrumbs',
   'QBreadcrumbsEl',
   'QSpace',
@@ -96,6 +150,14 @@ export default class extends BaseGenerator {
   'QTime',
   'QCheckbox',
   'QPopupProxy',
+  'QSpinner',
+  'QInnerLoading',
+  'QCard',
+  'QCardSection',
+  'QCardActions',
+  'QExpansionItem',
+  'QDialog',
+  'QAvatar',
 
 // 2. in 'framework.config', customize later
 notify: {
@@ -134,17 +196,126 @@ export const store = new Vuex.Store({
     );
   }
 
+  registerSwitchHelper() {
+    /*
+      https://github.com/wycats/handlebars.js/issues/927#issuecomment-318640459
+
+      {{#switch state}}
+        {{#case "page1" "page2"}}page 1 or 2{{/case}}
+        {{#case "page3"}}page3{{/case}}
+        {{#case "page4"}}page4{{/case}}
+        {{#case "page5"}}
+          {{#switch s}}
+            {{#case "3"}}s = 3{{/case}}
+            {{#case "2"}}s = 2{{/case}}
+            {{#case "1"}}s = 1{{/case}}
+            {{#default}}unknown{{/default}}
+          {{/switch}}
+        {{/case}}
+        {{#default}}page0{{/default}}
+      {{/switch}}
+    */
+    handlebars.__switch_stack__ = [];
+
+    handlebars.registerHelper("switch", function(value, options) {
+      handlebars.__switch_stack__.push({
+        switch_match: false,
+        switch_value: value
+      });
+      let html = options.fn(this);
+      handlebars.__switch_stack__.pop();
+      return html;
+    });
+    handlebars.registerHelper("case", function(value, options) {
+      var args = Array.from(arguments);
+      options = args.pop();
+      var caseValues = args;
+      var stack =
+        handlebars.__switch_stack__[handlebars.__switch_stack__.length - 1];
+
+      if (stack.switch_match || caseValues.indexOf(stack.switch_value) === -1) {
+        return "";
+      } else {
+        stack.switch_match = true;
+        return options.fn(this);
+      }
+    });
+    handlebars.registerHelper("default", function(options) {
+      var stack =
+        handlebars.__switch_stack__[handlebars.__switch_stack__.length - 1];
+      if (!stack.switch_match) {
+        return options.fn(this);
+      }
+    });
+  }
+
   generate(api, resource, dir) {
     return resource.getParameters().then(params => {
       params = params.map(param => ({
         ...param,
         ...this.getHtmlInputTypeFromField(param)
       }));
+
+      params = this.cleanupParams(params);
       this.generateFiles(api, resource, dir, params);
     });
   }
 
-  generateFiles(api, resource, dir, parameters) {
+  cleanupParams(params) {
+    const stats = {};
+    const result = [];
+
+    params.forEach(p => {
+      let key = p.variable.endsWith("[]")
+        ? p.variable.slice(0, -2)
+        : p.variable;
+      if (!stats[key]) {
+        stats[key] = 0;
+      }
+      stats[key] += 1;
+    });
+
+    params.forEach(p => {
+      if (p.variable.endsWith("[exists]")) {
+        return; // removed for the moment, it can help to add null option to select
+      }
+      if (p.variable.startsWith("order[")) {
+        return; // removed for the moment, it can help to sorting data
+      }
+      if (!stats[p.variable] && p.variable.endsWith("[]")) {
+        if (stats[p.variable.slice(0, -2)] === 1) {
+          result.push(p);
+        }
+      } else {
+        if (stats[p.variable] === 2) {
+          p.multiple = true;
+        }
+        result.push(p);
+      }
+    });
+
+    return result;
+  }
+
+  printObject(obj) {
+    var cache = [];
+    console.log(
+      JSON.stringify(obj, function(key, value) {
+        if (typeof value === "object" && value !== null) {
+          if (cache.indexOf(value) !== -1) {
+            // Duplicate reference found, discard key
+            return;
+          }
+          // Store value in our collection
+          cache.push(value);
+        }
+        return value;
+      })
+    );
+    cache = null;
+  }
+
+  generateFiles(api, resource, dir, params) {
     const lc = resource.title.toLowerCase();
     const titleUcFirst =
       resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
@@ -152,19 +323,43 @@ export const store = new Vuex.Store({
     const formFields = this.buildFields(resource.writableFields);
 
     const dateTypes = ["time", "date", "dateTime"];
-    const containsDate = formFields.some(e => dateTypes.includes(e.type));
+    const formContainsDate = formFields.some(e => dateTypes.includes(e.type));
+
+    const fields = this.buildFields(resource.readableFields);
+    const listContainsDate = fields.some(e => dateTypes.includes(e.type));
+
+    const parameters = [];
+    params.forEach(p => {
+      const param = fields.find(field => field.name === p.variable);
+      if (!param) {
+        parameters.push(p);
+      } else {
+        param.multiple = p.multiple;
+        parameters.push(param);
+      }
+    });
+
+    const paramsHaveRefs = parameters.some(
+      e => e.type === "text" && e.reference
+    );
+
+    const labels = this.commonLabelTexts();
 
     const context = {
       title: resource.title,
       name: resource.name,
       lc,
       uc: resource.title.toUpperCase(),
-      fields: resource.readableFields,
+      fields,
+      dateTypes,
+      listContainsDate,
+      paramsHaveRefs,
       parameters,
       formFields,
-      containsDate,
+      formContainsDate,
       hydraPrefix: this.hydraPrefix,
-      titleUcFirst
+      titleUcFirst,
+      labels
     };
 
     // Create directories
@@ -173,7 +368,19 @@ export const store = new Vuex.Store({
       `${dir}/config`,
       `${dir}/error`,
       `${dir}/router`,
-      `${dir}/utils`
+      `${dir}/utils`,
+      `${dir}/i18n`,
+      `${dir}/i18n/en-us`,
+
+      `${dir}/common`,
+      `${dir}/common/components`,
+      `${dir}/common/mixins`,
+      `${dir}/common/store`,
+      `${dir}/common/store/create`,
+      `${dir}/common/store/delete`,
+      `${dir}/common/store/list`,
+      `${dir}/common/store/show`,
+      `${dir}/common/store/update`
     ]) {
       this.createDir(dir, false);
     }
@@ -185,9 +392,59 @@ export const store = new Vuex.Store({
       `${dir}/store/modules/${lc}/list`,
       `${dir}/store/modules/${lc}/show`,
       `${dir}/store/modules/${lc}/update`,
+
       `${dir}/components/${lc}`
     ]) {
       this.createDir(dir);
+    }
+
+    for (let common of [
+      "common/components/index.js",
+      "common/components/ActionCell.vue",
+      "common/components/Breadcrumb.vue",
+      "common/components/ConfirmDelete.vue",
+      "common/components/DataFilter.vue",
+      "common/components/InputDate.vue",
+      "common/components/Loading.vue",
+      "common/components/Toolbar.vue",
+
+      "common/mixins/CreateMixin.js",
+      "common/mixins/ListMixin.js",
+      "common/mixins/ShowMixin.js",
+      "common/mixins/UpdateMixin.js",
+
+      "common/store/mutation_types.js",
+      "common/store/create/actions.js",
+      "common/store/create/getters.js",
+      "common/store/create/mutation_types.js",
+      "common/store/create/mutations.js",
+      "common/store/create/state.js",
+      "common/store/delete/actions.js",
+      "common/store/delete/getters.js",
+      "common/store/delete/mutation_types.js",
+      "common/store/delete/mutations.js",
+      "common/store/delete/state.js",
+      "common/store/list/actions.js",
+      "common/store/list/getters.js",
+      "common/store/list/mutation_types.js",
+      "common/store/list/mutations.js",
+      "common/store/list/state.js",
+      "common/store/show/actions.js",
+      "common/store/show/getters.js",
+      "common/store/show/mutation_types.js",
+      "common/store/show/mutations.js",
+      "common/store/show/state.js",
+      "common/store/update/actions.js",
+      "common/store/update/getters.js",
+      "common/store/update/mutation_types.js",
+      "common/store/update/mutations.js",
+      "common/store/update/state.js",
+
+      "utils/dates.js",
+      "utils/notify.js",
+      "utils/vuexer.js"
+    ]) {
+      this.createFile(common, `${dir}/${common}`, context, false);
     }
 
     for (let pattern of [
@@ -259,5 +516,55 @@ export const store = new Vuex.Store({
       { hydraPrefix: this.hydraPrefix },
       false
     );
+
+    this.createFile(
+      "i18n/index.js",
+      `${dir}/i18n/en-us/index.js`,
+      { labels: Object.values(labels) },
+      false
+    );
+
+    const contextLabels = {
+      labels: this.contextLabelTexts(formFields, fields)
+    };
+    this.createFile(
+      "i18n/index.js",
+      `${dir}/i18n/en-us/${lc}.js`,
+      contextLabels,
+      false
+    );
+  }
+
+  contextLabelTexts(formFields, fields) {
+    let texts = [];
+    formFields.forEach(x => texts.push(x.name)); // forms
+    fields.forEach(x => texts.push(x.name)); // for show, too
+    return [...new Set(texts)];
+  }
+
+  commonLabelTexts() {
+    return {
+      submit: "Submit",
+      reset: "Reset",
+      delete: "Delete",
+      confirmDelete: "Are you sure you want to delete this item?",
+      noresults: "No results",
+      close: "Close",
+      cancel: "Cancel",
+      updated: "Updated",
+      field: "Field",
+      value: "Value",
+      filters: "Filters",
+      filter: "Filter",
+      unavail: "Data unavailable",
+      loading: "Loading...",
+      deleted: "Deleted",
+      numValidation: "Please, insert a value bigger than zero!",
+      stringValidation: "Please type something",
+      required: "Field is required",
+      recPerPage: "Records per page:"
+    };
+
+    // handlebars.registerPartial("myPartial", "{{name}}");
   }
 }

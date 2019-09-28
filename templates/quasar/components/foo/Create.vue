@@ -1,43 +1,30 @@
 <template>
   <div>
-    <q-ajax-bar ref="bar" position="top" color="accent" size="10px" skip-hijack />
-    <q-toolbar class="q-my-md">
-      <q-breadcrumbs class="q-mr-sm">
-        <q-breadcrumbs-el icon="home" to="/" />
-        <q-breadcrumbs-el
-          v-for="(breadcrumb, idx) in breadcrumbList"
-          :key="idx"
-          :label="breadcrumb.label"
-          :icon="breadcrumb.icon"
-          :to="breadcrumb.to"
-        />
-      </q-breadcrumbs>
-      <q-space />
-      <div>
-        <q-btn :label="$t('Submit')" color="primary" @click="onSendForm" />
-        <q-btn :label="$t('Reset')" color="primary" flat class="q-ml-sm" @click="resetForm" />
-      </div>
-    </q-toolbar>
+    <Toolbar :handle-submit="onSendForm" :handle-reset="resetForm">
+      <Breadcrumb :values="$route.meta.breadcrumb" slot="left" />
+    </Toolbar>
     <{{{titleUcFirst}}}Form ref="createForm" :values="item" :errors="violations" />
+    <Loading :showing="isLoading" />
   </div>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
+import { create } from '../../utils/vuexer';
 import {{{titleUcFirst}}}Form from './Form';
-{{#if containsDate}}
-import { date } from 'quasar';
-{{/if}}
-const { mapGetters, mapActions } = createNamespacedHelpers('{{{lc}}}/create');
+import { Breadcrumb, Toolbar, Loading } from '../../common/components';
+import CreateMixin from '../../common/mixins/CreateMixin';
+const servicePrefix = '{{{titleUcFirst}}}';
+const { getters, actions } = create(servicePrefix);
 
 export default {
   name: '{{{titleUcFirst}}}Create',
+  servicePrefix,
+  mixins: [CreateMixin],
   components: {
     {{{titleUcFirst}}}Form,
-  },
-
-  created() {
-    this.breadcrumbList = this.$route.meta.breadcrumb;
+    Breadcrumb,
+    Toolbar,
+    Loading,
   },
 
   data() {
@@ -45,65 +32,20 @@ export default {
       item: {
         {{#each formFields}}
           {{#compare type "==" "time" }}
-        {{{name}}}: date.formatDate(Date.now(), 'HH:mm'),
+        {{{name}}}: '',
           {{/compare}}
           {{#compare type "==" "date" }}
-        {{{name}}}: date.formatDate(Date.now(), 'YYYY-MM-DD'),
+        {{{name}}}: new Date().toISOString(),,
           {{/compare}}
           {{#compare type "==" "dateTime" }}
-        {{{name}}}: date.formatDate(Date.now(), 'YYYY-MM-DD HH:mm'),
+        {{{name}}}: new Date().toISOString(),
           {{/compare}}
         {{/each}}
       },
-      breadcrumbList: [],
     };
   },
 
-  computed: mapGetters(['error', 'isLoading', 'created', 'violations']),
-
-  watch: {
-    // eslint-disable-next-line object-shorthand,func-names
-    created: function(created) {
-      if (!created) {
-        return;
-      }
-
-      this.$router.push({ name: '{{{titleUcFirst}}}Update', params: { id: created['@id'] } });
-    },
-
-    isLoading(val) {
-      if (val) {
-        this.$refs.bar.start();
-      } else {
-        this.$refs.bar.stop();
-      }
-    },
-
-    error(message) {
-      message &&
-        this.$q.notify({
-          message,
-          color: 'red',
-          icon: 'error',
-          closeBtn: this.$t('Close'),
-        });
-    },
-  },
-
-  methods: {
-    ...mapActions(['create']),
-
-    onSendForm() {
-      this.$refs.createForm.$children[0].validate().then(success => {
-        if (success) {
-          this.create(this.item);
-        }
-      });
-    },
-
-    resetForm() {
-      this.item = {};
-    },
-  },
+  computed: getters,
+  methods: actions,
 };
 </script>

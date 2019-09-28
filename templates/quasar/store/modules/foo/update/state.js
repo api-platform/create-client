@@ -1,7 +1,1 @@
-export default {
-  error: '',
-  isLoading: false,
-  retrieved: null,
-  updated: null,
-  violations: null,
-};
+export { default } from '../../../../common/store/update/state';

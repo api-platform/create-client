@@ -1,5 +1,1 @@
-export default {
-  isLoading: false,
-  error: '',
-  deleted: null,
-};
+export { default } from '../../../../common/store/delete/state';

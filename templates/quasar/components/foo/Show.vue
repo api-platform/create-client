@@ -1,35 +1,18 @@
 <template>
   <div>
-    <q-ajax-bar ref="bar" position="top" color="accent" size="10px" skip-hijack />
-    <q-toolbar class="q-my-md">
-      <q-breadcrumbs class="q-mr-sm">
-        <q-breadcrumbs-el icon="home" to="/" />
-        <q-breadcrumbs-el
-          v-for="(breadcrumb, idx) in breadcrumbList"
-          :key="idx"
-          :label="
-            breadcrumb.label +
-              (idx === breadcrumbList.length - 1 && item && item['@id'] ? item['@id'] : '')
-          "
-          :icon="breadcrumb.icon"
-          :to="breadcrumb.to"
-        />
-      </q-breadcrumbs>
-      <q-space />
-      <div>
-        <q-btn :label="$t('Delete')" color="primary" flat class="q-ml-sm" @click="deleteItem" />
-      </div>
-    </q-toolbar>
+    <Toolbar :handle-delete="del">
+      <Breadcrumb :values="$route.meta.breadcrumb" :item="item" slot="left" />
+    </Toolbar>
 
     <div v-if="item" class="table-responsive">
       <q-markup-table>
         <thead>
           <tr>
-            <th>\{{ $t('Field') }}</th>
-            <th>\{{ $t('Value') }}</th>
+            <th>\{{ $t('{{{labels.field}}}') }}</th>
+            <th>\{{ $t('{{{labels.value}}}') }}</th>
 
-            <th>\{{ $t('Field') }}</th>
-            <th>\{{ $t('Value') }}</th>
+            <th>\{{ $t('{{{labels.field}}}') }}</th>
+            <th>\{{ $t('{{{labels.value}}}') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -38,7 +21,20 @@
           <tr>
           {{/ifOdd}}
             <td>\{{ $t('{{{name}}}') }}</td>
-            <td>\{{ item['{{{name}}}'] }}</td>
+            <td>{{#switch type}}
+            {{#case "dateTime"}}\{{ formatDateTime(item['{{{name}}}'], 'long') }}{{/case~}}
+            {{#case "date"}}\{{ formatDateTime(item['{{{name}}}'], 'short') }}{{/case~}}
+            {{#case "number"}}\{{ $n(item['{{{name}}}']) }}{{/case~}}
+            {{#default}}
+              {{#if reference}}
+            \{{ item['{{{name}}}'].name }}
+              {{else}}
+            \{{ item['{{{name}}}'] }}
+              {{/if}}
+            {{/default~}}
+            {{/switch}}
+            </td>
+
           {{#ifEven index}}
           </tr>
           {{/ifEven}}
@@ -50,77 +46,28 @@
         </tbody>
       </q-markup-table>
     </div>
+    <Loading :showing="isLoading" />
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { show } from '../../utils/vuexer';
+import { Breadcrumb, Toolbar, Loading } from '../../common/components';
+import ShowMixin from '../../common/mixins/ShowMixin';
+const servicePrefix = '{{{titleUcFirst}}}';
+const { getters, actions } = show(servicePrefix);
 
 export default {
-  name: "{{{titleUcFirst}}}Show",
-
-  computed: mapGetters({
-    deleteError: "{{{lc}}}/del/error",
-    error: "{{{lc}}}/show/error",
-    isLoading: "{{{lc}}}/show/isLoading",
-    item: "{{{lc}}}/show/retrieved"
-  }),
-
-  beforeDestroy() {
-    this.reset();
+  name: '{{{titleUcFirst}}}Show',
+  servicePrefix,
+  mixins: [ShowMixin],
+  components: {
+    Breadcrumb,
+    Toolbar,
+    Loading,
   },
 
-  created() {
-    this.breadcrumbList = this.$route.meta.breadcrumb;
-    this.retrieve(decodeURIComponent(this.$route.params.id));
-  },
-
-  watch: {
-    isLoading(val) {
-      if (val) {
-        this.$refs.bar.start();
-      } else {
-        this.$refs.bar.stop();
-      }
-    },
-
-    error(message) {
-      message &&
-        this.$q.notify({
-          message,
-          color: "red",
-          icon: "error",
-          closeBtn: this.$t("Close")
-        });
-    },
-
-    deleteError(message) {
-      message &&
-        this.$q.notify({
-          message,
-          color: "red",
-          icon: "error",
-          closeBtn: this.$t("Close")
-        });
-    }
-  },
-
-  methods: {
-    ...mapActions({
-      del: "{{{lc}}}/del/del",
-      reset: "{{{lc}}}/show/reset",
-      retrieve: "{{{lc}}}/show/retrieve"
-    }),
-
-    deleteItem() {
-      if (
-        window.confirm(this.$t("Are you sure you want to delete this item?"))
-      ) {
-        this.del(this.item).then(() =>
-          this.$router.push({ name: "{{{titleUcFirst}}}List" })
-        );
-      }
-    }
-  }
+  computed: getters,
+  methods: actions,
 };
 </script>

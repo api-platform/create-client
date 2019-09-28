@@ -1,6 +1,11 @@
-export const error = state => state.error;
-export const isLoading = state => state.isLoading;
-export const items = state => state.items;
-export const selectItems = state => state.selectItems;
-export const view = state => state.view;
-export const totalItems = state => state.totalItems;
+import {
+  error,
+  isLoading,
+  items,
+  selectItems,
+  selectItemsTemplate,
+  view,
+  totalItems,
+} from '../../../../common/store/list/getters';
+
+export { error, isLoading, items, selectItems, selectItemsTemplate, view, totalItems };

@@ -3,45 +3,62 @@ import {{{titleUcFirst}}}Create from '../components/{{{lc}}}/Create';
 import {{{titleUcFirst}}}Update from '../components/{{{lc}}}/Update';
 import {{{titleUcFirst}}}Show from '../components/{{{lc}}}/Show';
 
+const list = {
+  label: '{{{ titleUcFirst }}}List',
+  icon: 'whatshot',
+};
+const create = {
+  label: '{{{ titleUcFirst }}}Create',
+  icon: 'whatshot',
+};
+const update = {
+  label: '{{{ titleUcFirst }}}Update',
+  icon: 'whatshot',
+};
+const show = {
+  label: '{{{ titleUcFirst }}}Show',
+  icon: 'whatshot',
+};
+
 export default [
   {
-    name: '{{{titleUcFirst}}}List',
+    name: list['label'],
     path: '/{{{name}}}/',
     component: {{{ titleUcFirst }}}List,
     meta: {
-      breadcrumb: [{ label: '{{{ titleUcFirst }}} List', icon: 'whatshot' }],
+      breadcrumb: [list],
     },
   },
   {
-    name: '{{{titleUcFirst}}}Create',
+    name: create['label'],
     path: '/{{{name}}}/create',
     component: {{{ titleUcFirst }}}Create,
     meta: {
       breadcrumb: [
-        { label: '{{{ titleUcFirst }}} List', icon: 'whatshot', to: { name: '{{{ titleUcFirst }}}List' } },
-        { label: 'New {{{ titleUcFirst }}}', icon: 'whatshot' },
+        { ...list , to: { name: list['label'] } },
+        create,
       ],
     },
   },
   {
-    name: '{{{titleUcFirst}}}Update',
+    name: update['label'],
     path: '/{{{name}}}/edit/:id',
     component: {{{ titleUcFirst }}}Update,
     meta: {
       breadcrumb: [
-        { label: '{{{ titleUcFirst }}} List', icon: 'whatshot', to: { name: '{{{ titleUcFirst }}}List' } },
-        { label: 'Edit {{{ titleUcFirst }}}', icon: 'whatshot' },
+        { ...list , to: { name: list['label'] } },
+        update,
       ],
     },
   },
   {
-    name: '{{{titleUcFirst}}}Show',
+    name: show['label'],
     path: '/{{{name}}}/show/:id',
     component: {{{ titleUcFirst }}}Show,
     meta: {
       breadcrumb: [
-        { label: '{{{ titleUcFirst }}} List', icon: 'whatshot', to: { name: '{{{ titleUcFirst }}}List' } },
-        { label: 'Show {{{ titleUcFirst }}}', icon: 'whatshot' },
+        { ...list , to: { name: list['label'] } },
+        show,
       ],
     },
   },

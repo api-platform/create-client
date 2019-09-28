@@ -1,37 +1,18 @@
-import fetch from '../../../../utils/fetch';
-import * as types from './mutation_types';
+import { types } from './mutation_types';
+import { getItemsCommon, getSelectItemsCommon } from '../../../../common/store/list/actions';
 
-export const getItems = ({ commit }, { page = '{{{name}}}', params = {} }) => {
-  commit(types.TOGGLE_LOADING);
+const hydraPrefix = '{{{hydraPrefix}}}';
 
-  fetch(page, { params })
-    .then(response => response.json())
-    .then(data => {
-      commit(types.TOGGLE_LOADING);
-      commit(types.SET_ITEMS, data['{{{hydraPrefix}}}member']);
-      commit(types.SET_VIEW, data['{{{hydraPrefix}}}view']);
-      commit(types.SET_TOTALITEMS, data['{{{hydraPrefix}}}totalItems']);
-    })
-    .catch(e => {
-      commit(types.TOGGLE_LOADING);
-      commit(types.SET_ERROR, e.message);
-    });
-};
+export const getItems = (state, options) =>
+  getItemsCommon(
+    state,
+    { ...{ page: '{{{name}}}', params: {} }, ...options },
+    { types, hydraPrefix },
+  );
 
-export const getSelectItems = (
-  { commit },
-  { page = '{{{name}}}', params = { properties: ['id', 'name'] } },
-) => {
-  commit(types.TOGGLE_LOADING);
-
-  fetch(page, { params })
-    .then(response => response.json())
-    .then(data => {
-      commit(types.TOGGLE_LOADING);
-      commit(types.SET_SELECT_ITEMS, data['hydra:member']);
-    })
-    .catch(e => {
-      commit(types.TOGGLE_LOADING);
-      commit(types.SET_ERROR, e.message);
-    });
-};
+export const getSelectItems = (state, options) =>
+  getSelectItemsCommon(
+    state,
+    { ...{ page: '{{{name}}}', params: { properties: ['id', 'name'] } }, ...options },
+    { types, hydraPrefix },
+  );
