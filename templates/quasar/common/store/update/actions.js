@@ -46,6 +46,6 @@ export const updateCommon = ({ commit, state }, values, { types }) => {
       }
 
       // eslint-disable-next-line
-      commit(commit(types.SET_ERROR, e.errors._error));
+      commit(types.SET_ERROR, e.errors._error);
     });
 };

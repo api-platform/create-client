@@ -1,33 +1,51 @@
-import SubmissionError from '../error/SubmissionError'
+import { isArray, isObject, isUndefined, forEach } from 'lodash';
 import { ENTRYPOINT } from '../config/entrypoint';
+import { SubmissionError } from '../error/SubmissionError';
 
-const MIME_TYPE = 'application/ld+json'
+const MIME_TYPE = 'application/ld+json';
 
-export default function (id, options = {}) {
-  if (typeof options.headers === 'undefined') Object.assign(options, { headers: new Headers() })
+const transformRelationToIri = (payload) => {
+  forEach(payload, (value, property) => {
+    if (isObject(value) && !isUndefined(value['@id'])) {
+      payload[property] = value['@id'];
+    }
 
-  if (options.headers.get('Accept') === null) options.headers.set('Accept', MIME_TYPE)
+    if (isArray(value)) payload[property] = transformRelationToIri(value);
+  });
 
-  if (options.body !== undefined && !(options.body instanceof FormData) && options.headers.get('Content-Type') === null) {
-    options.headers.set('Content-Type', MIME_TYPE)
-  }
+  return payload;
+};
 
-  const entryPoint = ENTRYPOINT + (ENTRYPOINT.endsWith('/') ? '' : '/')
+export default function(id, options = {}) {
+  if ('undefined' === typeof options.headers) options.headers = new Headers();
 
-  return fetch(new URL(id, entryPoint), options).then((response) => {
-    if (response.ok) return response
+  if (null === options.headers.get('Accept'))
+    options.headers.set('Accept', MIME_TYPE);
 
-    return response
-      .json()
-      .then((json) => {
-        const error = json['{{{hydraPrefix}}}description'] ? json['{{{hydraPrefix}}}description'] : response.statusText
-        if (!json.violations) throw Error(error)
+  if (
+    'undefined' !== options.body &&
+    !(options.body instanceof FormData) &&
+    null === options.headers.get('Content-Type')
+  )
+    options.headers.set('Content-Type', MIME_TYPE);
 
-        const errors = { _error: error }
-        json.violations.map(violation =>
-          Object.assign(errors, { [violation.propertyPath]: violation.message }))
+  const payload = options.body && JSON.parse(options.body);
+  if (isObject(payload) && payload['@id'])
+    options.body = JSON.stringify(transformRelationToIri(payload));
 
-        throw new SubmissionError(errors)
-      })
-  })
+  return global.fetch(new URL(id, ENTRYPOINT), options).then(response => {
+    if (response.ok) return response;
+
+    return response.json().then((json) => {
+      const error = json['{{{hydraPrefix}}}description'] || response.statusText;
+      if (!json.violations) throw Error(error);
+
+      let errors = { _error: error };
+      json.violations.map(
+        violation => (errors[violation.propertyPath] = violation.message)
+      );
+
+      throw new SubmissionError(errors);
+    });
+  });
 }

@@ -12,110 +12,135 @@
       v-if="error"
       class="alert alert-danger">\{{ error }}</div>
 
-    <span v-if="view">
-      <button
-        :disabled="!view['hydra:previous']"
-        type="button"
-        class="btn btn-basic btn-sm"
-        @click="getPage(view['hydra:first'])">First</button>
-      &nbsp;
-      <button
-        :disabled="!view['hydra:previous']"
-        type="button"
-        class="btn btn-basic btn-sm"
-        @click="getPage(view['hydra:previous'])">Previous</button>
-      &nbsp;
-      <button
-        :disabled="!view['hydra:next']"
-        type="button"
-        class="btn btn-basic btn-sm"
-        @click="getPage(view['hydra:next'])">Next</button>
-      &nbsp;
-      <button
-        :disabled="!view['hydra:last']"
-        type="button"
-        class="btn btn-basic btn-sm"
-        @click="getPage(view['hydra:last'])">Last</button>
-      &nbsp;
-    </span>
+    <p>
+      <router-link
+        :to="{ name: '{{{titleUcFirst}}}Create' }"
+        class="btn btn-primary">Create</router-link>
+    </p>
 
-    <div class="table-responsive">
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Id</th>
+    <table class="table table-responsive table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Id</th>
 {{#each fields}}
-            <th>{{name}}</th>
+          <th>{{name}}</th>
 {{/each }}
-            <th colspan="2" />
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="item in items"
-            :key="item['@id']">
-            <td>
-              <router-link
-                v-if="item"
-                :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">
-                \{{ item['@id'] }}
-              </router-link>
-            </td>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="item in items"
+          :key="item['@id']">
+          <th scope="row">
+            <router-link
+              v-if="item"
+              :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">
+              \{{ item['@id'] }}
+            </router-link>
+          </th>
 {{#each fields}}
-            <td>
+        <td>
+          {{#if reference}}
+            <template>
+              <div
+                v-if="Array.isArray(item['{{{reference.name}}}'])">
+                <router-link
+                  v-for="link in item['{{{reference.name}}}']"
+                  :key="link['@id']"
+                  :to="`/{{{name}}}/show/${link['@id']}`">
+                  \{{ link['@id'] }}
+                </router-link>
+              </div>
               <router-link
-                v-if="item"
-                :to="{name: '{{{../titleUcFirst}}}Show', params: { id: item['@id'] }}">
-                \{{ item['{{{name}}}'] }}
+                v-else
+                :to="`/{{{reference.name}}}/show/${item['{{{name}}}']}`">
+                \{{ item['{{{reference.name}}}'] }}
               </router-link>
-            </td>
+            </template>
+          {{else}}
+            \{{ item['{{{name}}}'] }}
+          {{/if}}
+        </td>
 {{/each}}
-            <td>
-              <router-link
-                :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">
-                <span
-                  class="fa fa-search"
-                  aria-hidden="true" />
-                <span class="sr-only">Show</span>
-              </router-link>
-            </td>
-            <td>
-              <router-link :to="{name: '{{{titleUcFirst}}}Update', params: { id: item['@id'] }}">
-                <span
-                  class="fa fa-pencil"
-                  aria-hidden="true" />
-                <span class="sr-only">Edit</span>
-              </router-link>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+          <td>
+            <router-link
+              :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">
+              <span
+                class="fa fa-search"
+                aria-hidden="true"></span>
+              <span class="sr-only">Show</span>
+            </router-link>
+          </td>
+          <td>
+            <router-link :to="{name: '{{{titleUcFirst}}}Update', params: { id: item['@id'] }}">
+              <span
+                class="fa fa-pencil"
+                aria-hidden="true"></span>
+              <span class="sr-only">Edit</span>
+            </router-link>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-    <router-link
-      :to="{ name: '{{{titleUcFirst}}}Create' }"
-      class="btn btn-primary">Create</router-link>
+    <nav aria-label="Page navigation" v-if="view">
+      <router-link
+        :to="view['hydra:first'] ? view['hydra:first'] : '{{{titleUcFirst}}}ContactList'"
+        :class="{ disabled: !view['hydra:previous'] }"
+        class="btn btn-primary">
+        <span aria-hidden="true">&lArr;</span> First
+      </router-link>
+      &nbsp;
+      <router-link
+        :to="!view['hydra:previous'] || view['hydra:previous'] === view['hydra:first'] ? '{{{titleUcFirst}}}List' : view['hydra:previous']"
+        :class="{ disabled: !view['hydra:previous'] }"
+        class="btn btn-primary">
+        <span aria-hidden="true">&larr;</span> Previous
+      </router-link>
+
+      <router-link
+        :to="view['hydra:next'] ? view['hydra:next'] : '#'"
+        :class="{ disabled: !view['hydra:next'] }"
+        class="btn btn-primary">
+        Next <span aria-hidden="true">&rarr;</span>
+      </router-link>
+
+      <router-link
+        :to="view['hydra:last'] ? view['hydra:last'] : '#'"
+        :class="{ disabled: !view['hydra:next'] }"
+        class="btn btn-primary">
+        Last <span aria-hidden="true">&rArr;</span>
+      </router-link>
+    </nav>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex';
+import { mapFields } from 'vuex-map-fields';
 
 export default {
-  computed: mapGetters({
-    deletedItem: '{{{lc}}}/del/deleted',
-    error: '{{{lc}}}/list/error',
-    items: '{{{lc}}}/list/items',
-    isLoading: '{{{lc}}}/list/isLoading',
-    view: '{{{lc}}}/list/view'
-  }),
-
-  created () {
-    this.getPage()
+  computed: {
+      ...mapFields('{{{lc}}}/del', {
+          deletedItem: 'deleted',
+      }),
+      ...mapFields('{{{lc}}}/list', {
+          error: 'error',
+          items: 'items',
+          isLoading: 'isLoading',
+          view: 'view',
+      }),
   },
 
-  methods: mapActions({
-    getPage: '{{{lc}}}/list/default'
-  })
-}
+  mounted() {
+    this.getPage();
+  },
+
+  methods: {
+    ...mapActions({
+      getPage: '{{{lc}}}/list/default',
+    }),
+  },
+};
 </script>

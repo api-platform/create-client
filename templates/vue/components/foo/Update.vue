@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Edit \{{ item && item['@id'] }}</h1>
+    <h1>Edit \{{ retrieved && retrieved['@id'] }}</h1>
 
     <div
       v-if="created"
@@ -20,7 +20,7 @@
       role="alert">
       <span
         class="fa fa-exclamation-triangle"
-        aria-hidden="true" /> \{{ error }}
+        aria-hidden="true">\{{ error }}</span>
     </div>
     <div
       v-if="deleteError"
@@ -28,21 +28,20 @@
       role="alert">
       <span
         class="fa fa-exclamation-triangle"
-        aria-hidden="true" /> \{{ deleteError }}
+        aria-hidden="true">\{{ deleteError }}</span>
     </div>
 
     <{{{titleUcFirst}}}Form
-      v-if="item"
+      v-if="retrieved"
       :handle-submit="onSendForm"
-      :handle-update-field="updateField"
-      :values="item"
+      :values="retrieved"
       :errors="violations"
       :initial-values="retrieved" />
 
     <router-link
-      v-if="item"
+      v-if="retrieved"
       :to="{ name: '{{{titleUcFirst}}}List' }"
-      class="btn btn-default">Back to list</router-link>
+      class="btn btn-primary">Back to list</router-link>
     <button
       class="btn btn-danger"
       @click="del">Delete</button>
@@ -50,51 +49,50 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import {{{titleUcFirst}}}Form from './Form.vue'
+import { mapActions } from 'vuex';
+import { mapFields } from 'vuex-map-fields';
+import {{{titleUcFirst}}}Form from './Form.vue';
 
 export default {
   components: {
-    {{{titleUcFirst}}}Form
-  },
-
-  data () {
-    return {
-      item: {}
-    }
+    {{{titleUcFirst}}}Form,
   },
 
   computed: {
-    ...mapGetters({
-      isLoading: '{{{lc}}}/update/isLoading',
-      error: '{{{lc}}}/update/error',
-      deleteError: '{{{lc}}}/del/error',
-      deleteLoading: '{{{lc}}}/del/isLoading',
-      created: '{{{lc}}}/create/created',
-      deleted: '{{{lc}}}/del/deleted',
-      retrieved: '{{{lc}}}/update/retrieved',
-      updated: '{{{lc}}}/update/updated',
-      violations: '{{{lc}}}/update/violations'
-    })
+    ...mapFields('{{{lc}}}/del', {
+      deleteError: 'error',
+      deleteLoading: 'isLoading',
+      deleted: 'deleted',
+    }),
+    ...mapFields('{{{lc}}}/create', {
+      created: 'created',
+    }),
+    ...mapFields('{{{lc}}}/update', {
+      isLoading: 'isLoading',
+      error: 'error',
+      retrieved: 'retrieved',
+      updated: 'updated',
+      violations: 'violations',
+    }),
   },
 
   watch: {
     // eslint-disable-next-line object-shorthand,func-names
-    deleted: function (deleted) {
+    deleted: function(deleted) {
       if (!deleted) {
-        return
+        return;
       }
 
-      this.$router.push({ name: '{{{titleUcFirst}}}List' })
-    }
+      this.$router.push({ name: '{{{titleUcFirst}}}List' });
+    },
   },
 
-  beforeDestroy () {
-    this.reset()
+  beforeDestroy() {
+    this.reset();
   },
 
-  created () {
-    this.retrieve(decodeURIComponent(this.$route.params.id))
+  created() {
+    this.retrieve(decodeURIComponent(this.$route.params.id));
   },
 
   methods: {
@@ -105,28 +103,23 @@ export default {
       retrieve: '{{{lc}}}/update/retrieve',
       updateReset: '{{{lc}}}/update/reset',
       update: '{{{lc}}}/update/update',
-      updateRetrieved: '{{{lc}}}/update/updateRetrieved'
+      updateRetrieved: '{{{lc}}}/update/updateRetrieved',
     }),
 
-    del () {
+    del() {
       if (window.confirm('Are you sure you want to delete this {{{lc}}} ?')) {
-        this.deleteItem(this.retrieved)
+        this.deleteItem(this.retrieved);
       }
     },
 
-    reset () {
-      this.updateReset()
-      this.delReset()
-      this.createReset()
+    reset() {
+      this.updateReset();
+      this.createReset();
     },
 
-    onSendForm () {
-      this.update()
+    onSendForm() {
+      this.update();
     },
-
-    updateField (field, value) {
-      this.updateRetrieved({ [field]: value })
-    }
-  }
-}
+  },
+};
 </script>

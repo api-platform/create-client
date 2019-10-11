@@ -12,7 +12,7 @@
       role="alert">
       <span
         class="fa fa-exclamation-triangle"
-        aria-hidden="true" /> \{{ error }}
+        aria-hidden="true">\{{ error }}</span>
     </div>
     <div
       v-if="deleteError"
@@ -20,7 +20,7 @@
       role="alert">
       <span
         class="fa fa-exclamation-triangle"
-        aria-hidden="true" /> \{{ deleteError }}
+        aria-hidden="true">\{{ deleteError }}</span>
     </div>
     <div
       v-if="item"
@@ -35,7 +35,7 @@
         <tbody>
       {{#each fields}}
           <tr>
-            <td>{{name}}</td>
+            <th scope="row">{{name}}</th>
             <td>\{{ item['{{{name}}}'] }}</td>
           </tr>
       {{/each }}
@@ -44,9 +44,16 @@
     </div>
 
     <router-link
-      v-if="item"
       :to="{ name: '{{{titleUcFirst}}}List' }"
-      class="btn btn-default">Back to list</router-link>
+      class="btn btn-primary">
+      Back to list
+    </router-link>
+    <router-link
+      v-if="item"
+      :to="{ name: '{{{titleUcFirst}}}Update', params: { id: item['@id'] } }"
+      class="btn btn-warning">
+      Edit
+    </router-link>
     <button
       class="btn btn-danger"
       @click="deleteItem(item)">Delete</button>
@@ -54,36 +61,41 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex';
+import { mapFields } from 'vuex-map-fields';
 
 export default {
-  computed: mapGetters({
-    deleteError: '{{{lc}}}/del/error',
-    error: '{{{lc}}}/show/error',
-    isLoading: '{{{lc}}}/show/isLoading',
-    item: '{{{lc}}}/show/retrieved'
-  }),
+  computed: {
+    ...mapFields('{{{lc}}}/del', {
+      deleteError: 'error',
+    }),
+    ...mapFields('{{{lc}}}/show', {
+      error: 'error',
+      isLoading: 'isLoading',
+      item: 'retrieved',
+    }),
+  },
 
   beforeDestroy () {
-    this.reset()
+    this.reset();
   },
 
   created () {
-    this.retrieve(decodeURIComponent(this.$route.params.id))
+    this.retrieve(decodeURIComponent(this.$route.params.id));
   },
 
   methods: {
     ...mapActions({
       del: '{{{lc}}}/del/del',
       reset: '{{{lc}}}/show/reset',
-      retrieve: '{{{lc}}}/show/retrieve'
+      retrieve: '{{{lc}}}/show/retrieve',
     }),
 
     deleteItem (item) {
       if (window.confirm('Are you sure you want to delete this item?')) {
-        this.del(item).then(() => this.$router.push({ name: '{{{titleUcFirst}}}List' }))
+        this.del(item).then(() => this.$router.push({ name: '{{{titleUcFirst}}}List' }));
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
