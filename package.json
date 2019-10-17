@@ -34,15 +34,15 @@
     "tmp": "^0.1.0"
   },
   "dependencies": {
-    "@api-platform/api-doc-parser": "^0.8.0",
-    "@babel/runtime": "^7.0.0",
-    "chalk": "^2.4.1",
-    "commander": "^3.0.1",
-    "handlebars": "^4.0.12",
-    "handlebars-helpers": "^0.10.0",
-    "isomorphic-fetch": "^2.2.1",
-    "mkdirp": "^0.5.1",
-    "sprintf-js": "^1.1.1"
+    "@api-platform/api-doc-parser": "0.8.0",
+    "@babel/runtime": "7.0.0",
+    "chalk": "2.4.1",
+    "commander": "3.0.1",
+    "handlebars": "4.0.12",
+    "handlebars-helpers": "0.10.0",
+    "isomorphic-fetch": "2.2.1",
+    "mkdirp": "0.5.1",
+    "sprintf-js": "1.1.1"
   },
   "scripts": {
     "test": "jest",
