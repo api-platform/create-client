@@ -23,6 +23,8 @@ program
     "The hydra prefix used by the API",
     "hydra:"
   )
+  .option("--username [username]", "Username for basic auth (Hydra only)")
+  .option("--password [password]", "Password for basic auth (Hydra only)")
   .option(
     "-g, --generator [generator]",
     'The generator to use, one of "react", "react-native", "vue", "admin-on-rest", "typescript", "next"',
@@ -67,13 +69,21 @@ const resourceToGenerate = program.resource
 const serverPath = program.serverPath ? program.serverPath.toLowerCase() : null;
 
 const parser = entrypointWithSlash => {
+  const options = {};
+  if (program.username && program.password) {
+    const encoded = Buffer.from(
+      `${program.username}:${program.password}`
+    ).toString("base64");
+    options.headers = new Headers();
+    options.headers.set("Authorization", `Basic ${encoded}`);
+  }
   switch (program.format) {
     case "swagger":
       return parseSwaggerDocumentation(entrypointWithSlash);
     case "openapi3":
       return parseOpenApi3Documentation(entrypointWithSlash);
     default:
-      return parseHydraDocumentation(entrypointWithSlash);
+      return parseHydraDocumentation(entrypointWithSlash, options);
   }
 };
 
