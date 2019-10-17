@@ -1,6 +1,6 @@
-import * as actions from './actions'
-import * as getters from './getters'
-import mutations from './mutations'
+import { getField, updateField } from 'vuex-map-fields';
+import * as actions from './actions';
+import mutations from './mutations';
 
 export default {
   namespaced: true,
@@ -8,9 +8,15 @@ export default {
     error: '',
     isLoading: false,
     items: [],
-    view: []
+    selectItems: null,
+    view: [],
   },
   actions,
-  getters,
-  mutations
-}
+  getters: {
+    getField,
+  },
+  mutations: {
+    updateField,
+    ...mutations,
+  }
+};

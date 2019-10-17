@@ -1,8 +1,8 @@
-import list from './list'
-import create from './create'
-import update from './update'
-import show from './show'
-import del from './delete'
+import list from './list';
+import create from './create';
+import update from './update';
+import show from './show';
+import del from './delete';
 
 export default {
   namespaced: true,
@@ -11,6 +11,6 @@ export default {
     create,
     update,
     show,
-    del
-  }
-}
+    del,
+  },
+};

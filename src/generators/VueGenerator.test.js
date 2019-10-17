@@ -53,9 +53,6 @@ test("Generate a Vue app", () => {
       fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/actions.js`)
     ).toBe(true);
     expect(
-      fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/getters.js`)
-    ).toBe(true);
-    expect(
       fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/index.js`)
     ).toBe(true);
     expect(
