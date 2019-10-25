@@ -19,7 +19,7 @@ export default {
       if (!deleted) {
         return;
       }
-      this.$router.push({ name: `${this.$options.servicePrefix}List` });
+      this.$router.push({ name: `${this.$options.servicePrefix}List` }).catch(() => {})
     },
 
     error(message) {

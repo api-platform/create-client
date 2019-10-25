@@ -10,9 +10,9 @@ export default {
       component: () => import('../views/{{{lc}}}/List')
     },
     {
-      name: '{{{titleUcFirst}}}New',
+      name: '{{{titleUcFirst}}}Create',
       path: 'new',
-      component: () => import('../views/{{{lc}}}/New')
+      component: () => import('../views/{{{lc}}}/Create')
     },
     {
       name: '{{{titleUcFirst}}}Update',

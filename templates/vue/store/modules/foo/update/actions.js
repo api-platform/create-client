@@ -21,14 +21,14 @@ export const retrieve = ({ commit }, id) => {
     });
 };
 
-export const update = ({ commit, state }) => {
+export const update = ({ commit, state }, payload) => {
   commit(types.SET_ERROR, '');
   commit(types.TOGGLE_LOADING);
 
   return fetch(state.retrieved['@id'], {
     method: 'PUT',
     headers: new Headers({ 'Content-Type': 'application/ld+json' }),
-    body: JSON.stringify(state.retrieved),
+    body: JSON.stringify(payload),
   })
     .then(response => response.json())
     .then((data) => {
