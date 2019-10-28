@@ -19,36 +19,41 @@
       color="secondary"
       @click="confirmDelete = true"
     />
-    <ConfirmDelete v-if="handleDelete" :show="confirmDelete" :handle-delete="handleDelete" />
+    <ConfirmDelete
+      v-if="handleDelete"
+      :show="confirmDelete"
+      :handle-delete="handleDelete"
+      :handle-cancel="() => (confirmDelete = false)"
+    />
   </q-td>
 </template>
 
 <script>
-import ConfirmDelete from './ConfirmDelete';
+import ConfirmDelete from "./ConfirmDelete";
 
 export default {
-  name: 'ActionCell',
+  name: "ActionCell",
   components: {
-    ConfirmDelete,
+    ConfirmDelete
   },
   data() {
     return {
-      confirmDelete: false,
+      confirmDelete: false
     };
   },
   props: {
     handleShow: {
       type: Function,
-      required: false,
+      required: false
     },
     handleEdit: {
       type: Function,
-      required: false,
+      required: false
     },
     handleDelete: {
       type: Function,
-      required: false,
-    },
-  },
+      required: false
+    }
+  }
 };
 </script>

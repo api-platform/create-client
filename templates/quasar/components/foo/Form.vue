@@ -193,7 +193,7 @@ export default {
     {{#if reference}}
     {{{name}}}FilterFn(val, update /* , abort */) {
       const params = {
-        '{{{name}}}[exists]': false,
+        'exists[{{{name}}}]': false,
       };
       const template = JSON.stringify(params);
 
@@ -201,9 +201,7 @@ export default {
         ? update()
         : this.{{{name}}}GetSelectItems({ params }).then(() => {
             this.{{{name}}}SetSelectItemsTemplate(template);
-            setTimeout(() => {
-              update();
-            }, 500);
+            update();
           });
     },
     {{/if}}

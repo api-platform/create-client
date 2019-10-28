@@ -1,8 +1,8 @@
 import { types } from './mutation_types';
 import { delCommon, resetCommon } from '../../../../common/store/delete/actions';
 
-export const del = (state, item) => delCommon(state, item, { types });
+export const del = (context, item) => delCommon(context, item, { types });
 
-export const reset = state => {
-  resetCommon(state, { types });
+export const reset = context => {
+  resetCommon(context, { types });
 };

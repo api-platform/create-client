@@ -1,5 +1,5 @@
 import { types } from './mutation_types';
 import initState from './state';
-import makeState from '../../../../common/store/delete/mutations';
+import makeMutations from '../../../../common/store/delete/mutations';
 
-export default makeState(initState, types, 'DELETE');
+export default makeMutations(initState, types, 'DELETE');

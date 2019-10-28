@@ -24,7 +24,7 @@ export const updateCommon = ({ commit, state }, values, { types }) => {
   commit(types.SET_ERROR, '');
   commit(types.TOGGLE_LOADING);
 
-  return fetch(state.retrieved['@id'], {
+  return fetch((state.retrieved && state.retrieved['@id']) || values['@id'], {
     method: 'PUT',
     headers: new Headers({ 'Content-Type': 'application/ld+json' }),
     body: JSON.stringify(values),
@@ -46,6 +46,6 @@ export const updateCommon = ({ commit, state }, values, { types }) => {
       }
 
       // eslint-disable-next-line
-      commit(types.SET_ERROR, e.errors._error);
+      commit(types.SET_ERROR, e.message);
     });
 };
