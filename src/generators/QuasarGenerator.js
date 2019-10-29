@@ -233,7 +233,7 @@ export const store = new Vuex.Store({
       var stack =
         handlebars.__switch_stack__[handlebars.__switch_stack__.length - 1];
 
-      if (stack.switch_match || caseValues.indexOf(stack.switch_value) === -1) {
+      if (stack.switch_match || caseValues.includes(stack.switch_value)) {
         return "";
       } else {
         stack.switch_match = true;
@@ -302,7 +302,7 @@ export const store = new Vuex.Store({
     console.log(
       JSON.stringify(obj, function(key, value) {
         if (typeof value === "object" && value !== null) {
-          if (cache.indexOf(value) !== -1) {
+          if (cache.includes(value)) {
             // Duplicate reference found, discard key
             return;
           }
