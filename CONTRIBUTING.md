@@ -22,7 +22,8 @@ Then, if it appears that it's a real bug, you may report it using Github by foll
 
 ### Installing the source version
 
-To install the source version of the API Platform Client Generator in your project and contribute a patch, run the following commands:
+To install the source version of the API Platform Client Generator in your project and contribute towards a patch, 
+run the following commands:
 
 ```console
 $ git clone git@github.com:api-platform/client-generator.git
@@ -43,7 +44,7 @@ $ yarn test
 ### Matching coding standards
 
 The API Platform Client Generator project is inspired by the [Airbnb JavaScript style guide](https://github.com/airbnb/javascript).
-But don't worry, you can fix CS issues automatically using [ESLint](https://eslint.org/) tool:
+You can fix CS issues automatically using [ESLint](https://eslint.org/) tool:
 
 ```console
 $ yarn fix
@@ -128,7 +129,7 @@ $ git push --tags
 
 Travis will then publish the version on npm.
 
-# License and copyright attribution
+# License and copyright (c) attribution
 
 When you open a Pull Request to the API Platform project, you agree to license your code under the [MIT license](LICENSE)
 and to transfer the copyright on the submitted code to Kévin Dunglas.
