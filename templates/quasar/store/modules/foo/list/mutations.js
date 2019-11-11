@@ -1,7 +1,7 @@
 import { types } from './mutation_types';
 import initState from './state';
-import makeState from '../../../../common/store/list/mutations';
+import makeMutations from '../../../../common/store/list/mutations';
 
-const mutations = makeState(initState, types);
+const mutations = makeMutations(initState, types);
 
 export default mutations;

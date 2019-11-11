@@ -3,16 +3,16 @@ import { getItemsCommon, getSelectItemsCommon } from '../../../../common/store/l
 
 const hydraPrefix = '{{{hydraPrefix}}}';
 
-export const getItems = (state, options) =>
+export const getItems = (context, options) =>
   getItemsCommon(
-    state,
+    context,
     { ...{ page: '{{{name}}}', params: {} }, ...options },
     { types, hydraPrefix },
   );
 
-export const getSelectItems = (state, options) =>
+export const getSelectItems = (context, options) =>
   getSelectItemsCommon(
-    state,
+    context,
     { ...{ page: '{{{name}}}', params: { properties: ['id', 'name'] } }, ...options },
     { types, hydraPrefix },
   );

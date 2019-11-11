@@ -3,7 +3,12 @@
     <slot name="left"></slot>
     <q-space />
     <div>
-      <q-btn v-if="handleSubmit" :label="$t('{{{labels.submit}}}')" color="primary" @click="submitItem" />
+      <q-btn
+        v-if="handleSubmit"
+        :label="$t('{{{labels.submit}}}')"
+        color="primary"
+        @click="submitItem"
+      />
       <q-btn
         v-if="handleReset"
         :label="$t('{{{labels.reset}}}')"
@@ -22,40 +27,45 @@
       />
       <q-btn v-if="handleAdd" flat round dense icon="add" @click="addItem" />
     </div>
-    <ConfirmDelete v-if="handleDelete" :show="confirmDelete" :handle-delete="handleDelete" />
+    <ConfirmDelete
+      v-if="handleDelete"
+      :show="confirmDelete"
+      :handle-delete="handleDelete"
+      :handle-cancel="() => (confirmDelete = false)"
+    />
   </q-toolbar>
 </template>
 
 <script>
-import ConfirmDelete from './ConfirmDelete';
+import ConfirmDelete from "./ConfirmDelete";
 
 export default {
-  name: 'Toolbar',
+  name: "Toolbar",
   components: {
-    ConfirmDelete,
+    ConfirmDelete
   },
   data() {
     return {
-      confirmDelete: false,
+      confirmDelete: false
     };
   },
   props: {
     handleSubmit: {
       type: Function,
-      required: false,
+      required: false
     },
     handleReset: {
       type: Function,
-      required: false,
+      required: false
     },
     handleDelete: {
       type: Function,
-      required: false,
+      required: false
     },
     handleAdd: {
       type: Function,
-      required: false,
-    },
+      required: false
+    }
   },
   methods: {
     addItem() {
@@ -72,7 +82,7 @@ export default {
       if (this.handleReset) {
         this.handleReset();
       }
-    },
-  },
+    }
+  }
 };
 </script>

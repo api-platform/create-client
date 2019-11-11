@@ -7,7 +7,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="{{{labels.cancel}}}" color="primary" v-close-popup />
+        <q-btn flat label="{{{labels.cancel}}}" color="primary" v-close-popup @click="handleCancel" />
         <q-btn flat label="{{{labels.delete}}}" color="primary" v-close-popup @click="handleDelete" />
       </q-card-actions>
     </q-card>
@@ -25,6 +25,10 @@ export default {
     handleDelete: {
       type: Function,
       required: true,
+    },
+    handleCancel: {
+      type: Function,
+      required: false,
     },
   },
 };

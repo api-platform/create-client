@@ -1,4 +1,4 @@
-export default {
+export default () => ({
   error: '',
   isLoading: false,
   items: [],
@@ -6,4 +6,4 @@ export default {
   totalItems: 10,
   selectItems: null,
   selectItemsTemplate: '',
-};
+});

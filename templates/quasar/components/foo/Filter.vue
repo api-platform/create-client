@@ -162,7 +162,7 @@ export default {
     {{{name}}}FilterFn(val, update /* , abort */) {
       return this.{{{name}}}SelectItems !== null
         ? update()
-        : this.{{{name}}}GetSelectItems({}).then(update());
+        : this.{{{name}}}GetSelectItems({}).then(update);
     },
     {{/if}}
     {{/compare}}

@@ -3,11 +3,9 @@ import { error } from '../../utils/notify';
 export default {
   watch: {
     created(created) {
-      if (!created) {
-        return;
+      if (created) {
+        this.onCreated(created);
       }
-
-      this.$router.push({ name: `${this.$options.servicePrefix}Update`, params: { id: created['@id'] } });
     },
 
     error(message) {
@@ -16,6 +14,13 @@ export default {
   },
 
   methods: {
+    onCreated(item) {
+      this.$router.push({ 
+        name: `${this.$options.servicePrefix}Update`,
+        params: { id: item['@id'] },
+      });
+    },
+
     onSendForm() {
       this.$refs.createForm.$children[0].validate().then(success => {
         if (success) {
