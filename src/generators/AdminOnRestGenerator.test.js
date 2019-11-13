@@ -1,6 +1,4 @@
-import Api from "@api-platform/api-doc-parser/lib/Api";
-import Resource from "@api-platform/api-doc-parser/lib/Resource";
-import Field from "@api-platform/api-doc-parser/lib/Field";
+import { Api, Resource, Field } from "@api-platform/api-doc-parser/lib";
 import fs from "fs";
 import tmp from "tmp";
 import AdminOnRestGenerator from "./AdminOnRestGenerator";
@@ -34,9 +32,11 @@ test("Generate a Admin On Rest app", () => {
   });
   generator.generate(api, resource, tmpobj.name);
 
-  ["/config/entrypoint.js", "/resources/abc.js", "/resource-import.js"].forEach(
-    file => expect(fs.existsSync(tmpobj.name + file)).toBe(true)
-  );
+  [
+    "/config/entrypoint.js",
+    "/resources/abc.js",
+    "/resource-import.js"
+  ].forEach(file => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
 
   ["/components/abc.js", "/config/abc.js"].forEach(file => {
     expect(fs.existsSync(tmpobj.name + file)).toBe(true);

@@ -123,7 +123,4 @@ const mapDispatchToProps = dispatch => ({
   reset: eventSource => dispatch(reset(eventSource))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Show);
+export default connect(mapStateToProps, mapDispatchToProps)(Show);
