@@ -45,6 +45,14 @@ export default class {
   }
 
   createFile(template, dest, context = {}, warn = true) {
+    if (undefined === this.templates[template]) {
+      console.log(
+        `The template ${template} does not exists in the registered templates.`
+      );
+
+      return;
+    }
+
     if (!fs.existsSync(dest)) {
       fs.writeFileSync(dest, this.templates[template](context));
 
