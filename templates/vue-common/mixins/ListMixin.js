@@ -1,3 +1,4 @@
+import isEmpty from 'lodash/isEmpty';
 import { formatDateTime } from '../utils/dates';
 import NotificationMixin from './NotificationMixin';
 
@@ -39,7 +40,8 @@ export default {
       if (itemsPerPage > 0) {
         params = { ...params, itemsPerPage, page };
       }
-      if (sortBy) {
+
+      if (!isEmpty(sortBy)) {
         params[`order[${sortBy}]`] = descending ? 'desc' : 'asc';
       }
 
