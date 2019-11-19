@@ -22,11 +22,12 @@ export default function(id, options = {}) {
     options.headers.set('Content-Type', MIME_TYPE);
 
   if (options.params) {
-    let queryString = Object.keys(options.params)
+    const params = normalize(options.params);
+    let queryString = Object.keys(params)
       .map(key =>
-        Array.isArray(options.params[key])
-          ? makeParamArray(key, options.params[key])
-          : `${key}=${options.params[key]}`
+        Array.isArray(params[key])
+          ? makeParamArray(key, params[key])
+          : `${key}=${params[key]}`
       )
       .join('&');
     id = `${id}?${queryString}`;
