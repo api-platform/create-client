@@ -77,7 +77,6 @@ export default function makeCrudModule({
 
         service
           .del(item)
-          .then(response => response.json())
           .then(() => {
             commit(ACTIONS.TOGGLE_LOADING);
             commit(ACTIONS.SET_DELETED, item);
