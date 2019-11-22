@@ -84,7 +84,7 @@ export default {
   methods: {
     ...mapActions('{{{lc}}}', {
       deleteItem: 'del',
-      reset: 'reset',
+      reset: 'resetShow',
       retrieve: 'load'
     })
   }

@@ -3,6 +3,21 @@ import { getField, updateField } from 'vuex-map-fields';
 import remove from 'lodash/remove';
 import SubmissionError from '../../error/SubmissionError';
 
+const initialState = {
+  allIds: [],
+  byId: {},
+  created: null,
+  deleted: null,
+  error: '',
+  isLoading: false,
+  resetList: false,
+  selectItems: null,
+  totalItems: 0,
+  updated: null,
+  view: null,
+  violations: null
+};
+
 const handleError = (commit, e) => {
   commit(ACTIONS.TOGGLE_LOADING);
 
@@ -18,12 +33,13 @@ const handleError = (commit, e) => {
   commit(ACTIONS.SET_ERROR, e.message);
 };
 
-const ACTIONS = {
+export const ACTIONS = {
   ADD: 'ADD',
-  MERCURE_DELETED: 'MERCURE_DELETED',
-  MERCURE_MESSAGE: 'MERCURE_MESSAGE',
-  MERCURE_OPEN: 'MERCURE_OPEN',
+  RESET_CREATE: 'RESET_CREATE',
+  RESET_DELETE: 'RESET_DELETE',
   RESET_LIST: 'RESET_LIST',
+  RESET_SHOW: 'RESET_SHOW',
+  RESET_UPDATE: 'RESET_UPDATE',
   SET_CREATED: 'SET_CREATED',
   SET_DELETED: 'SET_DELETED',
   SET_ERROR: 'SET_ERROR',
@@ -70,6 +86,8 @@ export default function makeCrudModule({
       },
       fetchAll: ({ commit, state }, params) => {
         if (!service) throw new Error('No service specified!');
+
+        commit(ACTIONS.TOGGLE_LOADING);
 
         service
           .findAll({ params })
@@ -123,6 +141,18 @@ export default function makeCrudModule({
           })
           .catch(e => handleError(commit, e));
       },
+      resetCreate: ({ commit }) => {
+        commit(ACTIONS.RESET_CREATE);
+      },
+      resetDelete: ({ commit }) => {
+        commit(ACTIONS.RESET_DELETE);
+      },
+      resetShow: ({ commit }) => {
+        commit(ACTIONS.RESET_SHOW);
+      },
+      resetUpdate: ({ commit }) => {
+        commit(ACTIONS.RESET_UPDATE);
+      },
       update: ({ commit }, item) => {
         commit(ACTIONS.SET_ERROR, '');
         commit(ACTIONS.TOGGLE_LOADING);
@@ -150,14 +180,46 @@ export default function makeCrudModule({
       updateField,
       [ACTIONS.ADD]: (state, item) => {
         Vue.set(state.byId, item['@id'], item);
+        Vue.set(state, 'isLoading', false);
         if (state.allIds.includes(item['@id'])) return;
         state.allIds.push(item['@id']);
+      },
+      [ACTIONS.RESET_CREATE]: state => {
+        Object.assign(state, {
+          isLoading: false,
+          error: '',
+          created: null,
+          violations: null
+        });
+      },
+      [ACTIONS.RESET_DELETE]: state => {
+        Object.assign(state, {
+          isLoading: false,
+          error: '',
+          deleted: null
+        });
       },
       [ACTIONS.RESET_LIST]: state => {
         Object.assign(state, {
           allIds: [],
           byId: {},
+          error: '',
+          isLoading: false,
           resetList: false
+        });
+      },
+      [ACTIONS.RESET_SHOW]: state => {
+        Object.assign(state, {
+          error: '',
+          isLoading: false
+        });
+      },
+      [ACTIONS.RESET_UPDATE]: state => {
+        Object.assign(state, {
+          error: '',
+          isLoading: false,
+          updated: null,
+          violations: null
         });
       },
       [ACTIONS.SET_CREATED]: (state, created) => {
@@ -203,19 +265,6 @@ export default function makeCrudModule({
       }
     },
     namespaced: true,
-    state: {
-      allIds: [],
-      byId: {},
-      created: null,
-      deleted: null,
-      error: '',
-      isLoading: false,
-      resetList: false,
-      selectItems: null,
-      totalItems: 0,
-      updated: null,
-      view: null,
-      violations: null
-    }
+    state: initialState
   };
 }

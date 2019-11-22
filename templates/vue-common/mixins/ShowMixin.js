@@ -35,5 +35,8 @@ export default {
     deleteError(message) {
       message && this.showError(message);
     }
+  },
+  beforeDestroy() {
+    this.reset();
   }
 };
