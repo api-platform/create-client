@@ -4,6 +4,14 @@
     <v-spacer />
     <div>
       <v-btn
+        v-if="handleEdit"
+        :loading="isLoading"
+        color="primary"
+        @click="editItem"
+      >
+        {{ $t('Edit') }}
+      </v-btn>
+      <v-btn
         v-if="handleSubmit"
         :loading="isLoading"
         color="primary"
@@ -55,6 +63,10 @@ export default {
     };
   },
   props: {
+    handleEdit: {
+      type: Function,
+      required: false
+    },
     handleSubmit: {
       type: Function,
       required: false
@@ -85,6 +97,11 @@ export default {
     addItem() {
       if (this.handleAdd) {
         this.handleAdd();
+      }
+    },
+    editItem() {
+      if (this.handleEdit) {
+        this.handleEdit();
       }
     },
     submitItem() {

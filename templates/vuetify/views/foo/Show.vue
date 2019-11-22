@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Toolbar :handle-delete="del">
+    <Toolbar :handle-edit="editHandler"  :handle-delete="del">
       <template slot="left">
         <v-toolbar-title v-if="item">\{{
           `${$options.servicePrefix} ${item['@id']}`
