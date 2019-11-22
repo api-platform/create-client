@@ -9,7 +9,7 @@
         color="primary"
         @click="editItem"
       >
-        {{ $t('Edit') }}
+        \{{ $t('Edit') }}
       </v-btn>
       <v-btn
         v-if="handleSubmit"
