@@ -34,7 +34,15 @@
                 {{#case "number"}}\{{ $n(item['{{{name}}}']) }}{{/case~}}
                 {{#default}}
                   {{#if reference}}
+                  {{#if maxCardinality }}
                     \{{ item['{{{name}}}'].name }}
+                  {{else~}}
+                    <ul>
+                      <li v-for="_item in item['{{{name}}}']" :key="_item['@id']">
+                        \{{ _item['@id'] }}
+                      </li>
+                    </ul>
+                  {{/if}}
                   {{else}}
                     \{{ item['{{{name}}}'] }}
                   {{/if}}

@@ -60,7 +60,7 @@
                       \{{ _item['@id'] }}
                     </li>
                   </ul>
-                  {{/if}}
+                {{/if}}
                 </template>
                 {{/if~}}
               {{/default~}}
