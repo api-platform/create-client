@@ -35,7 +35,7 @@
                 {{#default}}
                   {{#if reference}}
                   {{#if maxCardinality }}
-                    \{{ item['{{{name}}}'].name }}
+                    \{{ item['{{{name}}}'] && item['{{{name}}}'].name }}
                   {{else~}}
                     <ul>
                       <li v-for="_item in item['{{{name}}}']" :key="_item['@id']">
