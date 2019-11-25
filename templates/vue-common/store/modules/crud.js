@@ -92,6 +92,8 @@ export default function makeCrudModule({
           .findAll({ params })
           .then(response => response.json())
           .then(retrieved => {
+            commit(ACTIONS.TOGGLE_LOADING);
+
             commit(
               ACTIONS.SET_TOTAL_ITEMS,
               retrieved['{{{hydraPrefix}}}totalItems']
