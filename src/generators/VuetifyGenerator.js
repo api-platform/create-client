@@ -61,14 +61,15 @@ export default new VueRouter({
 import ${titleLc}Service from '../services/${titleLc}';
 import makeCrudModule from './modules/crud';
 
-// ...
-
-store.registerModule(
-  '${titleLc}',
-  makeCrudModule({
-    service: ${titleLc}Service
-  })
-);
+export const store = new Vuex.Store({
+  // ...
+  modules: {
+    // other modules
+    ${titleLc}: makeCrudModule({
+      service: ${titleLc}Service
+    })
+  }
+});
 `)
     );
   }

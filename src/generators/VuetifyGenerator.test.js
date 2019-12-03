@@ -59,7 +59,9 @@ test("Generate a Vuetify app", () => {
       "/views/foo/List.vue",
       "/views/foo/Show.vue",
       "/views/foo/Update.vue"
-    ].forEach(file => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
+    ].forEach(file => {
+      expect(fs.existsSync(tmpobj.name + file)).toBe(true);
+    });
 
     tmpobj.removeCallback();
   });
