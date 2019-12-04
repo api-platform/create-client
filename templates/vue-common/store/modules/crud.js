@@ -3,12 +3,12 @@ import { getField, updateField } from 'vuex-map-fields';
 import remove from 'lodash/remove';
 import SubmissionError from '../../error/SubmissionError';
 
-const initialState = {
+const initialState = () => ({
   allIds: [],
   byId: {},
   created: null,
   deleted: null,
-  error: '',
+  error: "",
   isLoading: false,
   resetList: false,
   selectItems: null,
@@ -16,7 +16,7 @@ const initialState = {
   updated: null,
   view: null,
   violations: null
-};
+});
 
 const handleError = (commit, e) => {
   commit(ACTIONS.TOGGLE_LOADING);
@@ -26,7 +26,7 @@ const handleError = (commit, e) => {
     // eslint-disable-next-line
     commit(ACTIONS.SET_ERROR, e.errors._error);
 
-    return;
+    return Promise.reject(e);
   }
 
   // eslint-disable-next-line
