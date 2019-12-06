@@ -31,6 +31,8 @@ const handleError = (commit, e) => {
 
   // eslint-disable-next-line
   commit(ACTIONS.SET_ERROR, e.message);
+
+  return Promise.reject(e);
 };
 
 export const ACTIONS = {
