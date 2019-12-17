@@ -1,10 +1,10 @@
 import { Api, Resource, Field } from "@api-platform/api-doc-parser/lib";
 import fs from "fs";
 import tmp from "tmp";
-import TypescriptGenerator from "./TypescriptGenerator";
+import ReactTypescriptGenerator from "./ReactTypescriptGenerator";
 
 test("Generate a Typescript React app", () => {
-  const generator = new TypescriptGenerator({
+  const generator = new ReactTypescriptGenerator({
     hydraPrefix: "hydra:",
     templateDirectory: `${__dirname}/../../templates`
   });

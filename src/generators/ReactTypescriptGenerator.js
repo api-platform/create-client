@@ -1,11 +1,11 @@
 import chalk from "chalk";
 import BaseGenerator from "./BaseGenerator";
 
-export default class TypescriptGenerator extends BaseGenerator {
+export default class ReactTypescriptGenerator extends BaseGenerator {
   constructor(params) {
     super(params);
 
-    this.registerTemplates("typescript/", [
+    this.registerTemplates("react-typescript/", [
       // actions
       "actions/foo/create.ts",
       "actions/foo/delete.ts",

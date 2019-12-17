@@ -2,7 +2,8 @@ import AdminOnRestGenerator from "./generators/AdminOnRestGenerator";
 import NextGenerator from "./generators/NextGenerator";
 import ReactGenerator from "./generators/ReactGenerator";
 import ReactNativeGenerator from "./generators/ReactNativeGenerator";
-import TypescriptGenerator from "./generators/TypescriptGenerator";
+import ReactTypescriptGenerator from "./generators/ReactTypescriptGenerator";
+import TypescriptInterfaceGenerator from "./generators/TypescriptInterfaceGenerator";
 import VueGenerator from "./generators/VueGenerator";
 import VuetifyGenerator from "./generators/VuetifyGenerator";
 import QuasarGenerator from "./generators/QuasarGenerator";
@@ -23,7 +24,9 @@ export default function generators(generator = "react") {
     case "react-native":
       return wrap(ReactNativeGenerator);
     case "typescript":
-      return wrap(TypescriptGenerator);
+      return wrap(TypescriptInterfaceGenerator);
+    case "react-typescript":
+      return wrap(ReactTypescriptGenerator);
     case "vue":
       return wrap(VueGenerator);
     case "vuetify":
