@@ -34,7 +34,9 @@ export const List: FunctionComponent<Props> = ({ {{{lc}}}s }) => (
             </th>
             {{#each fields}}
               <td>
-                {{#if reference}}
+                {{#if isReferences}}
+                  <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((ref: any) => ({ href: getPath(ref, '/{{{lowercase reference.title}}}s/[id]'), name: ref })) } />
+                {{else if reference}}
                   <ReferenceLinks items={ { href: getPath({{{../lc}}}['{{{name}}}'], '/{{{lowercase reference.title}}}s/[id]'), name: {{{../lc}}}['{{{name}}}'] } } />
                 {{else if isEmbeddeds}}
                   <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((emb: any) => ({ href: getPath(emb['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: emb['@id'] })) } />

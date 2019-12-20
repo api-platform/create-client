@@ -1,47 +1,49 @@
 import chalk from "chalk";
+import handlebars from "handlebars";
+import hbhComparison from "handlebars-helpers/lib/comparison.js";
 import BaseGenerator from "./BaseGenerator.js";
 
-export default class extends BaseGenerator {
+export default class ReactGenerator extends BaseGenerator {
   constructor(params) {
     super(params);
 
-    this.registerTemplates("common/", [
+    this.registerTemplates("react/", [
       // utils
-      "utils/mercure.js",
-    ]);
+      "utils/dataAccess.ts",
+      "utils/types.ts",
 
-    this.registerTemplates("react-common/", [
-      // actions
-      "actions/foo/create.js",
-      "actions/foo/delete.js",
-      "actions/foo/list.js",
-      "actions/foo/update.js",
-      "actions/foo/show.js",
+      // hooks
+      "hooks/create.ts",
+      "hooks/delete.ts",
+      "hooks/fetch.ts",
+      "hooks/index.ts",
+      "hooks/list.ts",
+      "hooks/mercure.ts",
+      "hooks/retrieve.ts",
+      "hooks/update.ts",
+      "hooks/show.ts",
 
-      // utils
-      "utils/dataAccess.js",
+      // interfaces
+      "interfaces/Collection.ts",
+      "interfaces/foo.ts",
 
-      // reducers
-      "reducers/foo/create.js",
-      "reducers/foo/delete.js",
-      "reducers/foo/index.js",
-      "reducers/foo/list.js",
-      "reducers/foo/update.js",
-      "reducers/foo/show.js",
-    ]);
-
-    this.registerTemplates(`react/`, [
       // components
-      "components/foo/Create.js",
-      "components/foo/Form.js",
-      "components/foo/index.js",
-      "components/foo/List.js",
-      "components/foo/Update.js",
-      "components/foo/Show.js",
+      "components/foo/Create.tsx",
+      "components/foo/Form.tsx",
+      "components/foo/index.ts",
+      "components/foo/List.tsx",
+      "components/foo/Update.tsx",
+      "components/foo/type.ts",
+      "components/foo/Show.tsx",
+      "components/Field.tsx",
+      "components/Links.tsx",
+      "components/Pagination.tsx",
 
       // routes
-      "routes/foo.js",
+      "routes/foo.tsx",
     ]);
+
+    handlebars.registerHelper("compare", hbhComparison.compare);
   }
 
   help(resource) {
@@ -52,20 +54,14 @@ export default class extends BaseGenerator {
       resource.title
     );
     console.log(
-      "Paste the following definitions in your application configuration (`client/src/index.js` by default):"
+      "Paste the following definitions in your application configuration (`client/src/index.tsx` by default):"
     );
     console.log(
       chalk.green(`
-// import reducers
-import ${titleLc} from './reducers/${titleLc}/';
-
-//import routes
+// import routes
 import ${titleLc}Routes from './routes/${titleLc}';
 
-// Add the reducer
-combineReducers({ ${titleLc},/* ... */ }),
-
-// Add routes to <Switch>
+// Add routes to <Routes>
 { ${titleLc}Routes }
 `)
     );
@@ -74,70 +70,87 @@ combineReducers({ ${titleLc},/* ... */ }),
   generate(api, resource, dir) {
     const lc = resource.title.toLowerCase();
     const ucf = this.ucFirst(resource.title);
+    const fields = this.parseFields(resource);
 
     const context = {
-      title: resource.title,
       name: resource.name,
       lc,
       uc: resource.title.toUpperCase(),
       ucf,
-      fields: this.parseFields(resource),
-      formFields: this.buildFields(resource.writableFields),
+      fields,
+      formFields: this.buildFields(fields),
+      hasRelations: fields.some((field) => field.reference || field.embedded),
+      hasManyRelations: fields.some(
+        (field) => field.isReferences || field.isEmbeddeds
+      ),
       hydraPrefix: this.hydraPrefix,
+      title: resource.title,
     };
 
     // Create directories
     // These directories may already exist
-    [`${dir}/utils`, `${dir}/config`, `${dir}/routes`].forEach((dir) =>
-      this.createDir(dir, false)
-    );
-
     [
-      `${dir}/actions/${lc}`,
+      `${dir}/utils`,
+      `${dir}/config`,
+      `${dir}/interfaces`,
+      `${dir}/routes`,
       `${dir}/components/${lc}`,
-      `${dir}/reducers/${lc}`,
-    ].forEach((dir) => this.createDir(dir));
+      `${dir}/hooks`,
+    ].forEach((dir) => this.createDir(dir, false));
 
     [
-      // actions
-      "actions/%s/create.js",
-      "actions/%s/delete.js",
-      "actions/%s/list.js",
-      "actions/%s/update.js",
-      "actions/%s/show.js",
-
       // components
-      "components/%s/Create.js",
-      "components/%s/Form.js",
-      "components/%s/index.js",
-      "components/%s/List.js",
-      "components/%s/Update.js",
-      "components/%s/Show.js",
-
-      // reducers
-      "reducers/%s/create.js",
-      "reducers/%s/delete.js",
-      "reducers/%s/index.js",
-      "reducers/%s/list.js",
-      "reducers/%s/update.js",
-      "reducers/%s/show.js",
+      "components/%s/Create.tsx",
+      "components/%s/Form.tsx",
+      "components/%s/index.ts",
+      "components/%s/List.tsx",
+      "components/%s/Update.tsx",
+      "components/%s/type.ts",
+      "components/%s/Show.tsx",
 
       // routes
-      "routes/%s.js",
+      "routes/%s.tsx",
     ].forEach((pattern) =>
       this.createFileFromPattern(pattern, dir, lc, context)
     );
 
-    // utils
+    // interface pattern should be camel cased
     this.createFile(
-      "utils/dataAccess.js",
-      `${dir}/utils/dataAccess.js`,
-      context,
-      false
+      "interfaces/foo.ts",
+      `${dir}/interfaces/${context.ucf}.ts`,
+      context
     );
-    this.createFile("utils/mercure.js", `${dir}/utils/mercure.js`);
 
-    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
+    // copy with regular name
+    [
+      // interfaces
+      "interfaces/Collection.ts",
+
+      // components
+      "components/Field.tsx",
+      "components/Links.tsx",
+      "components/Pagination.tsx",
+
+      // hooks
+      "hooks/create.ts",
+      "hooks/delete.ts",
+      "hooks/fetch.ts",
+      "hooks/index.ts",
+      "hooks/list.ts",
+      "hooks/mercure.ts",
+      "hooks/retrieve.ts",
+      "hooks/update.ts",
+      "hooks/show.ts",
+
+      // utils
+      "utils/dataAccess.ts",
+      "utils/types.ts",
+    ].forEach((file) =>
+      this.createFile(file, `${dir}/${file}`, context, false)
+    );
+
+    // API config
+    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.ts`);
   }
 
   getDescription(field) {
@@ -160,6 +173,7 @@ combineReducers({ ${titleLc},/* ... */ }),
         ...list,
         [field.name]: {
           ...field,
+          type: this.getType(field),
           description: this.getDescription(field),
           readonly: false,
           isReferences,
@@ -169,7 +183,7 @@ combineReducers({ ${titleLc},/* ... */ }),
       };
     }, {});
 
-    return fields;
+    return Object.values(fields);
   }
 
   ucFirst(target) {

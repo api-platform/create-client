@@ -37,33 +37,40 @@ test("Generate a React app", () => {
   generator.generate(api, resource, tmpobj.name);
 
   [
-    "/utils/dataAccess.js",
-    "/config/entrypoint.js",
+    "/utils/dataAccess.ts",
+    "/utils/types.ts",
+    "/config/entrypoint.ts",
 
-    "/actions/abc/create.js",
-    "/actions/abc/delete.js",
-    "/actions/abc/list.js",
-    "/actions/abc/show.js",
-    "/actions/abc/update.js",
+    "/interfaces/Abc.ts",
+    "/interfaces/Collection.ts",
 
-    "/components/abc/index.js",
-    "/components/abc/Create.js",
-    "/components/abc/Update.js",
+    "/components/abc/index.ts",
+    "/components/abc/Create.tsx",
+    "/components/abc/Update.tsx",
+    "/components/abc/type.ts",
 
-    "/routes/abc.js",
+    "/components/Field.tsx",
+    "/components/Links.tsx",
+    "/components/Pagination.tsx",
 
-    "/reducers/abc/create.js",
-    "/reducers/abc/delete.js",
-    "/reducers/abc/index.js",
-    "/reducers/abc/list.js",
-    "/reducers/abc/show.js",
-    "/reducers/abc/update.js",
+    "/routes/abc.tsx",
+
+    "/hooks/create.ts",
+    "/hooks/delete.ts",
+    "/hooks/fetch.ts",
+    "/hooks/index.ts",
+    "/hooks/list.ts",
+    "/hooks/mercure.ts",
+    "/hooks/retrieve.ts",
+    "/hooks/show.ts",
+    "/hooks/update.ts",
   ].forEach((file) => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
 
   [
-    "/components/abc/Form.js",
-    "/components/abc/List.js",
-    "/components/abc/Show.js",
+    "/components/abc/Form.tsx",
+    "/components/abc/List.tsx",
+    "/components/abc/Show.tsx",
+    "/interfaces/Abc.ts",
   ].forEach((file) => {
     expect(fs.existsSync(tmpobj.name + file)).toBe(true);
     expect(fs.readFileSync(tmpobj.name + file, "utf8")).toMatch(/bar/);

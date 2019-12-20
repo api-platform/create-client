@@ -59,9 +59,9 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
             ...{{lc}},
             {{#each fields}}
               {{#if isEmbeddeds}}
-                {{name}}: {{../lc}}.{{name}}?.map((emb: any) => emb['@id']) ?? "",
+                {{name}}: {{../lc}}["{{name}}"]?.map((emb: any) => emb['@id']) ?? [],
               {{else if embedded}}
-                {{name}}: {{../lc}}.{{name}}?.['@id'] ?? "",
+                {{name}}: {{../lc}}["{{name}}"]?.['@id'] ?? "",
               {{/if}}
             {{/each}}
           } :
