@@ -49,9 +49,12 @@ export default {
 
   methods: {
     ...mapActions('{{{lc}}}', {
+      createReset: 'resetCreate',
       deleteItem: 'del',
+      delReset: 'resetDelete',
       retrieve: 'load',
       update: 'update',
+      updateReset: 'resetUpdate'
     })
   }
 };

@@ -285,6 +285,7 @@ export default class extends BaseGenerator {
       submit: "Submit",
       reset: "Reset",
       delete: "Delete",
+      edit: "Edit",
       confirmDelete: "Are you sure you want to delete this item?",
       noresults: "No results",
       close: "Close",

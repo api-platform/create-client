@@ -107,15 +107,15 @@ export default {
 
   computed: {
     {{#if paramsHaveRefs}}
-    ...mapFields({
-      {{#each parameters}}
-      {{#compare type "==" "text" }}
+    {{#each parameters}}
       {{#if reference}}
-      {{{name}}}SelectItems: '{{{downcase reference.title}}}/selectItems',
-      {{/if}}
+      {{#compare type "==" "text" }}
+      ...mapFields('{{{downcase reference.title}}}', {
+        {{{name}}}SelectItems: 'selectItems',
+      }),
       {{/compare}}
-      {{/each}}
-    }),
+      {{/if}}
+    {{/each}}
     {{/if}}
     // eslint-disable-next-line
     item() {

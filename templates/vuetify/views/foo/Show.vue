@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Toolbar :handle-delete="del">
+    <Toolbar :handle-edit="editHandler"  :handle-delete="del">
       <template slot="left">
         <v-toolbar-title v-if="item">\{{
           `${$options.servicePrefix} ${item['@id']}`
@@ -34,7 +34,15 @@
                 {{#case "number"}}\{{ $n(item['{{{name}}}']) }}{{/case~}}
                 {{#default}}
                   {{#if reference}}
-                    \{{ item['{{{name}}}'].name }}
+                  {{#if maxCardinality }}
+                    \{{ item['{{{name}}}'] && item['{{{name}}}'].name }}
+                  {{else~}}
+                    <ul>
+                      <li v-for="_item in item['{{{name}}}']" :key="_item['@id']">
+                        \{{ _item['@id'] }}
+                      </li>
+                    </ul>
+                  {{/if}}
                   {{else}}
                     \{{ item['{{{name}}}'] }}
                   {{/if}}
@@ -84,7 +92,7 @@ export default {
   methods: {
     ...mapActions('{{{lc}}}', {
       deleteItem: 'del',
-      reset: 'reset',
+      reset: 'resetShow',
       retrieve: 'load'
     })
   }

@@ -31,6 +31,8 @@ export default {
     formatDateTime,
     reset() {
       this.$refs.updateForm.$v.$reset();
+      this.updateReset();
+      this.delReset();
       this.createReset();
     },
 
