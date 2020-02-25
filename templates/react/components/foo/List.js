@@ -103,7 +103,7 @@ class List extends Component {
 
   pagination() {
     const view = this.props.retrieved && this.props.retrieved['hydra:view'];
-    if (!view) return;
+    if (!view || !view['hydra:first']) return;
 
     const {
       'hydra:first': first,
