@@ -25,6 +25,7 @@ program
   )
   .option("--username [username]", "Username for basic auth (Hydra only)")
   .option("--password [password]", "Password for basic auth (Hydra only)")
+  .option("--bearer [bearer]", "Token for bearer auth (Hydra only)")
   .option(
     "-g, --generator [generator]",
     'The generator to use, one of "react", "react-native", "vue", "admin-on-rest", "typescript", "next"',
@@ -76,6 +77,10 @@ const parser = entrypointWithSlash => {
     ).toString("base64");
     options.headers = new Headers();
     options.headers.set("Authorization", `Basic ${encoded}`);
+  }
+  if (program.bearer) {
+    options.headers = new Headers();
+    options.headers.set("Authorization", `Bearer ${program.bearer}`);
   }
   switch (program.format) {
     case "swagger":
