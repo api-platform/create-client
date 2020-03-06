@@ -1,39 +1,36 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { View } from 'react-native';
-import {
-  FormLabel,
-  FormInput,
-  FormValidationMessage,
-  Button,
-} from 'react-native-elements';
+import { Input, Button } from 'react-native-elements';
 
 
 class Form extends Component {
 
   renderField(data) {
-    const hasError = data.meta.touched && !!data.meta.error;
+    
     data.input.value = data.input.value.toString();
+    
+    let keyboard = data.type === "number" ? keyboard = "numeric" : keyboard = "default"
+    
     return (
       <View>
-        <FormLabel labelStyle={ {color: 'gray', fontSize: 20} }>
-            {data.input.name}
-        </FormLabel>
-        <FormInput containerStyle={ {flexDirection:'row'} }
-                   inputStyle={ {color: 'black', flex:1} }
-                   {...data.input}
-                   step={data.step}
-                   required={data.required}
-                   placeholder={data.placeholder}
-                   id={`{{{lc}}}_${data.input.name}`}
-                   multiline={true}
-                   keyboardType='numeric'
+        <Input
+      labelStyle={ {color: 'gray', flex:1} }
+      {...data.input}
+      required={data.required}
+      placeholder={data.placeholder}
+      id={`{{{lc}}}_${data.input.name}`}
+      label={data.input.name}
+      multiline={true}
+      errorMessage={data.meta.error}
+      keyboardType={keyboard}
         />
-        {hasError &&
-          <FormValidationMessage>{data.meta.error}</FormValidationMessage> }
+
       </View>
     );
   }
+
+  intParser = (value) => value ? parseInt(value, 10) : '';
 
   render() {
     const {handleSubmit, mySubmit} = this.props;
@@ -42,7 +39,7 @@ class Form extends Component {
       <View style={ {backgroundColor: 'white', paddingBottom: 20} }>
 {{#each formFields}}
         <Field component={this.renderField} name="{{{name}}}" type="{{{type}}}"
-          placeholder="{{{description}}}"{{#if required}} required={true}{{/if}} />
+          placeholder="{{{description}}}"{{#if required}} required={true}{{/if}} value="" parse={this.intParser}/>
 {{/each}}
         <Button buttonStyle={styles.button}
           title='SAVE'
