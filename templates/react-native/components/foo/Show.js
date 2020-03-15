@@ -129,6 +129,7 @@ const mapStateToProps = (state) => {
     deleteError: state.{{{lc}}}.del.error,
     deleteLoading: state.{{{lc}}}.del.loading,
     deleted: state.{{{lc}}}.del.deleted,
+    update: state.{{{lc}}}.update.updated
   };
 };
 
@@ -175,7 +176,8 @@ Show.propTypes = {
   showModal:PropTypes.bool,
   refresh:PropTypes.number,
   id:PropTypes.string,
-  list: PropTypes.func.isRequired
+  list: PropTypes.func.isRequired,
+  updated: PropTypes.object
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Show);
