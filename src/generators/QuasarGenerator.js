@@ -250,15 +250,18 @@ export const store = new Vuex.Store({
   }
 
   generate(api, resource, dir) {
-    return resource.getParameters().then(params => {
-      params = params.map(param => ({
-        ...param,
-        ...this.getHtmlInputTypeFromField(param)
-      }));
+    return resource
+      .getParameters()
+      .then(params => {
+        params = params.map(param => ({
+          ...param,
+          ...this.getHtmlInputTypeFromField(param)
+        }));
 
-      params = this.cleanupParams(params);
-      this.generateFiles(api, resource, dir, params);
-    });
+        params = this.cleanupParams(params);
+        this.generateFiles(api, resource, dir, params);
+      })
+      .catch(e => chalk.red(e));
   }
 
   cleanupParams(params) {
@@ -345,6 +348,8 @@ export const store = new Vuex.Store({
 
     const labels = this.commonLabelTexts();
 
+    const hashEntry = this.hashCode(api.entrypoint);
+
     const context = {
       title: resource.title,
       name: resource.name,
@@ -359,7 +364,8 @@ export const store = new Vuex.Store({
       formContainsDate,
       hydraPrefix: this.hydraPrefix,
       titleUcFirst,
-      labels
+      labels,
+      hashEntry
     };
 
     // Create directories
@@ -509,7 +515,11 @@ export const store = new Vuex.Store({
       false
     );
 
-    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
+    this.createEntrypoint(
+      api.entrypoint,
+      `${dir}/config/${hashEntry}_entrypoint.js`
+    );
+
     this.createFile(
       "utils/fetch.js",
       `${dir}/utils/fetch.js`,
@@ -532,6 +542,13 @@ export const store = new Vuex.Store({
       `${dir}/i18n/en-us/${lc}.js`,
       contextLabels,
       false
+    );
+  }
+
+  hashCode(s) {
+    return Array.from(s).reduce(
+      (s, c) => (Math.imul(31, s) + c.charCodeAt(0)) | 0,
+      0
     );
   }
 

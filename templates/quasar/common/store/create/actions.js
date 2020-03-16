@@ -1,11 +1,14 @@
 import SubmissionError from '../../../error/SubmissionError';
 import fetch from '../../../utils/fetch';
 
-export const createCommon = ({ commit }, { page, values }, { types }) => {
+export const createCommon = ({ commit }, { page, ep, values }, { types }) => {
   commit(types.SET_ERROR, '');
   commit(types.TOGGLE_LOADING);
 
-  return fetch(page, { method: 'POST', body: JSON.stringify(values) })
+  return fetch(
+    { id: page, ep },
+    { method: 'POST', body: JSON.stringify(values) }
+  )
     .then(response => {
       commit(types.TOGGLE_LOADING);
 
