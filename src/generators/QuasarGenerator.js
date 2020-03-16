@@ -267,7 +267,6 @@ export const store = new Vuex.Store({
   cleanupParams(params) {
     const stats = {};
     const result = [];
-
     params.forEach(p => {
       let key = p.variable.endsWith("[]")
         ? p.variable.slice(0, -2)
@@ -296,7 +295,6 @@ export const store = new Vuex.Store({
         result.push(p);
       }
     });
-
     return result;
   }
 
@@ -335,6 +333,9 @@ export const store = new Vuex.Store({
     params.forEach(p => {
       const param = fields.find(field => field.name === p.variable);
       if (!param) {
+        if (!p.name) {
+          p = { ...p, name: p.variable };
+        }
         parameters.push(p);
       } else {
         param.multiple = p.multiple;
