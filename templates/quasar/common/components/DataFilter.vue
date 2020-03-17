@@ -1,7 +1,7 @@
 <template>
   <q-expansion-item icon="search" :label="$t('{{{labels.filters}}}')" v-model="filtersExpanded">
     <q-card>
-      <q-card-section>
+      <q-card-section @keydown.enter.prevent="handleFilter">
         <slot name="filter"></slot>
       </q-card-section>
       <q-card-section>

@@ -70,7 +70,11 @@
       {{/if}}
       :label="$t('{{{name}}}')"
       class="col-12 col-md"
-      />
+      >
+        <template v-slot:append>
+          <q-icon name="close" @click.prevent.stop="item.{{{name}}} = ''" class="cursor-pointer" />
+        </template>
+      </q-input>
     {{/compare}}
     {{#compare type "==" "text" }}
     {{#if reference}}
@@ -90,6 +94,9 @@
             <q-item-section class="text-grey">\{{ $t('{{{labels.noresults}}}') }}</q-item-section>
           </q-item>
         </template>
+        <template v-slot:append>
+          <q-icon name="close" @click.prevent.stop="item.{{{name}}} = ''" class="cursor-pointer" />
+        </template>
       </q-select>
     {{else}}
       <q-input
@@ -98,7 +105,11 @@
         type="{{{type}}}"
         :label="$t('{{{name}}}')"
         class="col-12 col-md"
-      />
+      >
+        <template v-slot:append>
+          <q-icon name="close" @click.prevent.stop="item.{{{name}}} = ''" class="cursor-pointer" />
+        </template>
+      </q-input>
     {{/if}}
     {{/compare}}
     {{#ifEven index}}

@@ -233,7 +233,6 @@ export const store = new Vuex.Store({
       var stack =
         handlebars.__switch_stack__[handlebars.__switch_stack__.length - 1];
 
-      // if (stack.switch_match || caseValues.includes(stack.switch_value)) {
       if (stack.switch_match || caseValues.indexOf(stack.switch_value) === -1) {
         return "";
       } else {
