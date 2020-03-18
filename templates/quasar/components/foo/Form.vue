@@ -5,7 +5,7 @@
     <div class="row q-gutter-md">
     {{/ifOdd}}
     {{#compare type "==" "checkbox" }}
-      <q-checkbox v-model="item.{{{name}}}" :label="$t('{{{name}}}')" class="col-12 col-md" />
+      <q-checkbox v-model="item.{{{name}}}" :label="$t('{{{capitalize name}}}')" class="col-12 col-md" />
     {{/compare}}
     {{#compare type "==" "date" }}
       <InputDate
@@ -17,7 +17,7 @@
             item.{{{name}}} = v;
           }
         "
-        :label="$t('{{{name}}}')"
+        :label="$t('{{{capitalize name}}}')"
         class="col-12 col-md"
         kind="date"
         :rules="['date']"
@@ -33,7 +33,7 @@
             item.{{{name}}} = v;
           }
         "
-        :label="$t('{{{name}}}')"
+        :label="$t('{{{capitalize name}}}')"
         class="col-12 col-md"
         kind="time"
         :rules="['time']"
@@ -49,7 +49,7 @@
             item.{{{name}}} = new Date(v).toISOString();
           }
         "
-        :label="$t('{{{name}}}')"
+        :label="$t('{{{capitalize name}}}')"
         class="col-12 col-md"
         kind="datetime"
         :rules="['datetime']"
@@ -63,7 +63,7 @@
       {{#if step}}
       step="{{{step}}}"
       {{/if}}
-      :label="$t('{{{name}}}')"
+      :label="$t('{{{capitalize name}}}')"
       lazy-rules
       :rules="[{{#if required}}val => !!val || $t('{{{../labels.required}}}'), {{/if}}isInvalid('{{{name}}}')]"
       class="col-12 col-md"
@@ -78,7 +78,7 @@
       <q-select
         v-model="item.{{{name}}}"
         filled
-        :label="$t('{{{name}}}')"
+        :label="$t('{{{capitalize name}}}')"
         lazy-rules
         :rules="[{{#if required}}val => !!val || $t('{{{../labels.required}}}'), {{/if}}isInvalid('{{{name}}}')]"
         @filter="{{{name}}}FilterFn"
@@ -103,7 +103,7 @@
         v-model="item.{{{name}}}"
         filled
         type="{{{type}}}"
-        :label="$t('{{{name}}}')"
+        :label="$t('{{{capitalize name}}}')"
         lazy-rules
         :rules="[{{#if required}}val => !!val || $t('{{{../labels.required}}}'), {{/if}}isInvalid('{{{name}}}')]"
         class="col-12 col-md"

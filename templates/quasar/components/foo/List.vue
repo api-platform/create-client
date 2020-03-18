@@ -70,7 +70,7 @@ export default {
         {
           name: '{{name}}',
           field: '{{name}}',
-          label: this.$t('{{name}}'),
+          label: this.$t('{{capitalize name}}'),
           format: val => this.formatDateTime(val, 'HH:mm'),
         },
             {{/compare}}
@@ -78,7 +78,7 @@ export default {
         {
           name: '{{name}}',
           field: '{{name}}',
-          label: this.$t('{{name}}'),
+          label: this.$t('{{capitalize name}}'),
           format: val => this.formatDateTime(val, 'short'),
         },
             {{/compare}}
@@ -86,7 +86,7 @@ export default {
         {
           name: '{{name}}',
           field: '{{name}}',
-          label: this.$t('{{name}}'),
+          label: this.$t('{{capitalize name}}'),
           format: val => this.formatDateTime(val, 'long'),
         },
             {{/compare}}
@@ -95,14 +95,14 @@ export default {
         {
           name: '{{name}}',
           field: '{{name}}',
-          label: this.$t('{{name}}'),
+          label: this.$t('{{capitalize name}}'),
           format: val => this.$n(val),
         },
             {{else}}
         {
           name: '{{name}}',
           field: '{{name}}',
-          label: this.$t('{{name}}'),
+          label: this.$t('{{capitalize name}}'),
           {{#if sortable }}
           sortable: true,
           {{/if~}}

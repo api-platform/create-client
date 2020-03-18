@@ -117,6 +117,7 @@ export default class extends BaseGenerator {
     handlebars.registerHelper("inArray", hbh_array.inArray);
     handlebars.registerHelper("forEach", hbh_array.forEach);
     handlebars.registerHelper("downcase", hbh_string.downcase);
+    handlebars.registerHelper("capitalize", hbh_string.capitalize);
 
     this.registerSwitchHelper();
   }
@@ -563,9 +564,11 @@ export const store = new Vuex.Store({
   }
 
   hashCode(s) {
-    return Array.from(s).reduce(
-      (s, c) => (Math.imul(31, s) + c.charCodeAt(0)) | 0,
-      0
+    return Math.abs(
+      Array.from(s).reduce(
+        (s, c) => (Math.imul(31, s) + c.charCodeAt(0)) | 0,
+        0
+      )
     );
   }
 

@@ -20,7 +20,7 @@
           {{#ifOdd index}}
           <tr>
           {{/ifOdd}}
-            <td>\{{ $t('{{{name}}}') }}</td>
+            <td>\{{ $t('{{{capitalize name}}}') }}</td>
             <td>{{#switch type}}
             {{#case "dateTime"}}\{{ formatDateTime(item['{{{name}}}'], 'long') }}{{/case~}}
             {{#case "date"}}\{{ formatDateTime(item['{{{name}}}'], 'short') }}{{/case~}}

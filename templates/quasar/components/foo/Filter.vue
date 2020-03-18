@@ -5,14 +5,14 @@
     <div class="row q-col-gutter-x-md">
     {{/ifOdd}}
     {{#compare type "==" "checkbox" }}
-      <q-checkbox v-model="item.{{{name}}}" :label="$t('{{{name}}}')" class="col-12 col-md" />
+      <q-checkbox v-model="item.{{{name}}}" :label="$t('{{{capitalize name}}}')" class="col-12 col-md" />
     {{/compare}}
     {{#compare type "==" "date" }}
       <q-input
         filled
         v-model="item.{{{name}}}"
         mask="date"
-        :label="$t('{{{name}}}')"
+        :label="$t('{{{capitalize name}}}')"
         class="col-12 col-md"
       >
         <template v-slot:append>
@@ -29,7 +29,7 @@
         filled
         v-model="item.{{{name}}}"
         mask="time"
-        :label="$t('{{{name}}}')"
+        :label="$t('{{{capitalize name}}}')"
         class="col-12 col-md"
       >
         <template v-slot:append>
@@ -42,7 +42,7 @@
       </q-input>
     {{/compare}}
     {{#compare type "==" "dateTime" }}
-      <q-input filled v-model="item.{{{name}}}" :label="$t('{{{name}}}')" class="col-12 col-md">
+      <q-input filled v-model="item.{{{name}}}" :label="$t('{{{capitalize name}}}')" class="col-12 col-md">
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -68,7 +68,7 @@
       {{#if step}}
       step="{{{step}}}"
       {{/if}}
-      :label="$t('{{{name}}}')"
+      :label="$t('{{{capitalize name}}}')"
       class="col-12 col-md"
       >
         <template v-slot:append>
@@ -81,7 +81,7 @@
       <q-select
         v-model="item.{{{name}}}"
         filled
-        :label="$t('{{{name}}}')"
+        :label="$t('{{{capitalize name}}}')"
         @filter="{{{name}}}FilterFn"
         :options="{{{name}}}SelectItems"
         option-value="@id"
@@ -103,7 +103,7 @@
         v-model="item.{{{name}}}"
         filled
         type="{{{type}}}"
-        :label="$t('{{{name}}}')"
+        :label="$t('{{{capitalize name}}}')"
         class="col-12 col-md"
       >
         <template v-slot:append>
