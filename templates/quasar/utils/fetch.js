@@ -32,7 +32,7 @@ export default function({ id, ep }, options = {}) {
   // enable CORS for all requests
   Object.assign(options, {
     mode: 'cors',
-    credentials: 'include',
+    // credentials: 'include', // when credentials needed
   });
 
   const entryPoint = ep + (ep.endsWith('/') ? '' : '/');

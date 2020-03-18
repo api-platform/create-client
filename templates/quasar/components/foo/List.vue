@@ -3,13 +3,13 @@
     <Toolbar :handle-add="addHandler">
       <Breadcrumb :values="$route.meta.breadcrumb" slot="left" />
     </Toolbar>
-
     {{#if parameters.length}}
-    <DataFilter :handle-filter="onSendFilter" :handle-reset="resetFilter">
-      <{{{titleUcFirst}}}FilterForm ref="filterForm" :values="filters" slot="filter" />
-    </DataFilter>
-    {{/if}}
+    <DataFilter
+      :handle-filter="onSendFilter"
+      :handle-reset="resetFilter"
+    ><{{{titleUcFirst}}}FilterForm ref="filterForm" :values="filters" slot="filter" /></DataFilter>
 
+    {{/if}}
     <q-table
       :data="items"
       :columns="columns"
@@ -99,7 +99,14 @@ export default {
           format: val => this.$n(val),
         },
             {{else}}
-        { name: '{{name}}', field: '{{name}}', label: this.$t('{{name}}') },
+        {
+          name: '{{name}}',
+          field: '{{name}}',
+          label: this.$t('{{name}}'),
+          {{#if sortable }}
+          sortable: true,
+          {{/if~}}
+        },
             {{/compare}}
           {{/inArray}}
         {{/each }}

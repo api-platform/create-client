@@ -276,13 +276,20 @@ export const store = new Vuex.Store({
       }
       stats[key] += 1;
     });
-
+    const orderList = {};
     params.forEach(p => {
       if (p.variable.endsWith("[exists]")) {
         return; // removed for the moment, it can help to add null option to select
       }
       if (p.variable.startsWith("order[")) {
-        return; // removed for the moment, it can help to sorting data
+        var v = p.variable.slice(6, -1);
+        var found = result.findIndex(r => r.variable === v);
+        if (found !== -1) {
+          result[found]["sortable"] = true;
+        } else {
+          orderList[v] = true;
+        }
+        return;
       }
       if (!stats[p.variable] && p.variable.endsWith("[]")) {
         if (stats[p.variable.slice(0, -2)] === 1) {
@@ -291,6 +298,9 @@ export const store = new Vuex.Store({
       } else {
         if (stats[p.variable] === 2) {
           p.multiple = true;
+        }
+        if (orderList[p.variable]) {
+          p.sortable = true;
         }
         result.push(p);
       }
@@ -331,14 +341,20 @@ export const store = new Vuex.Store({
 
     const parameters = [];
     params.forEach(p => {
-      const param = fields.find(field => field.name === p.variable);
-      if (!param) {
+      const paramIndex = fields.findIndex(field => field.name === p.variable);
+      if (paramIndex === -1) {
         if (!p.name) {
           p = { ...p, name: p.variable };
         }
-        parameters.push(p);
+        if (!p.sortable) {
+          parameters.push(p);
+        }
       } else {
+        const param = fields[paramIndex];
         param.multiple = p.multiple;
+        if (p.sortable) {
+          fields[paramIndex].sortable = true;
+        }
         parameters.push(param);
       }
     });
