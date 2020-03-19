@@ -5,7 +5,7 @@ export default {
   created() {
     this.onRequest({
       pagination: this.pagination,
-    });
+    }, true);
   },
   data() {
     return {
@@ -18,6 +18,8 @@ export default {
       },
       nextPage: null,
       filters: {},
+      filtration: {},
+      expandedFilter: false,
     };
   },
   watch: {
@@ -37,13 +39,13 @@ export default {
   },
 
   methods: {
-    onRequest(props) {
+    onRequest(props, init) {
       const {
         pagination: { page, rowsPerPage: itemsPerPage, sortBy, descending },
       } = props;
       this.nextPage = page;
       let params = {
-        ...this.filters,
+        ...this.filtration,
       };
       if (itemsPerPage > 0) {
         params = { ...params, itemsPerPage, page };
@@ -55,6 +57,9 @@ export default {
         this.pagination.sortBy = sortBy;
         this.pagination.descending = descending;
         this.pagination.rowsPerPage = itemsPerPage;
+        if (!init) {
+          this.filters = { ...this.filtration };
+        }
       });
     },
 

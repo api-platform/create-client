@@ -7,7 +7,8 @@
     <DataFilter
       :handle-filter="onSendFilter"
       :handle-reset="resetFilter"
-    ><{{{titleUcFirst}}}FilterForm ref="filterForm" :values="filters" slot="filter" /></DataFilter>
+      :expanded="expandedFilter"
+    ><{{{titleUcFirst}}}FilterForm ref="filterForm" :values="filtration" slot="filter" /></DataFilter>
 
     {{/if}}
     <q-table

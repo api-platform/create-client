@@ -24,11 +24,20 @@ export default {
       type: Function,
       required: true,
     },
+    expanded: {
+      type: Boolean,
+      default: false
+    },
   },
   data() {
     return {
       filtersExpanded: false,
     };
   },
+  watch: {
+    expanded(val) {
+      this.filtersExpanded = this.expanded;
+    }
+  }
 };
 </script>
