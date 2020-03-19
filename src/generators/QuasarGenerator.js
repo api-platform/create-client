@@ -262,7 +262,7 @@ export const store = new Vuex.Store({
         params = this.cleanupParams(params);
         this.generateFiles(api, resource, dir, params);
       })
-      .catch(e => chalk.red(e));
+      .catch(e => console.log(chalk.red(e)));
   }
 
   cleanupParams(params) {
@@ -277,19 +277,12 @@ export const store = new Vuex.Store({
       }
       stats[key] += 1;
     });
-    const orderList = {};
     params.forEach(p => {
       if (p.variable.endsWith("[exists]")) {
         return; // removed for the moment, it can help to add null option to select
       }
       if (p.variable.startsWith("order[")) {
-        var v = p.variable.slice(6, -1);
-        var found = result.findIndex(r => r.variable === v);
-        if (found !== -1) {
-          result[found]["sortable"] = true;
-        } else {
-          orderList[v] = true;
-        }
+        result.push(p);
         return;
       }
       if (!stats[p.variable] && p.variable.endsWith("[]")) {
@@ -299,9 +292,6 @@ export const store = new Vuex.Store({
       } else {
         if (stats[p.variable] === 2) {
           p.multiple = true;
-        }
-        if (orderList[p.variable]) {
-          p.sortable = true;
         }
         result.push(p);
       }
@@ -344,6 +334,15 @@ export const store = new Vuex.Store({
     params.forEach(p => {
       const paramIndex = fields.findIndex(field => field.name === p.variable);
       if (paramIndex === -1) {
+        if (p.variable.startsWith("order[")) {
+          var v = p.variable.slice(6, -1);
+          var found = fields.findIndex(field => field.name === v);
+          if (found !== -1) {
+            fields[found].sortable = true;
+          }
+          return;
+        }
+
         if (!p.name) {
           p = { ...p, name: p.variable };
         }
@@ -353,9 +352,6 @@ export const store = new Vuex.Store({
       } else {
         const param = fields[paramIndex];
         param.multiple = p.multiple;
-        if (p.sortable) {
-          fields[paramIndex].sortable = true;
-        }
         parameters.push(param);
       }
     });
