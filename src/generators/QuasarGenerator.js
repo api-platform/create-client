@@ -278,7 +278,8 @@ export const store = new Vuex.Store({
       stats[key] += 1;
     });
     params.forEach(p => {
-      if (p.variable.endsWith("[exists]")) {
+      if (p.variable.startsWith("exists[")) {
+        result.push(p);
         return; // removed for the moment, it can help to add null option to select
       }
       if (p.variable.startsWith("order[")) {
@@ -339,6 +340,24 @@ export const store = new Vuex.Store({
           var found = fields.findIndex(field => field.name === v);
           if (found !== -1) {
             fields[found].sortable = true;
+          }
+          return;
+        }
+
+        if (p.variable.startsWith("exists[")) {
+          var exists = p.variable.slice(7, -1);
+          var foundExistsFieldIndex = fields.findIndex(
+            field => field.name === exists
+          );
+          if (foundExistsFieldIndex !== -1) {
+            const param = fields[foundExistsFieldIndex];
+            param.variable = p.variable;
+            param.filterType = "exists";
+            parameters.push(param);
+          } else {
+            p.name = exists;
+            p.filterType = "exists";
+            parameters.push(p);
           }
           return;
         }

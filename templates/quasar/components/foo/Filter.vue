@@ -4,6 +4,11 @@
     {{#ifOdd index}}
     <div class="row q-col-gutter-x-md">
     {{/ifOdd}}
+    {{#switch filterType}}
+    {{#case "exists"}}
+      <q-checkbox v-model="item['{{{variable}}}']" :label="$t('{{{capitalize name}}}')" class="col-12 col-md" />
+    {{/case}}
+    {{#default}}
     {{#compare type "==" "checkbox" }}
       <q-checkbox v-model="item.{{{name}}}" :label="$t('{{{capitalize name}}}')" class="col-12 col-md" />
     {{/compare}}
@@ -112,6 +117,8 @@
       </q-input>
     {{/if}}
     {{/compare}}
+    {{/default}}
+    {{/switch}}
     {{#ifEven index}}
     </div>
     {{/ifEven}}
