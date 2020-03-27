@@ -2,40 +2,60 @@ import { extractDate } from '../../utils/dates';
 
 export default {
   created() {
-    this.retrieve(decodeURIComponent(this.$route.params.id));
+    this.onCreated();
   },
+
   beforeDestroy() {
-    this.reset();
+    this.onBeforeDestroy();
   },
+
   watch: {
     error(message) {
-      message &&
-        this.$q.notify({
-          message,
-          color: 'red',
-          icon: 'error',
-          closeBtn: this.$t('{{{labels.close}}}'),
-        });
+      this.onShowError(message);
     },
 
     deleteError(message) {
-      message &&
-        this.$q.notify({
-          message,
-          color: 'red',
-          icon: 'error',
-          closeBtn: this.$t('{{{labels.close}}}'),
-        });
+      this.onDeletedError(message);
     },
   },
 
   methods: {
+    onCreated() {
+      this.retrieve(decodeURIComponent(this.$route.params.id));
+    },
+
+    onBeforeDestroy() {
+      this.reset();
+    },
+
+    onShowError(message) {
+      message &&
+        this.$q.notify({
+          message,
+          color: 'red',
+          icon: 'error',
+          closeBtn: this.$t('{{{labels.close}}}'),
+        });
+    },
+
+    onDeletedError(message) {
+      message &&
+        this.$q.notify({
+          message,
+          color: 'red',
+          icon: 'error',
+          closeBtn: this.$t('{{{labels.close}}}'),
+        });
+    },
+
     formatDateTime(val, format) {
       return val ? this.$d(extractDate(val), format) : '';
     },
 
     deleteItem() {
-      this.deleteItem(this.item).then(() => this.$router.push({ name: `${this.$options.servicePrefix}List` }));
+      this.deleteItem(this.item).then(() =>
+        this.$router.push({ name: `${this.$options.servicePrefix}List` })
+      );
     },
   },
 };

@@ -9,7 +9,6 @@
       :handle-reset="resetFilter"
       :expanded="expandedFilter"
     ><{{{titleUcFirst}}}FilterForm ref="filterForm" :values="filtration" slot="filter" /></DataFilter>
-
     {{/if}}
     <q-table
       :data="items"
@@ -73,6 +72,9 @@ export default {
           field: '{{name}}',
           label: this.$t('{{capitalize name}}'),
           format: val => this.formatDateTime(val, 'HH:mm'),
+          {{#if sortable }}
+          sortable: true,
+          {{/if~}}
         },
             {{/compare}}
             {{#compare type "==" "date" }}
@@ -81,6 +83,9 @@ export default {
           field: '{{name}}',
           label: this.$t('{{capitalize name}}'),
           format: val => this.formatDateTime(val, 'short'),
+          {{#if sortable }}
+          sortable: true,
+          {{/if~}}
         },
             {{/compare}}
             {{#compare type "==" "dateTime" }}
@@ -89,6 +94,9 @@ export default {
           field: '{{name}}',
           label: this.$t('{{capitalize name}}'),
           format: val => this.formatDateTime(val, 'long'),
+          {{#if sortable }}
+          sortable: true,
+          {{/if~}}
         },
             {{/compare}}
           {{else}}
@@ -98,6 +106,9 @@ export default {
           field: '{{name}}',
           label: this.$t('{{capitalize name}}'),
           format: val => this.$n(val),
+          {{#if sortable }}
+          sortable: true,
+          {{/if~}}
         },
             {{else}}
         {

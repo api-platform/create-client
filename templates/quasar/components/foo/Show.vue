@@ -27,7 +27,7 @@
             {{#case "number"}}\{{ $n(item['{{{name}}}']) }}{{/case~}}
             {{#default}}
               {{#if reference}}
-            \{{ item['{{{name}}}'].name }}
+            \{{ item['{{{name}}}'] && item['{{{name}}}'].name }}
               {{else}}
             \{{ item['{{{name}}}'] }}
               {{/if}}

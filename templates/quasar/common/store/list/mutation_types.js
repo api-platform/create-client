@@ -11,4 +11,4 @@ const types = [
   'SET_TOTALITEMS',
 ];
 
-export const makeTypes = module => mutationTypes(module, 'LIST', types);
+export default m => mutationTypes(m, 'LIST', types);

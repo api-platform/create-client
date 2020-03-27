@@ -1,9 +1,9 @@
 import fetch from '../../../utils/fetch';
 
-export const retrieveCommon = ({ commit }, dest, { types }) => {
+export const retrieveCommon = ({ commit }, id, { types }) => {
   commit(types.TOGGLE_LOADING);
 
-  return fetch(dest)
+  return fetch(id)
     .then(response => response.json())
     .then(data => {
       commit(types.TOGGLE_LOADING);
