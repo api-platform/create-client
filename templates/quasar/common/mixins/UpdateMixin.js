@@ -16,10 +16,6 @@ export default {
   },
 
   watch: {
-    deleted(deleted) {
-      this.onDeleted(deleted);
-    },
-
     error(message) {
       this.onUpdateError(message);
     },
@@ -40,7 +36,9 @@ export default {
   methods: {
     del() {
       this.deleteItem(this.retrieved).then(() =>
-        this.$router.push({ name: `${this.$options.servicePrefix}List` }),
+        this.$router
+          .push({ name: `${this.$options.servicePrefix}List` })
+          .catch(() => {})
       );
     },
 
@@ -68,13 +66,6 @@ export default {
 
     onBeforeDestroy() {
       this.reset();
-    },
-
-    onDeleted(deleted) {
-      deleted &&
-        this.$router.
-          push({ name: `${this.$options.servicePrefix}List` }).
-          catch(() => {})
     },
 
     onUpdated(val) {

@@ -1,5 +1,5 @@
 <template>
-  <q-form class="q-pa-md q-col-gutter-y-md">
+  <q-form class="q-pa-md q-col-gutter-y-md" @keydown.enter.prevent="handleSubmit">
     {{#forEach formFields}}
     {{#ifOdd index}}
     <div class="row q-gutter-md">
@@ -165,6 +165,11 @@ export default {
       type: Object,
       default: () => {},
     },
+
+    handleSubmit: {
+      type: Function,
+      required: true
+    }
   },
 
   computed: {
