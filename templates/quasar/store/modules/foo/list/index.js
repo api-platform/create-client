@@ -1,8 +1,7 @@
-import actions from './actions';
-import * as getters from './getters';
-import mutations from './mutations';
-import state from './state';
-import types from "./mutation_types";
+import actions from "./actions";
+import * as getters from "./getters";
+import mutations from "./mutations";
+import state from "./state";
 import types from "./mutation_types";
 
 export default {
