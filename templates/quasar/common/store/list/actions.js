@@ -1,8 +1,12 @@
 import fetch from '../../../utils/fetch';
 
-export const getItemsCommon = ({ commit }, { page, params }, { types, hydraPrefix }) => {
+export const getItemsCommon = (
+  { commit },
+  { page, ep, params },
+  { types, hydraPrefix }
+) => {
   commit(types.TOGGLE_LOADING);
-  return fetch(page, { params })
+  return fetch({ id: page, ep }, { params })
     .then(response => response.json())
     .then(data => {
       commit(types.TOGGLE_LOADING);
@@ -16,9 +20,13 @@ export const getItemsCommon = ({ commit }, { page, params }, { types, hydraPrefi
     });
 };
 
-export const getSelectItemsCommon = ({ commit }, { page, params }, { types, hydraPrefix }) => {
+export const getSelectItemsCommon = (
+  { commit },
+  { page, ep, params },
+  { types, hydraPrefix }
+) => {
   commit(types.TOGGLE_LOADING);
-  return fetch(page, { params })
+  return fetch({ id: page, ep }, { params })
     .then(response => response.json())
     .then(data => {
       commit(types.TOGGLE_LOADING);

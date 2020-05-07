@@ -1,9 +1,13 @@
-import { types } from './mutation_types';
 import { createCommon, resetCommon } from '../../../../common/store/create/actions';
+import { ENTRYPOINT } from "../../../../config/{{{hashEntry}}}_entrypoint";
 
-export const create = (context, values) =>
-  createCommon(context, { page: '{{{name}}}', values }, { types });
+const page = '{{{name}}}';
 
-export const reset = context => {
-  resetCommon(context, { types });
-};
+export default function(types) {
+  const create = (context, values) =>
+    createCommon(context, { page, values, ep: ENTRYPOINT }, { types });
+
+  const reset = context => resetCommon(context, { types });
+
+  return { create, reset };
+}

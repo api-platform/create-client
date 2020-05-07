@@ -8,30 +8,24 @@ export default {
   },
 
   created() {
-    this.retrieve(decodeURIComponent(this.$route.params.id));
+    this.onCreated();
   },
+
   beforeDestroy() {
-    this.reset();
+    this.onBeforeDestroy();
   },
 
   watch: {
-    deleted(deleted) {
-      if (!deleted) {
-        return;
-      }
-      this.$router.push({ name: `${this.$options.servicePrefix}List` }).catch(() => {})
-    },
-
     error(message) {
-      message && error(message, this.$t('{{{labels.close}}}'));
+      this.onUpdateError(message);
     },
 
     deleteError(message) {
-      message && error(message, this.$t('{{{labels.close}}}'));
+      this.onDeleteError(message);
     },
 
     updated(val) {
-      success(`${val['@id']} ${this.$t('{{{labels.updated}}}')}.`, this.$t('{{{labels.close}}}'));
+      this.onUpdated(val);
     },
 
     retrieved(val) {
@@ -42,7 +36,9 @@ export default {
   methods: {
     del() {
       this.deleteItem(this.retrieved).then(() =>
-        this.$router.push({ name: `${this.$options.servicePrefix}List` }),
+        this.$router
+          .push({ name: `${this.$options.servicePrefix}List` })
+          .catch(() => {})
       );
     },
 
@@ -62,6 +58,26 @@ export default {
 
     resetForm() {
       this.item = { ...this.retrieved };
+    },
+
+    onCreated() {
+      this.retrieve(decodeURIComponent(this.$route.params.id));
+    },
+
+    onBeforeDestroy() {
+      this.reset();
+    },
+
+    onUpdated(val) {
+      success(`${val['@id']} ${this.$t('{{{labels.updated}}}')}.`, this.$t('{{{labels.close}}}'));
+    },
+
+    onUpdateError(message) {
+      message && error(message, this.$t('{{{labels.close}}}'));
+    },
+
+    onDeleteError(message) {
+      message && error(message, this.$t('{{{labels.close}}}'));
     },
   },
 };

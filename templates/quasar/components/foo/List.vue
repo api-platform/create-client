@@ -3,13 +3,13 @@
     <Toolbar :handle-add="addHandler">
       <Breadcrumb :values="$route.meta.breadcrumb" slot="left" />
     </Toolbar>
-
     {{#if parameters.length}}
-    <DataFilter :handle-filter="onSendFilter" :handle-reset="resetFilter">
-      <{{{titleUcFirst}}}FilterForm ref="filterForm" :values="filters" slot="filter" />
-    </DataFilter>
+    <DataFilter
+      :handle-filter="onSendFilter"
+      :handle-reset="resetFilter"
+      :expanded="expandedFilter"
+    ><{{{titleUcFirst}}}FilterForm ref="filterForm" :values="filtration" slot="filter" /></DataFilter>
     {{/if}}
-
     <q-table
       :data="items"
       :columns="columns"
@@ -70,24 +70,33 @@ export default {
         {
           name: '{{name}}',
           field: '{{name}}',
-          label: this.$t('{{name}}'),
+          label: this.$t('{{capitalize name}}'),
           format: val => this.formatDateTime(val, 'HH:mm'),
+          {{#if sortable }}
+          sortable: true,
+          {{/if~}}
         },
             {{/compare}}
             {{#compare type "==" "date" }}
         {
           name: '{{name}}',
           field: '{{name}}',
-          label: this.$t('{{name}}'),
+          label: this.$t('{{capitalize name}}'),
           format: val => this.formatDateTime(val, 'short'),
+          {{#if sortable }}
+          sortable: true,
+          {{/if~}}
         },
             {{/compare}}
             {{#compare type "==" "dateTime" }}
         {
           name: '{{name}}',
           field: '{{name}}',
-          label: this.$t('{{name}}'),
+          label: this.$t('{{capitalize name}}'),
           format: val => this.formatDateTime(val, 'long'),
+          {{#if sortable }}
+          sortable: true,
+          {{/if~}}
         },
             {{/compare}}
           {{else}}
@@ -95,11 +104,21 @@ export default {
         {
           name: '{{name}}',
           field: '{{name}}',
-          label: this.$t('{{name}}'),
+          label: this.$t('{{capitalize name}}'),
           format: val => this.$n(val),
+          {{#if sortable }}
+          sortable: true,
+          {{/if~}}
         },
             {{else}}
-        { name: '{{name}}', field: '{{name}}', label: this.$t('{{name}}') },
+        {
+          name: '{{name}}',
+          field: '{{name}}',
+          label: this.$t('{{capitalize name}}'),
+          {{#if sortable }}
+          sortable: true,
+          {{/if~}}
+        },
             {{/compare}}
           {{/inArray}}
         {{/each }}

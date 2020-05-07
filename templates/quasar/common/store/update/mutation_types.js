@@ -9,4 +9,4 @@ const types = [
   'TOGGLE_LOADING',
 ];
 
-export const makeTypes = module => mutationTypes(module, 'UPDATE', types);
+export default m => mutationTypes(m, 'UPDATE', types);

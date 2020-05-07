@@ -3,7 +3,13 @@
     <Toolbar :handle-submit="onSendForm" :handle-reset="resetForm" :handle-delete="del">
       <Breadcrumb :values="$route.meta.breadcrumb" :item="item" slot="left" />
     </Toolbar>
-    <{{{titleUcFirst}}}Form ref="updateForm" v-if="item" :values="item" :errors="violations" />
+    <{{{titleUcFirst}}}Form
+      ref="updateForm"
+      v-if="item"
+      :values="item"
+      :errors="violations"
+      :handle-submit="onSendForm"
+    />
     <Loading :showing="isLoading || deleteLoading" />
   </div>
 </template>
