@@ -59,7 +59,7 @@ export default new VueRouter({
 // Register the modules in the store
 // src/store/index.js
 import ${titleLc}Service from '../services/${titleLc}';
-import makeCrudModule from './modules/crud';
+import makeCrudModule from './store/modules/crud';
 
 export const store = new Vuex.Store({
   // ...
