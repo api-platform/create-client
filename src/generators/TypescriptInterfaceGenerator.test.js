@@ -53,7 +53,6 @@ test("Generate a typescript interface", () => {
   foo: any;
   foobar?: string[];
   readonly bar: string;
-  id?: string;
 }
 `;
   expect(
@@ -104,7 +103,6 @@ test("Generate a typescript interface without references to other interfaces", (
   '@id'?: string;
   foo: any;
   readonly bar: string;
-  id?: string;
 }
 `;
   expect(
