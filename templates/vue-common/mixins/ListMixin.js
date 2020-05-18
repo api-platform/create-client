@@ -39,15 +39,6 @@ export default {
       if (itemsPerPage > 0) {
         params = { ...params, itemsPerPage, page };
       }
-      
-      let sortDescVuetify = false;
-      let vueDescending = descending;
-      if (sortBy.length === 1 && sortDesc.length === 1) {
-        if (sortDesc[0]) {
-          sortDescVuetify = true;
-        }
-        vueDescending = sortDescVuetify;
-      }
 
       if (!isEmpty(sortBy) && !isEmpty(sortDesc)) {
         params[`order[${sortBy[0]}]`] = sortDesc[0] ? 'desc' : 'asc'
