@@ -33,16 +33,25 @@ export default {
 
   methods: {
     onUpdateOptions(props) {
-      const { page, itemsPerPage, sortBy, descending, totalItems } = props;
+      const { page, itemsPerPage, sortBy, sortDesc, descending, totalItems } = props;
       let params = {
         ...this.filters
       };
       if (itemsPerPage > 0) {
         params = { ...params, itemsPerPage, page };
       }
+      
+      let sortDescVuetify = false;
+      let vueDescending = descending;
+      if (sortBy.length === 1 && sortDesc.length === 1) {
+        if (sortDesc[0]) {
+          sortDescVuetify = true;
+        }
+        vueDescending = sortDescVuetify;
+      }
 
       if (!isEmpty(sortBy)) {
-        params[`order[${sortBy}]`] = descending ? 'desc' : 'asc';
+        params[`order[${sortBy}]`] = vueDescending ? 'desc' : 'asc';
       }
 
       this.getPage(params).then(() => {
