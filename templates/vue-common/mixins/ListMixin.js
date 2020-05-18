@@ -9,7 +9,6 @@ export default {
     return {
       options: {
         sortBy: [],
-        descending: false,
         page: 1,
         itemsPerPage: 15
       },
@@ -32,8 +31,7 @@ export default {
   },
 
   methods: {
-    onUpdateOptions(props) {
-      const { page, itemsPerPage, sortBy, sortDesc, descending, totalItems } = props;
+    onUpdateOptions({ page, itemsPerPage, sortBy, sortDesc, totalItems } = {}) {
       let params = {
         ...this.filters
       };
@@ -50,13 +48,13 @@ export default {
         vueDescending = sortDescVuetify;
       }
 
-      if (!isEmpty(sortBy)) {
-        params[`order[${sortBy}]`] = vueDescending ? 'desc' : 'asc';
+      if (!isEmpty(sortBy) && !isEmpty(sortDesc)) {
+        params[`order[${sortBy[0]}]`] = sortDesc[0] ? 'desc' : 'asc'
       }
 
       this.getPage(params).then(() => {
         this.options.sortBy = sortBy;
-        this.options.descending = descending;
+        this.options.sortDesc = sortDesc;
         this.options.itemsPerPage = itemsPerPage;
         this.options.totalItems = totalItems;
       });
