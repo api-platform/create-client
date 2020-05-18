@@ -44,6 +44,8 @@ export default {
       if (!isEmpty(sortBy)) {
         params[`order[${sortBy}]`] = descending ? 'desc' : 'asc';
       }
+      
+      this.resetList = true;
 
       this.getPage(params).then(() => {
         this.options.sortBy = sortBy;
