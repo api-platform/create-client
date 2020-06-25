@@ -118,7 +118,7 @@ export default {
     },
 
     onSendForm() {
-      this.update();
+      this.update(this.retrieved);
     },
   },
 };
