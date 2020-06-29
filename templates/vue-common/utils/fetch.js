@@ -9,17 +9,21 @@ const makeParamArray = (key, arr) =>
   arr.map(val => `${key}[]=${val}`).join('&');
 
 export default function(id, options = {}) {
-  if ('undefined' === typeof options.headers) options.headers = new Headers();
+  if ('undefined' === typeof options.headers) {
+    options.headers = {};
+  }
 
-  if (null === options.headers.get('Accept'))
-    options.headers.set('Accept', MIME_TYPE);
+  if (!options.headers.hasOwnProperty('Accept')) {
+    options.headers = {...options.headers, 'Accept': MIME_TYPE};
+  }
 
   if (
-    'undefined' !== options.body &&
+    undefined !== options.body &&
     !(options.body instanceof FormData) &&
-    null === options.headers.get('Content-Type')
-  )
-    options.headers.set('Content-Type', MIME_TYPE);
+    !options.headers.hasOwnProperty('Content-Type')
+  ) {
+    options.headers = {...options.headers, 'Content-Type': MIME_TYPE};
+  }
 
   if (options.params) {
     const params = normalize(options.params);
