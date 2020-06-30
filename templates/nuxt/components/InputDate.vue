@@ -35,12 +35,10 @@ export default {
   created() {
     this.date = this.value ? this.value : this.date;
   },
-  data() {
-    return {
-      date: this.value ? this.value : new Date().toISOString().substr(0, 10),
-      showMenu: false
-    };
-  },
+  data: () => ({
+    date: this.value ? this.value : new Date().toISOString().substr(0, 10),
+    showMenu: false
+  }),
   methods: {
     formatDateTime,
     handleInput() {

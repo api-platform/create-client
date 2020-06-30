@@ -1,41 +1,43 @@
 <template>
-  <nav class="navbar navbar-light bg-light">
+  <v-toolbar class="my-md-auto" elevation="0">
     <slot name="left"></slot>
+    <v-spacer />
     <div>
-      <button
+      <v-btn
         v-if="handleEdit"
         :loading="isLoading"
-        class="btn btn-primary"
+        color="primary"
         @click="editItem"
       >
-        Submit
-      </button>
-      <button
+        Edit
+      </v-btn>
+      <v-btn
         v-if="handleSubmit"
         :loading="isLoading"
-        class="btn btn-primary"
+        color="primary"
         @click="submitItem"
       >
         Submit
-      </button>
-      <button
+      </v-btn>
+      <v-btn
         v-if="handleReset"
-        class="btn btn-primary ml-sm-2"
+        class="ml-sm-2"
         @click="resetItem"
       >
         Reset
-      </button>
-      <button
+      </v-btn>
+      <v-btn
         v-if="handleDelete"
-        class="btn btn-danger ml-sm-2"
+        color="error"
+        class="ml-sm-2"
         @click="confirmDelete = true"
       >
         Delete
-      </button>
+      </v-btn>
 
-      <button v-if="handleAdd" class="btn btn-primary" @click="addItem">
-        <i class="fa fa-plus"></i>
-      </button>
+      <v-btn v-if="handleAdd" color="primary" rounded @click="addItem">
+        <v-icon>mdi-plus-circle</v-icon>
+      </v-btn>
     </div>
     <ConfirmDelete
       v-if="handleDelete"
@@ -43,7 +45,7 @@
       :handle-delete="handleDelete"
       @close="confirmDelete = false"
     />
-  </nav>
+  </v-toolbar>
 </template>
 
 <script>
@@ -54,11 +56,9 @@ export default {
   components: {
     ConfirmDelete
   },
-  data() {
-    return {
-      confirmDelete: false
-    };
-  },
+  data: () => ({
+    confirmDelete: false
+  }),
   props: {
     handleEdit: {
       type: Function,

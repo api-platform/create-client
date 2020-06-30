@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import { sprintf } from "sprintf-js";
 import BaseVueGenerator from "./VueBaseGenerator";
 
 export default class extends BaseVueGenerator {
@@ -17,6 +16,13 @@ export default class extends BaseVueGenerator {
       "components/Toolbar.vue",
       "components/foo/Filter.vue",
       "components/foo/Form.vue",
+
+      // mixins
+      "mixins/create.js",
+      "mixins/list.js",
+      "mixins/notification.js",
+      "mixins/show.js",
+      "mixins/update.js",
 
       // pages
       "pages/foo/new.vue",
@@ -80,19 +86,12 @@ export const store = new Vuex.Store({
 
     // mixins
     [
-      "mixins/Create%s.js",
-      "mixins/List%s.js",
-      "mixins/Notification%s.js",
-      "mixins/Show%s.js",
-      "mixins/Update%s.js"
-    ].forEach(pattern =>
-      this.createFile(
-        sprintf(`${pattern}`, "Mixin"),
-        sprintf(`${dir}/${pattern}`, "Mixin"),
-        {},
-        false
-      )
-    );
+      "mixins/create.js",
+      "mixins/list.js",
+      "mixins/notification.js",
+      "mixins/show.js",
+      "mixins/update.js"
+    ].forEach(file => this.createFile(file, `${dir}/${file}`, context, false));
 
     // stores
     this.createFile(

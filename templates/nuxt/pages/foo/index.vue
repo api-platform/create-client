@@ -1,23 +1,8 @@
 <template>
   <div class="{{{lc}}}-list">
-    <Toolbar :handle-add="addHandler" />
-
     <v-container grid-list-xl fluid>
       <v-layout row wrap>
-        <v-flex sm12>
-          <h1>{{{titleUcFirst}}} List</h1>
-        </v-flex>
         <v-flex lg12>
-          <DataFilter :handle-filter="onSendFilter" :handle-reset="resetFilter">
-            <{{{titleUcFirst}}}FilterForm
-              ref="filterForm"
-              :values="filters"
-              slot="filter"
-            />
-          </DataFilter>
-
-          <br />
-
           <v-data-table
             v-model="selected"
             :headers="headers"
@@ -32,6 +17,33 @@
             show-select
             @update:options="onUpdateOptions"
           >
+            <template v-slot:top>
+              <v-toolbar flat color="white">
+                <v-toolbar-title>{{{titleUcFirst}}}</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                {{#if parameters.length}}
+                <DataFilter :handle-filter="onSendFilter" :handle-reset="resetFilter">
+                  <{{{titleUcFirst}}}FilterForm
+                    ref="filterForm"
+                    :values="filters"
+                    slot="filter"
+                  />
+                </DataFilter>
+                {{/if}}
+
+                <v-btn
+                  color="primary"
+                  dark
+                  class="ml-2"
+                  @click="addHandler"
+                >
+                  New Item
+                </v-btn>
+              </v-toolbar>
+            </template>
+
           {{#forEach fields~}}
             {{#switch type~}}
               {{#case "dateTime"}}
@@ -70,7 +82,6 @@
             <ActionCell
               slot="item.action"
               slot-scope="props"
-              :handle-show="() => showHandler(props.item)"
               :handle-edit="() => editHandler(props.item)"
               :handle-delete="() => deleteHandler(props.item)"
             ></ActionCell>
@@ -84,12 +95,11 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
-import ListMixin from '../../mixins/ListMixin';
+import list from '../../mixins/list';
 
 export default {
-  name: '{{{titleUcFirst}}}List',
-  servicePrefix: '{{{titleUcFirst}}}',
-  mixins: [ListMixin],
+  servicePrefix: '{{{lc}}}',
+  mixins: [list],
   components: {
     Toolbar: () => import('../../components/Toolbar'),
     ActionCell: () => import('../../components/ActionCell'),
@@ -124,7 +134,7 @@ export default {
   },
   methods: {
     ...mapActions('{{{lc}}}', {
-      getPage: 'fetchAll',
+      fetchAll: 'fetchAll',
       deleteItem: 'del'
     })
   }

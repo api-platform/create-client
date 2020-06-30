@@ -9,9 +9,9 @@
 <script>
 import { mapActions } from 'vuex';
 import { createHelpers } from 'vuex-map-fields';
-import CreateMixin from '../../mixins/CreateMixin';
+import create from '../../mixins/create';
 
-const servicePrefix = '{{{titleUcFirst}}}';
+const servicePrefix = '{{{lc}}}';
 
 const { mapFields } = createHelpers({
   getterType: '{{{lc}}}/getField',
@@ -19,9 +19,8 @@ const { mapFields } = createHelpers({
 });
 
 export default {
-  name: '{{{titleUcFirst}}}Create',
   servicePrefix,
-  mixins: [CreateMixin],
+  mixins: [create],
   components: {
     Loading: () => import('../../components/Loading'),
     Toolbar: () => import('../../components/Toolbar'),

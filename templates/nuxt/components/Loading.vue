@@ -1,8 +1,8 @@
 <template>
-  <div v-if="visible"
-       class="spinner-border"
-       role="status">
-    <span class="sr-only">Loading...</span>
+  <div class="text-center">
+    <v-overlay :value="visible">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </div>
 </template>
 

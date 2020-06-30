@@ -12,21 +12,20 @@
       :values="item"
       :errors="violations"
     />
-    <Loading :visible="isLoading || deleteLoading" />
+    <Loading :visible="deleteLoading" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
-import UpdateMixin from '../../mixins/UpdateMixin';
+import update from '../../mixins/update';
 
-const servicePrefix = '{{{titleUcFirst}}}';
+const servicePrefix = '{{{lc}}}';
 
 export default {
-  name: '{{{titleUcFirst}}}Update',
   servicePrefix,
-  mixins: [UpdateMixin],
+  mixins: [update],
   components: {
     Loading: () => import('../../components/Loading'),
     Toolbar: () => import('../../components/Toolbar'),

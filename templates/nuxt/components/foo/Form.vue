@@ -146,13 +146,11 @@ export default {
       {{/compare}}
     {{/each}}
   },
-  data() {
-    return {
-      {{#each formFields}}
-        {{{name}}}: null,
-      {{/each}}
-    };
-  },
+  data: () => ({
+    {{#each formFields}}
+      {{{name}}}: null,
+    {{/each}}
+  }),
   computed: {
     {{#each formFields}}
       {{#compare type "==" "text" }}

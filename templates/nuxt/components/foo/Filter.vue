@@ -8,7 +8,7 @@
       <v-col cols="12" sm="6" md="6">
         <v-checkbox
           v-model="item.{{{name}}}"
-          :label="{{{name}}}"
+          label="{{{name}}}"
         />
       </v-col>
     {{/compare}}
@@ -16,7 +16,7 @@
       <v-col cols="12" sm="6" md="6">
         <InputDate
           v-model="item.{{{name}}}"
-          :label="{{{name}}}"
+          label="{{{name}}}"
         />
       </v-col>
     {{/compare}}
@@ -24,7 +24,7 @@
       <v-col cols="12" sm="6" md="6">
         <v-time-picker
           v-model="item.{{{name}}}"
-          :label="{{{name}}}"
+          label="{{{name}}}"
         />
       </v-col>
     {{/compare}}
@@ -33,7 +33,7 @@
       <v-col cols="12" sm="6" md="6">
         <InputDate
           v-model="item.{{{name}}}"
-          :label="{{{name}}}"
+          label="{{{name}}}"
         />
       </v-col>
     {{/compare}}
@@ -41,7 +41,7 @@
       <v-col cols="12" sm="6" md="6">
         <v-text-field
           v-model.number="item.{{{name}}}"
-          :label="{{{name}}}"
+          label="{{{name}}}"
         />
       </v-col>
     {{/compare}}
@@ -52,7 +52,7 @@
           v-model="item.{{{name}}}"
           :items="{{{name}}}SelectItems"
           :no-data-text="{{{../labels.noresults}}}"
-          :label="{{{name}}}"{{#unless maxCardinality}}
+          label="{{{name}}}"{{#unless maxCardinality}}
           multiple{{/unless}}
           item-text="name"
           item-value="@id"
@@ -63,7 +63,7 @@
       <v-col cols="12" sm="6" md="6">
         <v-text-field
           v-model="item.{{{name}}}"
-          :label="{{{name}}}"
+          label="{{{name}}}"
           type="{{{type}}}"
         />
       </v-col>
@@ -93,9 +93,6 @@ export default {
       type: Object,
       required: true
     }
-  },
-  data() {
-    return {};
   },
   mounted() {
     {{#each parameters}}
