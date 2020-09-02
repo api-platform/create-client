@@ -63,17 +63,6 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
       };
     }
 
-    // If id is not present, add it manually with default values
-    if (!("id" in fields)) {
-      fields["id"] = {
-        notrequired: true,
-        name: "id",
-        type: "string",
-        description: null,
-        readonly: false
-      };
-    }
-
     // Parse fields to add relevant imports, required for Typescript
     const fieldsArray = Object.keys(fields).map(e => fields[e]);
     const imports = {};
