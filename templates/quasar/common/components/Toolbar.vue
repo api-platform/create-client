@@ -8,6 +8,7 @@
         :label="$t('{{{labels.submit}}}')"
         color="primary"
         @click="submitItem"
+        icon="save"
       />
       <q-btn
         v-if="handleReset"
@@ -16,6 +17,7 @@
         flat
         class="q-ml-sm"
         @click="resetItem"
+        icon="settings_backup_restore"
       />
       <q-btn
         v-if="handleDelete"
@@ -24,6 +26,7 @@
         flat
         class="q-ml-sm"
         @click="confirmDelete = true"
+        icon="delete"
       />
       <q-btn v-if="handleAdd" flat round dense icon="add" @click="addItem" />
     </div>

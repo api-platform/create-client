@@ -22,11 +22,11 @@ class List extends Component {
     );
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.page !== nextProps.match.params.page)
-      nextProps.list(
-        nextProps.match.params.page &&
-          decodeURIComponent(nextProps.match.params.page)
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.page !== prevProps.match.params.page)
+      this.props.list(
+        this.props.match.params.page &&
+          decodeURIComponent(this.props.match.params.page)
       );
   }
 
@@ -103,7 +103,7 @@ class List extends Component {
 
   pagination() {
     const view = this.props.retrieved && this.props.retrieved['hydra:view'];
-    if (!view) return;
+    if (!view || !view['hydra:first']) return;
 
     const {
       'hydra:first': first,

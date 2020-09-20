@@ -3,22 +3,25 @@ import { error } from '../../utils/notify';
 export default {
   watch: {
     created(created) {
-      if (created) {
-        this.onCreated(created);
-      }
+      this.onCreated(created);
     },
 
     error(message) {
-      message && error(message, this.$t('Close'));
+      this.onError(message);
     },
   },
 
   methods: {
     onCreated(item) {
-      this.$router.push({ 
-        name: `${this.$options.servicePrefix}Update`,
-        params: { id: item['@id'] },
-      });
+      item &&
+        this.$router.push({
+          name: `${this.$options.servicePrefix}Update`,
+          params: { id: item['@id'] },
+        });
+    },
+
+    onError(message) {
+      message && error(message, this.$t('{{{labels.close}}}'));
     },
 
     onSendForm() {

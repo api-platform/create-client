@@ -3,10 +3,9 @@ import { extractDate } from '../../utils/dates';
 
 export default {
   created() {
-    this.onRequest({
-      pagination: this.pagination,
-    });
+    this.onCreated();
   },
+
   data() {
     return {
       pagination: {
@@ -18,11 +17,14 @@ export default {
       },
       nextPage: null,
       filters: {},
+      filtration: {},
+      expandedFilter: false,
     };
   },
+
   watch: {
     error(message) {
-      message && error(message, this.$t('{{{labels.close}}}'));
+      this.onListError(message);
     },
 
     items() {
@@ -32,18 +34,32 @@ export default {
     },
 
     deletedItem(val) {
-      success(`${val['@id']} ${this.$t('{{{labels.deleted}}}')}.`, this.$t('{{{labels.close}}}'));
+      this.onDeletedItem(val);
     },
   },
 
   methods: {
-    onRequest(props) {
+    onCreated() {
+      this.onRequest({
+        pagination: this.pagination
+      });
+    },
+
+    onListError(message) {
+      message && error(message, this.$t('{{{labels.close}}}'));
+    },
+
+    onDeletedItem(val) {
+      success(`${val['@id']} ${this.$t('{{{labels.deleted}}}')}.`, this.$t('{{{labels.close}}}'));
+    },
+
+    onRequest(props, init) {
       const {
         pagination: { page, rowsPerPage: itemsPerPage, sortBy, descending },
       } = props;
       this.nextPage = page;
       let params = {
-        ...this.filters,
+        ...this.filtration,
       };
       if (itemsPerPage > 0) {
         params = { ...params, itemsPerPage, page };
@@ -55,6 +71,9 @@ export default {
         this.pagination.sortBy = sortBy;
         this.pagination.descending = descending;
         this.pagination.rowsPerPage = itemsPerPage;
+        if (!init) {
+          this.filters = { ...this.filtration };
+        }
       });
     },
 
@@ -77,11 +96,17 @@ export default {
     },
 
     showHandler(item) {
-      this.$router.push({ name: `${this.$options.servicePrefix}Show`, params: { id: item['@id'] } });
+      this.$router.push({
+        name: `${this.$options.servicePrefix}Show`,
+        params: { id: item['@id'] }
+      });
     },
 
     editHandler(item) {
-      this.$router.push({ name: `${this.$options.servicePrefix}Update`, params: { id: item['@id'] } });
+      this.$router.push({
+        name: `${this.$options.servicePrefix}Update`,
+        params: { id: item['@id'] }
+      });
     },
 
     deleteHandler(item) {

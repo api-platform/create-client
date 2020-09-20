@@ -44,22 +44,6 @@ export default class extends BaseVueGenerator {
     );
     console.log(
       chalk.green(`
-//Configure your Vuetify plugin
-// src/plugins/vuetify.js
-
-import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
-
-Vue.use(Vuetify)
-
-const opts = {
-  icons: {
-    iconfont: 'mdi'
-  }
-};
-
-export default new Vuetify(opts)
-
 // Register the routes in you router
 // src/router/index.js
 import ${titleLc}Routes from './${titleLc}';
@@ -74,17 +58,18 @@ export default new VueRouter({
 
 // Register the modules in the store
 // src/store/index.js
-import ${titleLc}Service from './services/${titleLc}';
-import makeCrudModule from './modules/crud';
+import ${titleLc}Service from '../services/${titleLc}';
+import makeCrudModule from './store/modules/crud';
 
-// ...
-
-store.registerModule(
-  '${titleLc}',
-  makeCrudModule({
-    service: ${titleLc}Service
-  })
-);
+export const store = new Vuex.Store({
+  // ...
+  modules: {
+    // other modules
+    ${titleLc}: makeCrudModule({
+      service: ${titleLc}Service
+    })
+  }
+});
 `)
     );
   }

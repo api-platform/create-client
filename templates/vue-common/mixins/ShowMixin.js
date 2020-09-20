@@ -20,7 +20,13 @@ export default {
           .catch(() => {});
       });
     },
-    formatDateTime
+    formatDateTime,
+    editHandler() {
+      this.$router.push({
+        name: `${this.$options.servicePrefix}Update`,
+        params: { id: this.item['@id'] }
+      });
+    }
   },
   watch: {
     error(message) {
@@ -29,5 +35,8 @@ export default {
     deleteError(message) {
       message && this.showError(message);
     }
+  },
+  beforeDestroy() {
+    this.reset();
   }
 };

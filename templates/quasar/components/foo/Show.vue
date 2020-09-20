@@ -20,14 +20,14 @@
           {{#ifOdd index}}
           <tr>
           {{/ifOdd}}
-            <td>\{{ $t('{{{name}}}') }}</td>
+            <td>\{{ $t('{{{capitalize name}}}') }}</td>
             <td>{{#switch type}}
             {{#case "dateTime"}}\{{ formatDateTime(item['{{{name}}}'], 'long') }}{{/case~}}
             {{#case "date"}}\{{ formatDateTime(item['{{{name}}}'], 'short') }}{{/case~}}
             {{#case "number"}}\{{ $n(item['{{{name}}}']) }}{{/case~}}
             {{#default}}
               {{#if reference}}
-            \{{ item['{{{name}}}'].name }}
+            \{{ item['{{{name}}}'] && item['{{{name}}}'].name }}
               {{else}}
             \{{ item['{{{name}}}'] }}
               {{/if}}

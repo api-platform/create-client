@@ -51,15 +51,17 @@
               {{/case~}}
               {{#default}}
                 {{#if reference}}
-                {{#unless maxCardinality}}
                 <template slot="item.{{{name}}}" slot-scope="{ item }">
+                {{#if maxCardinality }}
+                  \{{ item['@id'] }}
+                  {{else}}
                   <ul>
-                    <li v-for="_item in item['{{{name}}}']" :key="_item.id">
-                      \{{ _item.id }}
+                    <li v-for="_item in item['{{{name}}}']" :key="_item['@id']">
+                      \{{ _item['@id'] }}
                     </li>
                   </ul>
+                {{/if}}
                 </template>
-                {{/unless~}}
                 {{/if~}}
               {{/default~}}
             {{/switch}}

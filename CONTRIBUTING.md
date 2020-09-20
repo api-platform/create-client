@@ -27,6 +27,7 @@ To install the source version of the API Platform Client Generator in your proje
 ```console
 $ git clone git@github.com:api-platform/client-generator.git
 $ cd client-generator
+$ yarn install
 $ yarn watch
 ```
 

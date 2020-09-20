@@ -5,10 +5,10 @@ export const resetCommon = ({ commit }, { types }) => {
   commit(types.RESET);
 };
 
-export const retrieveCommon = ({ commit }, id, { types }) => {
+export const retrieveCommon = ({ commit }, dest, { types }) => {
   commit(types.TOGGLE_LOADING);
 
-  return fetch(id)
+  return fetch(dest)
     .then(response => response.json())
     .then(data => {
       commit(types.TOGGLE_LOADING);
@@ -20,15 +20,18 @@ export const retrieveCommon = ({ commit }, id, { types }) => {
     });
 };
 
-export const updateCommon = ({ commit, state }, values, { types }) => {
+export const updateCommon = ({ commit, state }, { values, ep }, { types }) => {
   commit(types.SET_ERROR, '');
   commit(types.TOGGLE_LOADING);
 
-  return fetch((state.retrieved && state.retrieved['@id']) || values['@id'], {
-    method: 'PUT',
-    headers: new Headers({ 'Content-Type': 'application/ld+json' }),
-    body: JSON.stringify(values),
-  })
+  return fetch(
+    { id: (state.retrieved && state.retrieved['@id']) || values['@id'], ep },
+    {
+      method: 'PUT',
+      headers: new Headers({ 'Content-Type': 'application/ld+json' }),
+      body: JSON.stringify(values),
+    }
+  )
     .then(response => response.json())
     .then(data => {
       commit(types.TOGGLE_LOADING);

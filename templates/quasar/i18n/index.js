@@ -1,5 +1,5 @@
 export default {
   {{#each labels as |label|}}
-  '{{{label}}}': '{{{label}}}',
+  '{{{capitalize label}}}': '{{{capitalize label}}}',
   {{/each }}
 };

@@ -117,6 +117,7 @@ export default class extends BaseGenerator {
     handlebars.registerHelper("inArray", hbh_array.inArray);
     handlebars.registerHelper("forEach", hbh_array.forEach);
     handlebars.registerHelper("downcase", hbh_string.downcase);
+    handlebars.registerHelper("capitalize", hbh_string.capitalize);
 
     this.registerSwitchHelper();
   }
@@ -233,7 +234,7 @@ export const store = new Vuex.Store({
       var stack =
         handlebars.__switch_stack__[handlebars.__switch_stack__.length - 1];
 
-      if (stack.switch_match || caseValues.includes(stack.switch_value)) {
+      if (stack.switch_match || caseValues.indexOf(stack.switch_value) === -1) {
         return "";
       } else {
         stack.switch_match = true;
@@ -250,21 +251,23 @@ export const store = new Vuex.Store({
   }
 
   generate(api, resource, dir) {
-    return resource.getParameters().then(params => {
-      params = params.map(param => ({
-        ...param,
-        ...this.getHtmlInputTypeFromField(param)
-      }));
+    return resource
+      .getParameters()
+      .then(params => {
+        params = params.map(param => ({
+          ...param,
+          ...this.getHtmlInputTypeFromField(param)
+        }));
 
-      params = this.cleanupParams(params);
-      this.generateFiles(api, resource, dir, params);
-    });
+        params = this.cleanupParams(params);
+        this.generateFiles(api, resource, dir, params);
+      })
+      .catch(e => console.log(chalk.red(e)));
   }
 
   cleanupParams(params) {
     const stats = {};
     const result = [];
-
     params.forEach(p => {
       let key = p.variable.endsWith("[]")
         ? p.variable.slice(0, -2)
@@ -274,13 +277,14 @@ export const store = new Vuex.Store({
       }
       stats[key] += 1;
     });
-
     params.forEach(p => {
-      if (p.variable.endsWith("[exists]")) {
+      if (p.variable.startsWith("exists[")) {
+        result.push(p);
         return; // removed for the moment, it can help to add null option to select
       }
       if (p.variable.startsWith("order[")) {
-        return; // removed for the moment, it can help to sorting data
+        result.push(p);
+        return;
       }
       if (!stats[p.variable] && p.variable.endsWith("[]")) {
         if (stats[p.variable.slice(0, -2)] === 1) {
@@ -293,7 +297,6 @@ export const store = new Vuex.Store({
         result.push(p);
       }
     });
-
     return result;
   }
 
@@ -330,10 +333,43 @@ export const store = new Vuex.Store({
 
     const parameters = [];
     params.forEach(p => {
-      const param = fields.find(field => field.name === p.variable);
-      if (!param) {
-        parameters.push(p);
+      const paramIndex = fields.findIndex(field => field.name === p.variable);
+      if (paramIndex === -1) {
+        if (p.variable.startsWith("order[")) {
+          var v = p.variable.slice(6, -1);
+          var found = fields.findIndex(field => field.name === v);
+          if (found !== -1) {
+            fields[found].sortable = true;
+          }
+          return;
+        }
+
+        if (p.variable.startsWith("exists[")) {
+          var exists = p.variable.slice(7, -1);
+          var foundExistsFieldIndex = fields.findIndex(
+            field => field.name === exists
+          );
+          if (foundExistsFieldIndex !== -1) {
+            const param = fields[foundExistsFieldIndex];
+            param.variable = p.variable;
+            param.filterType = "exists";
+            parameters.push(param);
+          } else {
+            p.name = exists;
+            p.filterType = "exists";
+            parameters.push(p);
+          }
+          return;
+        }
+
+        if (!p.name) {
+          p = { ...p, name: p.variable };
+        }
+        if (!p.sortable) {
+          parameters.push(p);
+        }
       } else {
+        const param = fields[paramIndex];
         param.multiple = p.multiple;
         parameters.push(param);
       }
@@ -344,6 +380,8 @@ export const store = new Vuex.Store({
     );
 
     const labels = this.commonLabelTexts();
+
+    const hashEntry = this.hashCode(api.entrypoint);
 
     const context = {
       title: resource.title,
@@ -359,7 +397,8 @@ export const store = new Vuex.Store({
       formContainsDate,
       hydraPrefix: this.hydraPrefix,
       titleUcFirst,
-      labels
+      labels,
+      hashEntry
     };
 
     // Create directories
@@ -509,7 +548,11 @@ export const store = new Vuex.Store({
       false
     );
 
-    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
+    this.createEntrypoint(
+      api.entrypoint,
+      `${dir}/config/${hashEntry}_entrypoint.js`
+    );
+
     this.createFile(
       "utils/fetch.js",
       `${dir}/utils/fetch.js`,
@@ -532,6 +575,15 @@ export const store = new Vuex.Store({
       `${dir}/i18n/en-us/${lc}.js`,
       contextLabels,
       false
+    );
+  }
+
+  hashCode(s) {
+    return Math.abs(
+      Array.from(s).reduce(
+        (s, c) => (Math.imul(31, s) + c.charCodeAt(0)) | 0,
+        0
+      )
     );
   }
 
