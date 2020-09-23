@@ -28,7 +28,7 @@ program
   .option("--bearer [bearer]", "Token for bearer auth (Hydra only)")
   .option(
     "-g, --generator [generator]",
-    'The generator to use, one of "react", "react-native", "vue", "admin-on-rest", "typescript", "next", "nuxt"',
+    'The generator to use, one of "next", "nuxt", "quasar", "react", "react-native", "typescript", "vue", "vuetify"',
     "react"
   )
   .option(
