@@ -1,30 +1,15 @@
 <template>
   <div class="{{{lc}}}-list">
-    <Toolbar :handle-add="addHandler" />
-
     <v-container grid-list-xl fluid>
       <v-layout row wrap>
-        <v-flex sm12>
-          <h1>{{{titleUcFirst}}} List</h1>
-        </v-flex>
         <v-flex lg12>
-          <DataFilter :handle-filter="onSendFilter" :handle-reset="resetFilter">
-            <{{{titleUcFirst}}}FilterForm
-              ref="filterForm"
-              :values="filters"
-              slot="filter"
-            />
-          </DataFilter>
-
-          <br />
-
           <v-data-table
             v-model="selected"
             :headers="headers"
             :items="items"
             :items-per-page.sync="options.itemsPerPage"
             :loading="isLoading"
-            :loading-text="$t('Loading...')"
+            loading-text="Loading..."
             :options.sync="options"
             :server-items-length="totalItems"
             class="elevation-1"
@@ -32,6 +17,33 @@
             show-select
             @update:options="onUpdateOptions"
           >
+            <template v-slot:top>
+              <v-toolbar flat color="white">
+                <v-toolbar-title>{{{titleUcFirst}}}</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                {{#if parameters.length}}
+                <DataFilter :handle-filter="onSendFilter" :handle-reset="resetFilter">
+                  <{{{titleUcFirst}}}FilterForm
+                    ref="filterForm"
+                    :values="filters"
+                    slot="filter"
+                  />
+                </DataFilter>
+                {{/if}}
+
+                <v-btn
+                  color="primary"
+                  dark
+                  class="ml-2"
+                  @click="addHandler"
+                >
+                  New Item
+                </v-btn>
+              </v-toolbar>
+            </template>
+
           {{#forEach fields~}}
             {{#switch type~}}
               {{#case "dateTime"}}
@@ -57,7 +69,9 @@
                   {{else}}
                   <ul>
                     <li v-for="_item in item['{{{name}}}']" :key="_item['@id']">
-                      \{{ _item['@id'] }}
+                      <nuxt-link :to="{ name: '{{{name}}}-id', params: { id: _item['@id'] } }">
+                        \{{ _item['@id'] }}
+                      </nuxt-link>
                     </li>
                   </ul>
                 {{/if}}
@@ -70,7 +84,6 @@
             <ActionCell
               slot="item.action"
               slot-scope="props"
-              :handle-show="() => showHandler(props.item)"
               :handle-edit="() => editHandler(props.item)"
               :handle-delete="() => deleteHandler(props.item)"
             ></ActionCell>
@@ -84,37 +97,30 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
-import ListMixin from '../../mixins/ListMixin';
-import ActionCell from '../../components/ActionCell';
-import {{{titleUcFirst}}}FilterForm from '../../components/{{{lc}}}/Filter';
-import DataFilter from '../../components/DataFilter';
-import Toolbar from '../../components/Toolbar';
+import list from '../../mixins/list';
 
 export default {
-  name: '{{{titleUcFirst}}}List',
-  servicePrefix: '{{{titleUcFirst}}}',
-  mixins: [ListMixin],
+  servicePrefix: '{{{lc}}}s',
+  mixins: [list],
   components: {
-    Toolbar,
-    ActionCell,
-    {{{titleUcFirst}}}FilterForm,
-    DataFilter
+    Toolbar: () => import('../../components/Toolbar'),
+    ActionCell: () => import('../../components/ActionCell'),
+    {{{titleUcFirst}}}FilterForm: () => import('../../components/{{{lc}}}/Filter'),
+    DataFilter: () => import('../../components/DataFilter')
   },
-  data() {
-    return {
-      headers: [
-        {{#forEach fields}}
-        { text: '{{{name}}}', value: '{{{name}}}' },
-        {{/forEach}}
-        {
-          text: 'Actions',
-          value: 'action',
-          sortable: false
-        }
-      ],
-      selected: []
-    };
-  },
+  data: () => ({
+    headers: [
+      {{#forEach fields}}
+      { text: '{{{name}}}', value: '{{{name}}}' },
+      {{/forEach}}
+      {
+        text: 'Actions',
+        value: 'action',
+        sortable: false
+      }
+    ],
+    selected: []
+  }),
   computed: {
     ...mapGetters('{{{lc}}}', {
       items: 'list'
@@ -130,7 +136,7 @@ export default {
   },
   methods: {
     ...mapActions('{{{lc}}}', {
-      getPage: 'fetchAll',
+      fetchAll: 'fetchAll',
       deleteItem: 'del'
     })
   }

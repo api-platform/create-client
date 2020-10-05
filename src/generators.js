@@ -1,5 +1,6 @@
 import AdminOnRestGenerator from "./generators/AdminOnRestGenerator";
 import NextGenerator from "./generators/NextGenerator";
+import NuxtGenerator from "./generators/NuxtGenerator";
 import ReactGenerator from "./generators/ReactGenerator";
 import ReactNativeGenerator from "./generators/ReactNativeGenerator";
 import TypescriptInterfaceGenerator from "./generators/TypescriptInterfaceGenerator";
@@ -18,6 +19,8 @@ export default function generators(generator = "react") {
       return wrap(AdminOnRestGenerator);
     case "next":
       return wrap(NextGenerator);
+    case "nuxt":
+      return wrap(NuxtGenerator);
     case "react":
       return wrap(ReactGenerator);
     case "react-native":

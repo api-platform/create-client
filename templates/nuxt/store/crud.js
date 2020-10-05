@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import { getField, updateField } from 'vuex-map-fields';
 import remove from 'lodash/remove';
-import SubmissionError from '../../error/SubmissionError';
+import SubmissionError from '../error/SubmissionError';
 
 const initialState = () => ({
   allIds: [],

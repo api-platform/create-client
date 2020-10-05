@@ -33,14 +33,12 @@ export default {
     value: String
   },
   created() {
-    this.date = this.value ? this.value : this.date;
+    this.date = this.value || this.date;
   },
-  data() {
-    return {
-      date: new Date().toISOString().substr(0, 10),
-      showMenu: false
-    };
-  },
+  data: () => ({
+    date: new Date().toISOString().substr(0, 10),
+    showMenu: false
+  }),
   methods: {
     formatDateTime,
     handleInput() {
