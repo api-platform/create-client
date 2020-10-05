@@ -69,7 +69,9 @@
                   {{else}}
                   <ul>
                     <li v-for="_item in item['{{{name}}}']" :key="_item['@id']">
-                      \{{ _item['@id'] }}
+                      <nuxt-link :to="{ name: '{{{name}}}-id', params: { id: _item['@id'] } }">
+                        \{{ _item['@id'] }}
+                      </nuxt-link>
                     </li>
                   </ul>
                 {{/if}}
