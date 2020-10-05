@@ -72,7 +72,7 @@
             label="{{{name}}}"{{#if required}}
             required{{/if}}{{#unless maxCardinality}}
             multiple{{/unless}}
-            item-text="name"
+            item-text="@id"
             item-value="@id"{{#unless maxCardinality}}
             chips{{/unless}}
           />
