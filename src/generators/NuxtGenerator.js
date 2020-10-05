@@ -36,31 +36,9 @@ export default class extends BaseVueGenerator {
   }
 
   help(resource) {
-    const titleLc = resource.title.toLowerCase();
     console.log(
-      'Code for the "%s" resource type has been generated!',
+      chalk.green('Code for the "%s" resource type has been generated!'),
       resource.title
-    );
-    console.log(
-      "Paste the following definitions in your application configuration:"
-    );
-    console.log(
-      chalk.green(`
-// Register the modules in the store
-// src/store/index.js
-import ${titleLc}Service from '../services/${titleLc}';
-import makeCrudModule from './store/modules/crud';
-
-export const store = new Vuex.Store({
-  // ...
-  modules: {
-    // other modules
-    ${titleLc}: makeCrudModule({
-      service: ${titleLc}Service
-    })
-  }
-});
-`)
     );
   }
 
