@@ -5,7 +5,13 @@
       :handle-submit="onSendForm"
       :handle-reset="resetForm"
       :handle-delete="del"
-    />
+    >
+      <template #left>
+        <h1 v-if="item">
+          Edit \{{ item['@id'] }}
+        </h1>
+      </template>
+    </Toolbar>
     <{{{titleUcFirst}}}Form
       ref="updateForm"
       v-if="item"
