@@ -58,7 +58,7 @@
               {{/case~}}
               {{#case "number"}}
                 <template slot="item.{{{name}}}" slot-scope="{ item }">
-                  \{{ $n(item['{{{name}}}']) }}
+                  \{{ $t(item['{{{name}}}']) }}
                 </template>
               {{/case~}}
               {{#default}}
@@ -98,7 +98,7 @@ import { mapFields } from 'vuex-map-fields';
 import list from '../../mixins/list';
 
 export default {
-  servicePrefix: '{{{lc}}}',
+  servicePrefix: '{{{lc}}}s',
   mixins: [list],
   components: {
     Toolbar: () => import('../../components/Toolbar'),

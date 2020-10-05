@@ -21,7 +21,7 @@ import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 import update from '../../mixins/update';
 
-const servicePrefix = '{{{lc}}}';
+const servicePrefix = '{{{lc}}}s';
 
 export default {
   servicePrefix,

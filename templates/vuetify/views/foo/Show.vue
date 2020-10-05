@@ -31,7 +31,7 @@
               <td>{{#switch type}}
                 {{#case "dateTime"}}\{{ formatDateTime(item['{{{name}}}'], 'long') }}{{/case~}}
                 {{#case "date"}}\{{ formatDateTime(item['{{{name}}}'], 'short') }}{{/case~}}
-                {{#case "number"}}\{{ $n(item['{{{name}}}']) }}{{/case~}}
+                {{#case "number"}}\{{ $t(item['{{{name}}}']) }}{{/case~}}
                 {{#default}}
                   {{#if reference}}
                   {{#if maxCardinality }}

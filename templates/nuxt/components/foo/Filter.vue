@@ -51,7 +51,7 @@
         <v-combobox
           v-model="item.{{{name}}}"
           :items="{{{name}}}SelectItems"
-          :no-data-text="{{{../labels.noresults}}}"
+          no-data-text="{{{../labels.noresults}}}"
           label="{{{name}}}"{{#unless maxCardinality}}
           multiple{{/unless}}
           item-text="name"

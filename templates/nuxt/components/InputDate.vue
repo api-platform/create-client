@@ -33,10 +33,10 @@ export default {
     value: String
   },
   created() {
-    this.date = this.value ? this.value : this.date;
+    this.date = this.value || this.date;
   },
   data: () => ({
-    date: this.value ? this.value : new Date().toISOString().substr(0, 10),
+    date: new Date().toISOString().substr(0, 10),
     showMenu: false
   }),
   methods: {

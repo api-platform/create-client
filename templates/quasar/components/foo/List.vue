@@ -105,7 +105,7 @@ export default {
           name: '{{name}}',
           field: '{{name}}',
           label: this.$t('{{capitalize name}}'),
-          format: val => this.$n(val),
+          format: val => this.$t(val),
           {{#if sortable }}
           sortable: true,
           {{/if~}}

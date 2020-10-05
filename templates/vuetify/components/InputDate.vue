@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      date: this.value ? this.value : new Date().toISOString().substr(0, 10),
+      date: new Date().toISOString().substr(0, 10),
       showMenu: false
     };
   },

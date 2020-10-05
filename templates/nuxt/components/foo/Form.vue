@@ -68,7 +68,7 @@
             v-model="item.{{{name}}}"
             :items="{{{name}}}SelectItems"
             :error-messages="{{{name}}}Errors"
-            :no-data-text="{{{../labels.noresults}}}"
+            no-data-text="{{{../labels.noresults}}}"
             label="{{{name}}}"{{#if required}}
             required{{/if}}{{#unless maxCardinality}}
             multiple{{/unless}}

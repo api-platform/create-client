@@ -11,7 +11,7 @@ import { mapActions } from 'vuex';
 import { createHelpers } from 'vuex-map-fields';
 import create from '../../mixins/create';
 
-const servicePrefix = '{{{lc}}}';
+const servicePrefix = '{{{lc}}}s';
 
 const { mapFields } = createHelpers({
   getterType: '{{{lc}}}/getField',

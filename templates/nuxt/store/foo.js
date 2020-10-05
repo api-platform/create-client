@@ -1,4 +1,4 @@
-import {{{name}}}Service from '../services/{{{name}}}'
+import {{{name}}}Service from '../services/{{{lc}}}'
 import makeCrudModule from './crud'
 
 export default makeCrudModule({

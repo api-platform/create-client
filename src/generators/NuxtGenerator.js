@@ -25,9 +25,9 @@ export default class extends BaseVueGenerator {
       "mixins/update.js",
 
       // pages
-      "pages/foo/new.vue",
-      "pages/foo/index.vue",
-      "pages/foo/_id.vue",
+      "pages/foos/new.vue",
+      "pages/foos/index.vue",
+      "pages/foos/_id.vue",
 
       // store
       "store/crud.js",
@@ -72,6 +72,7 @@ export const store = new Vuex.Store({
       `${dir}/config`,
       `${dir}/error`,
       `${dir}/mixins`,
+      `${dir}/services`,
       `${dir}/utils`,
       `${dir}/validators`
     ].forEach(dir => this.createDir(dir, false));
@@ -123,9 +124,11 @@ export const store = new Vuex.Store({
 
     this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
 
-    for (let dir of [`${dir}/components/${lc}`, `${dir}/pages/${lc}`]) {
+    for (let dir of [`${dir}/components/${lc}`, `${dir}/pages/${lc}s`]) {
       this.createDir(dir);
     }
+
+    this.createFile("services/api.js", `${dir}/services/api.js`, {}, false);
 
     [
       // components
@@ -133,9 +136,9 @@ export const store = new Vuex.Store({
       "components/%s/Form.vue",
 
       // pages
-      "pages/%s/new.vue",
-      "pages/%s/index.vue",
-      "pages/%s/_id.vue",
+      "pages/%ss/new.vue",
+      "pages/%ss/index.vue",
+      "pages/%ss/_id.vue",
 
       // service
       "services/%s.js",

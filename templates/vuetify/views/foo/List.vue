@@ -46,7 +46,7 @@
               {{/case~}}
               {{#case "number"}}
                 <template slot="item.{{{name}}}" slot-scope="{ item }">
-                  \{{ $n(item['{{{name}}}']) }}
+                  \{{ $t(item['{{{name}}}']) }}
                 </template>
               {{/case~}}
               {{#default}}
