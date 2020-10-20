@@ -58,6 +58,7 @@ describe("generate", () => {
         "/services/api.js",
         "/services/foo.js",
         "/store/foo.js",
+        "/store/notifications.js",
         "/utils/dates.js",
         "/utils/fetch.js",
         "/utils/hydra.js",

@@ -31,6 +31,7 @@ export default class extends BaseVueGenerator {
 
       // store
       "store/crud.js",
+      "store/notifications.js",
       "store/foo.js"
     ]);
   }
@@ -51,6 +52,7 @@ export default class extends BaseVueGenerator {
       `${dir}/error`,
       `${dir}/mixins`,
       `${dir}/services`,
+      `${dir}/store`,
       `${dir}/utils`,
       `${dir}/validators`
     ].forEach(dir => this.createDir(dir, false));
