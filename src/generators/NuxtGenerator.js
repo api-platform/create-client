@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import BaseVueGenerator from "./VueBaseGenerator";
 
-export default class extends BaseVueGenerator {
+export default class NuxtGenerator extends BaseVueGenerator {
   constructor(params) {
     super(params);
 
