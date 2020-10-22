@@ -42,19 +42,13 @@ describe("generate", () => {
 
     generator.generate(api, resource, tmpobj.name).then(() => {
       [
-        "/components/ActionCell",
-        "/components/ConfirmDelete",
-        "/components/DataFilter",
-        "/components/foo/Filter",
         "/components/foo/Form.vue",
-        "/components/foo/Layout",
         "/components/InputDate.vue",
         "/components/Loading.vue",
         "/components/Alert.vue",
         "/components/Toolbar.vue",
         "/config/entrypoint.js",
         "/error/SubmissionError.js",
-        "/locales/en.js",
         "/services/api.js",
         "/services/foo.js",
         "/store/foo.js",

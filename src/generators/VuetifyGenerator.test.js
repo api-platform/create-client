@@ -35,13 +35,13 @@ test("Generate a Vuetify app", () => {
   });
   generator.generate(api, resource, tmpobj.name).then(() => {
     [
-      "/components/ActionCell",
-      "/components/Breadcrumb",
-      "/components/ConfirmDelete",
-      "/components/DataFilter",
-      "/components/foo/Filter",
+      "/components/ActionCell.vue",
+      "/components/Breadcrumb.vue",
+      "/components/ConfirmDelete.vue",
+      "/components/DataFilter.vue",
+      "/components/foo/Filter.vue",
       "/components/foo/Form.vue",
-      "/components/foo/Layout",
+      "/components/foo/Layout.vue",
       "/components/InputDate.vue",
       "/components/Loading.vue",
       "/components/Snackbar.vue",
