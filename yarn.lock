@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@api-platform/api-doc-parser@^0.8.0":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@api-platform/api-doc-parser/-/api-doc-parser-0.8.2.tgz#4a8edae414650b26f3ddd8acf42a201522523a14"
-  integrity sha512-TUa6MMcvzouC5wjGn72fky1GBC0gu1hVRqKqooV2HUuOCmn5oQb6TAbVhyuDZjRPvmkB3I3pZwIkLxSo4t6UBw==
+"@api-platform/api-doc-parser@^0.8.3":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@api-platform/api-doc-parser/-/api-doc-parser-0.8.4.tgz#9804c8acd4ace037966532df9e4fb18eeb28db82"
+  integrity sha512-ExzX+1H/30JGaLgJ1EkTb7yQOJXCtamE05rdfrbL53MlnJvKNU59ti0xETZWUy/eDkIX1KCOwMZSOTJa4DYv5g==
   dependencies:
     jsonld "^1.5.0"
     lodash.get "^4.4.2"

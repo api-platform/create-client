@@ -36,7 +36,7 @@
     "tmp": "^0.1.0"
   },
   "dependencies": {
-    "@api-platform/api-doc-parser": "^0.8.0",
+    "@api-platform/api-doc-parser": "^0.8.3",
     "@babel/runtime": "^7.0.0",
     "chalk": "^2.4.1",
     "commander": "^3.0.1",
