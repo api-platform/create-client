@@ -52,14 +52,14 @@ import ${titleLc}Routes from './${titleLc}';
 export default new VueRouter({
   // ...
   routes: [
-      ...${titleLc}Routes,
+      ${titleLc}Routes,
   ]
 });
 
 // Register the modules in the store
 // src/store/index.js
 import ${titleLc}Service from '../services/${titleLc}';
-import makeCrudModule from './store/modules/crud';
+import makeCrudModule from './modules/crud';
 
 export const store = new Vuex.Store({
   // ...
