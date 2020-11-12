@@ -48,13 +48,13 @@
                 <router-link
                   v-for="link in item['{{{reference.name}}}']"
                   :key="link['@id']"
-                  :to="`/{{{name}}}/show/${link['@id']}`">
+                  :to="{ name: '{{{reference.title}}}Show', params: { id: link['@id'] } }">
                   \{{ link['@id'] }}
                 </router-link>
               </div>
               <router-link
                 v-else
-                :to="`/{{{reference.name}}}/show/${item['{{{name}}}']}`">
+                :to="{ name: '{{{reference.title}}}Show', params: { id: item['{{{reference.name}}}'] } }">
                 \{{ item['{{{reference.name}}}'] }}
               </router-link>
             </template>
