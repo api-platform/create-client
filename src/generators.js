@@ -1,4 +1,3 @@
-import AdminOnRestGenerator from "./generators/AdminOnRestGenerator";
 import NextGenerator from "./generators/NextGenerator";
 import NuxtGenerator from "./generators/NuxtGenerator";
 import ReactGenerator from "./generators/ReactGenerator";
@@ -15,8 +14,6 @@ function wrap(cl) {
 
 export default function generators(generator = "react") {
   switch (generator) {
-    case "admin-on-rest":
-      return wrap(AdminOnRestGenerator);
     case "next":
       return wrap(NextGenerator);
     case "nuxt":
