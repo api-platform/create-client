@@ -81,7 +81,7 @@ export default class {
       const configuration = JSON.parse(packageFile.toString());
       dependencies = Object.keys({
         ...configuration.dependencies,
-        ...configuration.devDependencies
+        ...configuration.devDependencies,
       });
     } catch (e) {
       console.log(
@@ -154,10 +154,10 @@ export default class {
   }
 
   buildFields(fields) {
-    return fields.map(field => ({
+    return fields.map((field) => ({
       ...field,
       ...this.getHtmlInputTypeFromField(field),
-      description: field.description.replace(/"/g, "'") // fix for Form placeholder description
+      description: field.description.replace(/"/g, "'"), // fix for Form placeholder description
     }));
   }
 }

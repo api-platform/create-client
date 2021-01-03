@@ -6,7 +6,7 @@ import ReactNativeGenerator from "./ReactNativeGenerator";
 test("Generate a React app", () => {
   const generator = new ReactNativeGenerator({
     hydraPrefix: "hydra:",
-    templateDirectory: `${__dirname}/../../templates`
+    templateDirectory: `${__dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 
@@ -16,19 +16,19 @@ test("Generate a React app", () => {
       range: "http://www.w3.org/2001/XMLSchema#string",
       reference: null,
       required: true,
-      description: "An URL"
-    })
+      description: "An URL",
+    }),
   ];
   const resource = new Resource("abc", "http://example.com/foos", {
     id: "abc",
     title: "abc",
     readableFields: fields,
-    writableFields: fields
+    writableFields: fields,
   });
   const api = new Api("http://example.com", {
     entrypoint: "http://example.com:8080",
     title: "My API",
-    resources: [resource]
+    resources: [resource],
   });
   generator.generate(api, resource, tmpobj.name);
 
@@ -54,8 +54,8 @@ test("Generate a React app", () => {
     "/reducers/abc/index.js",
     "/reducers/abc/list.js",
     "/reducers/abc/show.js",
-    "/reducers/abc/update.js"
-  ].forEach(file => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
+    "/reducers/abc/update.js",
+  ].forEach((file) => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
 
   tmpobj.removeCallback();
 });

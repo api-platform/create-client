@@ -5,7 +5,7 @@ import NextGenerator from "./NextGenerator";
 
 const generator = new NextGenerator({
   hydraPrefix: "hydra:",
-  templateDirectory: `${__dirname}/../../templates`
+  templateDirectory: `${__dirname}/../../templates`,
 });
 
 afterEach(() => {
@@ -22,19 +22,19 @@ describe("generate", () => {
         range: "http://www.w3.org/2001/XMLSchema#string",
         reference: null,
         required: true,
-        description: "An URL"
-      })
+        description: "An URL",
+      }),
     ];
     const resource = new Resource("abc", "http://example.com/foos", {
       id: "abc",
       title: "abc",
       readableFields: fields,
-      writableFields: fields
+      writableFields: fields,
     });
     const api = new Api("http://example.com", {
       entrypoint: "http://example.com:8080",
       title: "My API",
-      resources: [resource]
+      resources: [resource],
     });
     generator.generate(api, resource, tmpobj.name);
 
@@ -49,15 +49,15 @@ describe("generate", () => {
       "/interfaces/Collection.ts",
       "/pages/abcs/[id].tsx",
       "/pages/abcs/index.tsx",
-      "/utils/dataAccess.ts"
-    ].forEach(file => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
+      "/utils/dataAccess.ts",
+    ].forEach((file) => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
 
     [
       "/components/abc/List.tsx",
       "/components/abc/ListItem.tsx",
       "/components/abc/Show.tsx",
-      "/interfaces/Abc.ts"
-    ].forEach(file => {
+      "/interfaces/Abc.ts",
+    ].forEach((file) => {
       expect(fs.existsSync(tmpobj.name + file)).toBe(true);
       expect(fs.readFileSync(tmpobj.name + file, "utf8")).toMatch(/bar/);
     });

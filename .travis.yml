@@ -1,8 +1,7 @@
 language: node_js
 node_js:
-- '11'
-- '10'
-- '8'
+- '15'
+- '14'
 
 cache:
   directories:
@@ -13,7 +12,7 @@ script:
 - yarn test
 - yarn lint
 - yarn test-gen
-- yarn test-gen-cs
+#- yarn test-gen-cs
 - yarn test-gen-env
 - yarn check
 
@@ -23,5 +22,5 @@ deploy:
   api_key: $NPM_AUTH_TOKEN
   on:
     tags: true
-    node_js: '8'
+    node_js: '15'
   skip_cleanup: true

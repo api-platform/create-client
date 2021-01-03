@@ -43,7 +43,7 @@ export default class extends BaseGenerator {
       "error/SubmissionError.js",
 
       // utils
-      "utils/fetch.js"
+      "utils/fetch.js",
     ]);
   }
 
@@ -96,7 +96,7 @@ export const store = new Vuex.Store({
       fields: resource.readableFields,
       formFields: this.buildFields(resource.writableFields),
       hydraPrefix: this.hydraPrefix,
-      titleUcFirst
+      titleUcFirst,
     };
 
     // Create directories
@@ -105,7 +105,7 @@ export const store = new Vuex.Store({
       `${dir}/config`,
       `${dir}/error`,
       `${dir}/router`,
-      `${dir}/utils`
+      `${dir}/utils`,
     ]) {
       this.createDir(dir, false);
     }
@@ -117,7 +117,7 @@ export const store = new Vuex.Store({
       `${dir}/store/modules/${lc}/list`,
       `${dir}/store/modules/${lc}/show`,
       `${dir}/store/modules/${lc}/update`,
-      `${dir}/components/${lc}`
+      `${dir}/components/${lc}`,
     ]) {
       this.createDir(dir);
     }
@@ -154,7 +154,7 @@ export const store = new Vuex.Store({
       "components/%s/Show.vue",
 
       // routes
-      "router/%s.js"
+      "router/%s.js",
     ]) {
       this.createFileFromPattern(pattern, dir, lc, context);
     }

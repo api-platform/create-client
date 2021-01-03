@@ -6,7 +6,7 @@ import QuasarGenerator from "./QuasarGenerator";
 test("Generate a Quasar app", () => {
   const generator = new QuasarGenerator({
     hydraPrefix: "hydra:",
-    templateDirectory: `${__dirname}/../../templates`
+    templateDirectory: `${__dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 
@@ -16,8 +16,8 @@ test("Generate a Quasar app", () => {
       range: "http://www.w3.org/2001/XMLSchema#string",
       reference: null,
       required: true,
-      description: "An URL"
-    })
+      description: "An URL",
+    }),
   ];
   const resource = new Resource("abc", "http://example.com/foos", {
     id: "foo",
@@ -26,12 +26,12 @@ test("Generate a Quasar app", () => {
     writableFields: fields,
     getParameters: function getParameters() {
       return Promise.resolve([]);
-    }
+    },
   });
   const api = new Api("http://example.com", {
     entrypoint: "http://example.com:8080",
     title: "My API",
-    resources: [resource]
+    resources: [resource],
   });
   generator
     .generate(api, resource, tmpobj.name)
@@ -64,7 +64,7 @@ test("Generate a Quasar app", () => {
         true
       );
 
-      ["create", "delete", "list", "show", "update"].forEach(action => {
+      ["create", "delete", "list", "show", "update"].forEach((action) => {
         expect(
           fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/actions.js`)
         ).toBe(true);

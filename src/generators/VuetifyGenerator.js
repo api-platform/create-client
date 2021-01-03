@@ -29,7 +29,7 @@ export default class extends BaseVueGenerator {
       "views/foo/Create.vue",
       "views/foo/List.vue",
       "views/foo/Show.vue",
-      "views/foo/Update.vue"
+      "views/foo/Update.vue",
     ]);
   }
 
@@ -104,8 +104,10 @@ export const store = new Vuex.Store({
       "views/%s/Create.vue",
       "views/%s/List.vue",
       "views/%s/Show.vue",
-      "views/%s/Update.vue"
-    ].forEach(pattern => this.createFileFromPattern(pattern, dir, lc, context));
+      "views/%s/Update.vue",
+    ].forEach((pattern) =>
+      this.createFileFromPattern(pattern, dir, lc, context)
+    );
 
     // components
     [
@@ -116,8 +118,8 @@ export const store = new Vuex.Store({
       "InputDate.vue",
       "Loading.vue",
       "Snackbar.vue",
-      "Toolbar.vue"
-    ].forEach(file =>
+      "Toolbar.vue",
+    ].forEach((file) =>
       this.createFile(
         `components/${file}`,
         `${dir}/components/${file}`,

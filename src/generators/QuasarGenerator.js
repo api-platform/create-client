@@ -108,7 +108,7 @@ export default class extends BaseGenerator {
       "utils/vuexer.js",
 
       // i18n
-      "i18n/index.js"
+      "i18n/index.js",
     ]);
 
     handlebars.registerHelper("compare", hbh_comparison.compare);
@@ -218,16 +218,16 @@ export const store = new Vuex.Store({
     */
     handlebars.__switch_stack__ = [];
 
-    handlebars.registerHelper("switch", function(value, options) {
+    handlebars.registerHelper("switch", function (value, options) {
       handlebars.__switch_stack__.push({
         switch_match: false,
-        switch_value: value
+        switch_value: value,
       });
       let html = options.fn(this);
       handlebars.__switch_stack__.pop();
       return html;
     });
-    handlebars.registerHelper("case", function(value, options) {
+    handlebars.registerHelper("case", function (value, options) {
       var args = Array.from(arguments);
       options = args.pop();
       var caseValues = args;
@@ -241,7 +241,7 @@ export const store = new Vuex.Store({
         return options.fn(this);
       }
     });
-    handlebars.registerHelper("default", function(options) {
+    handlebars.registerHelper("default", function (options) {
       var stack =
         handlebars.__switch_stack__[handlebars.__switch_stack__.length - 1];
       if (!stack.switch_match) {
@@ -253,22 +253,22 @@ export const store = new Vuex.Store({
   generate(api, resource, dir) {
     return resource
       .getParameters()
-      .then(params => {
-        params = params.map(param => ({
+      .then((params) => {
+        params = params.map((param) => ({
           ...param,
-          ...this.getHtmlInputTypeFromField(param)
+          ...this.getHtmlInputTypeFromField(param),
         }));
 
         params = this.cleanupParams(params);
         this.generateFiles(api, resource, dir, params);
       })
-      .catch(e => console.log(chalk.red(e)));
+      .catch((e) => console.log(chalk.red(e)));
   }
 
   cleanupParams(params) {
     const stats = {};
     const result = [];
-    params.forEach(p => {
+    params.forEach((p) => {
       let key = p.variable.endsWith("[]")
         ? p.variable.slice(0, -2)
         : p.variable;
@@ -277,7 +277,7 @@ export const store = new Vuex.Store({
       }
       stats[key] += 1;
     });
-    params.forEach(p => {
+    params.forEach((p) => {
       if (p.variable.startsWith("exists[")) {
         result.push(p);
         return; // removed for the moment, it can help to add null option to select
@@ -303,7 +303,7 @@ export const store = new Vuex.Store({
   printObject(obj) {
     var cache = [];
     console.log(
-      JSON.stringify(obj, function(key, value) {
+      JSON.stringify(obj, function (key, value) {
         if (typeof value === "object" && value !== null) {
           if (cache.includes(value)) {
             // Duplicate reference found, discard key
@@ -326,18 +326,18 @@ export const store = new Vuex.Store({
     const formFields = this.buildFields(resource.writableFields);
 
     const dateTypes = ["time", "date", "dateTime"];
-    const formContainsDate = formFields.some(e => dateTypes.includes(e.type));
+    const formContainsDate = formFields.some((e) => dateTypes.includes(e.type));
 
     const fields = this.buildFields(resource.readableFields);
-    const listContainsDate = fields.some(e => dateTypes.includes(e.type));
+    const listContainsDate = fields.some((e) => dateTypes.includes(e.type));
 
     const parameters = [];
-    params.forEach(p => {
-      const paramIndex = fields.findIndex(field => field.name === p.variable);
+    params.forEach((p) => {
+      const paramIndex = fields.findIndex((field) => field.name === p.variable);
       if (paramIndex === -1) {
         if (p.variable.startsWith("order[")) {
           var v = p.variable.slice(6, -1);
-          var found = fields.findIndex(field => field.name === v);
+          var found = fields.findIndex((field) => field.name === v);
           if (found !== -1) {
             fields[found].sortable = true;
           }
@@ -347,7 +347,7 @@ export const store = new Vuex.Store({
         if (p.variable.startsWith("exists[")) {
           var exists = p.variable.slice(7, -1);
           var foundExistsFieldIndex = fields.findIndex(
-            field => field.name === exists
+            (field) => field.name === exists
           );
           if (foundExistsFieldIndex !== -1) {
             const param = fields[foundExistsFieldIndex];
@@ -376,7 +376,7 @@ export const store = new Vuex.Store({
     });
 
     const paramsHaveRefs = parameters.some(
-      e => e.type === "text" && e.reference
+      (e) => e.type === "text" && e.reference
     );
 
     const labels = this.commonLabelTexts();
@@ -398,7 +398,7 @@ export const store = new Vuex.Store({
       hydraPrefix: this.hydraPrefix,
       titleUcFirst,
       labels,
-      hashEntry
+      hashEntry,
     };
 
     // Create directories
@@ -419,7 +419,7 @@ export const store = new Vuex.Store({
       `${dir}/common/store/delete`,
       `${dir}/common/store/list`,
       `${dir}/common/store/show`,
-      `${dir}/common/store/update`
+      `${dir}/common/store/update`,
     ]) {
       this.createDir(dir, false);
     }
@@ -432,7 +432,7 @@ export const store = new Vuex.Store({
       `${dir}/store/modules/${lc}/show`,
       `${dir}/store/modules/${lc}/update`,
 
-      `${dir}/components/${lc}`
+      `${dir}/components/${lc}`,
     ]) {
       this.createDir(dir);
     }
@@ -481,7 +481,7 @@ export const store = new Vuex.Store({
 
       "utils/dates.js",
       "utils/notify.js",
-      "utils/vuexer.js"
+      "utils/vuexer.js",
     ]) {
       this.createFile(common, `${dir}/${common}`, context, false);
     }
@@ -529,7 +529,7 @@ export const store = new Vuex.Store({
       "components/%s/Show.vue",
 
       // routes
-      "router/%s.js"
+      "router/%s.js",
     ]) {
       if (
         pattern === "components/%s/Filter.vue" &&
@@ -568,7 +568,7 @@ export const store = new Vuex.Store({
     );
 
     const contextLabels = {
-      labels: this.contextLabelTexts(formFields, fields)
+      labels: this.contextLabelTexts(formFields, fields),
     };
     this.createFile(
       "i18n/index.js",
@@ -589,8 +589,8 @@ export const store = new Vuex.Store({
 
   contextLabelTexts(formFields, fields) {
     let texts = [];
-    formFields.forEach(x => texts.push(x.name)); // forms
-    fields.forEach(x => texts.push(x.name)); // for show, too
+    formFields.forEach((x) => texts.push(x.name)); // forms
+    fields.forEach((x) => texts.push(x.name)); // for show, too
     return [...new Set(texts)];
   }
 
@@ -614,7 +614,7 @@ export const store = new Vuex.Store({
       numValidation: "Please, insert a value bigger than zero!",
       stringValidation: "Please type something",
       required: "Field is required",
-      recPerPage: "Records per page:"
+      recPerPage: "Records per page:",
     };
 
     // handlebars.registerPartial("myPartial", "{{name}}");

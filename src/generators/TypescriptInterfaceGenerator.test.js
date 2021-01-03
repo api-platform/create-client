@@ -5,7 +5,7 @@ import TypescriptInterfaceGenerator from "./TypescriptInterfaceGenerator";
 
 test("Generate a typescript interface", () => {
   const generator = new TypescriptInterfaceGenerator({
-    templateDirectory: `${__dirname}/../../templates`
+    templateDirectory: `${__dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 
@@ -18,8 +18,8 @@ test("Generate a typescript interface", () => {
         range: "http://www.w3.org/2001/XMLSchema#string",
         reference: null,
         required: true,
-        description: "An URL"
-      })
+        description: "An URL",
+      }),
     ],
     writableFields: [
       new Field("foo", {
@@ -27,22 +27,22 @@ test("Generate a typescript interface", () => {
         range: "http://www.w3.org/2001/XMLSchema#datetime",
         reference: null,
         required: true,
-        description: "An URL"
+        description: "An URL",
       }),
       new Field("foobar", {
         id: "http://schema.org/url",
         range: undefined,
         reference: new Resource("foobar", "http://example.com/FooBar", {
-          title: "FooBar"
+          title: "FooBar",
         }),
-        required: false
-      })
-    ]
+        required: false,
+      }),
+    ],
   });
   const api = new Api("http://example.com", {
     entrypoint: "http://example.com:8080",
     title: "My API",
-    resources: [resource]
+    resources: [resource],
   });
   generator.generate(api, resource, tmpobj.name);
 
@@ -64,7 +64,7 @@ test("Generate a typescript interface", () => {
 
 test("Generate a typescript interface without references to other interfaces", () => {
   const generator = new TypescriptInterfaceGenerator({
-    templateDirectory: `${__dirname}/../../templates`
+    templateDirectory: `${__dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 
@@ -77,8 +77,8 @@ test("Generate a typescript interface without references to other interfaces", (
         range: "http://www.w3.org/2001/XMLSchema#string",
         reference: null,
         required: true,
-        description: "An URL"
-      })
+        description: "An URL",
+      }),
     ],
     writableFields: [
       new Field("foo", {
@@ -86,14 +86,14 @@ test("Generate a typescript interface without references to other interfaces", (
         range: "http://www.w3.org/2001/XMLSchema#datetime",
         reference: null,
         required: true,
-        description: "An URL"
-      })
-    ]
+        description: "An URL",
+      }),
+    ],
   });
   const api = new Api("http://example.com", {
     entrypoint: "http://example.com:8080",
     title: "My API",
-    resources: [resource]
+    resources: [resource],
   });
   generator.generate(api, resource, tmpobj.name);
 
@@ -114,7 +114,7 @@ test("Generate a typescript interface without references to other interfaces", (
 
 test("Generate a typescript interface with an explicit id field in the readableFields", () => {
   const generator = new TypescriptInterfaceGenerator({
-    templateDirectory: `${__dirname}/../../templates`
+    templateDirectory: `${__dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 
@@ -127,15 +127,15 @@ test("Generate a typescript interface with an explicit id field in the readableF
         range: "http://www.w3.org/2001/XMLSchema#string",
         reference: null,
         required: true,
-        description: "An URL"
+        description: "An URL",
       }),
       new Field("id", {
         id: "http://schema.org/url",
         range: "http://www.w3.org/2001/XMLSchema#string",
         reference: null,
         required: false,
-        description: "Id"
-      })
+        description: "Id",
+      }),
     ],
     writableFields: [
       new Field("foo", {
@@ -143,14 +143,14 @@ test("Generate a typescript interface with an explicit id field in the readableF
         range: "http://www.w3.org/2001/XMLSchema#datetime",
         reference: null,
         required: true,
-        description: "An URL"
-      })
-    ]
+        description: "An URL",
+      }),
+    ],
   });
   const api = new Api("http://example.com", {
     entrypoint: "http://example.com:8080",
     title: "My API",
-    resources: [resource]
+    resources: [resource],
   });
   generator.generate(api, resource, tmpobj.name);
 
