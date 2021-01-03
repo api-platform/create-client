@@ -20,7 +20,7 @@ export const List: FunctionComponent<Props> = ({ {{{name}}} }) => (
         </tr>
       </thead>
       <tbody>
-        { {{{name}}} && {{{name}}}.length && {{{name}}}.map({{{lc}}} => (
+        { {{{name}}} && ({{{name}}}.length !== 0) && {{{name}}}.map({{{lc}}} => (
           <ListItem key={ {{{lc}}}['@id'] } {{{lc}}}={ {{{lc}}} } />
         ))}
       </tbody>
