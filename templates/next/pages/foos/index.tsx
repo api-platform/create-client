@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Page: NextComponentType<NextPageContext, Props, Props> = ({collection}) => (
-  <List {{{name}}}={collection['{{{hydraPrefix}}}member'] || []}/>
+  <List {{{name}}}={collection['{{{hydraPrefix}}}member']}/>
 );
 
 Page.getInitialProps = async () => {
