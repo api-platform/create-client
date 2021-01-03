@@ -6,7 +6,7 @@ import VuetifyGenerator from "./VuetifyGenerator";
 test("Generate a Vuetify app", () => {
   const generator = new VuetifyGenerator({
     hydraPrefix: "hydra:",
-    templateDirectory: `${__dirname}/../../templates`
+    templateDirectory: `${__dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 
@@ -16,8 +16,8 @@ test("Generate a Vuetify app", () => {
       range: "http://www.w3.org/2001/XMLSchema#string",
       reference: null,
       required: true,
-      description: "An URL"
-    })
+      description: "An URL",
+    }),
   ];
   const resource = new Resource("abc", "http://example.com/foos", {
     id: "foo",
@@ -26,12 +26,12 @@ test("Generate a Vuetify app", () => {
     writableFields: fields,
     getParameters: function getParameters() {
       return Promise.resolve([]);
-    }
+    },
   });
   const api = new Api("http://example.com", {
     entrypoint: "http://example.com:8080",
     title: "My API",
-    resources: [resource]
+    resources: [resource],
   });
   generator.generate(api, resource, tmpobj.name).then(() => {
     [
@@ -58,8 +58,8 @@ test("Generate a Vuetify app", () => {
       "/views/foo/Create.vue",
       "/views/foo/List.vue",
       "/views/foo/Show.vue",
-      "/views/foo/Update.vue"
-    ].forEach(file => {
+      "/views/foo/Update.vue",
+    ].forEach((file) => {
       expect(fs.existsSync(tmpobj.name + file)).toBe(true);
     });
 

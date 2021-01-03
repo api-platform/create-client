@@ -34,7 +34,7 @@ export default class extends BaseGenerator {
       "utils/hydra.js",
 
       // validators
-      "validators/date.js"
+      "validators/date.js",
     ]);
 
     handlebars.registerHelper("compare", hbh_comparison.compare);
@@ -69,16 +69,16 @@ export default class extends BaseGenerator {
     */
     handlebars.__switch_stack__ = [];
 
-    handlebars.registerHelper("switch", function(value, options) {
+    handlebars.registerHelper("switch", function (value, options) {
       handlebars.__switch_stack__.push({
         switch_match: false,
-        switch_value: value
+        switch_value: value,
       });
       let html = options.fn(this);
       handlebars.__switch_stack__.pop();
       return html;
     });
-    handlebars.registerHelper("case", function(value, options) {
+    handlebars.registerHelper("case", function (value, options) {
       let args = Array.from(arguments);
       options = args.pop();
       let caseValues = args;
@@ -92,7 +92,7 @@ export default class extends BaseGenerator {
         return options.fn(this);
       }
     });
-    handlebars.registerHelper("default", function(options) {
+    handlebars.registerHelper("default", function (options) {
       let stack =
         handlebars.__switch_stack__[handlebars.__switch_stack__.length - 1];
       if (!stack.switch_match) {
@@ -109,14 +109,14 @@ export default class extends BaseGenerator {
     const formFields = this.buildFields(resource.writableFields);
 
     const dateTypes = ["time", "date", "dateTime"];
-    const formContainsDate = formFields.some(e => dateTypes.includes(e.type));
+    const formContainsDate = formFields.some((e) => dateTypes.includes(e.type));
 
     const fields = this.buildFields(resource.readableFields);
-    const listContainsDate = fields.some(e => dateTypes.includes(e.type));
+    const listContainsDate = fields.some((e) => dateTypes.includes(e.type));
 
     const parameters = [];
-    params.forEach(p => {
-      const param = fields.find(field => field.name === p.variable);
+    params.forEach((p) => {
+      const param = fields.find((field) => field.name === p.variable);
       if (!param) {
         p.name = p.variable;
         parameters.push(p);
@@ -127,7 +127,7 @@ export default class extends BaseGenerator {
     });
 
     const paramsHaveRefs = parameters.some(
-      e => e.type === "text" && e.reference
+      (e) => e.type === "text" && e.reference
     );
 
     const labels = this.commonLabelTexts();
@@ -146,15 +146,15 @@ export default class extends BaseGenerator {
       formContainsDate,
       hydraPrefix: this.hydraPrefix,
       titleUcFirst,
-      labels
+      labels,
     };
   }
 
   generate(api, resource, dir) {
-    return resource.getParameters().then(params => {
-      params = params.map(param => ({
+    return resource.getParameters().then((params) => {
+      params = params.map((param) => ({
         ...param,
-        ...this.getHtmlInputTypeFromField(param)
+        ...this.getHtmlInputTypeFromField(param),
       }));
 
       params = this.cleanupParams(params);
@@ -175,8 +175,8 @@ export default class extends BaseGenerator {
       `${dir}/services`,
       `${dir}/store/modules`,
       `${dir}/utils`,
-      `${dir}/validators`
-    ].forEach(dir => this.createDir(dir, false));
+      `${dir}/validators`,
+    ].forEach((dir) => this.createDir(dir, false));
 
     // error
     this.createFile(
@@ -192,8 +192,8 @@ export default class extends BaseGenerator {
       "mixins/List%s.js",
       "mixins/Notification%s.js",
       "mixins/Show%s.js",
-      "mixins/Update%s.js"
-    ].forEach(pattern =>
+      "mixins/Update%s.js",
+    ].forEach((pattern) =>
       this.createFile(
         sprintf(`${pattern}`, "Mixin"),
         sprintf(`${dir}/${pattern}`, "Mixin"),
@@ -203,7 +203,7 @@ export default class extends BaseGenerator {
     );
 
     // stores
-    ["crud.js", "notifications.js"].forEach(file =>
+    ["crud.js", "notifications.js"].forEach((file) =>
       this.createFile(
         `store/modules/${file}`,
         `${dir}/store/modules/${file}`,
@@ -230,7 +230,7 @@ export default class extends BaseGenerator {
     );
 
     // utils
-    ["dates.js", "fetch.js", "hydra.js"].forEach(file =>
+    ["dates.js", "fetch.js", "hydra.js"].forEach((file) =>
       this.createFile(`utils/${file}`, `${dir}/utils/${file}`, {}, false)
     );
 
@@ -241,7 +241,7 @@ export default class extends BaseGenerator {
     const stats = {};
     const result = [];
 
-    params.forEach(p => {
+    params.forEach((p) => {
       let key = p.variable.endsWith("[]")
         ? p.variable.slice(0, -2)
         : p.variable;
@@ -251,7 +251,7 @@ export default class extends BaseGenerator {
       stats[key] += 1;
     });
 
-    params.forEach(p => {
+    params.forEach((p) => {
       if (p.variable.endsWith("[exists]")) {
         return; // removed for the moment, it can help to add null option to select
       }
@@ -275,8 +275,8 @@ export default class extends BaseGenerator {
 
   contextLabelTexts(formFields, fields) {
     let texts = [];
-    formFields.forEach(x => texts.push(x.name)); // forms
-    fields.forEach(x => texts.push(x.name)); // for show, too
+    formFields.forEach((x) => texts.push(x.name)); // forms
+    fields.forEach((x) => texts.push(x.name)); // for show, too
     return [...new Set(texts)];
   }
 
@@ -301,7 +301,7 @@ export default class extends BaseGenerator {
       numValidation: "Please, insert a value bigger than zero!",
       stringValidation: "Please type something",
       required: "Field is required",
-      recPerPage: "Records per page:"
+      recPerPage: "Records per page:",
     };
   }
 }

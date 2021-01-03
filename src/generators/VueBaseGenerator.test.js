@@ -6,7 +6,7 @@ import VueBaseGenerator from "./VueBaseGenerator";
 test("Test VueBaseGenerator", () => {
   const generator = new VueBaseGenerator({
     hydraPrefix: "hydra:",
-    templateDirectory: `${__dirname}/../../templates`
+    templateDirectory: `${__dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 
@@ -16,8 +16,8 @@ test("Test VueBaseGenerator", () => {
       range: "http://www.w3.org/2001/XMLSchema#string",
       reference: null,
       required: true,
-      description: "An URL"
-    })
+      description: "An URL",
+    }),
   ];
   const resource = new Resource("abc", "http://example.com/foos", {
     id: "foo",
@@ -26,12 +26,12 @@ test("Test VueBaseGenerator", () => {
     writableFields: fields,
     getParameters: function getParameters() {
       return Promise.resolve([]);
-    }
+    },
   });
   const api = new Api("http://example.com", {
     entrypoint: "http://example.com:8080",
     title: "My API",
-    resources: [resource]
+    resources: [resource],
   });
   generator.generate(api, resource, tmpobj.name).then(() => {
     expect(fs.existsSync(tmpobj.name + "/mixins/CreateMixin.js")).toBe(true);

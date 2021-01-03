@@ -22,7 +22,7 @@ export default class extends BaseGenerator {
       "reducers/foo/index.js",
       "reducers/foo/list.js",
       "reducers/foo/update.js",
-      "reducers/foo/show.js"
+      "reducers/foo/show.js",
     ]);
 
     this.registerTemplates(`react/`, [
@@ -35,7 +35,7 @@ export default class extends BaseGenerator {
       "components/foo/Show.js",
 
       // routes
-      "routes/foo.js"
+      "routes/foo.js",
     ]);
   }
 
@@ -79,20 +79,20 @@ combineReducers({ ${titleLc},/* ... */ }),
       fields: resource.readableFields,
       formFields: this.buildFields(resource.writableFields),
       hydraPrefix: this.hydraPrefix,
-      titleUcFirst
+      titleUcFirst,
     };
 
     // Create directories
     // These directories may already exist
-    [`${dir}/utils`, `${dir}/config`, `${dir}/routes`].forEach(dir =>
+    [`${dir}/utils`, `${dir}/config`, `${dir}/routes`].forEach((dir) =>
       this.createDir(dir, false)
     );
 
     [
       `${dir}/actions/${lc}`,
       `${dir}/components/${lc}`,
-      `${dir}/reducers/${lc}`
-    ].forEach(dir => this.createDir(dir));
+      `${dir}/reducers/${lc}`,
+    ].forEach((dir) => this.createDir(dir));
 
     [
       // actions
@@ -119,8 +119,10 @@ combineReducers({ ${titleLc},/* ... */ }),
       "reducers/%s/show.js",
 
       // routes
-      "routes/%s.js"
-    ].forEach(pattern => this.createFileFromPattern(pattern, dir, lc, context));
+      "routes/%s.js",
+    ].forEach((pattern) =>
+      this.createFileFromPattern(pattern, dir, lc, context)
+    );
 
     // utils
     this.createFile(

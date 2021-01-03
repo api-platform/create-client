@@ -18,5 +18,8 @@ module.exports = {
   'rules': {
     'prettier/prettier': 'error',
     'no-console': 0,
+    'no-extra-semi': 'off',
+    'no-mixed-spaces-and-tabs': 'off',
+    'no-unexpected-multiline': 'off',
   }
 };

@@ -6,7 +6,7 @@ export default class extends BaseGenerator {
   constructor(params) {
     super(params);
 
-    handlebars.registerHelper("ifNotResource", function(item, options) {
+    handlebars.registerHelper("ifNotResource", function (item, options) {
       if (item === null) {
         return options.fn(this);
       }
@@ -30,7 +30,7 @@ export default class extends BaseGenerator {
       "reducers/foo/index.js",
       "reducers/foo/list.js",
       "reducers/foo/update.js",
-      "reducers/foo/show.js"
+      "reducers/foo/show.js",
     ]);
 
     this.registerTemplates(`react-native/`, [
@@ -48,7 +48,7 @@ export default class extends BaseGenerator {
       "routes/foo.js",
 
       // helpers
-      "utils/helpers.js"
+      "utils/helpers.js",
     ]);
   }
 
@@ -86,20 +86,20 @@ combineReducers({ ${titleLc}, /* ... */ }),
       fields: resource.readableFields,
       formFields: this.buildFields(resource.writableFields),
       hydraPrefix: this.hydraPrefix,
-      titleUcFirst
+      titleUcFirst,
     };
 
     // Create directories
     // These directories may already exist
-    [`${dir}/utils`, `${dir}/config`, `${dir}/routes`].forEach(dir =>
+    [`${dir}/utils`, `${dir}/config`, `${dir}/routes`].forEach((dir) =>
       this.createDir(dir, false)
     );
 
     [
       `${dir}/actions/${lc}`,
       `${dir}/components/${lc}`,
-      `${dir}/reducers/${lc}`
-    ].forEach(dir => this.createDir(dir));
+      `${dir}/reducers/${lc}`,
+    ].forEach((dir) => this.createDir(dir));
 
     [
       // actions
@@ -126,15 +126,17 @@ combineReducers({ ${titleLc}, /* ... */ }),
       "reducers/%s/show.js",
 
       // routes
-      "routes/%s.js"
-    ].forEach(pattern => this.createFileFromPattern(pattern, dir, lc, context));
+      "routes/%s.js",
+    ].forEach((pattern) =>
+      this.createFileFromPattern(pattern, dir, lc, context)
+    );
 
     [
       "utils/dataAccess.js",
       "utils/helpers.js",
       "components/Spinner.js",
-      "components/Confirm.js"
-    ].forEach(file => this.createFile(file, `${dir}/${file}`));
+      "components/Confirm.js",
+    ].forEach((file) => this.createFile(file, `${dir}/${file}`));
 
     this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
   }

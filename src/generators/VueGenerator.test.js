@@ -6,7 +6,7 @@ import VueGenerator from "./VueGenerator";
 test("Generate a Vue app", () => {
   const generator = new VueGenerator({
     hydraPrefix: "hydra:",
-    templateDirectory: `${__dirname}/../../templates`
+    templateDirectory: `${__dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 
@@ -16,19 +16,19 @@ test("Generate a Vue app", () => {
       range: "http://www.w3.org/2001/XMLSchema#string",
       reference: null,
       required: true,
-      description: "An URL"
-    })
+      description: "An URL",
+    }),
   ];
   const resource = new Resource("abc", "http://example.com/foos", {
     id: "foo",
     title: "Foo",
     readableFields: fields,
-    writableFields: fields
+    writableFields: fields,
   });
   const api = new Api("http://example.com", {
     entrypoint: "http://example.com:8080",
     title: "My API",
-    resources: [resource]
+    resources: [resource],
   });
   generator.generate(api, resource, tmpobj.name);
 
@@ -46,7 +46,7 @@ test("Generate a Vue app", () => {
 
   expect(fs.existsSync(tmpobj.name + "/store/modules/foo/index.js")).toBe(true);
 
-  ["create", "delete", "list", "show", "update"].forEach(action => {
+  ["create", "delete", "list", "show", "update"].forEach((action) => {
     expect(
       fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/actions.js`)
     ).toBe(true);

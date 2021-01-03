@@ -32,7 +32,7 @@ export default class NuxtGenerator extends BaseVueGenerator {
       // store
       "store/crud.js",
       "store/notifications.js",
-      "store/foo.js"
+      "store/foo.js",
     ]);
   }
 
@@ -54,8 +54,8 @@ export default class NuxtGenerator extends BaseVueGenerator {
       `${dir}/services`,
       `${dir}/store`,
       `${dir}/utils`,
-      `${dir}/validators`
-    ].forEach(dir => this.createDir(dir, false));
+      `${dir}/validators`,
+    ].forEach((dir) => this.createDir(dir, false));
 
     // error
     this.createFile(
@@ -71,8 +71,10 @@ export default class NuxtGenerator extends BaseVueGenerator {
       "mixins/list.js",
       "mixins/notification.js",
       "mixins/show.js",
-      "mixins/update.js"
-    ].forEach(file => this.createFile(file, `${dir}/${file}`, context, false));
+      "mixins/update.js",
+    ].forEach((file) =>
+      this.createFile(file, `${dir}/${file}`, context, false)
+    );
 
     // stores
     this.createFile(
@@ -98,7 +100,7 @@ export default class NuxtGenerator extends BaseVueGenerator {
     );
 
     // utils
-    ["dates.js", "fetch.js", "hydra.js"].forEach(file =>
+    ["dates.js", "fetch.js", "hydra.js"].forEach((file) =>
       this.createFile(`utils/${file}`, `${dir}/utils/${file}`, {}, false)
     );
 
@@ -124,8 +126,10 @@ export default class NuxtGenerator extends BaseVueGenerator {
       "services/%s.js",
 
       // store
-      "store/%s.js"
-    ].forEach(pattern => this.createFileFromPattern(pattern, dir, lc, context));
+      "store/%s.js",
+    ].forEach((pattern) =>
+      this.createFileFromPattern(pattern, dir, lc, context)
+    );
 
     // components
     [
@@ -135,8 +139,8 @@ export default class NuxtGenerator extends BaseVueGenerator {
       "DataFilter.vue",
       "InputDate.vue",
       "Loading.vue",
-      "Toolbar.vue"
-    ].forEach(file =>
+      "Toolbar.vue",
+    ].forEach((file) =>
       this.createFile(
         `components/${file}`,
         `${dir}/components/${file}`,

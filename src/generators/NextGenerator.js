@@ -25,7 +25,7 @@ export default class NextGenerator extends BaseGenerator {
       "pages/foos/index.tsx",
 
       // utils
-      "utils/dataAccess.ts"
+      "utils/dataAccess.ts",
     ]);
   }
 
@@ -50,7 +50,7 @@ export default class NextGenerator extends BaseGenerator {
       formFields: this.buildFields(fields),
       imports,
       hydraPrefix: this.hydraPrefix,
-      title: resource.title
+      title: resource.title,
     };
 
     // Create directories
@@ -61,8 +61,8 @@ export default class NextGenerator extends BaseGenerator {
       `${dir}/error`,
       `${dir}/interfaces`,
       `${dir}/pages`,
-      `${dir}/utils`
-    ].forEach(dir => this.createDir(dir, false));
+      `${dir}/utils`,
+    ].forEach((dir) => this.createDir(dir, false));
 
     // copy with patterned name
     this.createDir(`${dir}/components/${context.lc}`);
@@ -75,8 +75,8 @@ export default class NextGenerator extends BaseGenerator {
 
       // pages
       "pages/%ss/[id].tsx",
-      "pages/%ss/index.tsx"
-    ].forEach(pattern =>
+      "pages/%ss/index.tsx",
+    ].forEach((pattern) =>
       this.createFileFromPattern(pattern, dir, context.lc, context)
     );
 
@@ -99,8 +99,10 @@ export default class NextGenerator extends BaseGenerator {
       "interfaces/Collection.ts",
 
       // utils
-      "utils/dataAccess.ts"
-    ].forEach(file => this.createFile(file, `${dir}/${file}`, context, false));
+      "utils/dataAccess.ts",
+    ].forEach((file) =>
+      this.createFile(file, `${dir}/${file}`, context, false)
+    );
 
     // API config
     this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.ts`);
@@ -113,7 +115,7 @@ export default class NextGenerator extends BaseGenerator {
   parseFields(resource) {
     const fields = [
       ...resource.writableFields,
-      ...resource.readableFields
+      ...resource.readableFields,
     ].reduce((list, field) => {
       if (list[field.name]) {
         return list;
@@ -127,8 +129,8 @@ export default class NextGenerator extends BaseGenerator {
           type: this.getType(field),
           description: this.getDescription(field),
           readonly: false,
-          reference: field.reference
-        }
+          reference: field.reference,
+        },
       };
     }, {});
 
@@ -144,8 +146,8 @@ export default class NextGenerator extends BaseGenerator {
           ...list,
           [type]: {
             type,
-            file: `./${type}`
-          }
+            file: `./${type}`,
+          },
         };
       },
       {}

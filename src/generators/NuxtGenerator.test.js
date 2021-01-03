@@ -5,7 +5,7 @@ import NuxtGenerator from "./NuxtGenerator";
 
 const generator = new NuxtGenerator({
   hydraPrefix: "hydra:",
-  templateDirectory: `${__dirname}/../../templates`
+  templateDirectory: `${__dirname}/../../templates`,
 });
 
 afterEach(() => {
@@ -22,8 +22,8 @@ describe("generate", () => {
         range: "http://www.w3.org/2001/XMLSchema#string",
         reference: null,
         required: true,
-        description: "An URL"
-      })
+        description: "An URL",
+      }),
     ];
     const resource = new Resource("abc", "http://example.com/foos", {
       id: "foo",
@@ -32,12 +32,12 @@ describe("generate", () => {
       writableFields: fields,
       getParameters: function getParameters() {
         return Promise.resolve([]);
-      }
+      },
     });
     const api = new Api("http://example.com", {
       entrypoint: "http://example.com:8080",
       title: "My API",
-      resources: [resource]
+      resources: [resource],
     });
 
     generator.generate(api, resource, tmpobj.name).then(() => {
@@ -58,8 +58,8 @@ describe("generate", () => {
         "/utils/hydra.js",
         "/pages/foos/_id.vue",
         "/pages/foos/index.vue",
-        "/pages/foos/new.vue"
-      ].forEach(file => {
+        "/pages/foos/new.vue",
+      ].forEach((file) => {
         expect(fs.existsSync(tmpobj.name + file)).toBe(true);
       });
 

@@ -62,14 +62,14 @@ const entrypointWithSlash = entrypoint.endsWith("/")
 
 const generator = generators(program.generator)({
   hydraPrefix: program.hydraPrefix,
-  templateDirectory: program.templateDirectory
+  templateDirectory: program.templateDirectory,
 });
 const resourceToGenerate = program.resource
   ? program.resource.toLowerCase()
   : null;
 const serverPath = program.serverPath ? program.serverPath.toLowerCase() : null;
 
-const parser = entrypointWithSlash => {
+const parser = (entrypointWithSlash) => {
   const options = {};
   if (program.username && program.password) {
     const encoded = Buffer.from(
@@ -96,10 +96,10 @@ const parser = entrypointWithSlash => {
 generator.checkDependencies(outputDirectory, serverPath);
 
 parser(entrypointWithSlash)
-  .then(ret => {
+  .then((ret) => {
     ret.api.resources
       .filter(({ deprecated }) => !deprecated)
-      .filter(resource => {
+      .filter((resource) => {
         const nameLc = resource.name.toLowerCase();
         const titleLc = resource.title.toLowerCase();
 
@@ -109,8 +109,8 @@ parser(entrypointWithSlash)
           titleLc === resourceToGenerate
         );
       })
-      .map(resource => {
-        const filterDeprecated = list =>
+      .map((resource) => {
+        const filterDeprecated = (list) =>
           list.filter(({ deprecated }) => !deprecated);
 
         resource.fields = filterDeprecated(resource.fields);
@@ -122,8 +122,8 @@ parser(entrypointWithSlash)
         return resource;
       })
       // display helps after all resources have been generated to check relation dependency for example
-      .forEach(resource => generator.help(resource, outputDirectory));
+      .forEach((resource) => generator.help(resource, outputDirectory));
   })
-  .catch(e => {
+  .catch((e) => {
     console.log(e);
   });
