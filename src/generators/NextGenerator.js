@@ -10,19 +10,21 @@ export default class NextGenerator extends BaseGenerator {
       // components
       "components/common/ReferenceLinks.tsx",
       "components/foo/List.tsx",
-      "components/foo/ListItem.tsx",
       "components/foo/Show.tsx",
+      "components/foo/Form.tsx",
 
       // interfaces
       "error/SubmissionError.ts",
 
-      // interfaces
-      "interfaces/Collection.ts",
-      "interfaces/foo.ts",
+      // types
+      "types/Collection.ts",
+      "types/foo.ts",
 
       // pages
-      "pages/foos/[id].tsx",
+      "pages/foos/[id]/index.tsx",
+      "pages/foos/[id]/edit.tsx",
       "pages/foos/index.tsx",
+      "pages/foos/create.tsx",
 
       // utils
       "utils/dataAccess.ts",
@@ -59,33 +61,33 @@ export default class NextGenerator extends BaseGenerator {
       `${dir}/components/common`,
       `${dir}/config`,
       `${dir}/error`,
-      `${dir}/interfaces`,
+      `${dir}/types`,
       `${dir}/pages`,
+      `${dir}/pages/${context.lc}s/[id]`,
       `${dir}/utils`,
     ].forEach((dir) => this.createDir(dir, false));
 
     // copy with patterned name
     this.createDir(`${dir}/components/${context.lc}`);
     this.createDir(`${dir}/pages/${context.lc}s`);
+    this.createDir(`${dir}/pages/${context.lc}s/[id]`);
     [
       // components
       "components/%s/List.tsx",
-      "components/%s/ListItem.tsx",
       "components/%s/Show.tsx",
+      "components/%s/Form.tsx",
 
       // pages
-      "pages/%ss/[id].tsx",
+      "pages/%ss/[id]/index.tsx",
+      "pages/%ss/[id]/edit.tsx",
       "pages/%ss/index.tsx",
+      "pages/%ss/create.tsx",
     ].forEach((pattern) =>
       this.createFileFromPattern(pattern, dir, context.lc, context)
     );
 
     // interface pattern should be camel cased
-    this.createFile(
-      "interfaces/foo.ts",
-      `${dir}/interfaces/${context.ucf}.ts`,
-      context
-    );
+    this.createFile("types/foo.ts", `${dir}/types/${context.ucf}.ts`, context);
 
     // copy with regular name
     [
@@ -95,8 +97,8 @@ export default class NextGenerator extends BaseGenerator {
       // error
       "error/SubmissionError.ts",
 
-      // interfaces
-      "interfaces/Collection.ts",
+      // types
+      "types/Collection.ts",
 
       // utils
       "utils/dataAccess.ts",

@@ -41,22 +41,24 @@ describe("generate", () => {
     [
       "/config/entrypoint.ts",
       "/components/abc/List.tsx",
-      "/components/abc/ListItem.tsx",
       "/components/abc/Show.tsx",
+      "/components/abc/Form.tsx",
       "/components/common/ReferenceLinks.tsx",
       "/error/SubmissionError.ts",
-      "/interfaces/Abc.ts",
-      "/interfaces/Collection.ts",
-      "/pages/abcs/[id].tsx",
+      "/types/Abc.ts",
+      "/types/Collection.ts",
+      "/pages/abcs/[id]/index.tsx",
+      "/pages/abcs/[id]/edit.tsx",
       "/pages/abcs/index.tsx",
+      "/pages/abcs/create.tsx",
       "/utils/dataAccess.ts",
     ].forEach((file) => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
 
     [
       "/components/abc/List.tsx",
-      "/components/abc/ListItem.tsx",
       "/components/abc/Show.tsx",
-      "/interfaces/Abc.ts",
+      "/components/abc/Form.tsx",
+      "/types/Abc.ts",
     ].forEach((file) => {
       expect(fs.existsSync(tmpobj.name + file)).toBe(true);
       expect(fs.readFileSync(tmpobj.name + file, "utf8")).toMatch(/bar/);
