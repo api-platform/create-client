@@ -29,7 +29,7 @@ program
   .option(
     "-g, --generator [generator]",
     'The generator to use, one of "next", "nuxt", "quasar", "react", "react-native", "typescript", "vue", "vuetify"',
-    "react"
+    "next"
   )
   .option(
     "-t, --template-directory [templateDirectory]",
