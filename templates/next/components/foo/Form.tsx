@@ -2,18 +2,21 @@ import { FunctionComponent, useState } from "react";
 import { Formik } from "formik";
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface Props {
   {{{lc}}}?: {{{ucf}}};
 }
 
 export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
-	const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
+  const router = useRouter();
 
 	const handleDelete = () => {
 		if (window.confirm("Are you sure you want to delete this item?")) {
 			try {
-				fetch({ {{{lc}}}['@id'] }, { method: "DELETE" });
+        fetch({ {{{lc}}}['@id'] }, { method: "DELETE" });
+        router.push("/{{{name}}}");
 			} catch (error) {
 				setError("Error when deleting the resource.");
 				console.error(error);
@@ -44,6 +47,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
               isValid: true,
               msg: `Element ${isCreation ? 'created': 'updated'}.`,
             });
+              router.push("/{{{name}}}");
           } catch (error) {
             setStatus({
               isValid: false,

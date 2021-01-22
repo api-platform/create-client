@@ -2,6 +2,7 @@ import { FunctionComponent, useState } from 'react';
 import Link from 'next/link';
 import { ReferenceLinks } from '../common/ReferenceLinks';
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
+import { useRouter } from "next/router";
 
 interface Props {
   {{{lc}}}: {{{ucf}}};
@@ -9,11 +10,13 @@ interface Props {
 
 export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   const handleDelete = () => {
 		if (window.confirm("Are you sure you want to delete this item?")) {
 			try {
-				fetch({ {{{lc}}}["@id"] }, { method: "DELETE" });
+        fetch({ {{{lc}}}["@id"] }, { method: "DELETE" });
+        router.push("/{{{name}}}");
 			} catch (error) {
         setError("Error when deleting the resource.");
 				console.error(error);
