@@ -1,8 +1,9 @@
 import { FunctionComponent, useState } from "react";
-import { Formik } from "formik";
-import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { Formik } from "formik";
+import { fetch } from "../../utils/dataAccess";
+import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 
 interface Props {
   {{{lc}}}?: {{{ucf}}};
@@ -12,33 +13,33 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
   const [error, setError] = useState(null);
   const router = useRouter();
 
-	const handleDelete = () => {
-		if (window.confirm("Are you sure you want to delete this item?")) {
-			try {
-        fetch({{{lc}}}['@id'], { method: "DELETE" });
-        router.push("/{{{name}}}");
-			} catch (error) {
-				setError("Error when deleting the resource.");
-				console.error(error);
-			}
-		}
+	const handleDelete = async () => {
+		if (!window.confirm("Are you sure you want to delete this item?")) return;
+
+    try {
+      await fetch({{{lc}}}['@id'], { method: "DELETE" });
+      router.push("/{{{name}}}");
+    } catch (error) {
+      setError("Error when deleting the resource.");
+      console.error(error);
+    }
 	};
 
 	return (
 		<div>
-			{ {{{lc}}} ? <h1>Edit {{{lc}}}['@id']</h1> : <h1>Create</h1>}
+			{ {{{lc}}} ? <h1>Edit {{{ucf}}} { {{{lc}}}['@id'] }</h1> : <h1>Create {{{ucf}}}</h1>}
 			<Formik
-				initialValues={ {{{lc}}} ?? new{{{lc}}}() }
+				initialValues={ {{~lc}} ? {...{{lc~}} } : new {{{ucf}}}()}
 				validate={(values) => {
 					const errors = {};
 					// add your validation logic here
           return errors;
 				}}
-				onSubmit={(values, { setSubmitting, setStatus }) => {
+				onSubmit={async (values, { setSubmitting, setStatus }) => {
           const isCreation = !{{{lc}}}["@id"];
             try {
-              fetch(isCreation ? "/{{{name}}}" : {{{lc}}}["@id"], {
-                method: isCreation ? "POST" : "PATCH",
+              await fetch(isCreation ? "/{{{name}}}" : {{{lc}}}["@id"], {
+                method: isCreation ? "POST" : "PUT",
                 body: JSON.stringify(values),
               });
               setStatus({
@@ -57,27 +58,31 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 			>
 				{({
 					values,
-					status,
+          status,
+          errors,
+          touched,
 					handleChange,
 					handleBlur,
 					handleSubmit,
 					isSubmitting,
 				}) => (
 					<form onSubmit={handleSubmit}>
-{{#each fields}}
+{{#each formFields}}
 						<div className="form-group">
-							<label>{{name}}</label>
+							<label className="form-control-label">{{name}}</label>
 							<input
-								className="form-control"
-								type="text"
-								name="isbn"
+                name="{{name}}"
+                value={ values.{{name}} }
+                type="{{type}}"
+                {{#if step}}step="{{{step}}}"{{/if}}
+                placeholder="{{{description}}}"
+                {{#if required}}required={true}{{/if}}
+                className={`form-control${errors.{{name}} && touched.{{name}} ? ' is-invalid' : ''}`}
 								onChange={handleChange}
 								onBlur={handleBlur}
-								value={ values.{{name}} }
-								required
 							/>
 						</div>
-						{ errors.{{name}} && touched.{{name}} && errors.{{name}} }
+						{ errors.{{name}} && touched.{{name}} && <div className="invalid-feedback">{ errors.{{name}} }</div> }
 {{/each}}
 						{status && status.msg && (
 							<div

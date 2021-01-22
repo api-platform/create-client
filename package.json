@@ -1,7 +1,7 @@
 {
   "name": "@api-platform/client-generator",
   "version": "0.5.2",
-  "description": "Generate a CRUD application built with React, Redux and React Router from an Hydra-enabled API",
+  "description": "Generate apps built with Next, Nuxt, Quasar, React, React Native, Vue or Vuetify for any API documented using Hydra or OpenAPI",
   "files": [
     "*.md",
     "docs/*.md",

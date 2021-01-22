@@ -4,13 +4,15 @@
 [![npm version](https://badge.fury.io/js/%40api-platform%2Fclient-generator.svg)](https://badge.fury.io/js/%40api-platform%2Fclient-generator)
 
 API Platform Client Generator is a generator to scaffold app with Create-Retrieve-Update-Delete features for any API exposing a [Hydra](http://www.hydra-cg.com/spec/latest/core/) or [OpenAPI](https://www.openapis.org/) documentation for:
- * Quasar Framework
- * Next.js
- * React/Redux
- * React Native
- * TypeScript Interfaces
- * Vue.js
- * Vuetify.js
+
+* Next.js
+* Nuxt.js
+* Quasar Framework
+* React/Redux
+* React Native
+* TypeScript Interfaces
+* Vue.js
+* Vuetify.js
 
 Works especially well with APIs built with the [API Platform](https://api-platform.com) framework.
 
@@ -18,43 +20,34 @@ Works especially well with APIs built with the [API Platform](https://api-platfo
 
 The documentation of API Platform's Client Generator can be browsed [on the official website](https://api-platform.com/docs/client-generator).
 
-## Usage
-
-**Hydra**
-```sh
-npx @api-platform/client-generator https://demo.api-platform.com/ output/ --resource Book
-```
-
-**OpenAPI v2 (formerly known as Swagger)** (experimental)
-```sh
-npx @api-platform/client-generator https://demo.api-platform.com/docs.json output/ --resource Book --format swagger
-```
-
-or
-
-```sh
-npx @api-platform/client-generator https://demo.api-platform.com/docs.json output/ --resource Book --format openapi2
-```
-
-**OpenAPI v3** (experimental)
-```sh
-npx @api-platform/client-generator https://demo.api-platform.com/docs.json?spec_version=3 output/ --resource Book --format openapi3
-```
-
 ## Features
 
-* Generate high-quality ES6 components and files built with [React](https://facebook.github.io/react/), [Redux](http://redux.js.org), [React Router](https://reacttraining.com/react-router/) and [Redux Form](http://redux-form.com/) including:
-  * A list view
-  * A creation form
-  * An editing form
-  * A deletion button
-* Use the Hydra or Swagger API documentation to generate the code
+* Generate high-quality TypeScript or ES6 components:
+  * List view
+  * Creation form
+  * Editing form
+  * Deletion button
+* Use the Hydra or OpenAPI documentations to generate the code
 * Generate the suitable HTML5 input type (`number`, `date`...) according to the type of the API property
 * Display of the server-side validation errors under the related input (if using API Platform Core)
 * Client-side validation (`required` attributes)
 * The generated HTML is compatible with [Bootstrap](https://getbootstrap.com/) and includes mandatory classes
 * The generated HTML code is accessible to people with disabilities ([ARIA](https://www.w3.org/WAI/intro/aria) support)
-* The Redux and the React Router configuration is also generated
+
+
+## Usage
+
+### Hydra
+
+    npx @api-platform/client-generator https://demo.api-platform.com/ output/ --resource Book
+
+### OpenAPI v3 (experimental)
+
+    npx @api-platform/client-generator https://demo.api-platform.com/docs.json?spec_version=3 output/ --resource Book --format openapi3
+
+### OpenAPI v2 (formerly known as Swagger, deprecated)
+
+    npx @api-platform/client-generator https://demo.api-platform.com/docs.json?spec_version=2 output/ --resource Book --format openapi2
 
 ## Credits
 

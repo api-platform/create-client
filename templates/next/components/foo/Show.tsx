@@ -1,8 +1,9 @@
 import { FunctionComponent, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from "next/router";
+import { fetch } from "../../utils/dataAccess";
 import { ReferenceLinks } from '../common/ReferenceLinks';
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
-import { useRouter } from "next/router";
 
 interface Props {
   {{{lc}}}: {{{ucf}}};
@@ -12,16 +13,16 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
   const [error, setError] = useState(null);
   const router = useRouter();
 
-  const handleDelete = () => {
-		if (window.confirm("Are you sure you want to delete this item?")) {
-			try {
-        fetch({{{lc}}}["@id"], { method: "DELETE" });
-        router.push("/{{{name}}}");
-			} catch (error) {
-        setError("Error when deleting the resource.");
-				console.error(error);
-			}
-		}
+  const handleDelete = async () => {
+		if (!window.confirm("Are you sure you want to delete this item?")) return;
+
+    try {
+      await fetch({{{lc}}}["@id"], { method: "DELETE" });
+      router.push("/{{{name}}}");
+    } catch (error) {
+      setError("Error when deleting the resource.");
+      console.error(error);
+    }
   };
 
   return (
@@ -50,8 +51,8 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
       )}
       <Link href="/{{{name}}}">
         <a className="btn btn-primary">Back to list</a>
-      </Link>
-      <Link href="/{{{name}}}/edit">
+      </Link>{" "}
+      <Link  href={`${ {{~lc}}["@id"]}/edit`}>
         <a className="btn btn-warning">Edit</a>
       </Link>
       <button className="btn btn-danger" onClick={handleDelete}>

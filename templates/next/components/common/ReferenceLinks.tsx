@@ -6,7 +6,7 @@ interface Props {
   type: string;
   useIcon?: boolean;
 }
-export const ReferenceLinks: FunctionComponent<Props> = ({
+const ReferenceLinks: FunctionComponent<Props> = ({
   items,
   type,
   useIcon = false,
@@ -38,3 +38,4 @@ export const ReferenceLinks: FunctionComponent<Props> = ({
     </Link>
   );
 };
+export default ReferenceLinks;

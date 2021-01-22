@@ -11,7 +11,7 @@ import generators from "./generators";
 program
   .version(version)
   .description(
-    "Generate a CRUD application built with React, Redux and React Router from an Hydra-enabled API"
+    "Generate apps built with Next, Nuxt, Quasar, React, React Native, Vue or Vuetify for any API documented using Hydra or OpenAPI"
   )
   .usage("entrypoint outputDirectory")
   .option(
@@ -36,7 +36,11 @@ program
     "The templates directory base to use. Final directory will be ${templateDirectory}/${generator}",
     `${__dirname}/../templates/`
   )
-  .option("-f, --format [hydra|swagger]", '"hydra" or "swagger', "hydra")
+  .option(
+    "-f, --format [hydra|openapi3|openapi2]",
+    '"hydra", "openapi3" or "openapi2"',
+    "hydra"
+  )
   .option(
     "-s, --server-path [serverPath]",
     "Path to express server file to allow route dynamic addition (Next.js generator only)"
@@ -83,7 +87,8 @@ const parser = (entrypointWithSlash) => {
     options.headers.set("Authorization", `Bearer ${program.bearer}`);
   }
   switch (program.format) {
-    case "swagger":
+    case "swagger": // deprecated
+    case "openapi2":
       return parseSwaggerDocumentation(entrypointWithSlash);
     case "openapi3":
       return parseOpenApi3Documentation(entrypointWithSlash);

@@ -1,6 +1,6 @@
 import { NextComponentType, NextPageContext } from 'next';
 import { Form } from '../../../components/{{{lc}}}/Form';
-import { {{{ucf}}} } from '../../types/{{{ucf}}}';
+import { {{{ucf}}} } from '../../../types/{{{ucf}}}';
 import { fetch } from '../../../utils/dataAccess';
 
 interface Props {

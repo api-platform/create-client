@@ -62,7 +62,6 @@ export default class NextGenerator extends BaseGenerator {
       `${dir}/config`,
       `${dir}/error`,
       `${dir}/types`,
-      `${dir}/pages/${context.lc}s/[id]`,
       `${dir}/utils`,
     ].forEach((dir) => this.createDir(dir, false));
 
