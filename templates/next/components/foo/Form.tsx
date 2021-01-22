@@ -36,9 +36,9 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           return errors;
 				}}
 				onSubmit={async (values, { setSubmitting, setStatus }) => {
-          const isCreation = !{{{lc}}}["@id"];
+          const isCreation = !values["@id"];
             try {
-              await fetch(isCreation ? "/{{{name}}}" : {{{lc}}}["@id"], {
+              await fetch(isCreation ? "/{{{name}}}" : values["@id"], {
                 method: isCreation ? "POST" : "PUT",
                 body: JSON.stringify(values),
               });
@@ -67,23 +67,26 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 					isSubmitting,
 				}) => (
 					<form onSubmit={handleSubmit}>
-{{#each formFields}}
+          {{#each formFields}}
 						<div className="form-group">
-							<label className="form-control-label">{{name}}</label>
+							<label className="form-control-label" htmlFor="{{lc}}_{{name}}">{{name}}</label>
 							<input
                 name="{{name}}"
-                value={ values.{{name}} }
+                id="{{lc}}_{{name}}"
+                value={ values.{{name}} ?? "" }
                 type="{{type}}"
                 {{#if step}}step="{{{step}}}"{{/if}}
                 placeholder="{{{description}}}"
                 {{#if required}}required={true}{{/if}}
                 className={`form-control${errors.{{name}} && touched.{{name}} ? ' is-invalid' : ''}`}
+                aria-invalid={errors.{{name}} && touched.{{name~}} }
 								onChange={handleChange}
 								onBlur={handleBlur}
 							/>
 						</div>
 						{ errors.{{name}} && touched.{{name}} && <div className="invalid-feedback">{ errors.{{name}} }</div> }
-{{/each}}
+            {{/each}}
+
 						{status && status.msg && (
 							<div
 								className={`alert ${
