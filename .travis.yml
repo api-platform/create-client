@@ -12,7 +12,6 @@ script:
 - yarn test
 - yarn lint
 - yarn test-gen
-#- yarn test-gen-cs
 - yarn test-gen-env
 - yarn check
 

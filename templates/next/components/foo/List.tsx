@@ -26,11 +26,11 @@ export const List: FunctionComponent<Props> = ({ {{{name}}} }) => (
         { {{{name}}} && ({{{name}}}.length !== 0) && {{{name}}}.map( ( {{{lc}}} ) => (
           <tr key={ {{{lc}}}['@id'] }>
             <th scope="row"><ReferenceLinks items={ {{{lc}}}['@id'] } type="{{{lc}}}" /></th>
-{{#each fields}}
-    <td>{{#if reference}}<ReferenceLinks items={ {{{../lc}}}['{{{name}}}'] } type="{{{reference.title}}}" />{{else}}{ {{{../lc}}}['{{{name}}}'] }{{/if}}</td>
-{{/each}}
-    <td><ReferenceLinks items={ {{{lc}}}['@id'] } type="{{{lc}}}" useIcon={true} /></td>
-  </tr>
+            {{#each fields}}
+              <td>{{#if reference}}<ReferenceLinks items={ {{{../lc}}}['{{{name}}}'] } type="{{{reference.title}}}" />{{else}}{ {{{../lc}}}['{{{name}}}'] }{{/if}}</td>
+            {{/each}}
+            <td><ReferenceLinks items={ {{{lc}}}['@id'] } type="{{{lc}}}" useIcon={true} /></td>
+          </tr>
         ))}
       </tbody>
     </table>
