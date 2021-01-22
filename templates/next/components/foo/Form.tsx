@@ -15,7 +15,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 	const handleDelete = () => {
 		if (window.confirm("Are you sure you want to delete this item?")) {
 			try {
-        fetch({ {{{lc}}}['@id'] }, { method: "DELETE" });
+        fetch({{{lc}}}['@id'], { method: "DELETE" });
         router.push("/{{{name}}}");
 			} catch (error) {
 				setError("Error when deleting the resource.");
@@ -31,22 +31,20 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 				initialValues={ {{{lc}}} ?? new{{{lc}}}() }
 				validate={(values) => {
 					const errors = {};
-					//set your validation logic here
+					// add your validation logic here
           return errors;
 				}}
 				onSubmit={(values, { setSubmitting, setStatus }) => {
           const isCreation = !{{{lc}}}["@id"];
             try {
-              fetch(isCreation ? "/{{{name}}}" : {{{lc}}}["@id"],
-            {
-            method: isCreation ? "POST" : "PATCH",
-            body: JSON.stringify(values),
-            }
-           );
+              fetch(isCreation ? "/{{{name}}}" : {{{lc}}}["@id"], {
+                method: isCreation ? "POST" : "PATCH",
+                body: JSON.stringify(values),
+              });
               setStatus({
-              isValid: true,
-              msg: `Element ${isCreation ? 'created': 'updated'}.`,
-            });
+                isValid: true,
+                msg: `Element ${isCreation ? 'created': 'updated'}.`,
+              });
               router.push("/{{{name}}}");
           } catch (error) {
             setStatus({
@@ -67,40 +65,40 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 				}) => (
 					<form onSubmit={handleSubmit}>
 {{#each fields}}
-						<div className='form-group'>
+						<div className="form-group">
 							<label>{{name}}</label>
 							<input
-								className='form-control'
-								type='text'
-								name='isbn'
+								className="form-control"
+								type="text"
+								name="isbn"
 								onChange={handleChange}
 								onBlur={handleBlur}
 								value={ values.{{name}} }
 								required
 							/>
 						</div>
-						{/* {errors.{{name}} && touched.{{name}} && errors.{{name}} */}
+						{ errors.{{name}} && touched.{{name}} && errors.{{name}} }
 {{/each}}
 						{status && status.msg && (
 							<div
 								className={`alert ${
 									status.isValid ? "alert-success" : "alert-danger"
 								}`}
-								role='alert'
+								role="alert"
 							>
 								{status.msg}
 							</div>
 						)}
 
 						{error && (
-							<div className='alert alert-danger' role='alert'>
+							<div className="alert alert-danger" role="alert">
 								{error}
 							</div>
 						)}
 
 						<button
-							type='submit'
-							className='btn btn-success'
+							type="submit"
+							className="btn btn-success"
 							disabled={isSubmitting}
 						>
 							Submit
@@ -109,10 +107,10 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 				)}
 			</Formik>
 			<Link href="/{{{name}}}">
-				<a className='btn btn-primary'>Back to list</a>
+				<a className="btn btn-primary">Back to list</a>
 			</Link>
 			{ {{{lc}}} && (
-				<button className='btn btn-danger' onClick={handleDelete}>
+				<button className="btn btn-danger" onClick={handleDelete}>
 					<a>Delete</a>
 				</button>
 			)}

@@ -62,12 +62,11 @@ export default class NextGenerator extends BaseGenerator {
       `${dir}/config`,
       `${dir}/error`,
       `${dir}/types`,
-      `${dir}/pages`,
       `${dir}/pages/${context.lc}s/[id]`,
       `${dir}/utils`,
     ].forEach((dir) => this.createDir(dir, false));
 
-    // copy with patterned name
+    // Copy with patterned name
     this.createDir(`${dir}/components/${context.lc}`);
     this.createDir(`${dir}/pages/${context.lc}s`);
     this.createDir(`${dir}/pages/${context.lc}s/[id]`);

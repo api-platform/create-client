@@ -49,7 +49,7 @@ test("Generate a typescript interface", () => {
   expect(fs.existsSync(tmpobj.name + "/interfaces/foo.ts")).toBe(true);
 
   const res = `export interface Foo {
-  '@id'?: string;
+  "@id"?: string;
   foo: any;
   foobar?: string[];
   readonly bar: string;
@@ -100,7 +100,7 @@ test("Generate a typescript interface without references to other interfaces", (
   expect(fs.existsSync(tmpobj.name + "/interfaces/foo.ts")).toBe(true);
 
   const res = `export interface Foo {
-  '@id'?: string;
+  "@id"?: string;
   foo: any;
   readonly bar: string;
 }
@@ -157,7 +157,7 @@ test("Generate a typescript interface with an explicit id field in the readableF
   expect(fs.existsSync(tmpobj.name + "/interfaces/foo.ts")).toBe(true);
 
   const res = `export interface Foo {
-  '@id'?: string;
+  "@id"?: string;
   foo: any;
   readonly bar: string;
   readonly id?: string;
