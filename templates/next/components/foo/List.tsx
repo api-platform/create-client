@@ -1,6 +1,7 @@
-import { FunctionComponent } from 'react';
-import { {{{ucf}}} } from '../../types/{{{ucf}}}';
+import { FunctionComponent } from "react";
 import Link from "next/link";
+import ReferenceLinks from "../../components/common/ReferenceLinks";
+import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 
 interface Props {
   {{{name}}}: {{{ucf}}}[];
