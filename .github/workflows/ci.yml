@@ -1,0 +1,41 @@
+name: Node.js Test, Build, Deploy to NPM
+
+on:
+  pull_request:
+  release:
+      types: [created]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        node-version: [14.x, 15.x]
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Node.js ${{ matrix.node-version }} 
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: yarn install
+    - run: yarn build
+    - run: yarn test
+    - run: yarn lint
+    - run: yarn test-gen
+    - run: yarn test-gen-env
+    - run: yarn check
+  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Node.js ${{ matrix.node-version }} 
+      uses: actions/setup-node@v1
+      with:
+        node-version: '15.x'
+        registry-url: 'https://registry.npmjs.org'
+    - run: npm install
+    - run: npm publish
+      env: 
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
