@@ -10,12 +10,12 @@ interface Props {
 
 export const List: FunctionComponent<Props> = ({ {{{name}}} }) => (
   <div>
-     <div>
-        <Head>
-          <title>{{{lc}}} List page</title>
-          <meta property="og:title" content="List page" key="title" />
-        </Head>
-      </div>
+    <div>
+      <Head>
+        <title>{{{ucf}}} List</title>
+        <meta property="og:title" content="List page" key="title" />
+      </Head>
+    </div>
     <h1>{{{ucf}}} List</h1>
     <Link href="/{{{name}}}/create">
       <a className="btn btn-primary">Create</a>

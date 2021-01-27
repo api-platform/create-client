@@ -28,9 +28,9 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 
   return (
     <div>
-       <div>
+      <div>
         <Head>
-          <title>{{{lc}}} Show page</title>
+          <title>Show { {{{lc}}}['@id'] }</title>
           <meta property="og:title" content="Show page" key="title" />
         </Head>
       </div>
