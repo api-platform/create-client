@@ -1,5 +1,6 @@
 import { FunctionComponent, useState } from 'react';
 import Link from 'next/link';
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { fetch } from "../../utils/dataAccess";
 import { ReferenceLinks } from '../common/ReferenceLinks';
@@ -27,6 +28,12 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 
   return (
     <div>
+       <div>
+        <Head>
+          <title>{{{lc}}} Show page</title>
+          <meta property="og:title" content="Show page" key="title" />
+        </Head>
+      </div>
       <h1>Show { {{{lc}}}['@id'] }</h1>
       <table className="table table-responsive table-striped table-hover">
         <thead>
