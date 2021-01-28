@@ -30,11 +30,11 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 		<div>
       <div>
         <Head>
-          { {{{lc}}} ? <title>Edit {{{ucf}}} { {{{lc}}}['@id'] }</title> : <title>Create {{{ucf}}}</title>}
-          <meta property="og:title" content="Form page" key="title" />
+          <title>{ {{{lc}}} ? `Edit {{{ucf}}} ${ {{{~lc}}}['@id']}` : `Create {{{ucf}}}` }</title>
+          <meta property="og:title" content="{{{lc}}} ? `Edit {{{ucf}}} ${ {{{~lc}}}['@id']}` : `Create {{{ucf}}}`"  />
         </Head>
       </div>
-      { {{{lc}}} ? <h1>Edit {{{ucf}}} { {{{lc}}}['@id'] }</h1> : <h1>Create {{{ucf}}}</h1>}
+      <h1>{{{lc}}} ? `Edit {{{ucf}}} ${ {{{~lc}}}['@id']}` : `Create {{{ucf}}}`</h1>
       <Formik
         initialValues={ {{~lc}} ? {...{{lc~}} } : new {{{ucf}}}()}
         validate={(values) => {

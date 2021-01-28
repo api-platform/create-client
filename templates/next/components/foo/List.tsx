@@ -13,7 +13,7 @@ export const List: FunctionComponent<Props> = ({ {{{name}}} }) => (
     <div>
       <Head>
         <title>{{{ucf}}} List</title>
-        <meta property="og:title" content="List page" key="title" />
+        <meta property="og:title" content="{{{ucf}}} List" key="title" />
       </Head>
     </div>
     <h1>{{{ucf}}} List</h1>
