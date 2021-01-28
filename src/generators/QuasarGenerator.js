@@ -174,7 +174,7 @@ notify: {
   'Notify'
 
 //import routes
-import ${titleLc}Routes from './router/${titleLc}';
+import ${titleLc}Routes from '../router/${titleLc}';
 
 // Add routes to VueRouter
 const router = new VueRouter({
@@ -185,7 +185,7 @@ const router = new VueRouter({
 });
 
 // Add the modules in the store
-import ${titleLc} from './store/modules/${titleLc}/';
+import ${titleLc} from '../store/modules/${titleLc}/';
 
 export const store = new Vuex.Store({
   // ...
