@@ -31,7 +31,7 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
       <div>
         <Head>
         <title>{`Show {{{ucf}}} ${ {{{~lc}}}['@id']}`}</title>
-          <meta property="og:title" content="`Show {{{ucf}}} ${ {{{~lc}}}['@id']}`" key="title" />
+          <meta property="og:title" content=`Show {{{ucf}}} ${ {{{~lc}}}['@id']}` key="title" />
         </Head>
       </div>
       <h1>{`Show {{{ucf}}} ${ {{{~lc}}}['@id']}`}</h1>
