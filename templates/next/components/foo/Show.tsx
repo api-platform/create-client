@@ -27,7 +27,7 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
   };
 
   return (
-    <h1>
+    <div>
       <div>
         <Head>
         <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
