@@ -39,7 +39,7 @@ export const List: FunctionComponent<Props> = ({ {{{name}}} }) => (
             {{/each}}
             <td><ReferenceLinks items={ {{{lc}}}['@id'] } type="{{{lc}}}" useIcon={true} /></td>
             <br></br>
-            <Link  href={`${ {{~lc}}["@id"]}/edit`}>Edit</Link>
+            <Link href={`${ {{~lc}}["@id"]}/edit`}>Edit</Link>
           </tr>
         ))}
       </tbody>
