@@ -59,12 +59,12 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
               isValid: false,
               msg: `Error when ${isCreation ? 'creating': 'updating'} the resource.`,
             });
-             const fieldErrors = Object.keys(error.errors).filter(
-                (key) => key !== "_error");
-              const apiErrorsMsg = {};
-              fieldErrors.forEach((key) => {
-                apiErrorsMsg[key] = error.errors[key];
-              });
+             const apiErrorsMsg = Object.keys(error.errors)
+                  .filter((key) => key !== "_error")
+                  .reduce((errors, errorKey) => {
+                    errors[errorKey] = error.errors[errorKey];
+                    return errors;
+                }, {});
             setErrors(apiErrorsMsg);
           }
           setSubmitting(false);
