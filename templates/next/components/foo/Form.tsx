@@ -59,6 +59,13 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
               isValid: false,
               msg: `Error when ${isCreation ? 'creating': 'updating'} the resource.`,
             });
+             const fieldErrors = Object.keys(error.errors).filter(
+                (key) => key !== "_error");
+              const apiErrorsMsg = {};
+              fieldErrors.forEach((key) => {
+                apiErrorsMsg[key] = error.errors[key];
+              });
+            setErrors(apiErrorsMsg);
           }
           setSubmitting(false);
         }}
@@ -91,7 +98,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                 onBlur={handleBlur}
               />
             </div>
-            { errors.{{name}} && touched.{{name}} && <div className="invalid-feedback">{ errors.{{name}} }</div> }
+            { errors.{{name}} && touched.{{name}} && <div className="text-danger">{ errors.{{name}} }</div> }
             {{/each}}
 
             {status && status.msg && (
