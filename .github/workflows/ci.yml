@@ -1,4 +1,4 @@
-name: Node.js Test, Build, Deploy to NPM
+name: Node.js Build and Test
 
 on:
   pull_request:
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build Node.js ${{ matrix.node-version }} 
+    - name: Build Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
@@ -25,17 +25,3 @@ jobs:
     - run: yarn test-gen
     - run: yarn test-gen-env
     - run: yarn check
-  
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build Node.js ${{ matrix.node-version }} 
-      uses: actions/setup-node@v1
-      with:
-        node-version: '15.x'
-        registry-url: 'https://registry.npmjs.org'
-    - run: npm install
-    - run: npm publish
-      env: 
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
