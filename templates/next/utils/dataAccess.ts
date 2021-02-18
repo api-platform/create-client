@@ -3,13 +3,16 @@ import has from "lodash/has";
 import mapValues from "lodash/mapValues";
 import isomorphicFetch from "isomorphic-unfetch";
 import { ENTRYPOINT } from "../config/entrypoint";
-import { SubmissionError, SubmissionErrorList } from "../error/SubmissionError";
 
 const MIME_TYPE = "application/ld+json";
 
 interface Violation {
   message: string;
   propertyPath: string;
+}
+
+interface SubmissionErrorList {
+  [key: string]: string;
 }
 
 export const fetch = async (id: string, init: RequestInit = {}) => {
@@ -32,13 +35,13 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
   const error = json["{{{hydraPrefix}}}description"] || resp.statusText;
   if (!json.violations) throw Error(error);
 
-  const errors: SubmissionErrorList = { _error: error };
+  const errors: SubmissionErrorList = { error };
   json.violations.map(
     (violation: Violation) =>
       (errors[violation.propertyPath] = violation.message)
   );
 
-  throw new SubmissionError(errors);
+  throw errors;
 };
 
 export const normalize = (data: any) => {

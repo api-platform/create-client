@@ -59,13 +59,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
               isValid: false,
               msg: `Error when ${isCreation ? 'creating': 'updating'} the resource.`,
             });
-             const apiErrorsMsg = Object.keys(error.errors)
-                  .filter((key) => key !== "_error")
-                  .reduce((errors, errorKey) => {
-                    errors[errorKey] = error.errors[errorKey];
-                    return errors;
-                }, {});
-            setErrors(apiErrorsMsg);
+            setErrors(error);
           }
           setSubmitting(false);
         }}
