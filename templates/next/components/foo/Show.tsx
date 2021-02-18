@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { fetch } from "../../utils/dataAccess";
+import { ReferenceLinks } from '../common/ReferenceLinks';
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 
 interface Props {
