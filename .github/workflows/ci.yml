@@ -1,0 +1,27 @@
+name: Node.js Build and Test
+
+on:
+  pull_request:
+  release:
+      types: [created]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        node-version: [14.x, 15.x]
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: yarn install
+    - run: yarn build
+    - run: yarn test
+    - run: yarn lint
+    - run: yarn test-gen
+    - run: yarn test-gen-env
+    - run: yarn check
