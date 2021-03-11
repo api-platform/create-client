@@ -6,15 +6,6 @@ import { ENTRYPOINT } from "../config/entrypoint";
 
 const MIME_TYPE = "application/ld+json";
 
-interface Violation {
-  message: string;
-  propertyPath: string;
-}
-
-interface SubmissionErrorList {
-  [key: string]: string;
-}
-
 export const fetch = async (id: string, init: RequestInit = {}) => {
   if (typeof init.headers === "undefined") init.headers = {};
   if (!init.headers.hasOwnProperty("Accept"))
@@ -32,16 +23,14 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
   const json = await resp.json();
   if (resp.ok) return normalize(json);
 
-  const error = json["{{{hydraPrefix}}}description"] || resp.statusText;
-  if (!json.violations) throw Error(error);
-
-  const errors: SubmissionErrorList = { error };
+  const status = json["hydra:description"] || resp.statusText;
+  if (!json.violations) throw Error(status);
+  const fields = {};
   json.violations.map(
-    (violation: Violation) =>
-      (errors[violation.propertyPath] = violation.message)
+    (violation) => (fields[violation.propertyPath] = violation.message)
   );
 
-  throw errors;
+  throw { status, fields };
 };
 
 export const normalize = (data: any) => {

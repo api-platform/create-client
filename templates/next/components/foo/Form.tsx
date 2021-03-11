@@ -21,7 +21,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
       await fetch({{{lc}}}['@id'], { method: "DELETE" });
       router.push("/{{{name}}}");
     } catch (error) {
-      setError("Error when deleting the resource.");
+      setError(`Error when deleting the resource: ${error}`);
       console.error(error);
     }
 	};
@@ -42,7 +42,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           // add your validation logic here
           return errors;
         }}
-        onSubmit={async (values, { setSubmitting, setStatus }) => {
+        onSubmit={async (values, { setSubmitting, setStatus, setErrors }) => {
           const isCreation = !values["@id"];
             try {
               await fetch(isCreation ? "/{{{name}}}" : values["@id"], {
@@ -57,9 +57,9 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           } catch (error) {
             setStatus({
               isValid: false,
-              msg: `Error when ${isCreation ? 'creating': 'updating'} the resource.`,
+              msg: `Error when ${isCreation ? 'creating': 'updating'} the resource: ${error.status}`,
             });
-            setErrors(error);
+            setErrors(error.fields);
           }
           setSubmitting(false);
         }}
