@@ -23,14 +23,15 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
   const json = await resp.json();
   if (resp.ok) return normalize(json);
 
+  const defaultErrorMsg = json["hydra:title"];
   const status = json["hydra:description"] || resp.statusText;
-  if (!json.violations) throw Error(status);
+  if (!json.violations) throw Error(defaultErrorMsg);
   const fields = {};
   json.violations.map(
     (violation) => (fields[violation.propertyPath] = violation.message)
   );
 
-  throw { status, fields };
+  throw { defaultErrorMsg, status, fields };
 };
 
 export const normalize = (data: any) => {

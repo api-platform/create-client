@@ -57,7 +57,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           } catch (error) {
             setStatus({
               isValid: false,
-              msg: `Error when ${isCreation ? 'creating': 'updating'} the resource: ${error.status}`,
+              `msg: `${error.defaultErrorMsg}`,
             });
             setErrors(error.fields);
           }
