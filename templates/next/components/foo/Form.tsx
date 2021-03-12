@@ -2,7 +2,7 @@ import { FunctionComponent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { Formik } from "formik";
+import { ErrorMessage, Formik } from "formik";
 import { fetch } from "../../utils/dataAccess";
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 
@@ -92,7 +92,11 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                 onBlur={handleBlur}
               />
             </div>
-            { errors.{{name}} && touched.{{name}} && <div className="text-danger">{ errors.{{name}} }</div> }
+            <ErrorMessage
+              className="text-danger"
+              component="div"
+              name="{{name}}"
+            />
             {{/each}}
 
             {status && status.msg && (
@@ -103,12 +107,6 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                 role="alert"
               >
                 {status.msg}
-              </div>
-            )}
-
-            {error && (
-              <div className="alert alert-danger" role="alert">
-                {error}
               </div>
             )}
 
