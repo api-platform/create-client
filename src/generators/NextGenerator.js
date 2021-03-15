@@ -13,9 +13,6 @@ export default class NextGenerator extends BaseGenerator {
       "components/foo/Show.tsx",
       "components/foo/Form.tsx",
 
-      // interfaces
-      "error/SubmissionError.ts",
-
       // types
       "types/Collection.ts",
       "types/foo.ts",
@@ -91,9 +88,6 @@ export default class NextGenerator extends BaseGenerator {
     [
       // components
       "components/common/ReferenceLinks.tsx",
-
-      // error
-      "error/SubmissionError.ts",
 
       // types
       "types/Collection.ts",

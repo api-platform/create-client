@@ -44,7 +44,6 @@ describe("generate", () => {
       "/components/abc/Show.tsx",
       "/components/abc/Form.tsx",
       "/components/common/ReferenceLinks.tsx",
-      "/error/SubmissionError.ts",
       "/types/Abc.ts",
       "/types/Collection.ts",
       "/pages/abcs/[id]/index.tsx",

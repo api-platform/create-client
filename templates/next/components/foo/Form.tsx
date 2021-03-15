@@ -2,7 +2,7 @@ import { FunctionComponent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { Formik } from "formik";
+import { ErrorMessage, Formik } from "formik";
 import { fetch } from "../../utils/dataAccess";
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 
@@ -21,7 +21,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
       await fetch({{{lc}}}['@id'], { method: "DELETE" });
       router.push("/{{{name}}}");
     } catch (error) {
-      setError("Error when deleting the resource.");
+      setError(`Error when deleting the resource: ${error}`);
       console.error(error);
     }
 	};
@@ -42,7 +42,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           // add your validation logic here
           return errors;
         }}
-        onSubmit={async (values, { setSubmitting, setStatus }) => {
+        onSubmit={async (values, { setSubmitting, setStatus, setErrors }) => {
           const isCreation = !values["@id"];
             try {
               await fetch(isCreation ? "/{{{name}}}" : values["@id"], {
@@ -57,8 +57,9 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           } catch (error) {
             setStatus({
               isValid: false,
-              msg: `Error when ${isCreation ? 'creating': 'updating'} the resource.`,
+              msg: `${error.defaultErrorMsg}`,
             });
+            setErrors(error.fields);
           }
           setSubmitting(false);
         }}
@@ -91,7 +92,11 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                 onBlur={handleBlur}
               />
             </div>
-            { errors.{{name}} && touched.{{name}} && <div className="invalid-feedback">{ errors.{{name}} }</div> }
+            <ErrorMessage
+              className="text-danger"
+              component="div"
+              name="{{name}}"
+            />
             {{/each}}
 
             {status && status.msg && (
@@ -102,12 +107,6 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                 role="alert"
               >
                 {status.msg}
-              </div>
-            )}
-
-            {error && (
-              <div className="alert alert-danger" role="alert">
-                {error}
               </div>
             )}
 
