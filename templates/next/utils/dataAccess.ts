@@ -6,6 +6,11 @@ import { ENTRYPOINT } from "../config/entrypoint";
 
 const MIME_TYPE = "application/ld+json";
 
+interface Violation {
+  message: string;
+  propertyPath: string;
+}
+
 export const fetch = async (id: string, init: RequestInit = {}) => {
   if (typeof init.headers === "undefined") init.headers = {};
   if (!init.headers.hasOwnProperty("Accept"))
@@ -28,7 +33,8 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
   if (!json.violations) throw Error(defaultErrorMsg);
   const fields = {};
   json.violations.map(
-    (violation) => (fields[violation.propertyPath] = violation.message)
+    (violation: Violation) =>
+      (fields[violation.propertyPath] = violation.message)
   );
 
   throw { defaultErrorMsg, status, fields };

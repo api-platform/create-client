@@ -57,7 +57,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           } catch (error) {
             setStatus({
               isValid: false,
-              `msg: `${error.defaultErrorMsg}`,
+              msg: `${error.defaultErrorMsg}`,
             });
             setErrors(error.fields);
           }
