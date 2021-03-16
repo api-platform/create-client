@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        node-version: [14.x, 15.x]
+        node-version: ['14', '15']
 
     runs-on: ubuntu-latest
     steps:
