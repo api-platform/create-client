@@ -47,7 +47,7 @@
     "sprintf-js": "^1.1.1"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest src",
     "lint": "eslint src",
     "fix": "eslint --fix src",
     "eslint-check": "eslint-config-prettier src/index.js",
