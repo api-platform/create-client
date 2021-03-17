@@ -1,7 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Head from "next/head";
 import { ErrorMessage, Formik } from "formik";
 import { fetch } from "../../utils/dataAccess";
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
@@ -28,12 +27,6 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 
 	return (
 		<div>
-      <div>
-        <Head>
-          <title>{ {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }</title>
-          <meta property="og:title" content={ {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }  />
-        </Head>
-      </div>
       <h1>{ {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }</h1>
       <Formik
         initialValues={ {{~lc}} ? {...{{lc~}} } : new {{{ucf}}}()}
