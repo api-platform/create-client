@@ -14,7 +14,6 @@ const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{lc}}} }) =>
       <div>
         <Head>
           <title>{ {{{lc}}} && `Edit {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
-          <meta property="og:title" content={ {{{lc}}} && `Edit{{{ucf}}} ${ {{~lc}}['@id']}`} key="title" />
         </Head>
       </div>
       <Form {{{lc}}}={ {{{lc}}} }/>

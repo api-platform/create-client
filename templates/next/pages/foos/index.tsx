@@ -14,7 +14,6 @@ const Page: NextComponentType<NextPageContext, Props, Props> = ({collection}) =>
       <div>
         <Head>
           <title>{{{ucf}}} List</title>
-          <meta property="og:title" content="{{{ucf}}} List" key="title" />
         </Head>
       </div>
       <List {{{name}}}={collection['{{{hydraPrefix}}}member']}/>

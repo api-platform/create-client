@@ -7,7 +7,6 @@ const Page: NextComponentType<NextPageContext> = () => (
     <div>
       <Head>
         <title>Create {{{ucf}}} </title>
-        <meta property="og:title" content="Create {{{ucf}}}" key="title" />
       </Head>
     </div>
     <Form />

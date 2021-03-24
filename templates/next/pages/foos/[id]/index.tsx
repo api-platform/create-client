@@ -13,8 +13,7 @@ const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{lc}}} }) =>
     <div>
       <div>
           <Head>
-          <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
-            <meta property="og:title" content={`Show {{{ucf}}} ${ {{~lc}}['@id']}`} key="title" />
+            <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
           </Head>
         </div>
       <Show {{{lc}}}={ {{{lc}}} }/>
