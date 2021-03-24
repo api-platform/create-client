@@ -1,9 +1,8 @@
 import { FunctionComponent, useState } from 'react';
 import Link from 'next/link';
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { fetch } from "../../utils/dataAccess";
-import { ReferenceLinks } from '../common/ReferenceLinks';
+import ReferenceLinks from '../common/ReferenceLinks';
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 
 interface Props {
@@ -28,12 +27,6 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 
   return (
     <div>
-      <div>
-        <Head>
-        <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
-          <meta property="og:title" content={`Show {{{ucf}}} ${ {{~lc}}['@id']}`} key="title" />
-        </Head>
-      </div>
       <h1>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</h1>
       <table className="table table-responsive table-striped table-hover">
         <thead>
