@@ -16,6 +16,9 @@ const transformRelationToIri = (payload) => {
   return payload;
 };
 
+const makeParamArray = (key, arr) =>
+  arr.map(val => `${key}[]=${val}`).join('&');
+
 export default function(id, options = {}) {
   if ('undefined' === typeof options.headers) options.headers = new Headers();
 
@@ -32,6 +35,18 @@ export default function(id, options = {}) {
   const payload = options.body && JSON.parse(options.body);
   if (isObject(payload) && payload['@id'])
     options.body = JSON.stringify(transformRelationToIri(payload));
+
+  if (options.params) {
+    const params = normalize(options.params);
+    let queryString = Object.keys(params)
+      .map(key =>
+        Array.isArray(params[key])
+          ? makeParamArray(key, params[key])
+          : `${key}=${params[key]}`
+      )
+      .join('&');
+    id = `${id}?${queryString}`;
+  }
 
   return global.fetch(new URL(id, ENTRYPOINT), options).then(response => {
     if (response.ok) return response;
