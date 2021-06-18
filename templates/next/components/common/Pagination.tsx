@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { FunctionComponent } from "react";
 import { PagedCollection } from "../../types/Collection";
 
 interface Props {
