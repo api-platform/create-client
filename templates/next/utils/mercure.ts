@@ -37,11 +37,7 @@ export const useMercure = (deps: unknown | PagedCollection<unknown>, hubURL: str
         setData(data);
       }));
 
-      return () => {
-        eventSource.removeEventListener("message", setData);
-
-        return data;
-      };
+      return () => data;
     }
 
     // It's a single object
