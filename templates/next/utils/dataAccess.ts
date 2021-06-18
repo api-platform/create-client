@@ -11,6 +11,17 @@ interface Violation {
   propertyPath: string;
 }
 
+const extractHubURL = function (response) {
+  const linkHeader = response.headers.get('Link');
+  if (!linkHeader) return null;
+
+  const matches = linkHeader.match(
+    /<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/
+  );
+
+  return matches && matches[1] ? new URL(matches[1], ENTRYPOINT) : null;
+}
+
 export const fetch = async (id: string, init: RequestInit = {}) => {
   if (typeof init.headers === "undefined") init.headers = {};
   if (!init.headers.hasOwnProperty("Accept"))
@@ -26,10 +37,15 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
   if (resp.status === 204) return;
 
   const json = await resp.json();
-  if (resp.ok) return normalize(json);
+  if (resp.ok) {
+    return {
+      hubURL: extractHubURL(resp).toString(), // URL cannot be serialized as JSON, must be sent as string
+      data: normalize(json),
+    };
+  }
 
-  const defaultErrorMsg = json["hydra:title"];
-  const status = json["hydra:description"] || resp.statusText;
+  const defaultErrorMsg = json["{{{hydraPrefix}}}title"];
+  const status = json["{{{hydraPrefix}}}description"] || resp.statusText;
   if (!json.violations) throw Error(defaultErrorMsg);
   const fields = {};
   json.violations.map(

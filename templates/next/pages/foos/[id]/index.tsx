@@ -4,12 +4,16 @@ import { {{{ucf}}} } from "../../../types/{{{ucf}}}";
 import { fetch } from "../../../utils/dataAccess";
 import Head from "next/head";
 import DefaultErrorPage from "next/error";
+import { useMercure } from "../../../utils/mercure";
 
 interface Props {
   {{{lc}}}: {{{ucf}}};
+  hubURL: string;
 };
 
-const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{lc}}} }) => {
+const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
+  const {{{lc}}} = useMercure(props.{{{lc}}}, props.hubURL);
+
   if (!{{{lc}}}) {
     return <DefaultErrorPage statusCode={404} />;
   }
@@ -18,20 +22,21 @@ const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{lc}}} }) =>
     <div>
       <div>
         <Head>
-          <title>{`Show {{{ucf}}} ${{{~lc}}['@id']}`}</title>
+          <title>{`Show {{{ucf}}} ${ {{~lc}}['@id'] }`}</title>
         </Head>
       </div>
-      <Show {{{lc}}}={{{{lc}}}} />
+      <Show {{{lc}}}={ {{{lc}}} } />
     </div>
   );
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const {{{lc}}} = await fetch(`/{{{name}}}/${params.id}`);
+  const response = await fetch(`/{{{name}}}/${params.id}`);
 
   return {
     props: {
-      {{{lc}}}: {{{lc}}},
+      {{{lc}}}: response.data,
+      hubURL: response.hubURL,
     },
     revalidate: 1,
   }
@@ -42,7 +47,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const response = await fetch("/{{{name}}}");
 
     return {
-      paths: response.data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => {{{lc}}}['@id']),
+      paths: response.data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => {{~lc}}['@id']),
       fallback: true,
     };
   } catch (e) {

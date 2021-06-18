@@ -18,10 +18,10 @@ const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{lc}}} }) =>
     <div>
       <div>
         <Head>
-          <title>{{{{lc}}} && `Edit {{{ucf}}} ${{{~lc}}['@id']}`}</title>
+          <title>{ {{{lc}}} && `Edit {{{ucf}}} ${ {{~lc}}['@id'] }` }</title>
         </Head>
       </div>
-      <Form {{{lc}}}={{{{lc}}}} />
+      <Form {{{lc}}}={ {{{lc}}} } />
     </div>
   );
 };
@@ -40,7 +40,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const response = await fetch("/{{{name}}}");
 
     return {
-      paths: response.data["hydra:member"].map(({{{lc}}}) => `${{{{lc}}}['@id']}/edit`),
+      paths: response.data["hydra:member"].map(({{{lc}}}) => `${ {{~lc}}['@id'] }/edit`),
       fallback: true,
     };
   } catch (e) {
