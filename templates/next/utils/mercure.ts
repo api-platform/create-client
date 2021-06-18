@@ -1,9 +1,9 @@
 import has from "lodash/has";
+import { useEffect, useState } from "react";
 import { PagedCollection } from "../types/Collection";
 import { normalize } from "./dataAccess";
-import { useEffect, useState } from "react";
 
-const mercureSubscribe = (hubURL: string, data: any | PagedCollection<any>, setData: Function) => {
+const mercureSubscribe = (hubURL: string, data: any | PagedCollection<any>, setData: (data: any) => void) => {
   const url = new URL(hubURL, window.origin);
   url.searchParams.append("topic", (new URL(data["@id"], window.origin)).toString());
   const eventSource = new EventSource(url.toString());
@@ -30,22 +30,28 @@ export const useMercure = (deps: any | PagedCollection<any>, hubURL: string) => 
   }
 
   useEffect(() => {
-    if (has(data, "{{{hydraPrefix}}}member") && typeof data["{{{hydraPrefix}}}member"] !== "undefined" && data["{{{hydraPrefix}}}member"].length !== 0) {
+    if (has(data, "{{{hydraPrefix}}}member") && Array.isArray(data["{{{hydraPrefix}}}member"]) && data["{{{hydraPrefix}}}member"].length !== 0) {
       // It's a PagedCollection
       data["{{{hydraPrefix}}}member"].forEach((obj, pos) => mercureSubscribe(hubURL, obj, (datum) => {
         data["{{{hydraPrefix}}}member"][pos] = datum;
         setData(data);
       }));
-    } else {
-      // It's a single object
-      const eventSource = mercureSubscribe(hubURL, data, setData);
 
       return () => {
         eventSource.removeEventListener("message", setData);
 
         return data;
-      }
+      };
     }
+
+    // It's a single object
+    const eventSource = mercureSubscribe(hubURL, data, setData);
+
+    return () => {
+      eventSource.removeEventListener("message", setData);
+
+      return data;
+    };
   }, [data]);
 
   return data;

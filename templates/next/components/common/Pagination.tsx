@@ -6,7 +6,7 @@ interface Props {
   collection: PagedCollection<any>;
 }
 
-const Pagination: FunctionComponent<Props> = ({ collection }) => {
+const Pagination = ({ collection }: Props) => {
   const view = collection && collection['{{{hydraPrefix}}}view'];
   if (!view) return;
 

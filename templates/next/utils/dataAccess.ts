@@ -11,7 +11,7 @@ interface Violation {
   propertyPath: string;
 }
 
-const extractHubURL = function (response) {
+const extractHubURL = (response: Response): null | URL => {
   const linkHeader = response.headers.get('Link');
   if (!linkHeader) return null;
 
@@ -20,7 +20,7 @@ const extractHubURL = function (response) {
   );
 
   return matches && matches[1] ? new URL(matches[1], ENTRYPOINT) : null;
-}
+};
 
 export const fetch = async (id: string, init: RequestInit = {}) => {
   if (typeof init.headers === "undefined") init.headers = {};
