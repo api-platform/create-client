@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { PagedCollection } from "../types/Collection";
 import { normalize } from "./dataAccess";
 
-const mercureSubscribe = (hubURL: string, data: any | PagedCollection<any>, setData: (data: any) => void) => {
+const mercureSubscribe = (hubURL: string, data: unknown | PagedCollection<unknown>, setData: (data: unknown) => void) => {
   const url = new URL(hubURL, window.origin);
   url.searchParams.append("topic", (new URL(data["@id"], window.origin)).toString());
   const eventSource = new EventSource(url.toString());
@@ -12,7 +12,7 @@ const mercureSubscribe = (hubURL: string, data: any | PagedCollection<any>, setD
   return eventSource;
 }
 
-export const useMercure = (deps: any | PagedCollection<any>, hubURL: string) => {
+export const useMercure = (deps: unknown | PagedCollection<unknown>, hubURL: string) => {
   const [data, setData] = useState(deps);
 
   useEffect(() => {

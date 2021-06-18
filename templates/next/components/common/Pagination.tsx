@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 import { PagedCollection } from "../../types/Collection";
 
 interface Props {
-  collection: PagedCollection<any>;
+  collection: PagedCollection<unknown>;
 }
 
 const Pagination = ({ collection }: Props) => {

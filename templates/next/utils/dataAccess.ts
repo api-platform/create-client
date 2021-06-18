@@ -56,12 +56,12 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
   throw { defaultErrorMsg, status, fields };
 };
 
-export const normalize = (data: any) => {
+export const normalize = (data: unknown) => {
   if (has(data, "{{{hydraPrefix}}}member")) {
     // Normalize items in collections
     data["{{{hydraPrefix}}}member"] = data[
       "{{{hydraPrefix}}}member"
-    ].map((item: any) => normalize(item));
+    ].map((item: unknown) => normalize(item));
 
     return data;
   }
