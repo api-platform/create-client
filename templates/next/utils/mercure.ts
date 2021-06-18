@@ -44,7 +44,7 @@ export const useMercure = (deps: unknown | PagedCollection<unknown>, hubURL: str
     const eventSource = mercureSubscribe(hubURL, data, setData);
 
     return () => {
-      eventSource.removeEventListener("message", setData);
+      eventSource.removeEventListener("message", (event) => setData(normalize(JSON.parse(event.data))));
 
       return data;
     };
