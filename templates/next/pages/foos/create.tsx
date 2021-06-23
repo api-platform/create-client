@@ -11,7 +11,6 @@ const Page: NextComponentType<NextPageContext> = () => (
     </div>
     <Form />
   </div>
-)
-
+);
 
 export default Page;
