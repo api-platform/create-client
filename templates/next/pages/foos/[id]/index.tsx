@@ -8,11 +8,11 @@ import { useMercure } from "../../../utils/mercure";
 
 interface Props {
   {{{lc}}}: {{{ucf}}};
-  hubURL: string;
+  hubURL: null | string;
 };
 
 const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
-  const {{{lc}}} = useMercure(props.{{{lc}}}, props.hubURL);
+  const {{{lc}}} = props.hubURL === null ? props.{{{lc}}} : useMercure(props.{{{lc}}}, props.hubURL);
 
   if (!{{{lc}}}) {
     return <DefaultErrorPage statusCode={404} />;
@@ -39,23 +39,41 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       hubURL: response.hubURL,
     },
     revalidate: 1,
-  }
+  };
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const response = await fetch("/{{{name}}}");
-
-    return {
-      paths: response.data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => {{~lc}}['@id']),
-      fallback: true,
-    };
   } catch (e) {
     console.error(e);
+
+    return {
+      paths: [],
+      fallback: true,
+    };
+  }
+
+  const view = response.data['{{{hydraPrefix}}}view'];
+  const paths = response.data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => `${ {{~lc}}['@id'] }`);
+
+  if (view) {
+    try {
+      const {
+        '{{{hydraPrefix}}}last': last
+      } = view;
+      for (let page = 2; page <= parseInt(last.replace(/^\/{{{name}}}\?page=(\d+)/, '$1')); page++) {
+        paths.concat(
+          await fetch(`/{{{name}}}?page=${page}`).data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => `${ {{~lc}}['@id'] }`)
+      );
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return {
-    paths: [],
+    paths,
     fallback: true,
   };
 }

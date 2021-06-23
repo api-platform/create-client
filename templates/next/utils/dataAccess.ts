@@ -39,7 +39,7 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
   const json = await resp.json();
   if (resp.ok) {
     return {
-      hubURL: extractHubURL(resp).toString(), // URL cannot be serialized as JSON, must be sent as string
+      hubURL: extractHubURL(resp)?.toString(), // URL cannot be serialized as JSON, must be sent as string
       data: normalize(json),
     };
   }

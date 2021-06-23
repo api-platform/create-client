@@ -32,23 +32,41 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       {{{lc}}}: await fetch(`/{{{name}}}/${params.id}`),
     },
     revalidate: 1,
-  }
+  };
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const response = await fetch("/{{{name}}}");
-
-    return {
-      paths: response.data["hydra:member"].map(({{{lc}}}) => `${ {{~lc}}['@id'] }/edit`),
-      fallback: true,
-    };
   } catch (e) {
     console.error(e);
+
+    return {
+      paths: [],
+      fallback: true,
+    };
+  }
+
+  const view = response.data['{{{hydraPrefix}}}view'];
+  const paths = response.data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => `${ {{~lc}}['@id'] }/edit`);
+
+  if (view) {
+    try {
+      const {
+        '{{{hydraPrefix}}}last': last
+      } = view;
+      for (let page = 2; page <= parseInt(last.replace(/^\/{{{name}}}\?page=(\d+)/, '$1')); page++) {
+        paths.concat(
+          await fetch(`/{{{name}}}?page=${page}`).data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => `${ {{~lc}}['@id'] }/edit`)
+        );
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return {
-    paths: [],
+    paths,
     fallback: true,
   };
 }
