@@ -66,6 +66,7 @@ export function normalize(data) {
   return mapValues(data, value =>
     Array.isArray(value)
       ? value.map(v => get(v, '@id', v))
+      : value instanceof Object ? normalize(value)
       : get(value, '@id', value)
   );
 }
