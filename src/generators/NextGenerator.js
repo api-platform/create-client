@@ -8,6 +8,7 @@ export default class NextGenerator extends BaseGenerator {
     this.routeAddedtoServer = false;
     this.registerTemplates(`next/`, [
       // components
+      "components/common/Pagination.tsx",
       "components/common/ReferenceLinks.tsx",
       "components/foo/List.tsx",
       "components/foo/Show.tsx",
@@ -25,6 +26,7 @@ export default class NextGenerator extends BaseGenerator {
 
       // utils
       "utils/dataAccess.ts",
+      "utils/mercure.ts",
     ]);
   }
 
@@ -87,6 +89,7 @@ export default class NextGenerator extends BaseGenerator {
     // copy with regular name
     [
       // components
+      "components/common/Pagination.tsx",
       "components/common/ReferenceLinks.tsx",
 
       // types
@@ -94,6 +97,7 @@ export default class NextGenerator extends BaseGenerator {
 
       // utils
       "utils/dataAccess.ts",
+      "utils/mercure.ts",
     ].forEach((file) =>
       this.createFile(file, `${dir}/${file}`, context, false)
     );
