@@ -44,6 +44,7 @@ describe("generate", () => {
       "/components/abc/Show.tsx",
       "/components/abc/Form.tsx",
       "/components/common/ReferenceLinks.tsx",
+      "/components/common/Pagination.tsx",
       "/types/Abc.ts",
       "/types/Collection.ts",
       "/pages/abcs/[id]/index.tsx",
@@ -51,6 +52,7 @@ describe("generate", () => {
       "/pages/abcs/index.tsx",
       "/pages/abcs/create.tsx",
       "/utils/dataAccess.ts",
+      "/utils/mercure.ts",
     ].forEach((file) => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
 
     [
