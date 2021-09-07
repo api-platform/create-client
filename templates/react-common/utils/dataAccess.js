@@ -65,7 +65,8 @@ export function normalize(data) {
   // Flatten nested documents
   return mapValues(data, value =>
     Array.isArray(value)
-      ? value.map(v => get(v, '@id', v))
+      ? value.map(v => normalize(v))
+      : value instanceof Object ? normalize(value)
       : get(value, '@id', value)
   );
 }
