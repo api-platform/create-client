@@ -35,6 +35,18 @@ You can now hack in the cloned repository of `client-generator`. If you want to 
 
 ### Testing your changes
 
+To test your changes, generate a client in a `pwa` directory of an api-platform distribution:
+
+```console
+$ git clean -df && NODE_TLS_REJECT_UNAUTHORIZED=0 <absolutePathOfYourClonedRepo>/lib/index.js https://localhost/ .
+```
+
+and see the `pwa` logs:
+
+```console
+$ docker-compose logs -f pwa
+```
+
 Before sending a Pull Request, make sure the tests pass correctly:
 
 ```console
