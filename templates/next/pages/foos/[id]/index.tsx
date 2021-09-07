@@ -25,7 +25,7 @@ const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
           <title>{`Show {{{ucf}}} ${ {{~lc}}['@id'] }`}</title>
         </Head>
       </div>
-      <Show {{{lc}}}={ {{{lc}}} text=text} />
+      <Show {{{lc}}}={ {{{lc}}} } text={ props.text } />
     </div>
   );
 };

@@ -10,7 +10,7 @@ interface Props {
   {{{lc}}}: {{{ucf}}};
 }
 
-export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
+export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
   const [error, setError] = useState(null);
   const router = useRouter();
 
