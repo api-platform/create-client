@@ -29,7 +29,7 @@ const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const collection = await fetch('/{{{name}}}');
+  const response = await fetch('/{{{name}}}');
 
   return {
     props: {
