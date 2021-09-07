@@ -10,7 +10,7 @@ interface Props {
   {{{lc}}}: {{{ucf}}};
 }
 
-export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
+export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
   const [error, setError] = useState(null);
   const router = useRouter();
 
@@ -32,10 +32,9 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
             <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML=\{{
-                  __html: text
-                }}
-            />
+            >
+              {text}
+            </script>
           </Head>
       <h1>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</h1>
       <table className="table table-responsive table-striped table-hover">
