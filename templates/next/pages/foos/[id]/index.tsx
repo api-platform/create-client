@@ -25,7 +25,7 @@ const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
           <title>{`Show {{{ucf}}} ${ {{~lc}}['@id'] }`}</title>
         </Head>
       </div>
-      <Show {{{lc}}}={ {{{lc}}} } />
+      <Show {{{lc}}}={ {{{lc}}} } text={ props.text } />
     </div>
   );
 };
@@ -36,6 +36,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       {{{lc}}}: response.data,
+      text: response.text,
       hubURL: response.hubURL,
     },
     revalidate: 1,

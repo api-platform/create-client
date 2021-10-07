@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { fetch } from "../../utils/dataAccess";
 import ReferenceLinks from '../common/ReferenceLinks';
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
+import Head from 'next/head'
 
 interface Props {
   {{{lc}}}: {{{ucf}}};
@@ -27,6 +28,14 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 
   return (
     <div>
+       <Head>
+            <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
+            <script
+                type="application/ld+json"
+            >
+              {text}
+            </script>
+          </Head>
       <h1>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</h1>
       <table className="table table-responsive table-striped table-hover">
         <thead>

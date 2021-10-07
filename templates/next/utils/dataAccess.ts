@@ -12,7 +12,7 @@ interface Violation {
 }
 
 const extractHubURL = (response: Response): null | URL => {
-  const linkHeader = response.headers.get('Link');
+  const linkHeader = response.headers.get("Link");
   if (!linkHeader) return null;
 
   const matches = linkHeader.match(
@@ -41,6 +41,7 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
     return {
       hubURL: extractHubURL(resp)?.toString(), // URL cannot be serialized as JSON, must be sent as string
       data: normalize(json),
+      text: await resp.text(),
     };
   }
 
