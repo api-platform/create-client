@@ -38,7 +38,7 @@
     "@api-platform/api-doc-parser": "^0.12.0",
     "@babel/runtime": "^7.0.0",
     "chalk": "^4.1.0",
-    "commander": "^6.2.1",
+    "commander": "^8.2.0",
     "handlebars": "^4.0.12",
     "handlebars-helpers": "^0.10.0",
     "isomorphic-fetch": "^3.0.0",

@@ -55,6 +55,8 @@ if (
   program.help();
 }
 
+const options = program.opts();
+
 const entrypoint =
   program.args[0] || process.env.API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT;
 const outputDirectory =
@@ -64,29 +66,29 @@ const entrypointWithSlash = entrypoint.endsWith("/")
   ? entrypoint
   : entrypoint + "/";
 
-const generator = generators(program.generator)({
-  hydraPrefix: program.hydraPrefix,
-  templateDirectory: program.templateDirectory,
+const generator = generators(options.generator)({
+  hydraPrefix: options.hydraPrefix,
+  templateDirectory: options.templateDirectory,
 });
-const resourceToGenerate = program.resource
-  ? program.resource.toLowerCase()
+const resourceToGenerate = options.resource
+  ? options.resource.toLowerCase()
   : null;
-const serverPath = program.serverPath ? program.serverPath.toLowerCase() : null;
+const serverPath = options.serverPath ? options.serverPath.toLowerCase() : null;
 
 const parser = (entrypointWithSlash) => {
   const options = {};
-  if (program.username && program.password) {
+  if (options.username && options.password) {
     const encoded = Buffer.from(
-      `${program.username}:${program.password}`
+      `${options.username}:${options.password}`
     ).toString("base64");
     options.headers = new Headers();
     options.headers.set("Authorization", `Basic ${encoded}`);
   }
-  if (program.bearer) {
+  if (options.bearer) {
     options.headers = new Headers();
-    options.headers.set("Authorization", `Bearer ${program.bearer}`);
+    options.headers.set("Authorization", `Bearer ${options.bearer}`);
   }
-  switch (program.format) {
+  switch (options.format) {
     case "swagger": // deprecated
     case "openapi2":
       return parseSwaggerDocumentation(entrypointWithSlash);
