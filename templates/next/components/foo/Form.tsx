@@ -25,6 +25,8 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
     }
 	};
 
+  const renderForm
+
 	return (
 		<div>
       <h1>{ {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }</h1>
@@ -66,52 +68,64 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           handleBlur,
           handleSubmit,
           isSubmitting,
-        }) => (
-          <form onSubmit={handleSubmit}>
-          {{#each formFields}}
-            <div className="form-group">
-              <label className="form-control-label" htmlFor="{{lc}}_{{name}}">{{name}}</label>
-              <input
-                name="{{name}}"
-                id="{{lc}}_{{name}}"
-                value={ values.{{name}} ?? "" }
-                type="{{type}}"
-                {{#if step}}step="{{{step}}}"{{/if}}
-                placeholder="{{{description}}}"
-                {{#if required}}required={true}{{/if}}
-                className={`form-control${errors.{{name}} && touched.{{name}} ? ' is-invalid' : ''}`}
-                aria-invalid={errors.{{name}} && touched.{{name~}} }
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </div>
-            <ErrorMessage
-              className="text-danger"
-              component="div"
-              name="{{name}}"
-            />
-            {{/each}}
+        }) => {
+          let inputClassName = 'form-control';
+          const isInvalid = touched[name] && !!errors[name];
+          if (isInvalid) {
+            validationClassNames += ' is-invalid';
+          }
 
-            {status && status.msg && (
-              <div
-                className={`alert ${
-                  status.isValid ? "alert-success" : "alert-danger"
-                }`}
-                role="alert"
-              >
-                {status.msg}
+          if (touched[name] && !errors[name]) {
+            validationClassNames += ' is-valid';
+          }
+
+          return (
+            <form onSubmit={handleSubmit}>
+            {{#each formFields}}
+              <div className="form-group">
+                <label className="form-control-label" htmlFor="{{lc}}_{{name}}">{{name}}</label>
+                <input
+                  name="{{name}}"
+                  id="{{lc}}_{{name}}"
+                  value={ values.{{name}} ?? "" }
+                  type="{{type}}"
+                  {{#if step}}step="{{{step}}}"{{/if}}
+                  placeholder="{{{description}}}"
+                  {{#if required}}required={true}{{/if}}
+                  className={inputClassName}
+                  aria-invalid={isInvalid}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <ErrorMessage
+                  className="invalid-feedback"
+                  component="div"
+                  name="{{name}}"
+                />
               </div>
-            )}
+              {{/each}}
 
-            <button
-              type="submit"
-              className="btn btn-success"
-              disabled={isSubmitting}
-            >
-              Submit
-            </button>
-          </form>
-        )}
+              {status && status.msg && (
+                <div
+                  className={`alert ${
+                    status.isValid ? "alert-success" : "alert-danger"
+                  }`}
+                  role="alert"
+                >
+                  {status.msg}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="btn btn-success"
+                disabled={isSubmitting}
+              >
+                Submit
+              </button>
+            </form>
+          );
+        }}
       </Formik>
       <Link href="/{{{name}}}">
         <a className="btn btn-primary">Back to list</a>

@@ -54,6 +54,8 @@ export default class NextGenerator extends BaseGenerator {
       title: resource.title,
     };
 
+    console.log(context.formFields);
+
     // Create directories
     // These directories may already exist
     [
@@ -128,6 +130,7 @@ export default class NextGenerator extends BaseGenerator {
           description: this.getDescription(field),
           readonly: false,
           reference: field.reference,
+          step: field.step,
         },
       };
     }, {});
