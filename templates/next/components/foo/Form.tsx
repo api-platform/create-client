@@ -25,6 +25,8 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
     }
 	};
 
+  const renderForm
+
 	return (
 		<div>
       <h1>{ {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }</h1>
@@ -84,14 +86,13 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
+              <ErrorMessage
+                className="invalid-feedback"
+                component="div"
+                name="{{name}}"
+              />
             </div>
-            <ErrorMessage
-              className="text-danger"
-              component="div"
-              name="{{name}}"
-            />
             {{/each}}
-
             {status && status.msg && (
               <div
                 className={`alert ${
@@ -102,7 +103,6 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                 {status.msg}
               </div>
             )}
-
             <button
               type="submit"
               className="btn btn-success"

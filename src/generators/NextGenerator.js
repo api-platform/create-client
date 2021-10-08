@@ -122,12 +122,10 @@ export default class NextGenerator extends BaseGenerator {
       return {
         ...list,
         [field.name]: {
-          notrequired: !field.required,
-          name: field.name,
+          ...field,
           type: this.getType(field),
           description: this.getDescription(field),
           readonly: false,
-          reference: field.reference,
         },
       };
     }, {});
