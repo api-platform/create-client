@@ -24,9 +24,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
       console.error(error);
     }
 	};
-
-  const renderForm
-
+  
 	return (
 		<div>
       <h1>{ {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }</h1>
