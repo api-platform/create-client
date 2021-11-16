@@ -1,3 +1,4 @@
+import fs from "fs";
 import NextGenerator from "./generators/NextGenerator";
 import NuxtGenerator from "./generators/NuxtGenerator";
 import ReactGenerator from "./generators/ReactGenerator";
@@ -12,7 +13,12 @@ function wrap(cl) {
     new cl({ hydraPrefix, templateDirectory });
 }
 
-export default function generators(generator = "react") {
+export default async function generators(generator = "react") {
+  if (fs.existsSync(generator)) {
+    const gen = await import(generator);
+    return wrap(gen.default);
+  }
+
   switch (generator) {
     case "next":
       return wrap(NextGenerator);
