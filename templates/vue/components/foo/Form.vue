@@ -42,7 +42,6 @@
 
 <script>
   import { find, get, isUndefined } from 'lodash';
-  import { mapFields } from 'vuex-map-fields';
   import { mapActions } from 'vuex';
 
   export default {

@@ -1,6 +1,7 @@
 import { isArray, isObject, isUndefined, forEach } from 'lodash';
 import { ENTRYPOINT } from '../config/entrypoint';
 import SubmissionError from '../error/SubmissionError';
+import { normalize } from './hydra';
 
 const MIME_TYPE = 'application/ld+json';
 
