@@ -8,6 +8,7 @@ export default {
     error: '',
     isLoading: false,
     retrieved: null,
+    hubUrl: null,
   },
   actions,
   getters: {

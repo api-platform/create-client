@@ -8,6 +8,7 @@ export default {
     error: '',
     isLoading: false,
     items: [],
+    hubUrl: null,
     selectItems: null,
     view: [],
   },

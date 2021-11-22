@@ -9,6 +9,9 @@
       v-if="deletedItem"
       class="alert alert-success">\{{ deletedItem['@id'] }} deleted.</div>
     <div
+      v-if="mercureDeletedItem"
+      class="alert alert-success">\{{ mercureDeletedItem['@id'] }} deleted by another user.</div>
+    <div
       v-if="error"
       class="alert alert-danger">\{{ error }}</div>
 
@@ -21,7 +24,7 @@
     <table class="table table-responsive table-striped table-hover">
       <thead>
         <tr>
-          <th>Id</th>
+          <th>id</th>
 {{#each fields}}
           <th>{{name}}</th>
 {{/each }}
@@ -119,18 +122,27 @@
 <script>
 import { mapActions } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
+import ListWatcher from '../../mixins/ListWatcher';
+import * as types from '../../store/modules/{{{lc}}}/list/mutation_types'
+import * as delTypes from '../../store/modules/{{{lc}}}/delete/mutation_types';
 
 export default {
+  mixins: [ListWatcher],
   computed: {
       ...mapFields('{{{lc}}}/del', {
           deletedItem: 'deleted',
+          mercureDeletedItem: 'mercureDeleted',
       }),
       ...mapFields('{{{lc}}}/list', {
           error: 'error',
           items: 'items',
+          hubUrl: 'hubUrl',
           isLoading: 'isLoading',
           view: 'view',
       }),
+      itemUpdateMutation: () => `{{{lc}}}/list/${types.UPDATE_ITEM}`,
+      itemDeleteMutation: () => `{{{lc}}}/list/${types.DELETE_ITEM}`,
+      itemMercureDeletedMutation: () => `{{{lc}}}/del/${delTypes.{{{uc}}}_DELETE_MERCURE_SET_DELETED}`,
   },
 
   mounted() {

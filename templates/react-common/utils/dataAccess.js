@@ -46,14 +46,6 @@ export function fetch(id, options = {}) {
   });
 }
 
-export function mercureSubscribe(url, topics) {
-  topics.forEach(topic =>
-    url.searchParams.append('topic', new URL(topic, ENTRYPOINT))
-  );
-
-  return new EventSource(url.toString());
-}
-
 export function normalize(data) {
   if (has(data, 'hydra:member')) {
     // Normalize items in collections
@@ -69,15 +61,4 @@ export function normalize(data) {
       : value instanceof Object ? normalize(value)
       : get(value, '@id', value)
   );
-}
-
-export function extractHubURL(response) {
-  const linkHeader = response.headers.get('Link');
-  if (!linkHeader) return null;
-
-  const matches = linkHeader.match(
-    /<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/
-  );
-
-  return matches && matches[1] ? new URL(matches[1], ENTRYPOINT) : null;
 }

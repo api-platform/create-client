@@ -2,21 +2,21 @@ export default [
   {
     name: '{{{titleUcFirst}}}List',
     path: '/{{{name}}}/',
-    component: () => import(/* webpackChunkName: "{{{lc}}}" */ '../components/{{{lc}}}/List'),
+    component: () => import('../components/{{{lc}}}/List.vue'),
   },
   {
     name: '{{{titleUcFirst}}}Create',
     path: '/{{{name}}}/create',
-    component: () => import(/* webpackChunkName: "{{{lc}}}" */ '../components/{{{lc}}}/Create'),
+    component: () => import('../components/{{{lc}}}/Create.vue'),
   },
   {
     name: '{{{titleUcFirst}}}Update',
     path: '/{{{name}}}/edit/:id',
-    component: () => import(/* webpackChunkName: "{{{lc}}}" */ '../components/{{{lc}}}/Update'),
+    component: () => import('../components/{{{lc}}}/Update.vue'),
   },
   {
     name: '{{{titleUcFirst}}}Show',
     path: '/{{{name}}}/show/:id',
-    component: () => import(/* webpackChunkName: "{{{lc}}}" */ '../components/{{{lc}}}/Show'),
+    component: () => import('../components/{{{lc}}}/Show.vue'),
   },
 ]

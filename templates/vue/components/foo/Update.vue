@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Edit \{{ retrieved && retrieved['@id'] }}</h1>
+    <h1>Edit Book \{{ item && item['@id'] }}</h1>
 
     <div
       v-if="created"
@@ -32,14 +32,14 @@
     </div>
 
     <{{{titleUcFirst}}}Form
-      v-if="retrieved"
+      v-if="item"
       :handle-submit="onSendForm"
-      :values="retrieved"
+      :values="item"
       :errors="violations"
-      :initial-values="retrieved" />
+      :initial-values="item" />
 
     <router-link
-      v-if="retrieved"
+      v-if="item"
       :to="{ name: '{{{titleUcFirst}}}List' }"
       class="btn btn-primary">Back to list</router-link>
     <button
@@ -51,9 +51,13 @@
 <script>
 import { mapActions } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
+import ItemWatcher from '../../mixins/ItemWatcher';
 import {{{titleUcFirst}}}Form from './Form.vue';
+import * as types from '../../store/modules/{{{lc}}}/update/mutation_types';
+import * as delTypes from '../../store/modules/{{{lc}}}/delete/mutation_types';
 
 export default {
+  mixins: [ItemWatcher],
   components: {
     {{{titleUcFirst}}}Form,
   },
@@ -63,6 +67,7 @@ export default {
       deleteError: 'error',
       deleteLoading: 'isLoading',
       deleted: 'deleted',
+      mercureDeleted: 'mercureDeleted',
     }),
     ...mapFields('{{{lc}}}/create', {
       created: 'created',
@@ -70,15 +75,26 @@ export default {
     ...mapFields('{{{lc}}}/update', {
       isLoading: 'isLoading',
       error: 'error',
-      retrieved: 'retrieved',
+      item: 'retrieved',
+      hubUrl: 'hubUrl',
       updated: 'updated',
       violations: 'violations',
     }),
+    itemUpdateMutation: () => `{{{lc}}}/update/${types.SET_RETRIEVED}`,
+    itemMercureDeletedMutation: () => `{{{lc}}}/del/${delTypes.{{{uc}}}_DELETE_MERCURE_SET_DELETED}`,
   },
 
   watch: {
     // eslint-disable-next-line object-shorthand,func-names
     deleted: function(deleted) {
+      if (!deleted) {
+        return;
+      }
+
+      this.$router.push({ name: '{{{titleUcFirst}}}List' });
+    },
+    // eslint-disable-next-line object-shorthand,func-names
+    mercureDeleted: function(deleted) {
       if (!deleted) {
         return;
       }
@@ -107,8 +123,8 @@ export default {
     }),
 
     del() {
-      if (window.confirm('Are you sure you want to delete this {{{lc}}} ?')) {
-        this.deleteItem(this.retrieved);
+      if (window.confirm('Are you sure you want to delete this {{{lc}}}?')) {
+        this.deleteItem(this.item);
       }
     },
 
@@ -118,7 +134,7 @@ export default {
     },
 
     onSendForm() {
-      this.update(this.retrieved);
+      this.update(this.item);
     },
   },
 };

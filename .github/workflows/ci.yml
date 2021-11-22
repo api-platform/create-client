@@ -27,6 +27,7 @@ jobs:
     - run: yarn test-gen
     - run: yarn test-next-app
     - run: yarn test-react-app
+    - run: yarn test-vue-app
     - run: yarn test-gen-env
     - run: yarn test-gen-openapi3
     - run: yarn check

@@ -49,7 +49,7 @@ export default function(id, options = {}) {
     id = `${id}?${queryString}`;
   }
 
-  return global.fetch(new URL(id, ENTRYPOINT), options).then(response => {
+  return fetch(new URL(id, ENTRYPOINT), options).then(response => {
     if (response.ok) return response;
 
     return response.json().then((json) => {
