@@ -44,6 +44,7 @@ export default class extends BaseGenerator {
 
       // utils
       "utils/fetch.js",
+      "utils/hydra.js",
     ]);
   }
 
@@ -171,6 +172,12 @@ export const store = new Vuex.Store({
     this.createFile(
       "utils/fetch.js",
       `${dir}/utils/fetch.js`,
+      { hydraPrefix: this.hydraPrefix },
+      false
+    );
+    this.createFile(
+      "utils/hydra.js",
+      `${dir}/utils/hydra.js`,
       { hydraPrefix: this.hydraPrefix },
       false
     );
