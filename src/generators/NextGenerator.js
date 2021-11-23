@@ -1,5 +1,7 @@
 import chalk from "chalk";
 import camelCase from "lodash/camelCase";
+import handlebars from "handlebars";
+import hbh_string from "handlebars-helpers/lib/string";
 import BaseGenerator from "./BaseGenerator";
 
 export default class NextGenerator extends BaseGenerator {
@@ -29,6 +31,8 @@ export default class NextGenerator extends BaseGenerator {
       "utils/dataAccess.ts",
       "utils/mercure.ts",
     ]);
+
+    handlebars.registerHelper("replace", hbh_string.replace);
   }
 
   help(resource) {

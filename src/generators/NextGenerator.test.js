@@ -25,7 +25,7 @@ describe("generate", () => {
         description: "An URL",
       }),
     ];
-    const resource = new Resource("abc", "http://example.com/foos", {
+    const resource = new Resource("prefix/aBe_cd", "http://example.com/foos", {
       id: "abc",
       title: "abc",
       readableFields: fields,

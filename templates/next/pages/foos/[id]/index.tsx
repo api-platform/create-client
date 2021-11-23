@@ -63,7 +63,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       const {
         '{{{hydraPrefix}}}last': last
       } = view;
-      for (let page = 2; page <= parseInt(last.replace(/^\/{{{name}}}\?page=(\d+)/, '$1')); page++) {
+      for (let page = 2; page <= parseInt(last.replace(/^\/{{replace name "/" "\/"}}\?page=(\d+)/, '$1')); page++) {
         paths.concat(
           await fetch(`/{{{name}}}?page=${page}`).data["{{{hydraPrefix}}}member"].map(({{{snc}}}) => `${ {{~snc}}['@id'] }`)
       );
