@@ -6,11 +6,11 @@ import Head from "next/head";
 import DefaultErrorPage from "next/error";
 
 interface Props {
-  {{{lc}}}: {{{ucf}}};
+  {{{snc}}}: {{{ucf}}};
 };
 
-const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{lc}}} }) => {
-  if (!{{{lc}}}) {
+const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{snc}}} }) => {
+  if (!{{{snc}}}) {
     return <DefaultErrorPage statusCode={404} />;
   }
 
@@ -18,10 +18,10 @@ const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{lc}}} }) =>
     <div>
       <div>
         <Head>
-          <title>{ {{{lc}}} && `Edit {{{ucf}}} ${ {{~lc}}['@id'] }` }</title>
+          <title>{ {{{snc}}} && `Edit {{{ucf}}} ${ {{~snc}}['@id'] }` }</title>
         </Head>
       </div>
-      <Form {{{lc}}}={ {{{lc}}} } />
+      <Form {{{snc}}}={ {{{snc}}} } />
     </div>
   );
 };
@@ -29,7 +29,7 @@ const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{lc}}} }) =>
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
-      {{{lc}}}: await fetch(`/{{{name}}}/${params.id}`),
+      {{{snc}}}: await fetch(`/{{{name}}}/${params.id}`),
     },
     revalidate: 1,
   };
@@ -48,7 +48,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   const view = response.data['{{{hydraPrefix}}}view'];
-  const paths = response.data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => `${ {{~lc}}['@id'] }/edit`);
+  const paths = response.data["{{{hydraPrefix}}}member"].map(({{{snc}}}) => `${ {{~snc}}['@id'] }/edit`);
 
   if (view) {
     try {
@@ -57,7 +57,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       } = view;
       for (let page = 2; page <= parseInt(last.replace(/^\/{{{name}}}\?page=(\d+)/, '$1')); page++) {
         paths.concat(
-          await fetch(`/{{{name}}}?page=${page}`).data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => `${ {{~lc}}['@id'] }/edit`)
+          await fetch(`/{{{name}}}?page=${page}`).data["{{{hydraPrefix}}}member"].map(({{{snc}}}) => `${ {{~snc}}['@id'] }/edit`)
         );
       }
     } catch (e) {

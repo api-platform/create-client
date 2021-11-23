@@ -6,10 +6,10 @@ import { fetch } from "../../utils/dataAccess";
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 
 interface Props {
-  {{{lc}}}?: {{{ucf}}};
+  {{{snc}}}?: {{{ucf}}};
 }
 
-export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
+export const Form: FunctionComponent<Props> = ({ {{{snc}}} }) => {
   const [error, setError] = useState(null);
   const router = useRouter();
 
@@ -17,7 +17,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 		if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     try {
-      await fetch({{{lc}}}['@id'], { method: "DELETE" });
+      await fetch({{{snc}}}['@id'], { method: "DELETE" });
       router.push("/{{{name}}}");
     } catch (error) {
       setError(`Error when deleting the resource: ${error}`);
@@ -27,9 +27,9 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
   
 	return (
 		<div>
-      <h1>{ {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }</h1>
+      <h1>{ {{{snc}}} ? `Edit {{{ucf}}} ${ {{~snc}}['@id']}` : `Create {{{ucf}}}` }</h1>
       <Formik
-        initialValues={ {{~lc}} ? {...{{lc~}} } : new {{{ucf}}}()}
+        initialValues={ {{~snc}} ? {...{{snc~}} } : new {{{ucf}}}()}
         validate={(values) => {
           const errors = {};
           // add your validation logic here

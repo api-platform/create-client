@@ -7,10 +7,10 @@ import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 import Head from 'next/head'
 
 interface Props {
-  {{{lc}}}: {{{ucf}}};
+  {{{snc}}}: {{{ucf}}};
 }
 
-export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
+export const Show: FunctionComponent<Props> = ({ {{{snc}}} }) => {
   const [error, setError] = useState(null);
   const router = useRouter();
 
@@ -18,7 +18,7 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 		if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     try {
-      await fetch({{{lc}}}["@id"], { method: "DELETE" });
+      await fetch({{{snc}}}["@id"], { method: "DELETE" });
       router.push("/{{{name}}}");
     } catch (error) {
       setError("Error when deleting the resource.");
@@ -29,14 +29,14 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
   return (
     <div>
        <Head>
-            <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
+            <title>{`Show {{{ucf}}} ${ {{~snc}}['@id']}`}</title>
             <script
                 type="application/ld+json"
             >
               {text}
             </script>
           </Head>
-      <h1>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</h1>
+      <h1>{`Show {{{ucf}}} ${ {{~snc}}['@id']}`}</h1>
       <table className="table table-responsive table-striped table-hover">
         <thead>
         <tr>
@@ -48,7 +48,7 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
         {{#each fields}}
           <tr>
             <th scope="row">{{name}}</th>
-            <td>{{#if reference}}<ReferenceLinks items={ {{{../lc}}}['{{{name}}}'] } type="{{{reference.title}}}" />{{else}}{ {{{../lc}}}['{{{name}}}'] }{{/if}}</td>
+            <td>{{#if reference}}<ReferenceLinks items={ {{{../snc}}}['{{{name}}}'] } type="{{{reference.title}}}" />{{else}}{ {{{../snc}}}['{{{name}}}'] }{{/if}}</td>
           </tr>
         {{/each}}
         </tbody>
@@ -61,7 +61,7 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
       <Link href="/{{{name}}}">
         <a className="btn btn-primary">Back to list</a>
       </Link>{" "}
-      <Link  href={`${ {{~lc}}["@id"]}/edit`}>
+      <Link  href={`${ {{~snc}}["@id"]}/edit`}>
         <a className="btn btn-warning">Edit</a>
       </Link>
       <button className="btn btn-danger" onClick={handleDelete}>

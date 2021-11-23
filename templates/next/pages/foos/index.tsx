@@ -22,7 +22,7 @@ const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
           <title>{{{ucf}}} List</title>
         </Head>
       </div>
-      <List {{{name}}}={collection["{{{hydraPrefix}}}member"]} />
+      <List {{{snc}}}={collection["{{{hydraPrefix}}}member"]} />
       <Pagination collection={collection} />
     </div>
   );

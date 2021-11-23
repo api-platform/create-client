@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import camelCase from "lodash/camelCase";
 import BaseGenerator from "./BaseGenerator";
 
 export default class NextGenerator extends BaseGenerator {
@@ -44,6 +45,7 @@ export default class NextGenerator extends BaseGenerator {
 
     const context = {
       name: resource.name,
+      snc: camelCase(resource.name),
       lc,
       uc: resource.title.toUpperCase(),
       ucf,

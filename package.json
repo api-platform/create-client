@@ -42,6 +42,7 @@
     "handlebars": "^4.0.12",
     "handlebars-helpers": "^0.10.0",
     "isomorphic-fetch": "^3.0.0",
+    "lodash": "^4.17.21",
     "mkdirp": "^1.0.4",
     "prettier": "^2.2.1",
     "sprintf-js": "^1.1.1"

@@ -7,14 +7,14 @@ import DefaultErrorPage from "next/error";
 import { useMercure } from "../../../utils/mercure";
 
 interface Props {
-  {{{lc}}}: {{{ucf}}};
+  {{{snc}}}: {{{ucf}}};
   hubURL: null | string;
 };
 
 const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
-  const {{{lc}}} = props.hubURL === null ? props.{{{lc}}} : useMercure(props.{{{lc}}}, props.hubURL);
+  const {{{snc}}} = props.hubURL === null ? props.{{{snc}}} : useMercure(props.{{{snc}}}, props.hubURL);
 
-  if (!{{{lc}}}) {
+  if (!{{{snc}}}) {
     return <DefaultErrorPage statusCode={404} />;
   }
 
@@ -22,10 +22,10 @@ const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
     <div>
       <div>
         <Head>
-          <title>{`Show {{{ucf}}} ${ {{~lc}}['@id'] }`}</title>
+          <title>{`Show {{{ucf}}} ${ {{~snc}}['@id'] }`}</title>
         </Head>
       </div>
-      <Show {{{lc}}}={ {{{lc}}} } text={ props.text } />
+      <Show {{{snc}}}={ {{{snc}}} } text={ props.text } />
     </div>
   );
 };
@@ -35,7 +35,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: {
-      {{{lc}}}: response.data,
+      {{{snc}}}: response.data,
       text: response.text,
       hubURL: response.hubURL,
     },
@@ -56,7 +56,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   const view = response.data['{{{hydraPrefix}}}view'];
-  const paths = response.data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => `${ {{~lc}}['@id'] }`);
+  const paths = response.data["{{{hydraPrefix}}}member"].map(({{{snc}}}) => `${ {{~snc}}['@id'] }`);
 
   if (view) {
     try {
@@ -65,7 +65,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       } = view;
       for (let page = 2; page <= parseInt(last.replace(/^\/{{{name}}}\?page=(\d+)/, '$1')); page++) {
         paths.concat(
-          await fetch(`/{{{name}}}?page=${page}`).data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => `${ {{~lc}}['@id'] }`)
+          await fetch(`/{{{name}}}?page=${page}`).data["{{{hydraPrefix}}}member"].map(({{{snc}}}) => `${ {{~snc}}['@id'] }`)
       );
       }
     } catch (e) {

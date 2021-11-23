@@ -4,10 +4,10 @@ import ReferenceLinks from "../../components/common/ReferenceLinks";
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 
 interface Props {
-  {{{name}}}: {{{ucf}}}[];
+  {{{snc}}}: {{{ucf}}}[];
 }
 
-export const List: FunctionComponent<Props> = ({ {{{name}}} }) => (
+export const List: FunctionComponent<Props> = ({ {{{snc}}} }) => (
   <div>
     <h1>{{{ucf}}} List</h1>
     <Link href="/{{{name}}}/create">
@@ -24,15 +24,15 @@ export const List: FunctionComponent<Props> = ({ {{{name}}} }) => (
         </tr>
       </thead>
       <tbody>
-        { {{{name}}} && ({{{name}}}.length !== 0) && {{{name}}}.map( ( {{{lc}}} ) => (
-          <tr key={ {{{lc}}}['@id'] }>
-            <th scope="row"><ReferenceLinks items={ {{{lc}}}['@id'] } type="{{{lc}}}" /></th>
+        { {{{snc}}} && ({{{snc}}}.length !== 0) && {{{snc}}}.map( ( {{{snc}}}Item ) => (
+          <tr key={ {{{snc}}}Item['@id'] }>
+            <th scope="row"><ReferenceLinks items={ {{{snc}}}Item['@id'] } type="{{{lc}}}" /></th>
             {{#each fields}}
-              <td>{{#if reference}}<ReferenceLinks items={ {{{../lc}}}['{{{name}}}'] } type="{{{reference.title}}}" />{{else}}{ {{{../lc}}}['{{{name}}}'] }{{/if}}</td>
+              <td>{{#if reference}}<ReferenceLinks items={ {{{../snc}}}Item['{{{lc}}}'] } type="{{{reference.title}}}" />{{else}}{ {{{../snc}}}['{{{lc}}}'] }{{/if}}</td>
             {{/each}}
-            <td><ReferenceLinks items={ {{{lc}}}['@id'] } type="{{{lc}}}" useIcon={true} /></td>
+            <td><ReferenceLinks items={ {{{snc}}}Item['@id'] } type="{{{lc}}}" useIcon={true} /></td>
            <td>
-            <Link href={`${ {{~lc}}["@id"]}/edit`}>
+            <Link href={`${ {{~snc}}Item["@id"]}/edit`}>
               <a>
                 <i className="bi bi-pen" aria-hidden="true" />
                 <span className="sr-only">Edit</span>
