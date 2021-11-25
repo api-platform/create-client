@@ -40,26 +40,26 @@ describe("generate", () => {
 
     [
       "/config/entrypoint.ts",
-      "/components/abc/List.tsx",
-      "/components/abc/Show.tsx",
-      "/components/abc/Form.tsx",
+      "/components/prefix/abe_cd/List.tsx",
+      "/components/prefix/abe_cd/Show.tsx",
+      "/components/prefix/abe_cd/Form.tsx",
       "/components/common/ReferenceLinks.tsx",
       "/components/common/Pagination.tsx",
-      "/types/Abc.ts",
+      "/types/PrefixABeCd.ts",
       "/types/Collection.ts",
-      "/pages/abcs/[id]/index.tsx",
-      "/pages/abcs/[id]/edit.tsx",
-      "/pages/abcs/index.tsx",
-      "/pages/abcs/create.tsx",
+      "/pages/prefix/abe_cd/[id]/index.tsx",
+      "/pages/prefix/abe_cd/[id]/edit.tsx",
+      "/pages/prefix/abe_cd/index.tsx",
+      "/pages/prefix/abe_cd/create.tsx",
       "/utils/dataAccess.ts",
       "/utils/mercure.ts",
     ].forEach((file) => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
 
     [
-      "/components/abc/List.tsx",
-      "/components/abc/Show.tsx",
-      "/components/abc/Form.tsx",
-      "/types/Abc.ts",
+      "/components/prefix/abe_cd/List.tsx",
+      "/components/prefix/abe_cd/Show.tsx",
+      "/components/prefix/abe_cd/Form.tsx",
+      "/types/PrefixABeCd.ts",
     ].forEach((file) => {
       expect(fs.existsSync(tmpobj.name + file)).toBe(true);
       expect(fs.readFileSync(tmpobj.name + file, "utf8")).toMatch(/bar/);

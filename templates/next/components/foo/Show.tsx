@@ -1,16 +1,17 @@
 import { FunctionComponent, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from "next/router";
-import { fetch } from "../../utils/dataAccess";
-import ReferenceLinks from '../common/ReferenceLinks';
-import { {{{ucf}}} } from '../../types/{{{ucf}}}';
+import { fetch } from "../{{{pathNesting}}}utils/dataAccess";
+import ReferenceLinks from '{{{pathNesting}}}common/ReferenceLinks';
+import { {{{camelNameUcf}}} } from '../{{{pathNesting}}}types/{{{camelNameUcf}}}';
 import Head from 'next/head'
 
 interface Props {
-  {{{snc}}}: {{{ucf}}};
+  {{{camelName}}}: {{{camelNameUcf}}};
+  text: string;
 }
 
-export const Show: FunctionComponent<Props> = ({ {{{snc}}} }) => {
+export const Show: FunctionComponent<Props> = ({ {{{camelName}}}, text }) => {
   const [error, setError] = useState(null);
   const router = useRouter();
 
@@ -18,7 +19,7 @@ export const Show: FunctionComponent<Props> = ({ {{{snc}}} }) => {
 		if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     try {
-      await fetch({{{snc}}}["@id"], { method: "DELETE" });
+      await fetch({{{camelName}}}["@id"], { method: "DELETE" });
       router.push("/{{{name}}}");
     } catch (error) {
       setError("Error when deleting the resource.");
@@ -29,14 +30,14 @@ export const Show: FunctionComponent<Props> = ({ {{{snc}}} }) => {
   return (
     <div>
        <Head>
-            <title>{`Show {{{ucf}}} ${ {{~snc}}['@id']}`}</title>
+            <title>{`Show {{{ucf}}} ${ {{~camelName}}['@id']}`}</title>
             <script
                 type="application/ld+json"
             >
               {text}
             </script>
           </Head>
-      <h1>{`Show {{{ucf}}} ${ {{~snc}}['@id']}`}</h1>
+      <h1>{`Show {{{ucf}}} ${ {{~camelName}}['@id']}`}</h1>
       <table className="table table-responsive table-striped table-hover">
         <thead>
         <tr>
@@ -48,7 +49,7 @@ export const Show: FunctionComponent<Props> = ({ {{{snc}}} }) => {
         {{#each fields}}
           <tr>
             <th scope="row">{{name}}</th>
-            <td>{{#if reference}}<ReferenceLinks items={ {{{../snc}}}['{{{name}}}'] } type="{{{reference.title}}}" />{{else}}{ {{{../snc}}}['{{{name}}}'] }{{/if}}</td>
+            <td>{{#if reference}}<ReferenceLinks items={ {{{../camelName}}}['{{{name}}}'] } type="{{{reference.title}}}" />{{else}}{ {{{../camelName}}}['{{{name}}}'] }{{/if}}</td>
           </tr>
         {{/each}}
         </tbody>
@@ -61,7 +62,7 @@ export const Show: FunctionComponent<Props> = ({ {{{snc}}} }) => {
       <Link href="/{{{name}}}">
         <a className="btn btn-primary">Back to list</a>
       </Link>{" "}
-      <Link  href={`${ {{~snc}}["@id"]}/edit`}>
+      <Link  href={`${ {{~camelName}}["@id"]}/edit`}>
         <a className="btn btn-warning">Edit</a>
       </Link>
       <button className="btn btn-danger" onClick={handleDelete}>

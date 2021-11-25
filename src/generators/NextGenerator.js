@@ -22,10 +22,10 @@ export default class NextGenerator extends BaseGenerator {
       "types/foo.ts",
 
       // pages
-      "pages/foos/[id]/index.tsx",
-      "pages/foos/[id]/edit.tsx",
-      "pages/foos/index.tsx",
-      "pages/foos/create.tsx",
+      "pages/foo/[id]/index.tsx",
+      "pages/foo/[id]/edit.tsx",
+      "pages/foo/index.tsx",
+      "pages/foo/create.tsx",
 
       // utils
       "utils/dataAccess.ts",
@@ -45,14 +45,23 @@ export default class NextGenerator extends BaseGenerator {
   generate(api, resource, dir) {
     const lc = resource.title.toLowerCase();
     const ucf = this.ucFirst(resource.title);
+    const path = resource.name.toLowerCase();
+    const camelName = camelCase(resource.name);
     const { fields, imports } = this.parseFields(resource);
 
     const context = {
       name: resource.name,
-      snc: camelCase(resource.name),
       lc,
       uc: resource.title.toUpperCase(),
       ucf,
+      camelName,
+      camelNameUcf: this.ucFirst(camelName),
+      path,
+      flatpath: path.replace("/", ""),
+      pathNesting: `${path
+        .split("/")
+        .map(() => "..")
+        .join("/")}/`,
       fields,
       formFields: this.buildFields(fields),
       imports,
@@ -71,9 +80,9 @@ export default class NextGenerator extends BaseGenerator {
     ].forEach((dir) => this.createDir(dir, false));
 
     // Copy with patterned name
-    this.createDir(`${dir}/components/${context.lc}`);
-    this.createDir(`${dir}/pages/${context.lc}s`);
-    this.createDir(`${dir}/pages/${context.lc}s/[id]`);
+    this.createDir(`${dir}/components/${context.path}`);
+    this.createDir(`${dir}/pages/${context.path}`);
+    this.createDir(`${dir}/pages/${context.path}/[id]`);
     [
       // components
       "components/%s/List.tsx",
@@ -81,16 +90,20 @@ export default class NextGenerator extends BaseGenerator {
       "components/%s/Form.tsx",
 
       // pages
-      "pages/%ss/[id]/index.tsx",
-      "pages/%ss/[id]/edit.tsx",
-      "pages/%ss/index.tsx",
-      "pages/%ss/create.tsx",
+      "pages/%s/[id]/index.tsx",
+      "pages/%s/[id]/edit.tsx",
+      "pages/%s/index.tsx",
+      "pages/%s/create.tsx",
     ].forEach((pattern) =>
-      this.createFileFromPattern(pattern, dir, context.lc, context)
+      this.createFileFromPattern(pattern, dir, context.path, context)
     );
 
     // interface pattern should be camel cased
-    this.createFile("types/foo.ts", `${dir}/types/${context.ucf}.ts`, context);
+    this.createFile(
+      "types/foo.ts",
+      `${dir}/types/${context.camelNameUcf}.ts`,
+      context
+    );
 
     // copy with regular name
     [

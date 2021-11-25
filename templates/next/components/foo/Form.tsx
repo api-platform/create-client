@@ -2,14 +2,14 @@ import { FunctionComponent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ErrorMessage, Formik } from "formik";
-import { fetch } from "../../utils/dataAccess";
-import { {{{ucf}}} } from '../../types/{{{ucf}}}';
+import { fetch } from "../{{{pathNesting}}}utils/dataAccess";
+import { {{{camelNameUcf}}} } from '../{{{pathNesting}}}types/{{{camelNameUcf}}}';
 
 interface Props {
-  {{{snc}}}?: {{{ucf}}};
+  {{{camelName}}}?: {{{camelNameUcf}}};
 }
 
-export const Form: FunctionComponent<Props> = ({ {{{snc}}} }) => {
+export const Form: FunctionComponent<Props> = ({ {{{camelName}}} }) => {
   const [error, setError] = useState(null);
   const router = useRouter();
 
@@ -17,7 +17,7 @@ export const Form: FunctionComponent<Props> = ({ {{{snc}}} }) => {
 		if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     try {
-      await fetch({{{snc}}}['@id'], { method: "DELETE" });
+      await fetch({{{camelName}}}['@id'], { method: "DELETE" });
       router.push("/{{{name}}}");
     } catch (error) {
       setError(`Error when deleting the resource: ${error}`);
@@ -27,9 +27,9 @@ export const Form: FunctionComponent<Props> = ({ {{{snc}}} }) => {
   
 	return (
 		<div>
-      <h1>{ {{{snc}}} ? `Edit {{{ucf}}} ${ {{~snc}}['@id']}` : `Create {{{ucf}}}` }</h1>
+      <h1>{ {{{camelName}}} ? `Edit {{{ucf}}} ${ {{~camelName}}['@id']}` : `Create {{{ucf}}}` }</h1>
       <Formik
-        initialValues={ {{~snc}} ? {...{{snc~}} } : new {{{ucf}}}()}
+        initialValues={ {{~camelName}} ? {...{{camelName~}} } : new {{{ucf}}}()}
         validate={(values) => {
           const errors = {};
           // add your validation logic here

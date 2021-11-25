@@ -1,4 +1,4 @@
-export class {{{ucf}}} {
+export class {{{camelNameUcf}}} {
   public "@id"?: string;
 
   constructor(

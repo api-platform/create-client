@@ -1,13 +1,13 @@
 import { FunctionComponent } from "react";
 import Link from "next/link";
-import ReferenceLinks from "../../components/common/ReferenceLinks";
-import { {{{ucf}}} } from '../../types/{{{ucf}}}';
+import ReferenceLinks from "../{{{pathNesting}}}components/common/ReferenceLinks";
+import { {{{camelNameUcf}}} } from '../{{{pathNesting}}}types/{{{camelNameUcf}}}';
 
 interface Props {
-  {{{snc}}}: {{{ucf}}}[];
+  {{{camelName}}}: {{{camelNameUcf}}}[];
 }
 
-export const List: FunctionComponent<Props> = ({ {{{snc}}} }) => (
+export const List: FunctionComponent<Props> = ({ {{{camelName}}} }) => (
   <div>
     <h1>{{{ucf}}} List</h1>
     <Link href="/{{{name}}}/create">
@@ -24,15 +24,15 @@ export const List: FunctionComponent<Props> = ({ {{{snc}}} }) => (
         </tr>
       </thead>
       <tbody>
-        { {{{snc}}} && ({{{snc}}}.length !== 0) && {{{snc}}}.map( ( {{{snc}}}Item ) => (
-          <tr key={ {{{snc}}}Item['@id'] }>
-            <th scope="row"><ReferenceLinks items={ {{{snc}}}Item['@id'] } type="{{{lc}}}" /></th>
+        { {{{camelName}}} && ({{{camelName}}}.length !== 0) && {{{camelName}}}.map( ( {{{camelName}}}Item ) => (
+          <tr key={ {{{camelName}}}Item['@id'] }>
+            <th scope="row"><ReferenceLinks items={ {{{camelName}}}Item['@id'] } type="{{{lc}}}" /></th>
             {{#each fields}}
-              <td>{{#if reference}}<ReferenceLinks items={ {{{../snc}}}Item['{{{lc}}}'] } type="{{{reference.title}}}" />{{else}}{ {{{../snc}}}['{{{lc}}}'] }{{/if}}</td>
+              <td>{{#if reference}}<ReferenceLinks items={ {{{../camelName}}}Item['{{{name}}}'] } type="{{{reference.title}}}" />{{else}}{ {{{../camelName}}}Item['{{{name}}}'] }{{/if}}</td>
             {{/each}}
-            <td><ReferenceLinks items={ {{{snc}}}Item['@id'] } type="{{{lc}}}" useIcon={true} /></td>
+            <td><ReferenceLinks items={ {{{camelName}}}Item['@id'] } type="{{{lc}}}" useIcon={true} /></td>
            <td>
-            <Link href={`${ {{~snc}}Item["@id"]}/edit`}>
+            <Link href={`${ {{~camelName}}Item["@id"]}/edit`}>
               <a>
                 <i className="bi bi-pen" aria-hidden="true" />
                 <span className="sr-only">Edit</span>

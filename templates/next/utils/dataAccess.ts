@@ -36,12 +36,12 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
   const resp = await isomorphicFetch(ENTRYPOINT + id, init);
   if (resp.status === 204) return;
 
-  const json = await resp.json();
+  const text = await resp.text();
   if (resp.ok) {
     return {
-      hubURL: extractHubURL(resp)?.toString(), // URL cannot be serialized as JSON, must be sent as string
-      data: normalize(json),
-      text: await resp.text(),
+      hubURL: extractHubURL(resp)?.toString() ?? null, // URL cannot be serialized as JSON, must be sent as string
+      data: normalize(JSON.parse(text)),
+      text,
     };
   }
 
