@@ -9,9 +9,9 @@
 <script>
 import { mapActions } from 'vuex';
 import { createHelpers } from 'vuex-map-fields';
-import create from '../../mixins/create';
+import create from '../{{{pathNesting}}}mixins/create';
 
-const servicePrefix = '{{{lc}}}s';
+const servicePrefix = '{{{snakePath}}}';
 
 const { mapFields } = createHelpers({
   getterType: '{{{lc}}}/getField',
@@ -22,9 +22,9 @@ export default {
   servicePrefix,
   mixins: [create],
   components: {
-    Loading: () => import('../../components/Loading'),
-    Toolbar: () => import('../../components/Toolbar'),
-    {{{titleUcFirst}}}Form: () => import('../../components/{{{lc}}}/Form')
+    Loading: () => import('../{{{pathNesting}}}components/Loading'),
+    Toolbar: () => import('../{{{pathNesting}}}components/Toolbar'),
+    {{{titleUcFirst}}}Form: () => import('../{{{pathNesting}}}components/{{{path}}}/Form')
   },
   data: () => ({
     item: {}
@@ -33,7 +33,7 @@ export default {
     ...mapFields(['error', 'isLoading', 'created', 'violations'])
   },
   methods: {
-    ...mapActions('{{{lc}}}', ['create', 'reset'])
+    ...mapActions('{{{flatpath}}}', ['create', 'reset'])
   }
 };
 </script>

@@ -25,33 +25,33 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
-import update from '../../mixins/update';
+import update from '../{{{pathNesting}}}mixins/update';
 
-const servicePrefix = '{{{lc}}}s';
+const servicePrefix = '{{{snakePath}}}';
 
 export default {
   servicePrefix,
   mixins: [update],
   components: {
-    Loading: () => import('../../components/Loading'),
-    Toolbar: () => import('../../components/Toolbar'),
-    {{{titleUcFirst}}}Form: () => import('../../components/{{{lc}}}/Form.vue')
+    Loading: () => import('../{{{pathNesting}}}components/Loading'),
+    Toolbar: () => import('../{{{pathNesting}}}components/Toolbar'),
+    {{{titleUcFirst}}}Form: () => import('../{{{pathNesting}}}components/{{{path}}}/Form.vue')
   },
 
   computed: {
-    ...mapFields('{{{lc}}}', {
+    ...mapFields('{{{flatpath}}}', {
       deleteLoading: 'isLoading',
       isLoading: 'isLoading',
       error: 'error',
       updated: 'updated',
       violations: 'violations'
     }),
-    ...mapGetters('{{{lc}}}', ['find'])
+    ...mapGetters('{{{flatpath}}}', ['find'])
 
   },
 
   methods: {
-    ...mapActions('{{{lc}}}', {
+    ...mapActions('{{{flatpath}}}', {
       createReset: 'resetCreate',
       deleteItem: 'del',
       delReset: 'resetDelete',

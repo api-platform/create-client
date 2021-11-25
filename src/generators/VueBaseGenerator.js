@@ -3,6 +3,7 @@ import handlebars from "handlebars";
 import hbh_comparison from "handlebars-helpers/lib/comparison";
 import hbh_array from "handlebars-helpers/lib/array";
 import hbh_string from "handlebars-helpers/lib/string";
+import camelCase from "lodash/camelCase";
 import { sprintf } from "sprintf-js";
 
 export default class extends BaseGenerator {
@@ -132,11 +133,21 @@ export default class extends BaseGenerator {
 
     const labels = this.commonLabelTexts();
 
+    const path = resource.name.toLowerCase().replace("_", "");
+
     return {
       title: resource.title,
       name: resource.name,
       lc,
       uc: resource.title.toUpperCase(),
+      camelName: camelCase(resource.name),
+      path,
+      flatpath: path.replace("/", ""),
+      snakePath: path.replace("/", "-"),
+      pathNesting: `${path
+        .split("/")
+        .map(() => "..")
+        .join("/")}/`,
       fields,
       dateTypes,
       listContainsDate,

@@ -25,7 +25,7 @@ describe("generate", () => {
         description: "An URL",
       }),
     ];
-    const resource = new Resource("abc", "http://example.com/foos", {
+    const resource = new Resource("prefix/aBe_cd", "http://example.com/foos", {
       id: "foo",
       title: "Foo",
       readableFields: fields,
@@ -42,7 +42,7 @@ describe("generate", () => {
 
     generator.generate(api, resource, tmpobj.name).then(() => {
       [
-        "/components/foo/Form.vue",
+        "/components/prefix/abecd/Form.vue",
         "/components/InputDate.vue",
         "/components/Loading.vue",
         "/components/Alert.vue",
@@ -50,15 +50,15 @@ describe("generate", () => {
         "/config/entrypoint.js",
         "/error/SubmissionError.js",
         "/services/api.js",
-        "/services/foo.js",
-        "/store/foo.js",
+        "/services/prefixabecd.js",
+        "/store/prefixabecd.js",
         "/store/notifications.js",
         "/utils/dates.js",
         "/utils/fetch.js",
         "/utils/hydra.js",
-        "/pages/foos/_id.vue",
-        "/pages/foos/index.vue",
-        "/pages/foos/new.vue",
+        "/pages/prefix/abecd/_id.vue",
+        "/pages/prefix/abecd/index.vue",
+        "/pages/prefix/abecd/new.vue",
       ].forEach((file) => {
         expect(fs.existsSync(tmpobj.name + file)).toBe(true);
       });

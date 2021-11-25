@@ -97,16 +97,16 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
-import list from '../../mixins/list';
+import list from '../{{{pathNesting}}}mixins/list';
 
 export default {
-  servicePrefix: '{{{lc}}}s',
+  servicePrefix: '{{{snakePath}}}',
   mixins: [list],
   components: {
-    Toolbar: () => import('../../components/Toolbar'),
-    ActionCell: () => import('../../components/ActionCell'),
-    {{{titleUcFirst}}}FilterForm: () => import('../../components/{{{lc}}}/Filter'),
-    DataFilter: () => import('../../components/DataFilter')
+    Toolbar: () => import('../{{{pathNesting}}}components/Toolbar'),
+    ActionCell: () => import('../{{{pathNesting}}}components/ActionCell'),
+    {{{titleUcFirst}}}FilterForm: () => import('../{{{pathNesting}}}components/{{{path}}}/Filter'),
+    DataFilter: () => import('../{{{pathNesting}}}components/DataFilter')
   },
   data: () => ({
     headers: [
@@ -122,10 +122,10 @@ export default {
     selected: []
   }),
   computed: {
-    ...mapGetters('{{{lc}}}', {
+    ...mapGetters('{{{flatpath}}}', {
       items: 'list'
     }),
-    ...mapFields('{{{lc}}}', {
+    ...mapFields('{{{flatpath}}}', {
       deletedItem: 'deleted',
       error: 'error',
       isLoading: 'isLoading',
@@ -135,7 +135,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions('{{{lc}}}', {
+    ...mapActions('{{{flatpath}}}', {
       fetchAll: 'fetchAll',
       deleteItem: 'del'
     })

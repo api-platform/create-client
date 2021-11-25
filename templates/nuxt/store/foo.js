@@ -1,6 +1,6 @@
-import {{{name}}}Service from '../services/{{{lc}}}'
+import {{{camelName}}}Service from '../services/{{{flatpath}}}'
 import makeCrudModule from './crud'
 
 export default makeCrudModule({
-  service: {{{name}}}Service
+  service: {{{camelName}}}Service
 })

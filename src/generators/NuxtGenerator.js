@@ -25,9 +25,9 @@ export default class NuxtGenerator extends BaseVueGenerator {
       "mixins/update.js",
 
       // pages
-      "pages/foos/new.vue",
-      "pages/foos/index.vue",
-      "pages/foos/_id.vue",
+      "pages/foo/new.vue",
+      "pages/foo/index.vue",
+      "pages/foo/_id.vue",
 
       // store
       "store/crud.js",
@@ -45,7 +45,6 @@ export default class NuxtGenerator extends BaseVueGenerator {
 
   generateFiles(api, resource, dir, params) {
     const context = super.getContextForResource(resource, params);
-    const lc = context.lc;
 
     [
       `${dir}/config`,
@@ -106,7 +105,10 @@ export default class NuxtGenerator extends BaseVueGenerator {
 
     this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
 
-    for (let dir of [`${dir}/components/${lc}`, `${dir}/pages/${lc}s`]) {
+    for (let dir of [
+      `${dir}/components/${context.path}`,
+      `${dir}/pages/${context.path}`,
+    ]) {
       this.createDir(dir);
     }
 
@@ -118,17 +120,21 @@ export default class NuxtGenerator extends BaseVueGenerator {
       "components/%s/Form.vue",
 
       // pages
-      "pages/%ss/new.vue",
-      "pages/%ss/index.vue",
-      "pages/%ss/_id.vue",
+      "pages/%s/new.vue",
+      "pages/%s/index.vue",
+      "pages/%s/_id.vue",
+    ].forEach((pattern) =>
+      this.createFileFromPattern(pattern, dir, context.path, context)
+    );
 
+    [
       // service
       "services/%s.js",
 
       // store
       "store/%s.js",
     ].forEach((pattern) =>
-      this.createFileFromPattern(pattern, dir, lc, context)
+      this.createFileFromPattern(pattern, dir, context.flatpath, context)
     );
 
     // components

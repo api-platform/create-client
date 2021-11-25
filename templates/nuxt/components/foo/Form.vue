@@ -109,8 +109,8 @@ import { required } from 'vuelidate/lib/validators';
 import { mapActions } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 {{#if formContainsDate}}
-import InputDate from '../InputDate';
-import { date } from '../../validators/date';
+import InputDate from '{{{pathNesting}}}InputDate';
+import { date } from '../{{{pathNesting}}}validators/date';
 {{/if}}
 
 export default {
