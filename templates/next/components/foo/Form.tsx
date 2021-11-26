@@ -29,7 +29,7 @@ export const Form: FunctionComponent<Props> = ({ {{{camelName}}} }) => {
 		<div>
       <h1>{ {{{camelName}}} ? `Edit {{{ucf}}} ${ {{~camelName}}['@id']}` : `Create {{{ucf}}}` }</h1>
       <Formik
-        initialValues={ {{~camelName}} ? {...{{camelName~}} } : new {{{ucf}}}()}
+        initialValues={ {{~camelName}} ? {...{{camelName~}} } : new {{{camelNameUcf}}}()}
         validate={(values) => {
           const errors = {};
           // add your validation logic here
