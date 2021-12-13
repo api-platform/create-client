@@ -18,14 +18,19 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
     const dest = `${dir}/interfaces`;
     const { fields, imports } = this.parseFields(resource);
 
+    const normalizeJs = (name) => name.replace(/-/g, "_");
+
     this.createDir(dest, false);
     this.createFile(
       "interface.ts",
       `${dest}/${resource.title.toLowerCase()}.ts`,
       {
-        fields,
+        fields: fields.map((f) => ({
+          ...f,
+          name: normalizeJs(f.name),
+        })),
         imports,
-        name: resource.title,
+        name: normalizeJs(resource.title),
       }
     );
   }

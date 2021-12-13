@@ -173,3 +173,61 @@ test("Generate a typescript interface with an explicit id field in the readableF
 
   tmpobj.removeCallback();
 });
+
+test("Generate a typescript interface with normalized JS identifiers", () => {
+  const generator = new TypescriptInterfaceGenerator({
+    templateDirectory: `${__dirname}/../../templates`,
+  });
+  const tmpobj = tmp.dirSync({ unsafeCleanup: true });
+
+  const resource = new Resource("abc", "http://example.com/foos", {
+    id: "foo",
+    title: "Foo-foo",
+    readableFields: [
+      new Field("bar-bar", {
+        id: "http://schema.org/url",
+        range: "http://www.w3.org/2001/XMLSchema#string",
+        reference: null,
+        required: true,
+        description: "An URL",
+      }),
+      new Field("id", {
+        id: "http://schema.org/url",
+        range: "http://www.w3.org/2001/XMLSchema#string",
+        reference: null,
+        required: false,
+        description: "Id",
+      }),
+    ],
+    writableFields: [
+      new Field("foo-foo", {
+        id: "http://schema.org/url",
+        range: "http://www.w3.org/2001/XMLSchema#datetime",
+        reference: null,
+        required: true,
+        description: "An URL",
+      }),
+    ],
+  });
+  const api = new Api("http://example.com", {
+    entrypoint: "http://example.com:8080",
+    title: "My API",
+    resources: [resource],
+  });
+  generator.generate(api, resource, tmpobj.name);
+
+  expect(fs.existsSync(tmpobj.name + "/interfaces/foo-foo.ts")).toBe(true);
+
+  const res = `export interface Foo_foo {
+  "@id"?: string;
+  foo_foo: any;
+  readonly bar_bar: string;
+  readonly id?: string;
+}
+`;
+  expect(
+    fs.readFileSync(tmpobj.name + "/interfaces/foo-foo.ts").toString()
+  ).toEqual(res);
+
+  tmpobj.removeCallback();
+});
