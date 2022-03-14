@@ -1,19 +1,24 @@
 import { GetStaticPaths, GetStaticProps, NextComponentType, NextPageContext } from "next";
-import Head from "next/head";
 import DefaultErrorPage from "next/error";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { dehydrate, QueryClient, useQuery } from "react-query";
+
 import { Show } from "../../../components/{{{lc}}}/Show";
+import { PagedCollection } from "../../../types/collection";
 import { {{{ucf}}} } from "../../../types/{{{ucf}}}";
-import { fetch, getPaths } from "../../../utils/dataAccess";
+import { fetch, FetchResponse, getPaths } from "../../../utils/dataAccess";
 import { useMercure } from "../../../utils/mercure";
 
-interface Props {
-  {{{lc}}}: {{{ucf}}};
-  hubURL: null | string;
-  text: string;
-};
+const get{{{ucf}}} = async (id: string|string[]|undefined) => id ? await fetch<{{{ucf}}}>(`/{{{name}}}/${id}`) : Promise.resolve(undefined);
 
-const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{lc}}}, hubURL, text }) => {
-  const {{{lc}}}Data = useMercure({{{lc}}}, hubURL);
+const Page: NextComponentType<NextPageContext> = () => {
+  const router = useRouter();
+  const { id } = router.query;
+
+  const { data: { data: {{lc}}, hubURL, text } = { hubURL: null, text: '' } } =
+    useQuery<FetchResponse<{{{ucf}}}> | undefined>(['{{{lc}}}', id], () => get{{{ucf}}}(id));
+  const {{{lc}}}Data = useMercure({{lc}}, hubURL);
 
   if (!{{{lc}}}Data) {
     return <DefaultErrorPage statusCode={404} />;
@@ -23,7 +28,7 @@ const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{lc}}}, hubU
     <div>
       <div>
         <Head>
-          <title>{`Show {{{ucf}}} ${ {{~lc}}['@id'] }`}</title>
+          <title>{`Show {{{ucf}}} ${ {{~lc}}Data['@id'] }`}</title>
         </Head>
       </div>
       <Show {{{lc}}}={ {{{lc}}}Data } text={text} />
@@ -31,21 +36,21 @@ const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{lc}}}, hubU
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const response = await fetch(`/{{{name}}}/${params.id}`);
+export const getStaticProps: GetStaticProps = async ({ params: { id } = {} }) => {
+  if (!id) throw new Error('id not in query param');
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(["{{{lc}}}", id], () => get{{{ucf}}}(id));
 
   return {
     props: {
-      {{{lc}}}: response.data,
-      text: response.text,
-      hubURL: response.hubURL,
+      dehydratedState: dehydrate(queryClient),
     },
     revalidate: 1,
   };
-}
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetch("/{{{name}}}");
+  const response = await fetch<PagedCollection<{{{ucf}}}>>("/{{{name}}}");
   const paths = await getPaths(response, "{{{name}}}", false);
 
   return {

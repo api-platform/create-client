@@ -10,6 +10,7 @@ export default class NextGenerator extends BaseGenerator {
     this.routeAddedtoServer = false;
     this.registerTemplates(`next/`, [
       // components
+      "components/common/Layout.tsx",
       "components/common/Pagination.tsx",
       "components/common/ReferenceLinks.tsx",
       "components/foo/List.tsx",
@@ -26,6 +27,7 @@ export default class NextGenerator extends BaseGenerator {
       "pages/foos/[id]/edit.tsx",
       "pages/foos/index.tsx",
       "pages/foos/create.tsx",
+      "pages/_app.tsx",
 
       // utils
       "utils/dataAccess.ts",
@@ -97,12 +99,16 @@ export default class NextGenerator extends BaseGenerator {
     // copy with regular name
     [
       // components
+      "components/common/Layout.tsx",
       "components/common/Pagination.tsx",
       "components/common/ReferenceLinks.tsx",
 
       // types
       "types/collection.ts",
       "types/item.ts",
+
+      // pages
+      "pages/_app.tsx",
 
       // utils
       "utils/dataAccess.ts",

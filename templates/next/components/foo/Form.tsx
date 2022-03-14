@@ -2,59 +2,89 @@ import { FunctionComponent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ErrorMessage, Formik } from "formik";
-import { fetch } from "../../utils/dataAccess";
+import { useMutation } from "react-query";
+
+import { fetch, FetchError, FetchResponse } from "../../utils/dataAccess";
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 
 interface Props {
   {{{lc}}}?: {{{ucf}}};
 }
 
+interface SaveParams {
+  values: {{{ucf}}};
+}
+
+interface DeleteParams {
+  id: string;
+}
+
+const save{{{ucf}}} = async ({ values }: SaveParams) =>
+  await fetch<{{ucf}}>(!values["@id"] ? "/{{{name}}}" : values["@id"], {
+    method: !values["@id"] ? "POST" : "PUT",
+    body: JSON.stringify(values),
+  });
+
+const delete{{{ucf}}} = async (id: string) => await fetch<{{ucf}}>(id, { method: "DELETE" });
+
 export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
-  const [error, setError] = useState(null);
+  const [, setError] = useState<string | null>(null);
   const router = useRouter();
 
-	const handleDelete = async () => {
-		if (!window.confirm("Are you sure you want to delete this item?")) return;
+  const saveMutation = useMutation<FetchResponse<{{ucf}}> | undefined, Error|FetchError, SaveParams>((saveParams) => save{{{ucf}}}(saveParams));
 
-    try {
-      await fetch({{{lc}}}['@id'], { method: "DELETE" });
+  const deleteMutation = useMutation<FetchResponse<{{ucf}}> | undefined, Error|FetchError, DeleteParams>(({ id }) => delete{{{ucf}}}(id), {
+    onSuccess: () => {
       router.push("/{{{name}}}");
-    } catch (error) {
+    },
+    onError: (error)=> {
       setError(`Error when deleting the resource: ${error}`);
       console.error(error);
     }
+  });
+
+	const handleDelete = () => {
+    if (!{{lc}} || !{{lc}}["@id"]) return;
+		if (!window.confirm("Are you sure you want to delete this item?")) return;
+    deleteMutation.mutate({ id: {{lc}}["@id"] });
 	};
-  
+
 	return (
-		<div>
+    <div>
       <h1>{ {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }</h1>
       <Formik
         initialValues={ {{~lc}} ? {...{{lc~}} } : new {{{ucf}}}()}
-        validate={(values) => {
+        validate={() => {
           const errors = {};
           // add your validation logic here
           return errors;
         }}
-        onSubmit={async (values, { setSubmitting, setStatus, setErrors }) => {
+        onSubmit={(values, { setSubmitting, setStatus, setErrors }) => {
           const isCreation = !values["@id"];
-            try {
-              await fetch(isCreation ? "/{{{name}}}" : values["@id"], {
-                method: isCreation ? "POST" : "PUT",
-                body: JSON.stringify(values),
-              });
-              setStatus({
-                isValid: true,
-                msg: `Element ${isCreation ? 'created': 'updated'}.`,
-              });
-              router.push("/{{{name}}}");
-          } catch (error) {
-            setStatus({
-              isValid: false,
-              msg: `${error.defaultErrorMsg}`,
-            });
-            setErrors(error.fields);
-          }
-          setSubmitting(false);
+          saveMutation.mutate(
+            { values },
+            {
+              onSuccess: () => {
+                setStatus({
+                  isValid: true,
+                  msg: `Element ${isCreation ? "created" : "updated"}.`,
+                });
+                router.push("/{{{name}}}");
+              },
+              onError: (error) => {
+                setStatus({
+                  isValid: false,
+                  msg: `${error.message}`,
+                });
+                if ("fields" in error) {
+                  setErrors(error.fields);
+                }
+              },
+              onSettled: ()=> {
+                setSubmitting(false);
+              }
+            }
+          );
         }}
       >
         {({
@@ -85,7 +115,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                 placeholder="{{{description}}}"
                 {{#if required}}required={true}{{/if}}
                 className={`form-control${errors.{{name}} && touched.{{name}} ? ' is-invalid' : ''}`}
-                aria-invalid={errors.{{name}} && touched.{{name~}} ? 'true' : null}
+                aria-invalid={errors.{{name}} && touched.{{name~}} ? 'true' : undefined}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
