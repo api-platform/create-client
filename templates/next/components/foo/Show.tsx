@@ -8,9 +8,10 @@ import Head from 'next/head'
 
 interface Props {
   {{{lc}}}: {{{ucf}}};
+  text: String
 }
 
-export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
+export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
   const [error, setError] = useState(null);
   const router = useRouter();
 

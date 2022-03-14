@@ -5,6 +5,7 @@ import { fetch } from "../../../utils/dataAccess";
 import Head from "next/head";
 import DefaultErrorPage from "next/error";
 import { useMercure } from "../../../utils/mercure";
+import { getPathsFromHydraResponse } from "../../../utils/helpers";
 
 interface Props {
   {{{lc}}}: {{{ucf}}};
@@ -25,7 +26,7 @@ const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
           <title>{`Show {{{ucf}}} ${ {{~lc}}['@id'] }`}</title>
         </Head>
       </div>
-      <Show {{{lc}}}={ {{{lc}}} } text={ props.text } />
+      <Show {{{lc}}}={ {{{lc}}} } text={ data.text } />
     </div>
   );
 };
@@ -42,41 +43,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     revalidate: 1,
   };
 }
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  try {
-    const response = await fetch("/{{{name}}}");
-  } catch (e) {
-    console.error(e);
-
-    return {
-      paths: [],
-      fallback: true,
-    };
-  }
-
-  const view = response.data['{{{hydraPrefix}}}view'];
-  const paths = response.data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => `${ {{~lc}}['@id'] }`);
-
-  if (view) {
-    try {
-      const {
-        '{{{hydraPrefix}}}last': last
-      } = view;
-      for (let page = 2; page <= parseInt(last.replace(/^\/{{{name}}}\?page=(\d+)/, '$1')); page++) {
-        paths.concat(
-          await fetch(`/{{{name}}}?page=${page}`).data["{{{hydraPrefix}}}member"].map(({{{lc}}}) => `${ {{~lc}}['@id'] }`)
-      );
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
+export const getStaticPaths: GetStaticPaths = async() => {
+  const response = await fetch("/{{{name}}}");
+  const paths= await getPathsFromHydraResponse(response,false);
   return {
     paths,
-    fallback: true,
-  };
+    fallback:true
 }
-
+}
 export default Page;
