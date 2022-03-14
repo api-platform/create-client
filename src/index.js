@@ -79,17 +79,20 @@ async function main() {
     : null;
 
   const parser = (entrypointWithSlash) => {
-    const options = {};
-    if (options.username && options.password) {
+    const parserOptions = {};
+    if (parserOptions.username && parserOptions.password) {
       const encoded = Buffer.from(
-        `${options.username}:${options.password}`
+        `${parserOptions.username}:${parserOptions.password}`
       ).toString("base64");
-      options.headers = new Headers();
-      options.headers.set("Authorization", `Basic ${encoded}`);
+      parserOptions.headers = new Headers();
+      parserOptions.headers.set("Authorization", `Basic ${encoded}`);
     }
-    if (options.bearer) {
-      options.headers = new Headers();
-      options.headers.set("Authorization", `Bearer ${options.bearer}`);
+    if (parserOptions.bearer) {
+      parserOptions.headers = new Headers();
+      parserOptions.headers.set(
+        "Authorization",
+        `Bearer ${parserOptions.bearer}`
+      );
     }
     switch (options.format) {
       case "swagger": // deprecated
@@ -98,7 +101,7 @@ async function main() {
       case "openapi3":
         return parseOpenApi3Documentation(entrypointWithSlash);
       default:
-        return parseHydraDocumentation(entrypointWithSlash, options);
+        return parseHydraDocumentation(entrypointWithSlash, parserOptions);
     }
   };
 
