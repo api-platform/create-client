@@ -1,6 +1,6 @@
 export default () => ({
   isLoading: false,
-  error: "",
+  error: '',
   created: null,
   violations: null,
 });

@@ -1,1 +1,1 @@
-export { default } from "../../../../common/store/update/mutations";
+export { default } from '../../../../common/store/update/mutations';

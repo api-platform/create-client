@@ -1,1 +1,1 @@
-export * from "../../../../common/store/update/getters";
+export * from '../../../../common/store/update/getters';

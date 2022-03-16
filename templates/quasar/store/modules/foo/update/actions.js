@@ -2,8 +2,8 @@ import {
   resetCommon,
   retrieveCommon,
   updateCommon,
-} from "../../../../common/store/update/actions";
-import { ENTRYPOINT } from "../../../../config/{{{hashEntry}}}_entrypoint";
+} from '../../../../common/store/update/actions';
+import { ENTRYPOINT } from '../../../../config/{{{hashEntry}}}_entrypoint';
 
 export default function (types) {
   const reset = (context) => {

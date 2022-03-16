@@ -1,7 +1,7 @@
-import has from "lodash/has";
-import { useEffect, useState } from "react";
-import { PagedCollection } from "../types/Collection";
-import { normalize } from "./dataAccess";
+import has from 'lodash/has';
+import { useEffect, useState } from 'react';
+import { PagedCollection } from '../types/Collection';
+import { normalize } from './dataAccess';
 
 const mercureSubscribe = (
   hubURL: string,
@@ -10,11 +10,11 @@ const mercureSubscribe = (
 ) => {
   const url = new URL(hubURL, window.origin);
   url.searchParams.append(
-    "topic",
-    new URL(data["@id"], window.origin).toString()
+    'topic',
+    new URL(data['@id'], window.origin).toString()
   );
   const eventSource = new EventSource(url.toString());
-  eventSource.addEventListener("message", (event) =>
+  eventSource.addEventListener('message', (event) =>
     setData(normalize(JSON.parse(event.data)))
   );
 
@@ -35,22 +35,22 @@ export const useMercure = (
     return data;
   }
 
-  if (!has(data, "{{{hydraPrefix}}}member") && !has(data, "@id")) {
-    console.error("Object sent is not in JSON-LD format.");
+  if (!has(data, '{{{hydraPrefix}}}member') && !has(data, '@id')) {
+    console.error('Object sent is not in JSON-LD format.');
 
     return data;
   }
 
   useEffect(() => {
     if (
-      has(data, "{{{hydraPrefix}}}member") &&
-      Array.isArray(data["{{{hydraPrefix}}}member"]) &&
-      data["{{{hydraPrefix}}}member"].length !== 0
+      has(data, '{{{hydraPrefix}}}member') &&
+      Array.isArray(data['{{{hydraPrefix}}}member']) &&
+      data['{{{hydraPrefix}}}member'].length !== 0
     ) {
       // It's a PagedCollection
-      data["{{{hydraPrefix}}}member"].forEach((obj, pos) =>
+      data['{{{hydraPrefix}}}member'].forEach((obj, pos) =>
         mercureSubscribe(hubURL, obj, (datum) => {
-          data["{{{hydraPrefix}}}member"][pos] = datum;
+          data['{{{hydraPrefix}}}member'][pos] = datum;
           setData(data);
         })
       );
@@ -62,7 +62,7 @@ export const useMercure = (
     const eventSource = mercureSubscribe(hubURL, data, setData);
 
     return () => {
-      eventSource.removeEventListener("message", (event) =>
+      eventSource.removeEventListener('message', (event) =>
         setData(normalize(JSON.parse(event.data)))
       );
 

@@ -1,9 +1,9 @@
-import chalk from "chalk";
-import fs from "fs";
-import handlebars from "handlebars";
-import mkdirp from "mkdirp";
-import { sprintf } from "sprintf-js";
-import prettier from "prettier";
+import chalk from 'chalk';
+import fs from 'fs';
+import handlebars from 'handlebars';
+import mkdirp from 'mkdirp';
+import { sprintf } from 'sprintf-js';
+import prettier from 'prettier';
 
 export default class {
   templates = {};
@@ -12,7 +12,7 @@ export default class {
     this.hydraPrefix = hydraPrefix;
     this.templateDirectory = templateDirectory;
 
-    this.registerTemplates("", ["entrypoint.js"]);
+    this.registerTemplates('', ['entrypoint.js']);
   }
 
   registerTemplates(basePath, paths) {
@@ -39,7 +39,7 @@ export default class {
 
   createFileFromPattern(pattern, dir, lc, context) {
     this.createFile(
-      sprintf(pattern, "foo"),
+      sprintf(pattern, 'foo'),
       sprintf(`${dir}/${pattern}`, lc),
       context
     );
@@ -56,10 +56,10 @@ export default class {
 
     // Format the generated code using Prettier
     let content = this.templates[template](context);
-    if (template.endsWith(".js")) {
-      content = prettier.format(content, { parser: "babel" });
-    } else if (template.endsWith(".ts") || template.endsWith(".tsx")) {
-      content = prettier.format(content, { parser: "babel-ts" });
+    if (template.endsWith('.js')) {
+      content = prettier.format(content, { parser: 'babel' });
+    } else if (template.endsWith('.ts') || template.endsWith('.tsx')) {
+      content = prettier.format(content, { parser: 'babel-ts' });
     }
 
     if (!fs.existsSync(dest)) {
@@ -72,7 +72,7 @@ export default class {
   }
 
   createEntrypoint(entrypoint, dest) {
-    this.createFile("entrypoint.js", dest, { entrypoint }, false);
+    this.createFile('entrypoint.js', dest, { entrypoint }, false);
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -105,61 +105,61 @@ export default class {
 
   getHtmlInputTypeFromField(field) {
     switch (field.id) {
-      case "http://schema.org/email":
-        return { type: "email" };
+      case 'http://schema.org/email':
+        return { type: 'email' };
 
-      case "http://schema.org/url":
-        return { type: "url" };
+      case 'http://schema.org/url':
+        return { type: 'url' };
     }
 
     switch (field.range) {
-      case "http://www.w3.org/2001/XMLSchema#integer":
-        return { type: "number", number: true };
+      case 'http://www.w3.org/2001/XMLSchema#integer':
+        return { type: 'number', number: true };
 
-      case "http://www.w3.org/2001/XMLSchema#decimal":
-        return { type: "number", step: "0.1", number: true };
+      case 'http://www.w3.org/2001/XMLSchema#decimal':
+        return { type: 'number', step: '0.1', number: true };
 
-      case "http://www.w3.org/2001/XMLSchema#boolean":
-        return { type: "checkbox" };
+      case 'http://www.w3.org/2001/XMLSchema#boolean':
+        return { type: 'checkbox' };
 
-      case "http://www.w3.org/2001/XMLSchema#date":
-        return { type: "date" };
+      case 'http://www.w3.org/2001/XMLSchema#date':
+        return { type: 'date' };
 
-      case "http://www.w3.org/2001/XMLSchema#time":
-        return { type: "time" };
+      case 'http://www.w3.org/2001/XMLSchema#time':
+        return { type: 'time' };
 
-      case "http://www.w3.org/2001/XMLSchema#dateTime":
-        return { type: "dateTime" };
+      case 'http://www.w3.org/2001/XMLSchema#dateTime':
+        return { type: 'dateTime' };
 
       default:
-        return { type: "text" };
+        return { type: 'text' };
     }
   }
 
   getType(field) {
     if (field.reference) {
       if (field.maxCardinality !== 1) {
-        return "string[]";
+        return 'string[]';
       }
 
-      return "string";
+      return 'string';
     }
 
     switch (field.range) {
-      case "http://www.w3.org/2001/XMLSchema#integer":
-      case "http://www.w3.org/2001/XMLSchema#decimal":
-        return "number";
-      case "http://www.w3.org/2001/XMLSchema#boolean":
-        return "boolean";
-      case "http://www.w3.org/2001/XMLSchema#date":
-      case "http://www.w3.org/2001/XMLSchema#dateTime":
-      case "http://www.w3.org/2001/XMLSchema#time":
-        return "Date";
-      case "http://www.w3.org/2001/XMLSchema#string":
-        return "string";
+      case 'http://www.w3.org/2001/XMLSchema#integer':
+      case 'http://www.w3.org/2001/XMLSchema#decimal':
+        return 'number';
+      case 'http://www.w3.org/2001/XMLSchema#boolean':
+        return 'boolean';
+      case 'http://www.w3.org/2001/XMLSchema#date':
+      case 'http://www.w3.org/2001/XMLSchema#dateTime':
+      case 'http://www.w3.org/2001/XMLSchema#time':
+        return 'Date';
+      case 'http://www.w3.org/2001/XMLSchema#string':
+        return 'string';
     }
 
-    return "any";
+    return 'any';
   }
 
   buildFields(fields) {

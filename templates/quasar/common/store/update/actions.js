@@ -1,5 +1,5 @@
-import SubmissionError from "../../../error/SubmissionError";
-import fetch from "../../../utils/fetch";
+import SubmissionError from '../../../error/SubmissionError';
+import fetch from '../../../utils/fetch';
 
 export const resetCommon = ({ commit }, { types }) => {
   commit(types.RESET);
@@ -21,14 +21,14 @@ export const retrieveCommon = ({ commit }, dest, { types }) => {
 };
 
 export const updateCommon = ({ commit, state }, { values, ep }, { types }) => {
-  commit(types.SET_ERROR, "");
+  commit(types.SET_ERROR, '');
   commit(types.TOGGLE_LOADING);
 
   return fetch(
-    { id: (state.retrieved && state.retrieved["@id"]) || values["@id"], ep },
+    { id: (state.retrieved && state.retrieved['@id']) || values['@id'], ep },
     {
-      method: "PUT",
-      headers: new Headers({ "Content-Type": "application/ld+json" }),
+      method: 'PUT',
+      headers: new Headers({ 'Content-Type': 'application/ld+json' }),
       body: JSON.stringify(values),
     }
   )

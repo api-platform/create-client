@@ -1,10 +1,10 @@
 import {
   createCommon,
   resetCommon,
-} from "../../../../common/store/create/actions";
-import { ENTRYPOINT } from "../../../../config/{{{hashEntry}}}_entrypoint";
+} from '../../../../common/store/create/actions';
+import { ENTRYPOINT } from '../../../../config/{{{hashEntry}}}_entrypoint';
 
-const page = "{{{name}}}";
+const page = '{{{name}}}';
 
 export default function (types) {
   const create = (context, values) =>

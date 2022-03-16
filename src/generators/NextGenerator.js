@@ -1,5 +1,5 @@
-import chalk from "chalk";
-import BaseGenerator from "./BaseGenerator";
+import chalk from 'chalk';
+import BaseGenerator from './BaseGenerator';
 
 export default class NextGenerator extends BaseGenerator {
   constructor(params) {
@@ -8,26 +8,26 @@ export default class NextGenerator extends BaseGenerator {
     this.routeAddedtoServer = false;
     this.registerTemplates(`next/`, [
       // components
-      "components/common/Pagination.tsx",
-      "components/common/ReferenceLinks.tsx",
-      "components/foo/List.tsx",
-      "components/foo/Show.tsx",
-      "components/foo/Form.tsx",
+      'components/common/Pagination.tsx',
+      'components/common/ReferenceLinks.tsx',
+      'components/foo/List.tsx',
+      'components/foo/Show.tsx',
+      'components/foo/Form.tsx',
 
       // types
-      "types/Collection.ts",
-      "types/foo.ts",
+      'types/Collection.ts',
+      'types/foo.ts',
 
       // pages
-      "pages/foos/[id]/index.tsx",
-      "pages/foos/[id]/edit.tsx",
-      "pages/foos/index.tsx",
-      "pages/foos/create.tsx",
+      'pages/foos/[id]/index.tsx',
+      'pages/foos/[id]/edit.tsx',
+      'pages/foos/index.tsx',
+      'pages/foos/create.tsx',
 
       // utils
-      "utils/dataAccess.ts",
-      "utils/mercure.ts",
-      "utils/helpers.ts",
+      'utils/dataAccess.ts',
+      'utils/mercure.ts',
+      'utils/helpers.ts',
     ]);
   }
 
@@ -71,35 +71,35 @@ export default class NextGenerator extends BaseGenerator {
     this.createDir(`${dir}/pages/${context.lc}s/[id]`);
     [
       // components
-      "components/%s/List.tsx",
-      "components/%s/Show.tsx",
-      "components/%s/Form.tsx",
+      'components/%s/List.tsx',
+      'components/%s/Show.tsx',
+      'components/%s/Form.tsx',
 
       // pages
-      "pages/%ss/[id]/index.tsx",
-      "pages/%ss/[id]/edit.tsx",
-      "pages/%ss/index.tsx",
-      "pages/%ss/create.tsx",
+      'pages/%ss/[id]/index.tsx',
+      'pages/%ss/[id]/edit.tsx',
+      'pages/%ss/index.tsx',
+      'pages/%ss/create.tsx',
     ].forEach((pattern) =>
       this.createFileFromPattern(pattern, dir, context.lc, context)
     );
 
     // interface pattern should be camel cased
-    this.createFile("types/foo.ts", `${dir}/types/${context.ucf}.ts`, context);
+    this.createFile('types/foo.ts', `${dir}/types/${context.ucf}.ts`, context);
 
     // copy with regular name
     [
       // components
-      "components/common/Pagination.tsx",
-      "components/common/ReferenceLinks.tsx",
+      'components/common/Pagination.tsx',
+      'components/common/ReferenceLinks.tsx',
 
       // types
-      "types/Collection.ts",
+      'types/Collection.ts',
 
       // utils
-      "utils/dataAccess.ts",
-      "utils/mercure.ts",
-      "utils/helpers.ts",
+      'utils/dataAccess.ts',
+      'utils/mercure.ts',
+      'utils/helpers.ts',
     ].forEach((file) =>
       this.createFile(file, `${dir}/${file}`, context, false)
     );
@@ -109,7 +109,7 @@ export default class NextGenerator extends BaseGenerator {
   }
 
   getDescription(field) {
-    return field.description ? field.description.replace(/"/g, "'") : "";
+    return field.description ? field.description.replace(/"/g, "'") : '';
   }
 
   parseFields(resource) {

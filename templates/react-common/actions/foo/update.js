@@ -1,23 +1,23 @@
-import { SubmissionError } from "redux-form";
+import { SubmissionError } from 'redux-form';
 import {
   fetch,
   extractHubURL,
   normalize,
   mercureSubscribe as subscribe,
-} from "../../utils/dataAccess";
-import { success as createSuccess } from "./create";
-import { loading, error } from "./delete";
+} from '../../utils/dataAccess';
+import { success as createSuccess } from './create';
+import { loading, error } from './delete';
 
 export function retrieveError(retrieveError) {
-  return { type: "{{{uc}}}_UPDATE_RETRIEVE_ERROR", retrieveError };
+  return { type: '{{{uc}}}_UPDATE_RETRIEVE_ERROR', retrieveError };
 }
 
 export function retrieveLoading(retrieveLoading) {
-  return { type: "{{{uc}}}_UPDATE_RETRIEVE_LOADING", retrieveLoading };
+  return { type: '{{{uc}}}_UPDATE_RETRIEVE_LOADING', retrieveLoading };
 }
 
 export function retrieveSuccess(retrieved) {
-  return { type: "{{{uc}}}_UPDATE_RETRIEVE_SUCCESS", retrieved };
+  return { type: '{{{uc}}}_UPDATE_RETRIEVE_SUCCESS', retrieved };
 }
 
 export function retrieve(id) {
@@ -36,7 +36,7 @@ export function retrieve(id) {
         dispatch(retrieveLoading(false));
         dispatch(retrieveSuccess(retrieved));
 
-        if (hubURL) dispatch(mercureSubscribe(hubURL, retrieved["@id"]));
+        if (hubURL) dispatch(mercureSubscribe(hubURL, retrieved['@id']));
       })
       .catch((e) => {
         dispatch(retrieveLoading(false));
@@ -46,15 +46,15 @@ export function retrieve(id) {
 }
 
 export function updateError(updateError) {
-  return { type: "{{{uc}}}_UPDATE_UPDATE_ERROR", updateError };
+  return { type: '{{{uc}}}_UPDATE_UPDATE_ERROR', updateError };
 }
 
 export function updateLoading(updateLoading) {
-  return { type: "{{{uc}}}_UPDATE_UPDATE_LOADING", updateLoading };
+  return { type: '{{{uc}}}_UPDATE_UPDATE_LOADING', updateLoading };
 }
 
 export function updateSuccess(updated) {
-  return { type: "{{{uc}}}_UPDATE_UPDATE_SUCCESS", updated };
+  return { type: '{{{uc}}}_UPDATE_UPDATE_SUCCESS', updated };
 }
 
 export function update(item, values) {
@@ -63,9 +63,9 @@ export function update(item, values) {
     dispatch(createSuccess(null));
     dispatch(updateLoading(true));
 
-    return fetch(item["@id"], {
-      method: "PUT",
-      headers: new Headers({ "Content-Type": "application/ld+json" }),
+    return fetch(item['@id'], {
+      method: 'PUT',
+      headers: new Headers({ 'Content-Type': 'application/ld+json' }),
       body: JSON.stringify(values),
     })
       .then((response) =>
@@ -79,7 +79,7 @@ export function update(item, values) {
         dispatch(updateLoading(false));
         dispatch(updateSuccess(retrieved));
 
-        if (hubURL) dispatch(mercureSubscribe(hubURL, retrieved["@id"]));
+        if (hubURL) dispatch(mercureSubscribe(hubURL, retrieved['@id']));
       })
       .catch((e) => {
         dispatch(updateLoading(false));
@@ -98,7 +98,7 @@ export function reset(eventSource) {
   return (dispatch) => {
     if (eventSource) eventSource.close();
 
-    dispatch({ type: "{{{uc}}}_UPDATE_RESET" });
+    dispatch({ type: '{{{uc}}}_UPDATE_RESET' });
     dispatch(error(null));
     dispatch(loading(false));
     dispatch(createSuccess(null));
@@ -109,23 +109,23 @@ export function mercureSubscribe(hubURL, topic) {
   return (dispatch) => {
     const eventSource = subscribe(hubURL, [topic]);
     dispatch(mercureOpen(eventSource));
-    eventSource.addEventListener("message", (event) =>
+    eventSource.addEventListener('message', (event) =>
       dispatch(mercureMessage(normalize(JSON.parse(event.data))))
     );
   };
 }
 
 export function mercureOpen(eventSource) {
-  return { type: "{{{uc}}}_UPDATE_MERCURE_OPEN", eventSource };
+  return { type: '{{{uc}}}_UPDATE_MERCURE_OPEN', eventSource };
 }
 
 export function mercureMessage(retrieved) {
   return (dispatch) => {
     if (1 === Object.keys(retrieved).length) {
-      dispatch({ type: "{{{uc}}}_UPDATE_MERCURE_DELETED", retrieved });
+      dispatch({ type: '{{{uc}}}_UPDATE_MERCURE_DELETED', retrieved });
       return;
     }
 
-    dispatch({ type: "{{{uc}}}_UPDATE_MERCURE_MESSAGE", retrieved });
+    dispatch({ type: '{{{uc}}}_UPDATE_MERCURE_MESSAGE', retrieved });
   };
 }

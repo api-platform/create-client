@@ -1,5 +1,5 @@
-import chalk from "chalk";
-import BaseVueGenerator from "./VueBaseGenerator";
+import chalk from 'chalk';
+import BaseVueGenerator from './VueBaseGenerator';
 
 export default class extends BaseVueGenerator {
   constructor(params) {
@@ -7,29 +7,29 @@ export default class extends BaseVueGenerator {
 
     this.registerTemplates(`vuetify/`, [
       // components
-      "components/ActionCell.vue",
-      "components/Breadcrumb.vue",
-      "components/ConfirmDelete.vue",
-      "components/DataFilter.vue",
-      "components/InputDate.vue",
-      "components/Loading.vue",
-      "components/Snackbar.vue",
-      "components/Toolbar.vue",
-      "components/foo/Filter.vue",
-      "components/foo/Form.vue",
-      "components/foo/Layout.vue",
+      'components/ActionCell.vue',
+      'components/Breadcrumb.vue',
+      'components/ConfirmDelete.vue',
+      'components/DataFilter.vue',
+      'components/InputDate.vue',
+      'components/Loading.vue',
+      'components/Snackbar.vue',
+      'components/Toolbar.vue',
+      'components/foo/Filter.vue',
+      'components/foo/Form.vue',
+      'components/foo/Layout.vue',
 
       // locales
-      "locales/en.js",
+      'locales/en.js',
 
       // routes
-      "router/foo.js",
+      'router/foo.js',
 
       // views
-      "views/foo/Create.vue",
-      "views/foo/List.vue",
-      "views/foo/Show.vue",
-      "views/foo/Update.vue",
+      'views/foo/Create.vue',
+      'views/foo/List.vue',
+      'views/foo/Show.vue',
+      'views/foo/Update.vue',
     ]);
   }
 
@@ -40,7 +40,7 @@ export default class extends BaseVueGenerator {
       resource.title
     );
     console.log(
-      "Paste the following definitions in your application configuration:"
+      'Paste the following definitions in your application configuration:'
     );
     console.log(
       chalk.green(`
@@ -89,36 +89,36 @@ export const store = new Vuex.Store({
       this.createDir(dir);
     }
 
-    this.createFile("locales/en.js", `${dir}/locales/en.js`, context, false);
+    this.createFile('locales/en.js', `${dir}/locales/en.js`, context, false);
 
     [
       // components
-      "components/%s/Filter.vue",
-      "components/%s/Form.vue",
-      "components/%s/Layout.vue",
+      'components/%s/Filter.vue',
+      'components/%s/Form.vue',
+      'components/%s/Layout.vue',
 
       // routes
-      "router/%s.js",
+      'router/%s.js',
 
       // views
-      "views/%s/Create.vue",
-      "views/%s/List.vue",
-      "views/%s/Show.vue",
-      "views/%s/Update.vue",
+      'views/%s/Create.vue',
+      'views/%s/List.vue',
+      'views/%s/Show.vue',
+      'views/%s/Update.vue',
     ].forEach((pattern) =>
       this.createFileFromPattern(pattern, dir, lc, context)
     );
 
     // components
     [
-      "ActionCell.vue",
-      "Breadcrumb.vue",
-      "ConfirmDelete.vue",
-      "DataFilter.vue",
-      "InputDate.vue",
-      "Loading.vue",
-      "Snackbar.vue",
-      "Toolbar.vue",
+      'ActionCell.vue',
+      'Breadcrumb.vue',
+      'ConfirmDelete.vue',
+      'DataFilter.vue',
+      'InputDate.vue',
+      'Loading.vue',
+      'Snackbar.vue',
+      'Toolbar.vue',
     ].forEach((file) =>
       this.createFile(
         `components/${file}`,

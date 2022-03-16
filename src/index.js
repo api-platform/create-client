@@ -1,50 +1,50 @@
 #!/usr/bin/env node
 
-import "isomorphic-fetch";
-import program from "commander";
-import parseHydraDocumentation from "@api-platform/api-doc-parser/lib/hydra/parseHydraDocumentation";
-import parseSwaggerDocumentation from "@api-platform/api-doc-parser/lib/swagger/parseSwaggerDocumentation";
-import parseOpenApi3Documentation from "@api-platform/api-doc-parser/lib/openapi3/parseOpenApi3Documentation";
-import { version } from "../package.json";
-import generators from "./generators";
+import 'isomorphic-fetch';
+import program from 'commander';
+import parseHydraDocumentation from '@api-platform/api-doc-parser/lib/hydra/parseHydraDocumentation';
+import parseSwaggerDocumentation from '@api-platform/api-doc-parser/lib/swagger/parseSwaggerDocumentation';
+import parseOpenApi3Documentation from '@api-platform/api-doc-parser/lib/openapi3/parseOpenApi3Documentation';
+import { version } from '../package.json';
+import generators from './generators';
 
 async function main() {
   program
     .version(version)
     .description(
-      "Generate apps built with Next, Nuxt, Quasar, React, React Native, Vue or Vuetify for any API documented using Hydra or OpenAPI"
+      'Generate apps built with Next, Nuxt, Quasar, React, React Native, Vue or Vuetify for any API documented using Hydra or OpenAPI'
     )
-    .usage("entrypoint outputDirectory")
+    .usage('entrypoint outputDirectory')
     .option(
-      "-r, --resource [resourceName]",
-      "Generate CRUD for the given resource"
+      '-r, --resource [resourceName]',
+      'Generate CRUD for the given resource'
     )
     .option(
-      "-p, --hydra-prefix [hydraPrefix]",
-      "The hydra prefix used by the API",
-      "hydra:"
+      '-p, --hydra-prefix [hydraPrefix]',
+      'The hydra prefix used by the API',
+      'hydra:'
     )
-    .option("--username [username]", "Username for basic auth (Hydra only)")
-    .option("--password [password]", "Password for basic auth (Hydra only)")
-    .option("--bearer [bearer]", "Token for bearer auth (Hydra only)")
+    .option('--username [username]', 'Username for basic auth (Hydra only)')
+    .option('--password [password]', 'Password for basic auth (Hydra only)')
+    .option('--bearer [bearer]', 'Token for bearer auth (Hydra only)')
     .option(
-      "-g, --generator [generator]",
+      '-g, --generator [generator]',
       'The generator to use, one of "next", "nuxt", "quasar", "react", "react-native", "typescript", "vue", "vuetify" or a path to a custom generator of your choice',
-      "next"
+      'next'
     )
     .option(
-      "-t, --template-directory [templateDirectory]",
-      "The templates directory base to use. Final directory will be ${templateDirectory}/${generator}",
+      '-t, --template-directory [templateDirectory]',
+      'The templates directory base to use. Final directory will be ${templateDirectory}/${generator}',
       `${__dirname}/../templates/`
     )
     .option(
-      "-f, --format [hydra|openapi3|openapi2]",
+      '-f, --format [hydra|openapi3|openapi2]',
       '"hydra", "openapi3" or "openapi2"',
-      "hydra"
+      'hydra'
     )
     .option(
-      "-s, --server-path [serverPath]",
-      "Path to express server file to allow route dynamic addition (Next.js generator only)"
+      '-s, --server-path [serverPath]',
+      'Path to express server file to allow route dynamic addition (Next.js generator only)'
     )
     .parse(process.argv);
 
@@ -63,9 +63,9 @@ async function main() {
   const outputDirectory =
     program.args[1] || process.env.API_PLATFORM_CLIENT_GENERATOR_OUTPUT;
 
-  const entrypointWithSlash = entrypoint.endsWith("/")
+  const entrypointWithSlash = entrypoint.endsWith('/')
     ? entrypoint
-    : entrypoint + "/";
+    : entrypoint + '/';
 
   const generator = (await generators(options.generator))({
     hydraPrefix: options.hydraPrefix,
@@ -83,19 +83,19 @@ async function main() {
     if (options.username && options.password) {
       const encoded = Buffer.from(
         `${options.username}:${options.password}`
-      ).toString("base64");
+      ).toString('base64');
       options.headers = new Headers();
-      options.headers.set("Authorization", `Basic ${encoded}`);
+      options.headers.set('Authorization', `Basic ${encoded}`);
     }
     if (options.bearer) {
       options.headers = new Headers();
-      options.headers.set("Authorization", `Bearer ${options.bearer}`);
+      options.headers.set('Authorization', `Bearer ${options.bearer}`);
     }
     switch (options.format) {
-      case "swagger": // deprecated
-      case "openapi2":
+      case 'swagger': // deprecated
+      case 'openapi2':
         return parseSwaggerDocumentation(entrypointWithSlash);
-      case "openapi3":
+      case 'openapi3':
         return parseOpenApi3Documentation(entrypointWithSlash);
       default:
         return parseHydraDocumentation(entrypointWithSlash, options);

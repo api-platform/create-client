@@ -1,41 +1,41 @@
-import chalk from "chalk";
-import BaseGenerator from "./BaseGenerator";
+import chalk from 'chalk';
+import BaseGenerator from './BaseGenerator';
 
 export default class extends BaseGenerator {
   constructor(params) {
     super(params);
 
-    this.registerTemplates("react-common/", [
+    this.registerTemplates('react-common/', [
       // actions
-      "actions/foo/create.js",
-      "actions/foo/delete.js",
-      "actions/foo/list.js",
-      "actions/foo/update.js",
-      "actions/foo/show.js",
+      'actions/foo/create.js',
+      'actions/foo/delete.js',
+      'actions/foo/list.js',
+      'actions/foo/update.js',
+      'actions/foo/show.js',
 
       // utils
-      "utils/dataAccess.js",
+      'utils/dataAccess.js',
 
       // reducers
-      "reducers/foo/create.js",
-      "reducers/foo/delete.js",
-      "reducers/foo/index.js",
-      "reducers/foo/list.js",
-      "reducers/foo/update.js",
-      "reducers/foo/show.js",
+      'reducers/foo/create.js',
+      'reducers/foo/delete.js',
+      'reducers/foo/index.js',
+      'reducers/foo/list.js',
+      'reducers/foo/update.js',
+      'reducers/foo/show.js',
     ]);
 
     this.registerTemplates(`react/`, [
       // components
-      "components/foo/Create.js",
-      "components/foo/Form.js",
-      "components/foo/index.js",
-      "components/foo/List.js",
-      "components/foo/Update.js",
-      "components/foo/Show.js",
+      'components/foo/Create.js',
+      'components/foo/Form.js',
+      'components/foo/index.js',
+      'components/foo/List.js',
+      'components/foo/Update.js',
+      'components/foo/Show.js',
 
       // routes
-      "routes/foo.js",
+      'routes/foo.js',
     ]);
   }
 
@@ -47,7 +47,7 @@ export default class extends BaseGenerator {
       resource.title
     );
     console.log(
-      "Paste the following definitions in your application configuration (`client/src/index.js` by default):"
+      'Paste the following definitions in your application configuration (`client/src/index.js` by default):'
     );
     console.log(
       chalk.green(`
@@ -96,37 +96,37 @@ combineReducers({ ${titleLc},/* ... */ }),
 
     [
       // actions
-      "actions/%s/create.js",
-      "actions/%s/delete.js",
-      "actions/%s/list.js",
-      "actions/%s/update.js",
-      "actions/%s/show.js",
+      'actions/%s/create.js',
+      'actions/%s/delete.js',
+      'actions/%s/list.js',
+      'actions/%s/update.js',
+      'actions/%s/show.js',
 
       // components
-      "components/%s/Create.js",
-      "components/%s/Form.js",
-      "components/%s/index.js",
-      "components/%s/List.js",
-      "components/%s/Update.js",
-      "components/%s/Show.js",
+      'components/%s/Create.js',
+      'components/%s/Form.js',
+      'components/%s/index.js',
+      'components/%s/List.js',
+      'components/%s/Update.js',
+      'components/%s/Show.js',
 
       // reducers
-      "reducers/%s/create.js",
-      "reducers/%s/delete.js",
-      "reducers/%s/index.js",
-      "reducers/%s/list.js",
-      "reducers/%s/update.js",
-      "reducers/%s/show.js",
+      'reducers/%s/create.js',
+      'reducers/%s/delete.js',
+      'reducers/%s/index.js',
+      'reducers/%s/list.js',
+      'reducers/%s/update.js',
+      'reducers/%s/show.js',
 
       // routes
-      "routes/%s.js",
+      'routes/%s.js',
     ].forEach((pattern) =>
       this.createFileFromPattern(pattern, dir, lc, context)
     );
 
     // utils
     this.createFile(
-      "utils/dataAccess.js",
+      'utils/dataAccess.js',
       `${dir}/utils/dataAccess.js`,
       context,
       false

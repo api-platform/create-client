@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { Fragment, FunctionComponent } from "react";
+import Link from 'next/link';
+import { Fragment, FunctionComponent } from 'react';
 
 interface Props {
   items: string | string[];

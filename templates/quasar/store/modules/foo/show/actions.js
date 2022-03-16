@@ -1,8 +1,8 @@
 import {
   retrieveCommon,
   resetCommon,
-} from "../../../../common/store/show/actions";
-import { ENTRYPOINT } from "../../../../config/{{{hashEntry}}}_entrypoint";
+} from '../../../../common/store/show/actions';
+import { ENTRYPOINT } from '../../../../config/{{{hashEntry}}}_entrypoint';
 
 export default function (types) {
   const retrieve = (context, id) =>

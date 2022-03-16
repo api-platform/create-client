@@ -1,49 +1,49 @@
-import BaseGenerator from "./BaseGenerator";
-import handlebars from "handlebars";
-import hbh_comparison from "handlebars-helpers/lib/comparison";
-import hbh_array from "handlebars-helpers/lib/array";
-import hbh_string from "handlebars-helpers/lib/string";
-import { sprintf } from "sprintf-js";
+import BaseGenerator from './BaseGenerator';
+import handlebars from 'handlebars';
+import hbh_comparison from 'handlebars-helpers/lib/comparison';
+import hbh_array from 'handlebars-helpers/lib/array';
+import hbh_string from 'handlebars-helpers/lib/string';
+import { sprintf } from 'sprintf-js';
 
 export default class extends BaseGenerator {
   constructor(params) {
     super(params);
 
-    this.registerTemplates("vue-common/", [
+    this.registerTemplates('vue-common/', [
       // error
-      "error/SubmissionError.js",
+      'error/SubmissionError.js',
 
       // mixins
-      "mixins/CreateMixin.js",
-      "mixins/ListMixin.js",
-      "mixins/NotificationMixin.js",
-      "mixins/ShowMixin.js",
-      "mixins/UpdateMixin.js",
+      'mixins/CreateMixin.js',
+      'mixins/ListMixin.js',
+      'mixins/NotificationMixin.js',
+      'mixins/ShowMixin.js',
+      'mixins/UpdateMixin.js',
 
       // services
-      "services/api.js",
-      "services/foo.js",
+      'services/api.js',
+      'services/foo.js',
 
       // modules
-      "store/modules/crud.js",
-      "store/modules/notifications.js",
+      'store/modules/crud.js',
+      'store/modules/notifications.js',
 
       // utils
-      "utils/dates.js",
-      "utils/fetch.js",
-      "utils/hydra.js",
+      'utils/dates.js',
+      'utils/fetch.js',
+      'utils/hydra.js',
 
       // validators
-      "validators/date.js",
+      'validators/date.js',
     ]);
 
-    handlebars.registerHelper("compare", hbh_comparison.compare);
-    handlebars.registerHelper("ifEven", hbh_comparison.ifEven);
-    handlebars.registerHelper("ifOdd", hbh_comparison.ifOdd);
-    handlebars.registerHelper("isArray", hbh_array.isArray);
-    handlebars.registerHelper("inArray", hbh_array.inArray);
-    handlebars.registerHelper("forEach", hbh_array.forEach);
-    handlebars.registerHelper("downcase", hbh_string.downcase);
+    handlebars.registerHelper('compare', hbh_comparison.compare);
+    handlebars.registerHelper('ifEven', hbh_comparison.ifEven);
+    handlebars.registerHelper('ifOdd', hbh_comparison.ifOdd);
+    handlebars.registerHelper('isArray', hbh_array.isArray);
+    handlebars.registerHelper('inArray', hbh_array.inArray);
+    handlebars.registerHelper('forEach', hbh_array.forEach);
+    handlebars.registerHelper('downcase', hbh_string.downcase);
 
     this.registerSwitchHelper();
   }
@@ -69,7 +69,7 @@ export default class extends BaseGenerator {
     */
     handlebars.__switch_stack__ = [];
 
-    handlebars.registerHelper("switch", function (value, options) {
+    handlebars.registerHelper('switch', function (value, options) {
       handlebars.__switch_stack__.push({
         switch_match: false,
         switch_value: value,
@@ -78,7 +78,7 @@ export default class extends BaseGenerator {
       handlebars.__switch_stack__.pop();
       return html;
     });
-    handlebars.registerHelper("case", function (value, options) {
+    handlebars.registerHelper('case', function (value, options) {
       let args = Array.from(arguments);
       options = args.pop();
       let caseValues = args;
@@ -86,13 +86,13 @@ export default class extends BaseGenerator {
         handlebars.__switch_stack__[handlebars.__switch_stack__.length - 1];
 
       if (stack.switch_match || caseValues.indexOf(stack.switch_value) === -1) {
-        return "";
+        return '';
       } else {
         stack.switch_match = true;
         return options.fn(this);
       }
     });
-    handlebars.registerHelper("default", function (options) {
+    handlebars.registerHelper('default', function (options) {
       let stack =
         handlebars.__switch_stack__[handlebars.__switch_stack__.length - 1];
       if (!stack.switch_match) {
@@ -108,7 +108,7 @@ export default class extends BaseGenerator {
 
     const formFields = this.buildFields(resource.writableFields);
 
-    const dateTypes = ["time", "date", "dateTime"];
+    const dateTypes = ['time', 'date', 'dateTime'];
     const formContainsDate = formFields.some((e) => dateTypes.includes(e.type));
 
     const fields = this.buildFields(resource.readableFields);
@@ -127,7 +127,7 @@ export default class extends BaseGenerator {
     });
 
     const paramsHaveRefs = parameters.some(
-      (e) => e.type === "text" && e.reference
+      (e) => e.type === 'text' && e.reference
     );
 
     const labels = this.commonLabelTexts();
@@ -180,7 +180,7 @@ export default class extends BaseGenerator {
 
     // error
     this.createFile(
-      "error/SubmissionError.js",
+      'error/SubmissionError.js',
       `${dir}/error/SubmissionError.js`,
       {},
       false
@@ -188,22 +188,22 @@ export default class extends BaseGenerator {
 
     // mixins
     [
-      "mixins/Create%s.js",
-      "mixins/List%s.js",
-      "mixins/Notification%s.js",
-      "mixins/Show%s.js",
-      "mixins/Update%s.js",
+      'mixins/Create%s.js',
+      'mixins/List%s.js',
+      'mixins/Notification%s.js',
+      'mixins/Show%s.js',
+      'mixins/Update%s.js',
     ].forEach((pattern) =>
       this.createFile(
-        sprintf(`${pattern}`, "Mixin"),
-        sprintf(`${dir}/${pattern}`, "Mixin"),
+        sprintf(`${pattern}`, 'Mixin'),
+        sprintf(`${dir}/${pattern}`, 'Mixin'),
         {},
         false
       )
     );
 
     // stores
-    ["crud.js", "notifications.js"].forEach((file) =>
+    ['crud.js', 'notifications.js'].forEach((file) =>
       this.createFile(
         `store/modules/${file}`,
         `${dir}/store/modules/${file}`,
@@ -213,9 +213,9 @@ export default class extends BaseGenerator {
     );
 
     // services
-    this.createFile("services/api.js", `${dir}/services/api.js`, {}, false);
+    this.createFile('services/api.js', `${dir}/services/api.js`, {}, false);
     this.createFileFromPattern(
-      "services/%s.js",
+      'services/%s.js',
       dir,
       resource.title.toLowerCase(),
       { name: resource.name }
@@ -223,14 +223,14 @@ export default class extends BaseGenerator {
 
     // validators
     this.createFile(
-      "validators/date.js",
+      'validators/date.js',
       `${dir}/validators/date.js`,
       { hydraPrefix: this.hydraPrefix },
       false
     );
 
     // utils
-    ["dates.js", "fetch.js", "hydra.js"].forEach((file) =>
+    ['dates.js', 'fetch.js', 'hydra.js'].forEach((file) =>
       this.createFile(`utils/${file}`, `${dir}/utils/${file}`, {}, false)
     );
 
@@ -242,7 +242,7 @@ export default class extends BaseGenerator {
     const result = [];
 
     params.forEach((p) => {
-      let key = p.variable.endsWith("[]")
+      let key = p.variable.endsWith('[]')
         ? p.variable.slice(0, -2)
         : p.variable;
       if (!stats[key]) {
@@ -252,13 +252,13 @@ export default class extends BaseGenerator {
     });
 
     params.forEach((p) => {
-      if (p.variable.endsWith("[exists]")) {
+      if (p.variable.endsWith('[exists]')) {
         return; // removed for the moment, it can help to add null option to select
       }
-      if (p.variable.startsWith("order[")) {
+      if (p.variable.startsWith('order[')) {
         return; // removed for the moment, it can help to sorting data
       }
-      if (!stats[p.variable] && p.variable.endsWith("[]")) {
+      if (!stats[p.variable] && p.variable.endsWith('[]')) {
         if (stats[p.variable.slice(0, -2)] === 1) {
           result.push(p);
         }
@@ -282,26 +282,26 @@ export default class extends BaseGenerator {
 
   commonLabelTexts() {
     return {
-      submit: "Submit",
-      reset: "Reset",
-      delete: "Delete",
-      edit: "Edit",
-      confirmDelete: "Are you sure you want to delete this item?",
-      noresults: "No results",
-      close: "Close",
-      cancel: "Cancel",
-      updated: "Updated",
-      field: "Field",
-      value: "Value",
-      filters: "Filters",
-      filter: "Filter",
-      unavail: "Data unavailable",
-      loading: "Loading...",
-      deleted: "Deleted",
-      numValidation: "Please, insert a value bigger than zero!",
-      stringValidation: "Please type something",
-      required: "Field is required",
-      recPerPage: "Records per page:",
+      submit: 'Submit',
+      reset: 'Reset',
+      delete: 'Delete',
+      edit: 'Edit',
+      confirmDelete: 'Are you sure you want to delete this item?',
+      noresults: 'No results',
+      close: 'Close',
+      cancel: 'Cancel',
+      updated: 'Updated',
+      field: 'Field',
+      value: 'Value',
+      filters: 'Filters',
+      filter: 'Filter',
+      unavail: 'Data unavailable',
+      loading: 'Loading...',
+      deleted: 'Deleted',
+      numValidation: 'Please, insert a value bigger than zero!',
+      stringValidation: 'Please type something',
+      required: 'Field is required',
+      recPerPage: 'Records per page:',
     };
   }
 }

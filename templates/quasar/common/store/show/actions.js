@@ -1,4 +1,4 @@
-import fetch from "../../../utils/fetch";
+import fetch from '../../../utils/fetch';
 
 export const retrieveCommon = ({ commit }, id, { types }) => {
   commit(types.TOGGLE_LOADING);

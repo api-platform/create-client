@@ -1,5 +1,5 @@
-import chalk from "chalk";
-import BaseGenerator from "./BaseGenerator";
+import chalk from 'chalk';
+import BaseGenerator from './BaseGenerator';
 
 export default class extends BaseGenerator {
   constructor(params) {
@@ -7,44 +7,44 @@ export default class extends BaseGenerator {
 
     this.registerTemplates(`vue/`, [
       // modules
-      "store/modules/foo/index.js",
-      "store/modules/foo/create/actions.js",
-      "store/modules/foo/create/index.js",
-      "store/modules/foo/create/mutation_types.js",
-      "store/modules/foo/create/mutations.js",
-      "store/modules/foo/delete/actions.js",
-      "store/modules/foo/delete/index.js",
-      "store/modules/foo/delete/mutation_types.js",
-      "store/modules/foo/delete/mutations.js",
-      "store/modules/foo/list/actions.js",
-      "store/modules/foo/list/index.js",
-      "store/modules/foo/list/mutation_types.js",
-      "store/modules/foo/list/mutations.js",
-      "store/modules/foo/show/actions.js",
-      "store/modules/foo/show/index.js",
-      "store/modules/foo/show/mutation_types.js",
-      "store/modules/foo/show/mutations.js",
-      "store/modules/foo/update/actions.js",
-      "store/modules/foo/update/index.js",
-      "store/modules/foo/update/mutation_types.js",
-      "store/modules/foo/update/mutations.js",
+      'store/modules/foo/index.js',
+      'store/modules/foo/create/actions.js',
+      'store/modules/foo/create/index.js',
+      'store/modules/foo/create/mutation_types.js',
+      'store/modules/foo/create/mutations.js',
+      'store/modules/foo/delete/actions.js',
+      'store/modules/foo/delete/index.js',
+      'store/modules/foo/delete/mutation_types.js',
+      'store/modules/foo/delete/mutations.js',
+      'store/modules/foo/list/actions.js',
+      'store/modules/foo/list/index.js',
+      'store/modules/foo/list/mutation_types.js',
+      'store/modules/foo/list/mutations.js',
+      'store/modules/foo/show/actions.js',
+      'store/modules/foo/show/index.js',
+      'store/modules/foo/show/mutation_types.js',
+      'store/modules/foo/show/mutations.js',
+      'store/modules/foo/update/actions.js',
+      'store/modules/foo/update/index.js',
+      'store/modules/foo/update/mutation_types.js',
+      'store/modules/foo/update/mutations.js',
 
       // components
-      "components/foo/Create.vue",
-      "components/foo/Form.vue",
-      "components/foo/List.vue",
-      "components/foo/Update.vue",
-      "components/foo/Show.vue",
+      'components/foo/Create.vue',
+      'components/foo/Form.vue',
+      'components/foo/List.vue',
+      'components/foo/Update.vue',
+      'components/foo/Show.vue',
 
       // routes
-      "router/foo.js",
+      'router/foo.js',
 
       // error
-      "error/SubmissionError.js",
+      'error/SubmissionError.js',
 
       // utils
-      "utils/fetch.js",
-      "utils/hydra.js",
+      'utils/fetch.js',
+      'utils/hydra.js',
     ]);
   }
 
@@ -56,7 +56,7 @@ export default class extends BaseGenerator {
       resource.title
     );
     console.log(
-      "Paste the following definitions in your application configuration:"
+      'Paste the following definitions in your application configuration:'
     );
     console.log(
       chalk.green(`
@@ -125,44 +125,44 @@ export const store = new Vuex.Store({
 
     for (let pattern of [
       // modules
-      "store/modules/%s/index.js",
-      "store/modules/%s/create/actions.js",
-      "store/modules/%s/create/index.js",
-      "store/modules/%s/create/mutation_types.js",
-      "store/modules/%s/create/mutations.js",
-      "store/modules/%s/delete/actions.js",
-      "store/modules/%s/delete/index.js",
-      "store/modules/%s/delete/mutation_types.js",
-      "store/modules/%s/delete/mutations.js",
-      "store/modules/%s/list/actions.js",
-      "store/modules/%s/list/index.js",
-      "store/modules/%s/list/mutation_types.js",
-      "store/modules/%s/list/mutations.js",
-      "store/modules/%s/show/actions.js",
-      "store/modules/%s/show/index.js",
-      "store/modules/%s/show/mutation_types.js",
-      "store/modules/%s/show/mutations.js",
-      "store/modules/%s/update/actions.js",
-      "store/modules/%s/update/index.js",
-      "store/modules/%s/update/mutation_types.js",
-      "store/modules/%s/update/mutations.js",
+      'store/modules/%s/index.js',
+      'store/modules/%s/create/actions.js',
+      'store/modules/%s/create/index.js',
+      'store/modules/%s/create/mutation_types.js',
+      'store/modules/%s/create/mutations.js',
+      'store/modules/%s/delete/actions.js',
+      'store/modules/%s/delete/index.js',
+      'store/modules/%s/delete/mutation_types.js',
+      'store/modules/%s/delete/mutations.js',
+      'store/modules/%s/list/actions.js',
+      'store/modules/%s/list/index.js',
+      'store/modules/%s/list/mutation_types.js',
+      'store/modules/%s/list/mutations.js',
+      'store/modules/%s/show/actions.js',
+      'store/modules/%s/show/index.js',
+      'store/modules/%s/show/mutation_types.js',
+      'store/modules/%s/show/mutations.js',
+      'store/modules/%s/update/actions.js',
+      'store/modules/%s/update/index.js',
+      'store/modules/%s/update/mutation_types.js',
+      'store/modules/%s/update/mutations.js',
 
       // components
-      "components/%s/Create.vue",
-      "components/%s/Form.vue",
-      "components/%s/List.vue",
-      "components/%s/Update.vue",
-      "components/%s/Show.vue",
+      'components/%s/Create.vue',
+      'components/%s/Form.vue',
+      'components/%s/List.vue',
+      'components/%s/Update.vue',
+      'components/%s/Show.vue',
 
       // routes
-      "router/%s.js",
+      'router/%s.js',
     ]) {
       this.createFileFromPattern(pattern, dir, lc, context);
     }
 
     // error
     this.createFile(
-      "error/SubmissionError.js",
+      'error/SubmissionError.js',
       `${dir}/error/SubmissionError.js`,
       context,
       false
@@ -170,13 +170,13 @@ export const store = new Vuex.Store({
 
     this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
     this.createFile(
-      "utils/fetch.js",
+      'utils/fetch.js',
       `${dir}/utils/fetch.js`,
       { hydraPrefix: this.hydraPrefix },
       false
     );
     this.createFile(
-      "utils/hydra.js",
+      'utils/hydra.js',
       `${dir}/utils/hydra.js`,
       { hydraPrefix: this.hydraPrefix },
       false

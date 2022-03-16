@@ -3,25 +3,25 @@ import {
   normalize,
   extractHubURL,
   mercureSubscribe as subscribe,
-} from "../../utils/dataAccess";
-import { success as deleteSuccess } from "./delete";
+} from '../../utils/dataAccess';
+import { success as deleteSuccess } from './delete';
 
 export function error(error) {
-  return { type: "{{{uc}}}_LIST_ERROR", error };
+  return { type: '{{{uc}}}_LIST_ERROR', error };
 }
 
 export function loading(loading) {
-  return { type: "{{{uc}}}_LIST_LOADING", loading };
+  return { type: '{{{uc}}}_LIST_LOADING', loading };
 }
 
 export function success(retrieved) {
-  return { type: "{{{uc}}}_LIST_SUCCESS", retrieved };
+  return { type: '{{{uc}}}_LIST_SUCCESS', retrieved };
 }
 
-export function list(page = "{{{name}}}") {
+export function list(page = '{{{name}}}') {
   return (dispatch) => {
     dispatch(loading(true));
-    dispatch(error(""));
+    dispatch(error(''));
 
     fetch(page)
       .then((response) =>
@@ -35,11 +35,11 @@ export function list(page = "{{{name}}}") {
         dispatch(loading(false));
         dispatch(success(retrieved));
 
-        if (hubURL && retrieved["hydra:member"].length)
+        if (hubURL && retrieved['hydra:member'].length)
           dispatch(
             mercureSubscribe(
               hubURL,
-              retrieved["hydra:member"].map((i) => i["@id"])
+              retrieved['hydra:member'].map((i) => i['@id'])
             )
           );
       })
@@ -54,7 +54,7 @@ export function reset(eventSource) {
   return (dispatch) => {
     if (eventSource) eventSource.close();
 
-    dispatch({ type: "{{{uc}}}_LIST_RESET" });
+    dispatch({ type: '{{{uc}}}_LIST_RESET' });
     dispatch(deleteSuccess(null));
   };
 }
@@ -63,23 +63,23 @@ export function mercureSubscribe(hubURL, topics) {
   return (dispatch) => {
     const eventSource = subscribe(hubURL, topics);
     dispatch(mercureOpen(eventSource));
-    eventSource.addEventListener("message", (event) =>
+    eventSource.addEventListener('message', (event) =>
       dispatch(mercureMessage(normalize(JSON.parse(event.data))))
     );
   };
 }
 
 export function mercureOpen(eventSource) {
-  return { type: "{{{uc}}}_LIST_MERCURE_OPEN", eventSource };
+  return { type: '{{{uc}}}_LIST_MERCURE_OPEN', eventSource };
 }
 
 export function mercureMessage(retrieved) {
   return (dispatch) => {
     if (1 === Object.keys(retrieved).length) {
-      dispatch({ type: "{{{uc}}}_LIST_MERCURE_DELETED", retrieved });
+      dispatch({ type: '{{{uc}}}_LIST_MERCURE_DELETED', retrieved });
       return;
     }
 
-    dispatch({ type: "{{{uc}}}_LIST_MERCURE_MESSAGE", retrieved });
+    dispatch({ type: '{{{uc}}}_LIST_MERCURE_MESSAGE', retrieved });
   };
 }

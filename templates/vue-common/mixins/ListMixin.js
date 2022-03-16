@@ -1,6 +1,6 @@
-import isEmpty from "lodash/isEmpty";
-import { formatDateTime } from "../utils/dates";
-import NotificationMixin from "./NotificationMixin";
+import isEmpty from 'lodash/isEmpty';
+import { formatDateTime } from '../utils/dates';
+import NotificationMixin from './NotificationMixin';
 
 export default {
   mixins: [NotificationMixin],
@@ -19,7 +19,7 @@ export default {
 
   watch: {
     deletedItem(item) {
-      this.showMessage(`${item["@id"]} deleted.`);
+      this.showMessage(`${item['@id']} deleted.`);
     },
 
     error(message) {
@@ -41,7 +41,7 @@ export default {
       }
 
       if (!isEmpty(sortBy) && !isEmpty(sortDesc)) {
-        params[`order[${sortBy[0]}]`] = sortDesc[0] ? "desc" : "asc";
+        params[`order[${sortBy[0]}]`] = sortDesc[0] ? 'desc' : 'asc';
       }
 
       this.resetList = true;
@@ -70,14 +70,14 @@ export default {
     showHandler(item) {
       this.$router.push({
         name: `${this.$options.servicePrefix}Show`,
-        params: { id: item["@id"] },
+        params: { id: item['@id'] },
       });
     },
 
     editHandler(item) {
       this.$router.push({
         name: `${this.$options.servicePrefix}Update`,
-        params: { id: item["@id"] },
+        params: { id: item['@id'] },
       });
     },
 

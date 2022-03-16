@@ -1,5 +1,5 @@
-import NotificationMixin from "./NotificationMixin";
-import { formatDateTime } from "../utils/dates";
+import NotificationMixin from './NotificationMixin';
+import { formatDateTime } from '../utils/dates';
 
 export default {
   mixins: [NotificationMixin],
@@ -22,7 +22,7 @@ export default {
   methods: {
     del() {
       this.deleteItem(this.retrieved).then(() => {
-        this.showMessage(`${this.item["@id"]} deleted.`);
+        this.showMessage(`${this.item['@id']} deleted.`);
         this.$router
           .push({ name: `${this.$options.servicePrefix}List` })
           .catch(() => {});
@@ -69,7 +69,7 @@ export default {
     },
 
     updated(val) {
-      this.showMessage(`${val["@id"]} updated.`);
+      this.showMessage(`${val['@id']} updated.`);
     },
 
     retrieved(val) {

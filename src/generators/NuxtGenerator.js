@@ -1,5 +1,5 @@
-import chalk from "chalk";
-import BaseVueGenerator from "./VueBaseGenerator";
+import chalk from 'chalk';
+import BaseVueGenerator from './VueBaseGenerator';
 
 export default class NuxtGenerator extends BaseVueGenerator {
   constructor(params) {
@@ -7,32 +7,32 @@ export default class NuxtGenerator extends BaseVueGenerator {
 
     this.registerTemplates(`nuxt/`, [
       // components
-      "components/ActionCell.vue",
-      "components/Alert.vue",
-      "components/ConfirmDelete.vue",
-      "components/DataFilter.vue",
-      "components/InputDate.vue",
-      "components/Loading.vue",
-      "components/Toolbar.vue",
-      "components/foo/Filter.vue",
-      "components/foo/Form.vue",
+      'components/ActionCell.vue',
+      'components/Alert.vue',
+      'components/ConfirmDelete.vue',
+      'components/DataFilter.vue',
+      'components/InputDate.vue',
+      'components/Loading.vue',
+      'components/Toolbar.vue',
+      'components/foo/Filter.vue',
+      'components/foo/Form.vue',
 
       // mixins
-      "mixins/create.js",
-      "mixins/list.js",
-      "mixins/notification.js",
-      "mixins/show.js",
-      "mixins/update.js",
+      'mixins/create.js',
+      'mixins/list.js',
+      'mixins/notification.js',
+      'mixins/show.js',
+      'mixins/update.js',
 
       // pages
-      "pages/foos/new.vue",
-      "pages/foos/index.vue",
-      "pages/foos/_id.vue",
+      'pages/foos/new.vue',
+      'pages/foos/index.vue',
+      'pages/foos/_id.vue',
 
       // store
-      "store/crud.js",
-      "store/notifications.js",
-      "store/foo.js",
+      'store/crud.js',
+      'store/notifications.js',
+      'store/foo.js',
     ]);
   }
 
@@ -59,7 +59,7 @@ export default class NuxtGenerator extends BaseVueGenerator {
 
     // error
     this.createFile(
-      "error/SubmissionError.js",
+      'error/SubmissionError.js',
       `${dir}/error/SubmissionError.js`,
       {},
       false
@@ -67,11 +67,11 @@ export default class NuxtGenerator extends BaseVueGenerator {
 
     // mixins
     [
-      "mixins/create.js",
-      "mixins/list.js",
-      "mixins/notification.js",
-      "mixins/show.js",
-      "mixins/update.js",
+      'mixins/create.js',
+      'mixins/list.js',
+      'mixins/notification.js',
+      'mixins/show.js',
+      'mixins/update.js',
     ].forEach((file) =>
       this.createFile(file, `${dir}/${file}`, context, false)
     );
@@ -93,14 +93,14 @@ export default class NuxtGenerator extends BaseVueGenerator {
 
     // validators
     this.createFile(
-      "validators/date.js",
+      'validators/date.js',
       `${dir}/validators/date.js`,
       { hydraPrefix: this.hydraPrefix },
       false
     );
 
     // utils
-    ["dates.js", "fetch.js", "hydra.js"].forEach((file) =>
+    ['dates.js', 'fetch.js', 'hydra.js'].forEach((file) =>
       this.createFile(`utils/${file}`, `${dir}/utils/${file}`, {}, false)
     );
 
@@ -110,36 +110,36 @@ export default class NuxtGenerator extends BaseVueGenerator {
       this.createDir(dir);
     }
 
-    this.createFile("services/api.js", `${dir}/services/api.js`, {}, false);
+    this.createFile('services/api.js', `${dir}/services/api.js`, {}, false);
 
     [
       // components
-      "components/%s/Filter.vue",
-      "components/%s/Form.vue",
+      'components/%s/Filter.vue',
+      'components/%s/Form.vue',
 
       // pages
-      "pages/%ss/new.vue",
-      "pages/%ss/index.vue",
-      "pages/%ss/_id.vue",
+      'pages/%ss/new.vue',
+      'pages/%ss/index.vue',
+      'pages/%ss/_id.vue',
 
       // service
-      "services/%s.js",
+      'services/%s.js',
 
       // store
-      "store/%s.js",
+      'store/%s.js',
     ].forEach((pattern) =>
       this.createFileFromPattern(pattern, dir, lc, context)
     );
 
     // components
     [
-      "ActionCell.vue",
-      "Alert.vue",
-      "ConfirmDelete.vue",
-      "DataFilter.vue",
-      "InputDate.vue",
-      "Loading.vue",
-      "Toolbar.vue",
+      'ActionCell.vue',
+      'Alert.vue',
+      'ConfirmDelete.vue',
+      'DataFilter.vue',
+      'InputDate.vue',
+      'Loading.vue',
+      'Toolbar.vue',
     ].forEach((file) =>
       this.createFile(
         `components/${file}`,

@@ -1,9 +1,9 @@
-import chalk from "chalk";
-import BaseGenerator from "./BaseGenerator";
-import handlebars from "handlebars";
-import hbh_comparison from "handlebars-helpers/lib/comparison";
-import hbh_array from "handlebars-helpers/lib/array";
-import hbh_string from "handlebars-helpers/lib/string";
+import chalk from 'chalk';
+import BaseGenerator from './BaseGenerator';
+import handlebars from 'handlebars';
+import hbh_comparison from 'handlebars-helpers/lib/comparison';
+import hbh_array from 'handlebars-helpers/lib/array';
+import hbh_string from 'handlebars-helpers/lib/string';
 
 export default class extends BaseGenerator {
   constructor(params) {
@@ -11,113 +11,113 @@ export default class extends BaseGenerator {
 
     this.registerTemplates(`quasar/`, [
       // modules
-      "store/modules/foo/index.js",
-      "store/modules/foo/create/actions.js",
-      "store/modules/foo/create/getters.js",
-      "store/modules/foo/create/index.js",
-      "store/modules/foo/create/mutation_types.js",
-      "store/modules/foo/create/mutations.js",
-      "store/modules/foo/create/state.js",
-      "store/modules/foo/delete/actions.js",
-      "store/modules/foo/delete/getters.js",
-      "store/modules/foo/delete/index.js",
-      "store/modules/foo/delete/mutation_types.js",
-      "store/modules/foo/delete/mutations.js",
-      "store/modules/foo/delete/state.js",
-      "store/modules/foo/list/actions.js",
-      "store/modules/foo/list/getters.js",
-      "store/modules/foo/list/index.js",
-      "store/modules/foo/list/mutation_types.js",
-      "store/modules/foo/list/mutations.js",
-      "store/modules/foo/list/state.js",
-      "store/modules/foo/show/actions.js",
-      "store/modules/foo/show/getters.js",
-      "store/modules/foo/show/index.js",
-      "store/modules/foo/show/mutation_types.js",
-      "store/modules/foo/show/mutations.js",
-      "store/modules/foo/show/state.js",
-      "store/modules/foo/update/actions.js",
-      "store/modules/foo/update/getters.js",
-      "store/modules/foo/update/index.js",
-      "store/modules/foo/update/mutation_types.js",
-      "store/modules/foo/update/mutations.js",
-      "store/modules/foo/update/state.js",
+      'store/modules/foo/index.js',
+      'store/modules/foo/create/actions.js',
+      'store/modules/foo/create/getters.js',
+      'store/modules/foo/create/index.js',
+      'store/modules/foo/create/mutation_types.js',
+      'store/modules/foo/create/mutations.js',
+      'store/modules/foo/create/state.js',
+      'store/modules/foo/delete/actions.js',
+      'store/modules/foo/delete/getters.js',
+      'store/modules/foo/delete/index.js',
+      'store/modules/foo/delete/mutation_types.js',
+      'store/modules/foo/delete/mutations.js',
+      'store/modules/foo/delete/state.js',
+      'store/modules/foo/list/actions.js',
+      'store/modules/foo/list/getters.js',
+      'store/modules/foo/list/index.js',
+      'store/modules/foo/list/mutation_types.js',
+      'store/modules/foo/list/mutations.js',
+      'store/modules/foo/list/state.js',
+      'store/modules/foo/show/actions.js',
+      'store/modules/foo/show/getters.js',
+      'store/modules/foo/show/index.js',
+      'store/modules/foo/show/mutation_types.js',
+      'store/modules/foo/show/mutations.js',
+      'store/modules/foo/show/state.js',
+      'store/modules/foo/update/actions.js',
+      'store/modules/foo/update/getters.js',
+      'store/modules/foo/update/index.js',
+      'store/modules/foo/update/mutation_types.js',
+      'store/modules/foo/update/mutations.js',
+      'store/modules/foo/update/state.js',
 
       // common for modules
-      "common/store/mutation_types.js",
-      "common/store/create/actions.js",
-      "common/store/create/getters.js",
-      "common/store/create/mutation_types.js",
-      "common/store/create/mutations.js",
-      "common/store/create/state.js",
-      "common/store/delete/actions.js",
-      "common/store/delete/getters.js",
-      "common/store/delete/mutation_types.js",
-      "common/store/delete/mutations.js",
-      "common/store/delete/state.js",
-      "common/store/list/actions.js",
-      "common/store/list/getters.js",
-      "common/store/list/mutation_types.js",
-      "common/store/list/mutations.js",
-      "common/store/list/state.js",
-      "common/store/show/actions.js",
-      "common/store/show/getters.js",
-      "common/store/show/mutation_types.js",
-      "common/store/show/mutations.js",
-      "common/store/show/state.js",
-      "common/store/update/actions.js",
-      "common/store/update/getters.js",
-      "common/store/update/mutation_types.js",
-      "common/store/update/mutations.js",
-      "common/store/update/state.js",
+      'common/store/mutation_types.js',
+      'common/store/create/actions.js',
+      'common/store/create/getters.js',
+      'common/store/create/mutation_types.js',
+      'common/store/create/mutations.js',
+      'common/store/create/state.js',
+      'common/store/delete/actions.js',
+      'common/store/delete/getters.js',
+      'common/store/delete/mutation_types.js',
+      'common/store/delete/mutations.js',
+      'common/store/delete/state.js',
+      'common/store/list/actions.js',
+      'common/store/list/getters.js',
+      'common/store/list/mutation_types.js',
+      'common/store/list/mutations.js',
+      'common/store/list/state.js',
+      'common/store/show/actions.js',
+      'common/store/show/getters.js',
+      'common/store/show/mutation_types.js',
+      'common/store/show/mutations.js',
+      'common/store/show/state.js',
+      'common/store/update/actions.js',
+      'common/store/update/getters.js',
+      'common/store/update/mutation_types.js',
+      'common/store/update/mutations.js',
+      'common/store/update/state.js',
 
       // components
-      "components/foo/Create.vue",
-      "components/foo/Filter.vue",
-      "components/foo/Form.vue",
-      "components/foo/List.vue",
-      "components/foo/Update.vue",
-      "components/foo/Show.vue",
+      'components/foo/Create.vue',
+      'components/foo/Filter.vue',
+      'components/foo/Form.vue',
+      'components/foo/List.vue',
+      'components/foo/Update.vue',
+      'components/foo/Show.vue',
 
       //common components
-      "common/components/index.js",
-      "common/components/ActionCell.vue",
-      "common/components/Breadcrumb.vue",
-      "common/components/ConfirmDelete.vue",
-      "common/components/DataFilter.vue",
-      "common/components/InputDate.vue",
-      "common/components/Loading.vue",
-      "common/components/Toolbar.vue",
+      'common/components/index.js',
+      'common/components/ActionCell.vue',
+      'common/components/Breadcrumb.vue',
+      'common/components/ConfirmDelete.vue',
+      'common/components/DataFilter.vue',
+      'common/components/InputDate.vue',
+      'common/components/Loading.vue',
+      'common/components/Toolbar.vue',
 
       // components mixins
-      "common/mixins/CreateMixin.js",
-      "common/mixins/ListMixin.js",
-      "common/mixins/ShowMixin.js",
-      "common/mixins/UpdateMixin.js",
+      'common/mixins/CreateMixin.js',
+      'common/mixins/ListMixin.js',
+      'common/mixins/ShowMixin.js',
+      'common/mixins/UpdateMixin.js',
 
       // routes
-      "router/foo.js",
+      'router/foo.js',
 
       // error
-      "error/SubmissionError.js",
+      'error/SubmissionError.js',
 
       // utils
-      "utils/fetch.js",
-      "utils/dates.js",
-      "utils/notify.js",
-      "utils/vuexer.js",
+      'utils/fetch.js',
+      'utils/dates.js',
+      'utils/notify.js',
+      'utils/vuexer.js',
 
       // i18n
-      "i18n/index.js",
+      'i18n/index.js',
     ]);
 
-    handlebars.registerHelper("compare", hbh_comparison.compare);
-    handlebars.registerHelper("ifEven", hbh_comparison.ifEven);
-    handlebars.registerHelper("ifOdd", hbh_comparison.ifOdd);
-    handlebars.registerHelper("inArray", hbh_array.inArray);
-    handlebars.registerHelper("forEach", hbh_array.forEach);
-    handlebars.registerHelper("downcase", hbh_string.downcase);
-    handlebars.registerHelper("capitalize", hbh_string.capitalize);
+    handlebars.registerHelper('compare', hbh_comparison.compare);
+    handlebars.registerHelper('ifEven', hbh_comparison.ifEven);
+    handlebars.registerHelper('ifOdd', hbh_comparison.ifOdd);
+    handlebars.registerHelper('inArray', hbh_array.inArray);
+    handlebars.registerHelper('forEach', hbh_array.forEach);
+    handlebars.registerHelper('downcase', hbh_string.downcase);
+    handlebars.registerHelper('capitalize', hbh_string.capitalize);
 
     this.registerSwitchHelper();
   }
@@ -130,7 +130,7 @@ export default class extends BaseGenerator {
       resource.title
     );
     console.log(
-      "Paste the following definitions in your application configuration:"
+      'Paste the following definitions in your application configuration:'
     );
     console.log(
       chalk.green(`
@@ -218,7 +218,7 @@ export const store = new Vuex.Store({
     */
     handlebars.__switch_stack__ = [];
 
-    handlebars.registerHelper("switch", function (value, options) {
+    handlebars.registerHelper('switch', function (value, options) {
       handlebars.__switch_stack__.push({
         switch_match: false,
         switch_value: value,
@@ -227,7 +227,7 @@ export const store = new Vuex.Store({
       handlebars.__switch_stack__.pop();
       return html;
     });
-    handlebars.registerHelper("case", function (value, options) {
+    handlebars.registerHelper('case', function (value, options) {
       var args = Array.from(arguments);
       options = args.pop();
       var caseValues = args;
@@ -235,13 +235,13 @@ export const store = new Vuex.Store({
         handlebars.__switch_stack__[handlebars.__switch_stack__.length - 1];
 
       if (stack.switch_match || caseValues.indexOf(stack.switch_value) === -1) {
-        return "";
+        return '';
       } else {
         stack.switch_match = true;
         return options.fn(this);
       }
     });
-    handlebars.registerHelper("default", function (options) {
+    handlebars.registerHelper('default', function (options) {
       var stack =
         handlebars.__switch_stack__[handlebars.__switch_stack__.length - 1];
       if (!stack.switch_match) {
@@ -269,7 +269,7 @@ export const store = new Vuex.Store({
     const stats = {};
     const result = [];
     params.forEach((p) => {
-      let key = p.variable.endsWith("[]")
+      let key = p.variable.endsWith('[]')
         ? p.variable.slice(0, -2)
         : p.variable;
       if (!stats[key]) {
@@ -278,15 +278,15 @@ export const store = new Vuex.Store({
       stats[key] += 1;
     });
     params.forEach((p) => {
-      if (p.variable.startsWith("exists[")) {
+      if (p.variable.startsWith('exists[')) {
         result.push(p);
         return; // removed for the moment, it can help to add null option to select
       }
-      if (p.variable.startsWith("order[")) {
+      if (p.variable.startsWith('order[')) {
         result.push(p);
         return;
       }
-      if (!stats[p.variable] && p.variable.endsWith("[]")) {
+      if (!stats[p.variable] && p.variable.endsWith('[]')) {
         if (stats[p.variable.slice(0, -2)] === 1) {
           result.push(p);
         }
@@ -304,7 +304,7 @@ export const store = new Vuex.Store({
     var cache = [];
     console.log(
       JSON.stringify(obj, function (key, value) {
-        if (typeof value === "object" && value !== null) {
+        if (typeof value === 'object' && value !== null) {
           if (cache.includes(value)) {
             // Duplicate reference found, discard key
             return;
@@ -325,7 +325,7 @@ export const store = new Vuex.Store({
 
     const formFields = this.buildFields(resource.writableFields);
 
-    const dateTypes = ["time", "date", "dateTime"];
+    const dateTypes = ['time', 'date', 'dateTime'];
     const formContainsDate = formFields.some((e) => dateTypes.includes(e.type));
 
     const fields = this.buildFields(resource.readableFields);
@@ -335,7 +335,7 @@ export const store = new Vuex.Store({
     params.forEach((p) => {
       const paramIndex = fields.findIndex((field) => field.name === p.variable);
       if (paramIndex === -1) {
-        if (p.variable.startsWith("order[")) {
+        if (p.variable.startsWith('order[')) {
           var v = p.variable.slice(6, -1);
           var found = fields.findIndex((field) => field.name === v);
           if (found !== -1) {
@@ -344,7 +344,7 @@ export const store = new Vuex.Store({
           return;
         }
 
-        if (p.variable.startsWith("exists[")) {
+        if (p.variable.startsWith('exists[')) {
           var exists = p.variable.slice(7, -1);
           var foundExistsFieldIndex = fields.findIndex(
             (field) => field.name === exists
@@ -352,11 +352,11 @@ export const store = new Vuex.Store({
           if (foundExistsFieldIndex !== -1) {
             const param = fields[foundExistsFieldIndex];
             param.variable = p.variable;
-            param.filterType = "exists";
+            param.filterType = 'exists';
             parameters.push(param);
           } else {
             p.name = exists;
-            p.filterType = "exists";
+            p.filterType = 'exists';
             parameters.push(p);
           }
           return;
@@ -376,7 +376,7 @@ export const store = new Vuex.Store({
     });
 
     const paramsHaveRefs = parameters.some(
-      (e) => e.type === "text" && e.reference
+      (e) => e.type === 'text' && e.reference
     );
 
     const labels = this.commonLabelTexts();
@@ -438,101 +438,101 @@ export const store = new Vuex.Store({
     }
 
     for (let common of [
-      "common/components/index.js",
-      "common/components/ActionCell.vue",
-      "common/components/Breadcrumb.vue",
-      "common/components/ConfirmDelete.vue",
-      "common/components/DataFilter.vue",
-      "common/components/InputDate.vue",
-      "common/components/Loading.vue",
-      "common/components/Toolbar.vue",
+      'common/components/index.js',
+      'common/components/ActionCell.vue',
+      'common/components/Breadcrumb.vue',
+      'common/components/ConfirmDelete.vue',
+      'common/components/DataFilter.vue',
+      'common/components/InputDate.vue',
+      'common/components/Loading.vue',
+      'common/components/Toolbar.vue',
 
-      "common/mixins/CreateMixin.js",
-      "common/mixins/ListMixin.js",
-      "common/mixins/ShowMixin.js",
-      "common/mixins/UpdateMixin.js",
+      'common/mixins/CreateMixin.js',
+      'common/mixins/ListMixin.js',
+      'common/mixins/ShowMixin.js',
+      'common/mixins/UpdateMixin.js',
 
-      "common/store/mutation_types.js",
-      "common/store/create/actions.js",
-      "common/store/create/getters.js",
-      "common/store/create/mutation_types.js",
-      "common/store/create/mutations.js",
-      "common/store/create/state.js",
-      "common/store/delete/actions.js",
-      "common/store/delete/getters.js",
-      "common/store/delete/mutation_types.js",
-      "common/store/delete/mutations.js",
-      "common/store/delete/state.js",
-      "common/store/list/actions.js",
-      "common/store/list/getters.js",
-      "common/store/list/mutation_types.js",
-      "common/store/list/mutations.js",
-      "common/store/list/state.js",
-      "common/store/show/actions.js",
-      "common/store/show/getters.js",
-      "common/store/show/mutation_types.js",
-      "common/store/show/mutations.js",
-      "common/store/show/state.js",
-      "common/store/update/actions.js",
-      "common/store/update/getters.js",
-      "common/store/update/mutation_types.js",
-      "common/store/update/mutations.js",
-      "common/store/update/state.js",
+      'common/store/mutation_types.js',
+      'common/store/create/actions.js',
+      'common/store/create/getters.js',
+      'common/store/create/mutation_types.js',
+      'common/store/create/mutations.js',
+      'common/store/create/state.js',
+      'common/store/delete/actions.js',
+      'common/store/delete/getters.js',
+      'common/store/delete/mutation_types.js',
+      'common/store/delete/mutations.js',
+      'common/store/delete/state.js',
+      'common/store/list/actions.js',
+      'common/store/list/getters.js',
+      'common/store/list/mutation_types.js',
+      'common/store/list/mutations.js',
+      'common/store/list/state.js',
+      'common/store/show/actions.js',
+      'common/store/show/getters.js',
+      'common/store/show/mutation_types.js',
+      'common/store/show/mutations.js',
+      'common/store/show/state.js',
+      'common/store/update/actions.js',
+      'common/store/update/getters.js',
+      'common/store/update/mutation_types.js',
+      'common/store/update/mutations.js',
+      'common/store/update/state.js',
 
-      "utils/dates.js",
-      "utils/notify.js",
-      "utils/vuexer.js",
+      'utils/dates.js',
+      'utils/notify.js',
+      'utils/vuexer.js',
     ]) {
       this.createFile(common, `${dir}/${common}`, context, false);
     }
 
     for (let pattern of [
       // modules
-      "store/modules/%s/index.js",
-      "store/modules/%s/create/actions.js",
-      "store/modules/%s/create/getters.js",
-      "store/modules/%s/create/index.js",
-      "store/modules/%s/create/mutation_types.js",
-      "store/modules/%s/create/mutations.js",
-      "store/modules/%s/create/state.js",
-      "store/modules/%s/delete/actions.js",
-      "store/modules/%s/delete/getters.js",
-      "store/modules/%s/delete/index.js",
-      "store/modules/%s/delete/mutation_types.js",
-      "store/modules/%s/delete/mutations.js",
-      "store/modules/%s/delete/state.js",
-      "store/modules/%s/list/actions.js",
-      "store/modules/%s/list/getters.js",
-      "store/modules/%s/list/index.js",
-      "store/modules/%s/list/mutation_types.js",
-      "store/modules/%s/list/mutations.js",
-      "store/modules/%s/list/state.js",
-      "store/modules/%s/show/actions.js",
-      "store/modules/%s/show/getters.js",
-      "store/modules/%s/show/index.js",
-      "store/modules/%s/show/mutation_types.js",
-      "store/modules/%s/show/mutations.js",
-      "store/modules/%s/show/state.js",
-      "store/modules/%s/update/actions.js",
-      "store/modules/%s/update/getters.js",
-      "store/modules/%s/update/index.js",
-      "store/modules/%s/update/mutation_types.js",
-      "store/modules/%s/update/mutations.js",
-      "store/modules/%s/update/state.js",
+      'store/modules/%s/index.js',
+      'store/modules/%s/create/actions.js',
+      'store/modules/%s/create/getters.js',
+      'store/modules/%s/create/index.js',
+      'store/modules/%s/create/mutation_types.js',
+      'store/modules/%s/create/mutations.js',
+      'store/modules/%s/create/state.js',
+      'store/modules/%s/delete/actions.js',
+      'store/modules/%s/delete/getters.js',
+      'store/modules/%s/delete/index.js',
+      'store/modules/%s/delete/mutation_types.js',
+      'store/modules/%s/delete/mutations.js',
+      'store/modules/%s/delete/state.js',
+      'store/modules/%s/list/actions.js',
+      'store/modules/%s/list/getters.js',
+      'store/modules/%s/list/index.js',
+      'store/modules/%s/list/mutation_types.js',
+      'store/modules/%s/list/mutations.js',
+      'store/modules/%s/list/state.js',
+      'store/modules/%s/show/actions.js',
+      'store/modules/%s/show/getters.js',
+      'store/modules/%s/show/index.js',
+      'store/modules/%s/show/mutation_types.js',
+      'store/modules/%s/show/mutations.js',
+      'store/modules/%s/show/state.js',
+      'store/modules/%s/update/actions.js',
+      'store/modules/%s/update/getters.js',
+      'store/modules/%s/update/index.js',
+      'store/modules/%s/update/mutation_types.js',
+      'store/modules/%s/update/mutations.js',
+      'store/modules/%s/update/state.js',
 
       // components
-      "components/%s/Create.vue",
-      "components/%s/Filter.vue",
-      "components/%s/Form.vue",
-      "components/%s/List.vue",
-      "components/%s/Update.vue",
-      "components/%s/Show.vue",
+      'components/%s/Create.vue',
+      'components/%s/Filter.vue',
+      'components/%s/Form.vue',
+      'components/%s/List.vue',
+      'components/%s/Update.vue',
+      'components/%s/Show.vue',
 
       // routes
-      "router/%s.js",
+      'router/%s.js',
     ]) {
       if (
-        pattern === "components/%s/Filter.vue" &&
+        pattern === 'components/%s/Filter.vue' &&
         !context.parameters.length
       ) {
         continue;
@@ -542,7 +542,7 @@ export const store = new Vuex.Store({
 
     // error
     this.createFile(
-      "error/SubmissionError.js",
+      'error/SubmissionError.js',
       `${dir}/error/SubmissionError.js`,
       context,
       false
@@ -554,14 +554,14 @@ export const store = new Vuex.Store({
     );
 
     this.createFile(
-      "utils/fetch.js",
+      'utils/fetch.js',
       `${dir}/utils/fetch.js`,
       { hydraPrefix: this.hydraPrefix },
       false
     );
 
     this.createFile(
-      "i18n/index.js",
+      'i18n/index.js',
       `${dir}/i18n/en-us/index.js`,
       { labels: Object.values(labels) },
       false
@@ -571,7 +571,7 @@ export const store = new Vuex.Store({
       labels: this.contextLabelTexts(formFields, fields),
     };
     this.createFile(
-      "i18n/index.js",
+      'i18n/index.js',
       `${dir}/i18n/en-us/${lc}.js`,
       contextLabels,
       false
@@ -596,25 +596,25 @@ export const store = new Vuex.Store({
 
   commonLabelTexts() {
     return {
-      submit: "Submit",
-      reset: "Reset",
-      delete: "Delete",
-      confirmDelete: "Are you sure you want to delete this item?",
-      noresults: "No results",
-      close: "Close",
-      cancel: "Cancel",
-      updated: "Updated",
-      field: "Field",
-      value: "Value",
-      filters: "Filters",
-      filter: "Filter",
-      unavail: "Data unavailable",
-      loading: "Loading...",
-      deleted: "Deleted",
-      numValidation: "Please, insert a value bigger than zero!",
-      stringValidation: "Please type something",
-      required: "Field is required",
-      recPerPage: "Records per page:",
+      submit: 'Submit',
+      reset: 'Reset',
+      delete: 'Delete',
+      confirmDelete: 'Are you sure you want to delete this item?',
+      noresults: 'No results',
+      close: 'Close',
+      cancel: 'Cancel',
+      updated: 'Updated',
+      field: 'Field',
+      value: 'Value',
+      filters: 'Filters',
+      filter: 'Filter',
+      unavail: 'Data unavailable',
+      loading: 'Loading...',
+      deleted: 'Deleted',
+      numValidation: 'Please, insert a value bigger than zero!',
+      stringValidation: 'Please type something',
+      required: 'Field is required',
+      recPerPage: 'Records per page:',
     };
 
     // handlebars.registerPartial("myPartial", "{{name}}");

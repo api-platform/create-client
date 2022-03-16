@@ -1,6 +1,6 @@
-import React from "react";
-import { Route } from "react-router-dom";
-import { List, Create, Update, Show } from "../components/{{{lc}}}/";
+import React from 'react';
+import { Route } from 'react-router-dom';
+import { List, Create, Update, Show } from '../components/{{{lc}}}/';
 
 export default [
   <Route path="/{{{name}}}/create" component={Create} exact key="create" />,

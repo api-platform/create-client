@@ -1,4 +1,4 @@
-import { error, success } from "../../utils/notify";
+import { error, success } from '../../utils/notify';
 
 export default {
   data() {
@@ -70,17 +70,17 @@ export default {
 
     onUpdated(val) {
       success(
-        `${val["@id"]} ${this.$t("{{{labels.updated}}}")}.`,
-        this.$t("{{{labels.close}}}")
+        `${val['@id']} ${this.$t('{{{labels.updated}}}')}.`,
+        this.$t('{{{labels.close}}}')
       );
     },
 
     onUpdateError(message) {
-      message && error(message, this.$t("{{{labels.close}}}"));
+      message && error(message, this.$t('{{{labels.close}}}'));
     },
 
     onDeleteError(message) {
-      message && error(message, this.$t("{{{labels.close}}}"));
+      message && error(message, this.$t('{{{labels.close}}}'));
     },
   },
 };

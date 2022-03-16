@@ -16,7 +16,7 @@ export default (initState, types) => ({
   },
 
   [types.SET_UPDATED](state, updated) {
-    Object.assign(state, { error: "", updated, violations: null });
+    Object.assign(state, { error: '', updated, violations: null });
   },
 
   [types.SET_VIOLATIONS](state, violations) {

@@ -3,15 +3,15 @@ import {
   mapGetters,
   mapMutations,
   createNamespacedHelpers,
-} from "vuex";
+} from 'vuex';
 
 export const create = (module) => {
   const lowmod = module.toLowerCase();
   const { mapGetters, mapActions } = createNamespacedHelpers(
     `${lowmod}/create`
   );
-  const getters = mapGetters(["error", "isLoading", "created", "violations"]);
-  const actions = mapActions(["create"]);
+  const getters = mapGetters(['error', 'isLoading', 'created', 'violations']);
+  const actions = mapActions(['create']);
   return { getters, actions };
 };
 

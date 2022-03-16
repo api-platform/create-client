@@ -1,11 +1,11 @@
 import {
   getItemsCommon,
   getSelectItemsCommon,
-} from "../../../../common/store/list/actions";
-import { ENTRYPOINT } from "../../../../config/{{{hashEntry}}}_entrypoint";
+} from '../../../../common/store/list/actions';
+import { ENTRYPOINT } from '../../../../config/{{{hashEntry}}}_entrypoint';
 
-const hydraPrefix = "{{{hydraPrefix}}}";
-const page = "{{{name}}}";
+const hydraPrefix = '{{{hydraPrefix}}}';
+const page = '{{{name}}}';
 
 export default function (types) {
   const getItems = (context, options) =>
@@ -19,7 +19,7 @@ export default function (types) {
     getSelectItemsCommon(
       context,
       {
-        ...{ page, ep: ENTRYPOINT, params: { properties: ["id", "name"] } },
+        ...{ page, ep: ENTRYPOINT, params: { properties: ['id', 'name'] } },
         ...options,
       },
       { types, hydraPrefix }

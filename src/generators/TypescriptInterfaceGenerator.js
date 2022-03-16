@@ -1,10 +1,10 @@
-import BaseGenerator from "./BaseGenerator";
+import BaseGenerator from './BaseGenerator';
 
 export default class TypescriptInterfaceGenerator extends BaseGenerator {
   constructor(params) {
     super(params);
 
-    this.registerTemplates(`typescript/`, ["interface.ts"]);
+    this.registerTemplates(`typescript/`, ['interface.ts']);
   }
 
   help(resource) {
@@ -20,7 +20,7 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
 
     this.createDir(dest, false);
     this.createFile(
-      "interface.ts",
+      'interface.ts',
       `${dest}/${resource.title.toLowerCase()}.ts`,
       {
         fields,
@@ -31,7 +31,7 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
   }
 
   getDescription(field) {
-    return field.description ? field.description.replace(/"/g, "'") : "";
+    return field.description ? field.description.replace(/"/g, "'") : '';
   }
 
   parseFields(resource) {
@@ -71,7 +71,7 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
       if (field.reference) {
         imports[field.type] = {
           type: field.type,
-          file: "./" + field.type.toLowerCase(),
+          file: './' + field.type.toLowerCase(),
         };
       }
     }

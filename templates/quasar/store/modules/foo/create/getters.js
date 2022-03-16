@@ -1,1 +1,1 @@
-export * from "../../../../common/store/create/getters";
+export * from '../../../../common/store/create/getters';

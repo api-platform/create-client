@@ -1,16 +1,16 @@
-import notification from "./notification";
-import { formatDateTime } from "../utils/dates";
+import notification from './notification';
+import { formatDateTime } from '../utils/dates';
 
 export default {
   mixins: [notification],
   methods: {
     formatDateTime,
     onCreated(item) {
-      this.showMessage(`${item["@id"]} created`);
+      this.showMessage(`${item['@id']} created`);
 
       this.$router.push({
         name: `${this.$options.servicePrefix}-id`,
-        params: { id: item["@id"] },
+        params: { id: item['@id'] },
       });
     },
     onSendForm() {

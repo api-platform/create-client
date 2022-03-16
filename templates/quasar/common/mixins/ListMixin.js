@@ -1,5 +1,5 @@
-import { error, success } from "../../utils/notify";
-import { extractDate } from "../../utils/dates";
+import { error, success } from '../../utils/notify';
+import { extractDate } from '../../utils/dates';
 
 export default {
   created() {
@@ -46,13 +46,13 @@ export default {
     },
 
     onListError(message) {
-      message && error(message, this.$t("{{{labels.close}}}"));
+      message && error(message, this.$t('{{{labels.close}}}'));
     },
 
     onDeletedItem(val) {
       success(
-        `${val["@id"]} ${this.$t("{{{labels.deleted}}}")}.`,
-        this.$t("{{{labels.close}}}")
+        `${val['@id']} ${this.$t('{{{labels.deleted}}}')}.`,
+        this.$t('{{{labels.close}}}')
       );
     },
 
@@ -68,7 +68,7 @@ export default {
         params = { ...params, itemsPerPage, page };
       }
       if (sortBy) {
-        params[`order[${sortBy}]`] = descending ? "DESC" : "ASC";
+        params[`order[${sortBy}]`] = descending ? 'DESC' : 'ASC';
       }
       this.getPage({ params }).then(() => {
         this.pagination.sortBy = sortBy;
@@ -81,7 +81,7 @@ export default {
     },
 
     formatDateTime(val, format) {
-      return val ? this.$d(extractDate(val), format) : "";
+      return val ? this.$d(extractDate(val), format) : '';
     },
 
     onSendFilter() {
@@ -101,14 +101,14 @@ export default {
     showHandler(item) {
       this.$router.push({
         name: `${this.$options.servicePrefix}Show`,
-        params: { id: item["@id"] },
+        params: { id: item['@id'] },
       });
     },
 
     editHandler(item) {
       this.$router.push({
         name: `${this.$options.servicePrefix}Update`,
-        params: { id: item["@id"] },
+        params: { id: item['@id'] },
       });
     },
 

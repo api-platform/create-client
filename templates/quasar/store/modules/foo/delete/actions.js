@@ -1,8 +1,8 @@
 import {
   delCommon,
   resetCommon,
-} from "../../../../common/store/delete/actions";
-import { ENTRYPOINT } from "../../../../config/{{{hashEntry}}}_entrypoint";
+} from '../../../../common/store/delete/actions';
+import { ENTRYPOINT } from '../../../../config/{{{hashEntry}}}_entrypoint';
 
 export default function (types) {
   const del = (context, item) =>

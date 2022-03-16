@@ -1,12 +1,12 @@
-import isEmpty from "lodash/isEmpty";
-import { formatDateTime } from "../utils/dates";
-import notification from "./notification";
+import isEmpty from 'lodash/isEmpty';
+import { formatDateTime } from '../utils/dates';
+import notification from './notification';
 
 export default {
   mixins: [notification],
 
   async fetch({ store }) {
-    await store.dispatch("{{{lc}}}/fetchAll");
+    await store.dispatch('{{{lc}}}/fetchAll');
   },
 
   data() {
@@ -23,7 +23,7 @@ export default {
 
   watch: {
     deletedItem(item) {
-      this.showMessage(`${item["@id"]} deleted.`);
+      this.showMessage(`${item['@id']} deleted.`);
     },
 
     error(message) {
@@ -45,7 +45,7 @@ export default {
       }
 
       if (!isEmpty(sortBy) && !isEmpty(sortDesc)) {
-        params[`order[${sortBy[0]}]`] = sortDesc[0] ? "desc" : "asc";
+        params[`order[${sortBy[0]}]`] = sortDesc[0] ? 'desc' : 'asc';
       }
 
       this.resetList = true;
@@ -77,14 +77,14 @@ export default {
     showHandler(item) {
       this.$router.push({
         name: `${this.$options.servicePrefix}-id`,
-        params: { id: item["@id"] },
+        params: { id: item['@id'] },
       });
     },
 
     editHandler(item) {
       this.$router.push({
         name: `${this.$options.servicePrefix}-id`,
-        params: { id: item["@id"] },
+        params: { id: item['@id'] },
       });
     },
 

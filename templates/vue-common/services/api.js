@@ -1,4 +1,4 @@
-import fetch from "../utils/fetch";
+import fetch from '../utils/fetch';
 
 export default function makeService(endpoint) {
   return {
@@ -9,14 +9,14 @@ export default function makeService(endpoint) {
       return fetch(endpoint, params);
     },
     create(payload) {
-      return fetch(endpoint, { method: "POST", body: JSON.stringify(payload) });
+      return fetch(endpoint, { method: 'POST', body: JSON.stringify(payload) });
     },
     del(item) {
-      return fetch(item["@id"], { method: "DELETE" });
+      return fetch(item['@id'], { method: 'DELETE' });
     },
     update(payload) {
-      return fetch(payload["@id"], {
-        method: "PUT",
+      return fetch(payload['@id'], {
+        method: 'PUT',
         body: JSON.stringify(payload),
       });
     },
