@@ -1,9 +1,9 @@
-import moment from 'moment';
+import moment from "moment";
 
-const formatDateTime = function(date) {
+const formatDateTime = function (date) {
   if (!date) return null;
 
-  return moment(date).format('DD/MM/YYYY');
+  return moment(date).format("DD/MM/YYYY");
 };
 
 export { formatDateTime };

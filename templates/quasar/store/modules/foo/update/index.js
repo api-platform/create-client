@@ -9,5 +9,5 @@ export default {
   state,
   actions: actions(types),
   getters,
-  mutations: mutations(state, types)
+  mutations: mutations(state, types),
 };

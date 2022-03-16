@@ -1,9 +1,9 @@
-import * as types from './mutation_types';
+import * as types from "./mutation_types";
 
 export default {
   [types.RESET](state) {
     Object.assign(state, {
-      error: '',
+      error: "",
       isLoading: false,
       items: [],
       selectItems: null,
@@ -17,7 +17,7 @@ export default {
 
   [types.SET_ITEMS](state, items) {
     Object.assign(state, {
-      error: '',
+      error: "",
       items,
     });
   },

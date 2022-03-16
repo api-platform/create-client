@@ -1,6 +1,6 @@
-import SubmissionError from '../../../../error/SubmissionError';
-import fetch from '../../../../utils/fetch';
-import * as types from './mutation_types';
+import SubmissionError from "../../../../error/SubmissionError";
+import fetch from "../../../../utils/fetch";
+import * as types from "./mutation_types";
 
 export const reset = ({ commit }) => {
   commit(types.RESET);
@@ -10,7 +10,7 @@ export const retrieve = ({ commit }, id) => {
   commit(types.TOGGLE_LOADING);
 
   return fetch(id)
-    .then(response => response.json())
+    .then((response) => response.json())
     .then((data) => {
       commit(types.TOGGLE_LOADING);
       commit(types.SET_RETRIEVED, data);
@@ -22,15 +22,15 @@ export const retrieve = ({ commit }, id) => {
 };
 
 export const update = ({ commit, state }, payload) => {
-  commit(types.SET_ERROR, '');
+  commit(types.SET_ERROR, "");
   commit(types.TOGGLE_LOADING);
 
-  return fetch(state.retrieved['@id'], {
-    method: 'PUT',
-    headers: new Headers({ 'Content-Type': 'application/ld+json' }),
+  return fetch(state.retrieved["@id"], {
+    method: "PUT",
+    headers: new Headers({ "Content-Type": "application/ld+json" }),
     body: JSON.stringify(payload),
   })
-    .then(response => response.json())
+    .then((response) => response.json())
     .then((data) => {
       commit(types.TOGGLE_LOADING);
       commit(types.SET_UPDATED, data);

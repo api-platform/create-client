@@ -1,23 +1,23 @@
-import SubmissionError from '../../../error/SubmissionError';
-import fetch from '../../../utils/fetch';
+import SubmissionError from "../../../error/SubmissionError";
+import fetch from "../../../utils/fetch";
 
 export const createCommon = ({ commit }, { page, ep, values }, { types }) => {
-  commit(types.SET_ERROR, '');
+  commit(types.SET_ERROR, "");
   commit(types.TOGGLE_LOADING);
 
   return fetch(
     { id: page, ep },
-    { method: 'POST', body: JSON.stringify(values) }
+    { method: "POST", body: JSON.stringify(values) }
   )
-    .then(response => {
+    .then((response) => {
       commit(types.TOGGLE_LOADING);
 
       return response.json();
     })
-    .then(data => {
+    .then((data) => {
       commit(types.SET_CREATED, data);
     })
-    .catch(e => {
+    .catch((e) => {
       commit(types.TOGGLE_LOADING);
 
       if (e instanceof SubmissionError) {

@@ -1,15 +1,15 @@
-import fetch from '../../../utils/fetch';
+import fetch from "../../../utils/fetch";
 
 export const retrieveCommon = ({ commit }, id, { types }) => {
   commit(types.TOGGLE_LOADING);
 
   return fetch(id)
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       commit(types.TOGGLE_LOADING);
       commit(types.SET_RETRIEVED, data);
     })
-    .catch(e => {
+    .catch((e) => {
       commit(types.TOGGLE_LOADING);
       commit(types.SET_ERROR, e.message);
     });

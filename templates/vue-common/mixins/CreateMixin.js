@@ -1,16 +1,16 @@
-import NotificationMixin from './NotificationMixin';
-import { formatDateTime } from '../utils/dates';
+import NotificationMixin from "./NotificationMixin";
+import { formatDateTime } from "../utils/dates";
 
 export default {
   mixins: [NotificationMixin],
   methods: {
     formatDateTime,
     onCreated(item) {
-      this.showMessage(`${item['@id']} created`);
+      this.showMessage(`${item["@id"]} created`);
 
       this.$router.push({
         name: `${this.$options.servicePrefix}Update`,
-        params: { id: item['@id'] }
+        params: { id: item["@id"] },
       });
     },
     onSendForm() {
@@ -23,7 +23,7 @@ export default {
     resetForm() {
       this.$refs.createForm.$v.$reset();
       this.item = {};
-    }
+    },
   },
   watch: {
     created(created) {
@@ -36,6 +36,6 @@ export default {
 
     error(message) {
       message && this.showError(message);
-    }
-  }
+    },
+  },
 };

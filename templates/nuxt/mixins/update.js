@@ -1,11 +1,11 @@
-import notification from './notification';
-import { formatDateTime } from '../utils/dates';
+import notification from "./notification";
+import { formatDateTime } from "../utils/dates";
 
 export default {
   mixins: [notification],
   data() {
     return {
-      item: {}
+      item: {},
     };
   },
   created() {
@@ -17,12 +17,12 @@ export default {
   computed: {
     retrieved() {
       return this.find(decodeURIComponent(this.$route.params.id));
-    }
+    },
   },
   methods: {
     del() {
       this.deleteItem(this.retrieved).then(() => {
-        this.showMessage(`${this.item['@id']} deleted.`);
+        this.showMessage(`${this.item["@id"]} deleted.`);
         this.$router
           .push({ name: `${this.$options.servicePrefix}` })
           .catch(() => {});
@@ -48,7 +48,7 @@ export default {
     resetForm() {
       this.$refs.updateForm.$v.$reset();
       this.item = { ...this.retrieved };
-    }
+    },
   },
   watch: {
     deleted(deleted) {
@@ -69,11 +69,11 @@ export default {
     },
 
     updated(val) {
-      this.showMessage(`${val['@id']} updated.`);
+      this.showMessage(`${val["@id"]} updated.`);
     },
 
     retrieved(val) {
       this.item = { ...val };
-    }
-  }
+    },
+  },
 };

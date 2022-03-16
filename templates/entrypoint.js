@@ -1,1 +1,1 @@
-export const ENTRYPOINT = '{{{entrypoint}}}';
+export const ENTRYPOINT = "{{{entrypoint}}}";

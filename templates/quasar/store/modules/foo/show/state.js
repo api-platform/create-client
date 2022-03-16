@@ -1,2 +1,2 @@
-import makeState from '../../../../common/store/show/state';
+import makeState from "../../../../common/store/show/state";
 export default makeState();

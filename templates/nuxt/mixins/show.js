@@ -1,5 +1,5 @@
-import notification from './notification';
-import { formatDateTime } from '../utils/dates';
+import notification from "./notification";
+import { formatDateTime } from "../utils/dates";
 
 export default {
   mixins: [notification],
@@ -9,12 +9,12 @@ export default {
   computed: {
     item() {
       return this.find(decodeURIComponent(this.$route.params.id));
-    }
+    },
   },
   methods: {
     del() {
       this.deleteItem(this.item).then(() => {
-        this.showMessage(`${this.item['@id']} deleted.`);
+        this.showMessage(`${this.item["@id"]} deleted.`);
         this.$router
           .push({ name: `${this.$options.servicePrefix}` })
           .catch(() => {});
@@ -24,9 +24,9 @@ export default {
     editHandler() {
       this.$router.push({
         name: `${this.$options.servicePrefix}-id`,
-        params: { id: this.item['@id'] }
+        params: { id: this.item["@id"] },
       });
-    }
+    },
   },
   watch: {
     error(message) {
@@ -34,9 +34,9 @@ export default {
     },
     deleteError(message) {
       message && this.showError(message);
-    }
+    },
   },
   beforeDestroy() {
     this.reset();
-  }
+  },
 };

@@ -1,6 +1,6 @@
-import isEmpty from 'lodash/isEmpty';
-import { formatDateTime } from '../utils/dates';
-import NotificationMixin from './NotificationMixin';
+import isEmpty from "lodash/isEmpty";
+import { formatDateTime } from "../utils/dates";
+import NotificationMixin from "./NotificationMixin";
 
 export default {
   mixins: [NotificationMixin],
@@ -9,17 +9,17 @@ export default {
     return {
       options: {
         sortBy: [],
-        sortDesc: [],        
+        sortDesc: [],
         page: 1,
-        itemsPerPage: 15
+        itemsPerPage: 15,
       },
-      filters: {}
+      filters: {},
     };
   },
 
   watch: {
     deletedItem(item) {
-      this.showMessage(`${item['@id']} deleted.`);
+      this.showMessage(`${item["@id"]} deleted.`);
     },
 
     error(message) {
@@ -28,22 +28,22 @@ export default {
 
     items() {
       this.options.totalItems = this.totalItems;
-    }
+    },
   },
 
   methods: {
     onUpdateOptions({ page, itemsPerPage, sortBy, sortDesc, totalItems } = {}) {
       let params = {
-        ...this.filters
+        ...this.filters,
       };
       if (itemsPerPage > 0) {
         params = { ...params, itemsPerPage, page };
       }
 
       if (!isEmpty(sortBy) && !isEmpty(sortDesc)) {
-        params[`order[${sortBy[0]}]`] = sortDesc[0] ? 'desc' : 'asc'
+        params[`order[${sortBy[0]}]`] = sortDesc[0] ? "desc" : "asc";
       }
-      
+
       this.resetList = true;
 
       this.getPage(params).then(() => {
@@ -70,20 +70,20 @@ export default {
     showHandler(item) {
       this.$router.push({
         name: `${this.$options.servicePrefix}Show`,
-        params: { id: item['@id'] }
+        params: { id: item["@id"] },
       });
     },
 
     editHandler(item) {
       this.$router.push({
         name: `${this.$options.servicePrefix}Update`,
-        params: { id: item['@id'] }
+        params: { id: item["@id"] },
       });
     },
 
     deleteHandler(item) {
       this.deleteItem(item).then(() => this.onUpdateOptions(this.options));
     },
-    formatDateTime
-  }
+    formatDateTime,
+  },
 };

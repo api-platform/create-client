@@ -27,6 +27,7 @@ export default class NextGenerator extends BaseGenerator {
       // utils
       "utils/dataAccess.ts",
       "utils/mercure.ts",
+      "utils/helpers.ts",
     ]);
   }
 
@@ -98,6 +99,7 @@ export default class NextGenerator extends BaseGenerator {
       // utils
       "utils/dataAccess.ts",
       "utils/mercure.ts",
+      "utils/helpers.ts",
     ].forEach((file) =>
       this.createFile(file, `${dir}/${file}`, context, false)
     );

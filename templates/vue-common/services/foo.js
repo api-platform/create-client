@@ -1,3 +1,3 @@
-import makeService from './api';
+import makeService from "./api";
 
-export default makeService('{{{name}}}');
+export default makeService("{{{name}}}");

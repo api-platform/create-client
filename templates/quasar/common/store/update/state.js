@@ -1,5 +1,5 @@
 export default () => ({
-  error: '',
+  error: "",
   isLoading: false,
   retrieved: null,
   updated: null,

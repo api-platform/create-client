@@ -1,8 +1,14 @@
-import { mapFields } from 'vuex-map-fields';
+import { mapFields } from "vuex-map-fields";
 
 export default {
   computed: {
-    ...mapFields('notifications', ['color', 'show', 'subText', 'text', 'timeout'])
+    ...mapFields("notifications", [
+      "color",
+      "show",
+      "subText",
+      "text",
+      "timeout",
+    ]),
   },
 
   methods: {
@@ -13,14 +19,14 @@ export default {
     },
 
     showError(error) {
-      this.showMessage(error, 'danger');
+      this.showMessage(error, "danger");
     },
 
-    showMessage(message, color = 'success') {
+    showMessage(message, color = "success") {
       this.show = true;
       this.color = color;
 
-      if (typeof message === 'string') {
+      if (typeof message === "string") {
         this.text = message;
         this.cleanState();
 
@@ -32,6 +38,6 @@ export default {
       if (message.response) this.subText = message.response.data.message;
 
       this.cleanState();
-    }
-  }
+    },
+  },
 };

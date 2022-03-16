@@ -1,5 +1,5 @@
-import { error, success } from '../../utils/notify';
-import { extractDate } from '../../utils/dates';
+import { error, success } from "../../utils/notify";
+import { extractDate } from "../../utils/dates";
 
 export default {
   created() {
@@ -41,16 +41,19 @@ export default {
   methods: {
     onCreated() {
       this.onRequest({
-        pagination: this.pagination
+        pagination: this.pagination,
       });
     },
 
     onListError(message) {
-      message && error(message, this.$t('{{{labels.close}}}'));
+      message && error(message, this.$t("{{{labels.close}}}"));
     },
 
     onDeletedItem(val) {
-      success(`${val['@id']} ${this.$t('{{{labels.deleted}}}')}.`, this.$t('{{{labels.close}}}'));
+      success(
+        `${val["@id"]} ${this.$t("{{{labels.deleted}}}")}.`,
+        this.$t("{{{labels.close}}}")
+      );
     },
 
     onRequest(props, init) {
@@ -65,7 +68,7 @@ export default {
         params = { ...params, itemsPerPage, page };
       }
       if (sortBy) {
-        params[`order[${sortBy}]`] = descending ? 'DESC' : 'ASC';
+        params[`order[${sortBy}]`] = descending ? "DESC" : "ASC";
       }
       this.getPage({ params }).then(() => {
         this.pagination.sortBy = sortBy;
@@ -78,7 +81,7 @@ export default {
     },
 
     formatDateTime(val, format) {
-      return val ? this.$d(extractDate(val), format) : '';
+      return val ? this.$d(extractDate(val), format) : "";
     },
 
     onSendFilter() {
@@ -98,14 +101,14 @@ export default {
     showHandler(item) {
       this.$router.push({
         name: `${this.$options.servicePrefix}Show`,
-        params: { id: item['@id'] }
+        params: { id: item["@id"] },
       });
     },
 
     editHandler(item) {
       this.$router.push({
         name: `${this.$options.servicePrefix}Update`,
-        params: { id: item['@id'] }
+        params: { id: item["@id"] },
       });
     },
 
@@ -113,7 +116,7 @@ export default {
       this.deleteItem(item).then(() =>
         this.onRequest({
           pagination: this.pagination,
-        }),
+        })
       );
     },
   },

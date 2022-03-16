@@ -1,14 +1,21 @@
-import { mapActions, mapGetters, mapMutations, createNamespacedHelpers } from 'vuex';
+import {
+  mapActions,
+  mapGetters,
+  mapMutations,
+  createNamespacedHelpers,
+} from "vuex";
 
-export const create = module => {
+export const create = (module) => {
   const lowmod = module.toLowerCase();
-  const { mapGetters, mapActions } = createNamespacedHelpers(`${lowmod}/create`);
-  const getters = mapGetters(['error', 'isLoading', 'created', 'violations']);
-  const actions = mapActions(['create']);
+  const { mapGetters, mapActions } = createNamespacedHelpers(
+    `${lowmod}/create`
+  );
+  const getters = mapGetters(["error", "isLoading", "created", "violations"]);
+  const actions = mapActions(["create"]);
   return { getters, actions };
 };
 
-export const list = module => {
+export const list = (module) => {
   const lowmod = module.toLowerCase();
   const getters = mapGetters({
     deletedItem: `${lowmod}/del/deleted`,
@@ -25,7 +32,7 @@ export const list = module => {
   return { getters, actions };
 };
 
-export const show = module => {
+export const show = (module) => {
   const lowmod = module.toLowerCase();
   const getters = mapGetters({
     deleteError: `${lowmod}/del/error`,
@@ -41,7 +48,7 @@ export const show = module => {
   return { getters, actions };
 };
 
-export const update = module => {
+export const update = (module) => {
   const lowmod = module.toLowerCase();
   const getters = mapGetters({
     isLoading: `${lowmod}/update/isLoading`,
@@ -64,14 +71,16 @@ export const update = module => {
   return { getters, actions };
 };
 
-export const form = modules => {
+export const form = (modules) => {
   let getters = {},
     actions = {},
     mutations = {};
   modules.forEach(({ name, module }) => {
     const lowmod = module.toLowerCase();
     getters[`${name}SelectItems`] = `${lowmod}/list/selectItems`;
-    getters[`${name}SelectItemsTemplate`] = `${lowmod}/list/selectItemsTemplate`;
+    getters[
+      `${name}SelectItemsTemplate`
+    ] = `${lowmod}/list/selectItemsTemplate`;
     actions[`${name}GetSelectItems`] = `${lowmod}/list/getSelectItems`;
     mutations[
       `${name}SetSelectItemsTemplate`

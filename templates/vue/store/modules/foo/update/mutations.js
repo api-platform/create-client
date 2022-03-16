@@ -1,9 +1,9 @@
-import * as types from './mutation_types';
+import * as types from "./mutation_types";
 
 export default {
   [types.RESET](state) {
     Object.assign(state, {
-      error: '',
+      error: "",
       isLoading: false,
       retrieved: null,
       updated: null,
@@ -16,7 +16,7 @@ export default {
   },
 
   [types.TOGGLE_LOADING](state) {
-    Object.assign(state, { error: '', isLoading: !state.isLoading });
+    Object.assign(state, { error: "", isLoading: !state.isLoading });
   },
 
   [types.SET_RETRIEVED](state, retrieved) {
@@ -24,7 +24,7 @@ export default {
   },
 
   [types.SET_UPDATED](state, updated) {
-    Object.assign(state, { error: '', updated, violations: null });
+    Object.assign(state, { error: "", updated, violations: null });
   },
 
   [types.SET_VIOLATIONS](state, violations) {

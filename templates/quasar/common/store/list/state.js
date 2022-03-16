@@ -1,9 +1,9 @@
 export default () => ({
-  error: '',
+  error: "",
   isLoading: false,
   items: [],
   view: [],
   totalItems: 10,
   selectItems: null,
-  selectItemsTemplate: '',
+  selectItemsTemplate: "",
 });

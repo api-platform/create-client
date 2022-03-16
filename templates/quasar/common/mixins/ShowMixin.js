@@ -1,4 +1,4 @@
-import { extractDate } from '../../utils/dates';
+import { extractDate } from "../../utils/dates";
 
 export default {
   created() {
@@ -32,9 +32,9 @@ export default {
       message &&
         this.$q.notify({
           message,
-          color: 'red',
-          icon: 'error',
-          closeBtn: this.$t('{{{labels.close}}}'),
+          color: "red",
+          icon: "error",
+          closeBtn: this.$t("{{{labels.close}}}"),
         });
     },
 
@@ -42,14 +42,14 @@ export default {
       message &&
         this.$q.notify({
           message,
-          color: 'red',
-          icon: 'error',
-          closeBtn: this.$t('{{{labels.close}}}'),
+          color: "red",
+          icon: "error",
+          closeBtn: this.$t("{{{labels.close}}}"),
         });
     },
 
     formatDateTime(val, format) {
-      return val ? this.$d(extractDate(val), format) : '';
+      return val ? this.$d(extractDate(val), format) : "";
     },
 
     deleteItem() {
