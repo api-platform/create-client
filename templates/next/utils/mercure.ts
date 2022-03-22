@@ -1,5 +1,5 @@
-import has from "lodash/has";
 import { useEffect, useState } from "react";
+import has from "lodash/has";
 import { PagedCollection } from "../types/Collection";
 import { normalize } from "./dataAccess";
 
@@ -12,24 +12,24 @@ const mercureSubscribe = (hubURL: string, data: unknown | PagedCollection<unknow
   return eventSource;
 }
 
-export const useMercure = (deps: unknown | PagedCollection<unknown>, hubURL: string) => {
+export const useMercure = (deps: unknown | PagedCollection<unknown>, hubURL: string | null) => {
   const [data, setData] = useState(deps);
 
   useEffect(() => {
     setData(deps);
   }, [deps]);
 
-  if (!data) {
-    return data;
-  }
-
-  if (!has(data, "{{{hydraPrefix}}}member") && !has(data, "@id")) {
-    console.error("Object sent is not in JSON-LD format.");
-
-    return data;
-  }
-
   useEffect(() => {
+    if (!hubURL || !data) {
+      return;
+    }
+
+    if (!has(data, "{{{hydraPrefix}}}member") && !has(data, "@id")) {
+      console.error("Object sent is not in JSON-LD format.");
+
+      return;
+    }
+
     if (has(data, "{{{hydraPrefix}}}member") && Array.isArray(data["{{{hydraPrefix}}}member"]) && data["{{{hydraPrefix}}}member"].length !== 0) {
       // It's a PagedCollection
       data["{{{hydraPrefix}}}member"].forEach((obj, pos) => mercureSubscribe(hubURL, obj, (datum) => {

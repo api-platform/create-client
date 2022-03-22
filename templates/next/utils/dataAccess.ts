@@ -75,3 +75,26 @@ export const normalize = (data: unknown) => {
       : get(value, "@id", value)
   );
 };
+
+export const getPaths = async (response, resourceName: string, isEdit: boolean) => {
+  try {
+    const pathSuffix = isEdit ? "/edit" : "";
+    const view = response.data["{{{hydraPrefix}}}view"];
+    const paths = response.data["{{{hydraPrefix}}}member"].map((resourceData) => `${resourceData['@id']}${pathSuffix}`);
+
+    if (view) {
+      const { '{{{hydraPrefix}}}last': last } = view;
+      for (let page = 2; page <= parseInt(last.replace(new RegExp(`^\/${resourceName}\?page=(\d+)`), "$1")); page++) {
+        paths.concat(
+          (await fetch(`/${resourceName}?page=${page}`)).data["{{{hydraPrefix}}}member"].map((resourceData) => `${ resourceData['@id'] }${pathSuffix}`)
+        );
+      }
+    }
+
+    return paths;
+  } catch (e) {
+    console.error(e);
+
+    return [];
+  }
+};

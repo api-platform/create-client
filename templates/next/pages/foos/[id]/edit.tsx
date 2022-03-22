@@ -1,10 +1,9 @@
 import { GetStaticPaths, GetStaticProps, NextComponentType, NextPageContext } from "next";
-import { Form } from "../../../components/{{{lc}}}/Form";
-import { {{{ucf}}} } from "../../../types/{{{ucf}}}";
-import { fetch } from "../../../utils/dataAccess";
 import Head from "next/head";
 import DefaultErrorPage from "next/error";
-import { getPathsFromHydraResponse } from "../../../utils/helpers";
+import { Form } from "../../../components/{{{lc}}}/Form";
+import { {{{ucf}}} } from "../../../types/{{{ucf}}}";
+import { fetch, getPaths } from "../../../utils/dataAccess";
 
 interface Props {
   {{{lc}}}: {{{ucf}}};
@@ -38,15 +37,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   };
 }
 
-
-export const getStaticPaths: GetStaticPaths = async() => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const response = await fetch("/{{{name}}}");
-  const paths= await getPathsFromHydraResponse(response,true);
-  return {
-      paths,
-      fallback:true
-  }
+  const paths = await getPaths(response, "{{{name}}}", true);
 
+  return {
+    paths,
+    fallback: true,
+  };
 }
 
 export default Page;

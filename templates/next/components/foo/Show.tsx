@@ -1,14 +1,14 @@
-import { FunctionComponent, useState } from 'react';
-import Link from 'next/link';
+import { FunctionComponent, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { fetch } from "../../utils/dataAccess";
-import ReferenceLinks from '../common/ReferenceLinks';
-import { {{{ucf}}} } from '../../types/{{{ucf}}}';
-import Head from 'next/head'
+import ReferenceLinks from "../common/ReferenceLinks";
+import { {{{ucf}}} } from "../../types/{{{ucf}}}";
 
 interface Props {
   {{{lc}}}: {{{ucf}}};
-  text: String
+  text: string;
 }
 
 export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
@@ -31,11 +31,7 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
     <div>
        <Head>
             <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
-            <script
-                type="application/ld+json"
-            >
-              {text}
-            </script>
+            <script type="application/ld+json" dangerouslySetInnerHTML={ { __html: text } } />
           </Head>
       <h1>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</h1>
       <table className="table table-responsive table-striped table-hover">

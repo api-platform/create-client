@@ -1,21 +1,21 @@
 import { GetStaticPaths, GetStaticProps, NextComponentType, NextPageContext } from "next";
-import { Show } from "../../../components/{{{lc}}}/Show";
-import { {{{ucf}}} } from "../../../types/{{{ucf}}}";
-import { fetch } from "../../../utils/dataAccess";
 import Head from "next/head";
 import DefaultErrorPage from "next/error";
+import { Show } from "../../../components/{{{lc}}}/Show";
+import { {{{ucf}}} } from "../../../types/{{{ucf}}}";
+import { fetch, getPaths } from "../../../utils/dataAccess";
 import { useMercure } from "../../../utils/mercure";
-import { getPathsFromHydraResponse } from "../../../utils/helpers";
 
 interface Props {
   {{{lc}}}: {{{ucf}}};
   hubURL: null | string;
+  text: string;
 };
 
-const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
-  const {{{lc}}} = props.hubURL === null ? props.{{{lc}}} : useMercure(props.{{{lc}}}, props.hubURL);
+const Page: NextComponentType<NextPageContext, Props, Props> = ({ {{{lc}}}, hubURL, text }) => {
+  const {{{lc}}}Data = useMercure({{{lc}}}, hubURL);
 
-  if (!{{{lc}}}) {
+  if (!{{{lc}}}Data) {
     return <DefaultErrorPage statusCode={404} />;
   }
 
@@ -26,7 +26,7 @@ const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
           <title>{`Show {{{ucf}}} ${ {{~lc}}['@id'] }`}</title>
         </Head>
       </div>
-      <Show {{{lc}}}={ {{{lc}}} } text={ data.text } />
+      <Show {{{lc}}}={ {{{lc}}}Data } text={text} />
     </div>
   );
 };
@@ -43,12 +43,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     revalidate: 1,
   };
 }
-export const getStaticPaths: GetStaticPaths = async() => {
+
+export const getStaticPaths: GetStaticPaths = async () => {
   const response = await fetch("/{{{name}}}");
-  const paths= await getPathsFromHydraResponse(response,false);
+  const paths = await getPaths(response, "{{{name}}}", false);
+
   return {
     paths,
-    fallback:true
+    fallback: true,
+  };
 }
-}
+
 export default Page;
