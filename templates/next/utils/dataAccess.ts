@@ -69,7 +69,7 @@ export const normalize = (data: unknown) => {
   }
 
   // Flatten nested documents
-  return mapValues(data, (value) =>
+  return mapValues(data as Object, (value) =>
     Array.isArray(value)
       ? value.map((v) => get(v, "@id", v))
       : get(value, "@id", value)

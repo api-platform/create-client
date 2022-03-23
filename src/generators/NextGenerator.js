@@ -1,4 +1,6 @@
 import chalk from "chalk";
+import handlebars from "handlebars";
+import hbh_comparison from "handlebars-helpers/lib/comparison";
 import BaseGenerator from "./BaseGenerator";
 
 export default class NextGenerator extends BaseGenerator {
@@ -28,6 +30,8 @@ export default class NextGenerator extends BaseGenerator {
       "utils/dataAccess.ts",
       "utils/mercure.ts",
     ]);
+    
+    handlebars.registerHelper("compare", hbh_comparison.compare);
   }
 
   help(resource) {

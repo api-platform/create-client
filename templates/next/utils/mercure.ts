@@ -20,24 +20,18 @@ export const useMercure = (deps: unknown | PagedCollection<unknown>, hubURL: str
   }, [deps]);
 
   useEffect(() => {
-    if (!hubURL || !data) {
-      return;
-    }
-
     if (!has(data, "{{{hydraPrefix}}}member") && !has(data, "@id")) {
       console.error("Object sent is not in JSON-LD format.");
 
-      return;
     }
 
-    if (has(data, "{{{hydraPrefix}}}member") && Array.isArray(data["{{{hydraPrefix}}}member"]) && data["{{{hydraPrefix}}}member"].length !== 0) {
+    if (hubURL && has(data, "{{{hydraPrefix}}}member") && Array.isArray(data["{{{hydraPrefix}}}member"]) && data["{{{hydraPrefix}}}member"].length !== 0) {
       // It's a PagedCollection
       data["{{{hydraPrefix}}}member"].forEach((obj, pos) => mercureSubscribe(hubURL, obj, (datum) => {
         data["{{{hydraPrefix}}}member"][pos] = datum;
         setData(data);
       }));
 
-      return () => data;
     }
 
     // It's a single object
@@ -46,7 +40,6 @@ export const useMercure = (deps: unknown | PagedCollection<unknown>, hubURL: str
     return () => {
       eventSource.removeEventListener("message", (event) => setData(normalize(JSON.parse(event.data))));
 
-      return data;
     };
   }, [data]);
 
