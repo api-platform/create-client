@@ -79,20 +79,19 @@ async function main() {
     : null;
 
   const parser = (entrypointWithSlash) => {
+    // parserOptions are used to set headers on the hydra-requests
     const parserOptions = {};
-    if (parserOptions.username && parserOptions.password) {
+    // options refers to the opts set via the CLI
+    if (options.username && options.password) {
       const encoded = Buffer.from(
-        `${parserOptions.username}:${parserOptions.password}`
+        `${options.username}:${options.password}`
       ).toString("base64");
       parserOptions.headers = new Headers();
       parserOptions.headers.set("Authorization", `Basic ${encoded}`);
     }
-    if (parserOptions.bearer) {
+    if (options.bearer) {
       parserOptions.headers = new Headers();
-      parserOptions.headers.set(
-        "Authorization",
-        `Bearer ${parserOptions.bearer}`
-      );
+      parserOptions.headers.set("Authorization", `Bearer ${options.bearer}`);
     }
     switch (options.format) {
       case "swagger": // deprecated
