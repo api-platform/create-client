@@ -1,6 +1,6 @@
 import { NextComponentType, NextPageContext } from "next";
-import { Form } from "../../components/{{{lc}}}/Form";
 import Head from "next/head";
+import { Form } from "../../components/{{{lc}}}/Form";
 
 const Page: NextComponentType<NextPageContext> = () => (
   <div>

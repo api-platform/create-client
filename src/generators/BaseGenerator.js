@@ -37,10 +37,10 @@ export default class {
     }
   }
 
-  createFileFromPattern(pattern, dir, lc, context) {
+  createFileFromPattern(pattern, dir, value, context, templateValue = "foo") {
     this.createFile(
-      sprintf(pattern, "foo"),
-      sprintf(`${dir}/${pattern}`, lc),
+      sprintf(pattern, templateValue),
+      sprintf(`${dir}/${pattern}`, value),
       context
     );
   }

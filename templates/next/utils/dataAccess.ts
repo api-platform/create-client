@@ -40,7 +40,7 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
   const json = JSON.parse(text);
   if (resp.ok) {
     return {
-      hubURL: extractHubURL(resp)?.toString(), // URL cannot be serialized as JSON, must be sent as string
+      hubURL: extractHubURL(resp)?.toString() || null, // URL cannot be serialized as JSON, must be sent as string
       data: normalize(json),
       text,
     };
@@ -58,7 +58,7 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
   throw { defaultErrorMsg, status, fields };
 };
 
-export const normalize = (data: unknown) => {
+export const normalize = (data: any) => {
   if (has(data, "{{{hydraPrefix}}}member")) {
     // Normalize items in collections
     data["{{{hydraPrefix}}}member"] = data[
@@ -69,7 +69,7 @@ export const normalize = (data: unknown) => {
   }
 
   // Flatten nested documents
-  return mapValues(data as Object, (value) =>
+  return mapValues(data, (value) =>
     Array.isArray(value)
       ? value.map((v) => get(v, "@id", v))
       : get(value, "@id", value)

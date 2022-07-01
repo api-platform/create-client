@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PagedCollection } from "../../types/Collection";
+import { PagedCollection } from "../../types/collection";
 
 interface Props {
   collection: PagedCollection<unknown>;
