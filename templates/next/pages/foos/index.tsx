@@ -1,15 +1,15 @@
 import { GetServerSideProps, NextComponentType, NextPageContext } from "next";
+import Head from "next/head";
 import { List } from "../../components/{{{lc}}}/List";
-import { PagedCollection } from "../../types/Collection";
+import { PagedCollection } from "../../types/collection";
 import { {{{ucf}}} } from "../../types/{{{ucf}}}";
 import { fetch } from "../../utils/dataAccess";
-import Head from "next/head";
 import Pagination from "../../components/common/Pagination";
 import { useMercure } from "../../utils/mercure";
 
 interface Props {
   collection: PagedCollection<{{{ucf}}}>;
-  hubURL: string;
+  hubURL: string | null;
 }
 
 const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {

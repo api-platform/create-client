@@ -74,13 +74,18 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
               <input
                 name="{{name}}"
                 id="{{lc}}_{{name}}"
-                value={ values.{{name}} ?? "" }
+                {{#compare type "==" "dateTime" }}
+                value={values.{{name}}?.toLocaleString() ?? ""}
+                {{/compare}}
+                {{#compare type "!=" "dateTime" }}
+                value={values.{{name}} ?? ""}
+                {{/compare}}
                 type="{{type}}"
                 {{#if step}}step="{{{step}}}"{{/if}}
                 placeholder="{{{description}}}"
                 {{#if required}}required={true}{{/if}}
                 className={`form-control${errors.{{name}} && touched.{{name}} ? ' is-invalid' : ''}`}
-                aria-invalid={errors.{{name}} && touched.{{name~}} }
+                aria-invalid={errors.{{name}} && touched.{{name~}} ? 'true' : null}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />

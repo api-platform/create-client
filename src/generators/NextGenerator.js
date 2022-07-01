@@ -1,4 +1,6 @@
 import chalk from "chalk";
+import handlebars from "handlebars";
+import hbh_comparison from "handlebars-helpers/lib/comparison";
 import BaseGenerator from "./BaseGenerator";
 
 export default class NextGenerator extends BaseGenerator {
@@ -15,8 +17,9 @@ export default class NextGenerator extends BaseGenerator {
       "components/foo/Form.tsx",
 
       // types
-      "types/Collection.ts",
+      "types/collection.ts",
       "types/foo.ts",
+      "types/item.ts",
 
       // pages
       "pages/foos/[id]/index.tsx",
@@ -28,6 +31,8 @@ export default class NextGenerator extends BaseGenerator {
       "utils/dataAccess.ts",
       "utils/mercure.ts",
     ]);
+
+    handlebars.registerHelper("compare", hbh_comparison.compare);
   }
 
   help(resource) {
@@ -66,21 +71,24 @@ export default class NextGenerator extends BaseGenerator {
 
     // Copy with patterned name
     this.createDir(`${dir}/components/${context.lc}`);
-    this.createDir(`${dir}/pages/${context.lc}s`);
-    this.createDir(`${dir}/pages/${context.lc}s/[id]`);
+    this.createDir(`${dir}/pages/${context.name}`);
+    this.createDir(`${dir}/pages/${context.name}/[id]`);
     [
       // components
       "components/%s/List.tsx",
       "components/%s/Show.tsx",
       "components/%s/Form.tsx",
-
-      // pages
-      "pages/%ss/[id]/index.tsx",
-      "pages/%ss/[id]/edit.tsx",
-      "pages/%ss/index.tsx",
-      "pages/%ss/create.tsx",
     ].forEach((pattern) =>
       this.createFileFromPattern(pattern, dir, context.lc, context)
+    );
+    [
+      // pages
+      "pages/%s/[id]/index.tsx",
+      "pages/%s/[id]/edit.tsx",
+      "pages/%s/index.tsx",
+      "pages/%s/create.tsx",
+    ].forEach((pattern) =>
+      this.createFileFromPattern(pattern, dir, context.name, context, "foos")
     );
 
     // interface pattern should be camel cased
@@ -93,7 +101,8 @@ export default class NextGenerator extends BaseGenerator {
       "components/common/ReferenceLinks.tsx",
 
       // types
-      "types/Collection.ts",
+      "types/collection.ts",
+      "types/item.ts",
 
       // utils
       "utils/dataAccess.ts",

@@ -25,7 +25,7 @@ describe("generate", () => {
         description: "An URL",
       }),
     ];
-    const resource = new Resource("abc", "http://example.com/foos", {
+    const resource = new Resource("abcs", "http://example.com/foos", {
       id: "abc",
       title: "abc",
       readableFields: fields,
@@ -46,7 +46,8 @@ describe("generate", () => {
       "/components/common/ReferenceLinks.tsx",
       "/components/common/Pagination.tsx",
       "/types/Abc.ts",
-      "/types/Collection.ts",
+      "/types/collection.ts",
+      "/types/item.ts",
       "/pages/abcs/[id]/index.tsx",
       "/pages/abcs/[id]/edit.tsx",
       "/pages/abcs/index.tsx",

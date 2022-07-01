@@ -36,12 +36,13 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
   const resp = await isomorphicFetch(ENTRYPOINT + id, init);
   if (resp.status === 204) return;
 
-  const json = await resp.json();
+  const text = await resp.text();
+  const json = JSON.parse(text);
   if (resp.ok) {
     return {
-      hubURL: extractHubURL(resp)?.toString(), // URL cannot be serialized as JSON, must be sent as string
+      hubURL: extractHubURL(resp)?.toString() || null, // URL cannot be serialized as JSON, must be sent as string
       data: normalize(json),
-      text: await resp.text(),
+      text,
     };
   }
 
@@ -57,7 +58,7 @@ export const fetch = async (id: string, init: RequestInit = {}) => {
   throw { defaultErrorMsg, status, fields };
 };
 
-export const normalize = (data: unknown) => {
+export const normalize = (data: any) => {
   if (has(data, "{{{hydraPrefix}}}member")) {
     // Normalize items in collections
     data["{{{hydraPrefix}}}member"] = data[
@@ -73,4 +74,27 @@ export const normalize = (data: unknown) => {
       ? value.map((v) => get(v, "@id", v))
       : get(value, "@id", value)
   );
+};
+
+export const getPaths = async (response, resourceName: string, isEdit: boolean) => {
+  try {
+    const pathSuffix = isEdit ? "/edit" : "";
+    const view = response.data["{{{hydraPrefix}}}view"];
+    const paths = response.data["{{{hydraPrefix}}}member"].map((resourceData) => `${resourceData['@id']}${pathSuffix}`);
+
+    if (view) {
+      const { '{{{hydraPrefix}}}last': last } = view;
+      for (let page = 2; page <= parseInt(last.replace(new RegExp(`^\/${resourceName}\?page=(\d+)`), "$1")); page++) {
+        paths.concat(
+          (await fetch(`/${resourceName}?page=${page}`)).data["{{{hydraPrefix}}}member"].map((resourceData) => `${ resourceData['@id'] }${pathSuffix}`)
+        );
+      }
+    }
+
+    return paths;
+  } catch (e) {
+    console.error(e);
+
+    return [];
+  }
 };
