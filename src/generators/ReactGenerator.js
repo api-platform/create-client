@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import BaseGenerator from "./BaseGenerator";
+import BaseGenerator from "./BaseGenerator.js";
 
 export default class extends BaseGenerator {
   constructor(params) {

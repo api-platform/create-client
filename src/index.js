@@ -1,16 +1,22 @@
 #!/usr/bin/env node
 
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import "isomorphic-fetch";
-import program from "commander";
-import parseHydraDocumentation from "@api-platform/api-doc-parser/lib/hydra/parseHydraDocumentation";
-import parseSwaggerDocumentation from "@api-platform/api-doc-parser/lib/swagger/parseSwaggerDocumentation";
-import parseOpenApi3Documentation from "@api-platform/api-doc-parser/lib/openapi3/parseOpenApi3Documentation";
-import { version } from "../package.json";
-import generators from "./generators";
+import { program } from "commander";
+import apiDocParser from "@api-platform/api-doc-parser";
+import generators from "./generators.js";
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const packageJson = JSON.parse(
+  fs.readFileSync(`${dirname}/../package.json`, "utf-8")
+);
 
 async function main() {
   program
-    .version(version)
+    .version(packageJson.version)
     .description(
       "Generate apps built with Next, Nuxt, Quasar, React, React Native, Vue or Vuetify for any API documented using Hydra or OpenAPI"
     )
@@ -35,7 +41,7 @@ async function main() {
     .option(
       "-t, --template-directory [templateDirectory]",
       "The templates directory base to use. Final directory will be ${templateDirectory}/${generator}",
-      `${__dirname}/../templates/`
+      `${dirname}/../templates/`
     )
     .option(
       "-f, --format [hydra|openapi3|openapi2]",
@@ -96,11 +102,14 @@ async function main() {
     switch (options.format) {
       case "swagger": // deprecated
       case "openapi2":
-        return parseSwaggerDocumentation(entrypointWithSlash);
+        return apiDocParser.parseSwaggerDocumentation(entrypointWithSlash);
       case "openapi3":
-        return parseOpenApi3Documentation(entrypointWithSlash);
+        return apiDocParser.parseOpenApi3Documentation(entrypointWithSlash);
       default:
-        return parseHydraDocumentation(entrypointWithSlash, parserOptions);
+        return apiDocParser.parseHydraDocumentation(
+          entrypointWithSlash,
+          parserOptions
+        );
     }
   };
 

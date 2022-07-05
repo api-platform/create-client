@@ -1,12 +1,16 @@
 import { Api, Resource, Field } from "@api-platform/api-doc-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 import fs from "fs";
 import tmp from "tmp";
-import VuetifyGenerator from "./VuetifyGenerator";
+import VuetifyGenerator from "./VuetifyGenerator.js";
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test("Generate a Vuetify app", () => {
   const generator = new VuetifyGenerator({
     hydraPrefix: "hydra:",
-    templateDirectory: `${__dirname}/../../templates`,
+    templateDirectory: `${dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 

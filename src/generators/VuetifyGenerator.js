@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import BaseVueGenerator from "./VueBaseGenerator";
+import BaseVueGenerator from "./VueBaseGenerator.js";
 
 export default class extends BaseVueGenerator {
   constructor(params) {
@@ -85,9 +85,9 @@ export const store = new Vuex.Store({
     this.createDir(`${dir}/router`, false);
     this.createDir(`${dir}/locales`, false);
 
-    for (let dir of [`${dir}/components/${lc}`, `${dir}/views/${lc}`]) {
-      this.createDir(dir);
-    }
+    [`${dir}/components/${lc}`, `${dir}/views/${lc}`].forEach((dir) =>
+      this.createDir(dir)
+    );
 
     this.createFile("locales/en.js", `${dir}/locales/en.js`, context, false);
 

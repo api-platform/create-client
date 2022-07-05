@@ -1,4 +1,4 @@
-import BaseGenerator from "./BaseGenerator";
+import BaseGenerator from "./BaseGenerator.js";
 
 export default class TypescriptInterfaceGenerator extends BaseGenerator {
   constructor(params) {

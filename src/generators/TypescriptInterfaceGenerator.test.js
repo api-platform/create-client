@@ -1,11 +1,15 @@
-import { Api, Resource, Field } from "@api-platform/api-doc-parser/lib";
+import { Api, Resource, Field } from "@api-platform/api-doc-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 import fs from "fs";
 import tmp from "tmp";
-import TypescriptInterfaceGenerator from "./TypescriptInterfaceGenerator";
+import TypescriptInterfaceGenerator from "./TypescriptInterfaceGenerator.js";
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test("Generate a typescript interface", () => {
   const generator = new TypescriptInterfaceGenerator({
-    templateDirectory: `${__dirname}/../../templates`,
+    templateDirectory: `${dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 
@@ -64,7 +68,7 @@ test("Generate a typescript interface", () => {
 
 test("Generate a typescript interface without references to other interfaces", () => {
   const generator = new TypescriptInterfaceGenerator({
-    templateDirectory: `${__dirname}/../../templates`,
+    templateDirectory: `${dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 
@@ -114,7 +118,7 @@ test("Generate a typescript interface without references to other interfaces", (
 
 test("Generate a typescript interface with an explicit id field in the readableFields", () => {
   const generator = new TypescriptInterfaceGenerator({
-    templateDirectory: `${__dirname}/../../templates`,
+    templateDirectory: `${dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 

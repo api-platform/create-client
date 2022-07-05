@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import handlebars from "handlebars";
-import hbh_comparison from "handlebars-helpers/lib/comparison";
-import BaseGenerator from "./BaseGenerator";
+import hbh_comparison from "handlebars-helpers/lib/comparison.js";
+import BaseGenerator from "./BaseGenerator.js";
 
 export default class NextGenerator extends BaseGenerator {
   constructor(params) {

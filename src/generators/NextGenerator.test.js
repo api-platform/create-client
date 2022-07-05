@@ -1,11 +1,15 @@
-import { Api, Resource, Field } from "@api-platform/api-doc-parser/lib";
+import { Api, Resource, Field } from "@api-platform/api-doc-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 import fs from "fs";
 import tmp from "tmp";
-import NextGenerator from "./NextGenerator";
+import NextGenerator from "./NextGenerator.js";
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const generator = new NextGenerator({
   hydraPrefix: "hydra:",
-  templateDirectory: `${__dirname}/../../templates`,
+  templateDirectory: `${dirname}/../../templates`,
 });
 
 afterEach(() => {

@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import handlebars from "handlebars";
-import BaseGenerator from "./BaseGenerator";
+import BaseGenerator from "./BaseGenerator.js";
 
 export default class extends BaseGenerator {
   constructor(params) {

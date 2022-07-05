@@ -1,12 +1,16 @@
-import { Api, Resource, Field } from "@api-platform/api-doc-parser/lib";
+import { Api, Resource, Field } from "@api-platform/api-doc-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 import fs from "fs";
 import tmp from "tmp";
-import QuasarGenerator from "./QuasarGenerator";
+import QuasarGenerator from "./QuasarGenerator.js";
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test("Generate a Quasar app", () => {
   const generator = new QuasarGenerator({
     hydraPrefix: "hydra:",
-    templateDirectory: `${__dirname}/../../templates`,
+    templateDirectory: `${dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 
