@@ -24,4 +24,5 @@ jobs:
     - run: yarn lint
     - run: yarn test-gen
     - run: yarn test-gen-env
+    - run: yarn test-app
     - run: yarn check
