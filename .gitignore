@@ -1,3 +1,6 @@
 /lib/
 /node_modules/
-/tmp
+/playwright/.cache/
+/playwright-report/
+/test-results/
+/tmp/

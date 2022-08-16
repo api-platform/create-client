@@ -22,7 +22,15 @@ jobs:
     - run: yarn build
     - run: yarn test
     - run: yarn lint
+    - name: Install Playwright Browsers
+      run: yarn playwright install --with-deps
     - run: yarn test-gen && yarn test-app
     - run: yarn test-gen-env
     - run: yarn test-gen-openapi3
     - run: yarn check
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
