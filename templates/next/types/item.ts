@@ -1,3 +1,5 @@
-import has from "lodash/has"
+export interface Item {
+  "@id"?: string;
+}
 
-export const isItem = <T>(data: any): data is T => has(data, "@id")
+export const isItem = (data: any): data is Item => "@id" in data

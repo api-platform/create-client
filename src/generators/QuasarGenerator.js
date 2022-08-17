@@ -1,9 +1,9 @@
 import chalk from "chalk";
-import BaseGenerator from "./BaseGenerator";
 import handlebars from "handlebars";
-import hbh_comparison from "handlebars-helpers/lib/comparison";
-import hbh_array from "handlebars-helpers/lib/array";
-import hbh_string from "handlebars-helpers/lib/string";
+import hbh_comparison from "handlebars-helpers/lib/comparison.js";
+import hbh_array from "handlebars-helpers/lib/array.js";
+import hbh_string from "handlebars-helpers/lib/string.js";
+import BaseGenerator from "./BaseGenerator.js";
 
 export default class extends BaseGenerator {
   constructor(params) {
@@ -403,7 +403,7 @@ export const store = new Vuex.Store({
 
     // Create directories
     // These directories may already exist
-    for (let dir of [
+    [
       `${dir}/config`,
       `${dir}/error`,
       `${dir}/router`,
@@ -420,11 +420,9 @@ export const store = new Vuex.Store({
       `${dir}/common/store/list`,
       `${dir}/common/store/show`,
       `${dir}/common/store/update`,
-    ]) {
-      this.createDir(dir, false);
-    }
+    ].forEach((dir) => this.createDir(dir, false));
 
-    for (let dir of [
+    [
       `${dir}/store/modules/${lc}`,
       `${dir}/store/modules/${lc}/create`,
       `${dir}/store/modules/${lc}/delete`,
@@ -433,11 +431,9 @@ export const store = new Vuex.Store({
       `${dir}/store/modules/${lc}/update`,
 
       `${dir}/components/${lc}`,
-    ]) {
-      this.createDir(dir);
-    }
+    ].forEach((dir) => this.createDir(dir));
 
-    for (let common of [
+    [
       "common/components/index.js",
       "common/components/ActionCell.vue",
       "common/components/Breadcrumb.vue",
@@ -482,11 +478,11 @@ export const store = new Vuex.Store({
       "utils/dates.js",
       "utils/notify.js",
       "utils/vuexer.js",
-    ]) {
-      this.createFile(common, `${dir}/${common}`, context, false);
-    }
+    ].forEach((common) =>
+      this.createFile(common, `${dir}/${common}`, context, false)
+    );
 
-    for (let pattern of [
+    [
       // modules
       "store/modules/%s/index.js",
       "store/modules/%s/create/actions.js",
@@ -530,15 +526,15 @@ export const store = new Vuex.Store({
 
       // routes
       "router/%s.js",
-    ]) {
+    ].forEach((pattern) => {
       if (
         pattern === "components/%s/Filter.vue" &&
         !context.parameters.length
       ) {
-        continue;
+        return;
       }
       this.createFileFromPattern(pattern, dir, lc, context);
-    }
+    });
 
     // error
     this.createFile(

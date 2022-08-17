@@ -9,19 +9,28 @@ jobs:
   build:
     strategy:
       matrix:
-        node-version: ['14', '15']
+        node-version: ['lts/*', 'current']
 
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Build Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
     - run: yarn install
     - run: yarn build
     - run: yarn test
     - run: yarn lint
-    - run: yarn test-gen
+    - name: Install Playwright Browsers
+      run: yarn playwright install --with-deps
+    - run: yarn test-gen && yarn test-app
     - run: yarn test-gen-env
+    - run: yarn test-gen-openapi3
     - run: yarn check
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30

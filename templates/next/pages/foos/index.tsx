@@ -1,19 +1,22 @@
 import { GetServerSideProps, NextComponentType, NextPageContext } from "next";
 import Head from "next/head";
+import { dehydrate, QueryClient, useQuery } from "react-query";
+
+import Pagination from "../../components/common/Pagination";
 import { List } from "../../components/{{{lc}}}/List";
 import { PagedCollection } from "../../types/collection";
 import { {{{ucf}}} } from "../../types/{{{ucf}}}";
-import { fetch } from "../../utils/dataAccess";
-import Pagination from "../../components/common/Pagination";
+import { fetch, FetchResponse } from "../../utils/dataAccess";
 import { useMercure } from "../../utils/mercure";
 
-interface Props {
-  collection: PagedCollection<{{{ucf}}}>;
-  hubURL: string | null;
-}
+const get{{{ucf}}}s = async () => await fetch<PagedCollection<{{{ucf}}}>>('/{{{name}}}');
 
-const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
-  const collection = useMercure(props.collection, props.hubURL);
+const Page: NextComponentType<NextPageContext> = () => {
+  const { data: { data: {{lc}}s, hubURL } = { hubURL: null } } =
+    useQuery<FetchResponse<PagedCollection<{{{ucf}}}>> | undefined>('{{{name}}}', get{{{ucf}}}s);
+  const collection = useMercure({{lc}}s, hubURL);
+
+  if (!collection || !collection["{{{hydraPrefix}}}member"]) return null;
 
   return (
     <div>
@@ -26,17 +29,17 @@ const Page: NextComponentType<NextPageContext, Props, Props> = (props) => {
       <Pagination collection={collection} />
     </div>
   );
-}
+};
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const response = await fetch('/{{{name}}}');
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery('{{{name}}}', get{{{ucf}}}s);
 
   return {
     props: {
-      collection: response.data,
-      hubURL: response.hubURL,
+      dehydratedState: dehydrate(queryClient),
     },
-  }
+  };
 }
 
 export default Page;

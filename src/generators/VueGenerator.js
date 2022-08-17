@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import BaseGenerator from "./BaseGenerator";
+import BaseGenerator from "./BaseGenerator.js";
 
 export default class extends BaseGenerator {
   constructor(params) {
@@ -102,16 +102,11 @@ export const store = new Vuex.Store({
 
     // Create directories
     // These directories may already exist
-    for (let dir of [
-      `${dir}/config`,
-      `${dir}/error`,
-      `${dir}/router`,
-      `${dir}/utils`,
-    ]) {
-      this.createDir(dir, false);
-    }
+    [`${dir}/config`, `${dir}/error`, `${dir}/router`, `${dir}/utils`].forEach(
+      (dir) => this.createDir(dir, false)
+    );
 
-    for (let dir of [
+    [
       `${dir}/store/modules/${lc}`,
       `${dir}/store/modules/${lc}/create`,
       `${dir}/store/modules/${lc}/delete`,
@@ -119,11 +114,9 @@ export const store = new Vuex.Store({
       `${dir}/store/modules/${lc}/show`,
       `${dir}/store/modules/${lc}/update`,
       `${dir}/components/${lc}`,
-    ]) {
-      this.createDir(dir);
-    }
+    ].forEach((dir) => this.createDir(dir));
 
-    for (let pattern of [
+    [
       // modules
       "store/modules/%s/index.js",
       "store/modules/%s/create/actions.js",
@@ -156,9 +149,9 @@ export const store = new Vuex.Store({
 
       // routes
       "router/%s.js",
-    ]) {
-      this.createFileFromPattern(pattern, dir, lc, context);
-    }
+    ].forEach((pattern) =>
+      this.createFileFromPattern(pattern, dir, lc, context)
+    );
 
     // error
     this.createFile(

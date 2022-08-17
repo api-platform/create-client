@@ -1,12 +1,12 @@
 import fs from "fs";
-import NextGenerator from "./generators/NextGenerator";
-import NuxtGenerator from "./generators/NuxtGenerator";
-import ReactGenerator from "./generators/ReactGenerator";
-import ReactNativeGenerator from "./generators/ReactNativeGenerator";
-import TypescriptInterfaceGenerator from "./generators/TypescriptInterfaceGenerator";
-import VueGenerator from "./generators/VueGenerator";
-import VuetifyGenerator from "./generators/VuetifyGenerator";
-import QuasarGenerator from "./generators/QuasarGenerator";
+import NextGenerator from "./generators/NextGenerator.js";
+import NuxtGenerator from "./generators/NuxtGenerator.js";
+import ReactGenerator from "./generators/ReactGenerator.js";
+import ReactNativeGenerator from "./generators/ReactNativeGenerator.js";
+import TypescriptInterfaceGenerator from "./generators/TypescriptInterfaceGenerator.js";
+import VueGenerator from "./generators/VueGenerator.js";
+import VuetifyGenerator from "./generators/VuetifyGenerator.js";
+import QuasarGenerator from "./generators/QuasarGenerator.js";
 
 function wrap(cl) {
   return ({ hydraPrefix, templateDirectory }) =>

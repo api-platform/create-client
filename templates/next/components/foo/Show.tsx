@@ -2,8 +2,9 @@ import { FunctionComponent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
+
+{{#if reference}}import ReferenceLinks from "../common/ReferenceLinks";{{/if}}
 import { fetch } from "../../utils/dataAccess";
-import ReferenceLinks from "../common/ReferenceLinks";
 import { {{{ucf}}} } from "../../types/{{{ucf}}}";
 
 interface Props {
@@ -12,10 +13,11 @@ interface Props {
 }
 
 export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const handleDelete = async () => {
+    if (!{{lc}}["@id"]) return;
 		if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     try {
@@ -29,7 +31,7 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
 
   return (
     <div>
-       <Head>
+      <Head>
             <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
             <script type="application/ld+json" dangerouslySetInnerHTML={ { __html: text } } />
           </Head>
@@ -45,7 +47,15 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
         {{#each fields}}
           <tr>
             <th scope="row">{{name}}</th>
-            <td>{{#if reference}}<ReferenceLinks items={ {{{../lc}}}['{{{name}}}'] } type="{{{reference.title}}}" />{{else}}{ {{{../lc}}}['{{{name}}}'] }{{/if}}</td>
+            <td>
+              {{#if reference}}
+                <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'] } type="{{{reference.title}}}" />
+              {{else if (compare type "==" "Date") }}
+                { {{{../lc}}}['{{{name}}}']?.toLocaleString() }
+              {{else}}
+                { {{{../lc}}}['{{{name}}}'] }
+              {{/if}}
+            </td>
           </tr>
         {{/each}}
         </tbody>

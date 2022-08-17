@@ -1,4 +1,6 @@
-export class {{{ucf}}} {
+import { Item } from "./item";
+
+export class {{{ucf}}} implements Item {
   public "@id"?: string;
 
   constructor(

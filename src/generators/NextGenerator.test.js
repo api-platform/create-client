@@ -1,11 +1,15 @@
-import { Api, Resource, Field } from "@api-platform/api-doc-parser/lib";
+import { Api, Resource, Field } from "@api-platform/api-doc-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 import fs from "fs";
 import tmp from "tmp";
-import NextGenerator from "./NextGenerator";
+import NextGenerator from "./NextGenerator.js";
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const generator = new NextGenerator({
   hydraPrefix: "hydra:",
-  templateDirectory: `${__dirname}/../../templates`,
+  templateDirectory: `${dirname}/../../templates`,
 });
 
 afterEach(() => {
@@ -43,6 +47,7 @@ describe("generate", () => {
       "/components/abc/List.tsx",
       "/components/abc/Show.tsx",
       "/components/abc/Form.tsx",
+      "/components/common/Layout.tsx",
       "/components/common/ReferenceLinks.tsx",
       "/components/common/Pagination.tsx",
       "/types/Abc.ts",
@@ -52,6 +57,7 @@ describe("generate", () => {
       "/pages/abcs/[id]/edit.tsx",
       "/pages/abcs/index.tsx",
       "/pages/abcs/create.tsx",
+      "/pages/_app.tsx",
       "/utils/dataAccess.ts",
       "/utils/mercure.ts",
     ].forEach((file) => expect(fs.existsSync(tmpobj.name + file)).toBe(true));

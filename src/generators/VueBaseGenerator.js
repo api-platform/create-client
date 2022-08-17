@@ -1,9 +1,9 @@
-import BaseGenerator from "./BaseGenerator";
 import handlebars from "handlebars";
-import hbh_comparison from "handlebars-helpers/lib/comparison";
-import hbh_array from "handlebars-helpers/lib/array";
-import hbh_string from "handlebars-helpers/lib/string";
+import hbh_comparison from "handlebars-helpers/lib/comparison.js";
+import hbh_array from "handlebars-helpers/lib/array.js";
+import hbh_string from "handlebars-helpers/lib/string.js";
 import { sprintf } from "sprintf-js";
+import BaseGenerator from "./BaseGenerator.js";
 
 export default class extends BaseGenerator {
   constructor(params) {

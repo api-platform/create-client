@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { PagedCollection, isPagedCollection } from "../types/collection";
-import { isItem } from "../types/item";
+import { Item, isItem } from "../types/item";
 import { normalize } from "./dataAccess";
 
-const mercureSubscribe = <T>(hubURL: string, data: T | PagedCollection<T>, setData: (data: T) => void) => {
+const mercureSubscribe = <T extends Item | PagedCollection<Item> | undefined>(
+  hubURL: string, data: T | PagedCollection<T>, setData: (data: T) => void
+) => {
+  if (!data || !data["@id"]) throw new Error('@id is missing');
+
   const url = new URL(hubURL, window.origin);
   url.searchParams.append("topic", (new URL(data["@id"], window.origin)).toString());
   const eventSource = new EventSource(url.toString());
@@ -12,7 +16,7 @@ const mercureSubscribe = <T>(hubURL: string, data: T | PagedCollection<T>, setDa
   return eventSource;
 }
 
-export const useMercure = <T>(deps: T | PagedCollection<T>, hubURL: string | null) => {
+export const useMercure = <TData extends Item | PagedCollection<Item> | undefined>(deps: TData, hubURL: string | null): TData => {
   const [data, setData] = useState(deps);
 
   useEffect(() => {
@@ -30,12 +34,14 @@ export const useMercure = <T>(deps: T | PagedCollection<T>, hubURL: string | nul
       return;
     }
 
-    if (isPagedCollection(data) && data["{{{hydraPrefix}}}member"].length !== 0) {
+    if (isPagedCollection(data) && data["{{{hydraPrefix}}}member"] && data["{{{hydraPrefix}}}member"].length !== 0) {
       const eventSources: EventSource[] = [];
       // It's a PagedCollection
       data["{{{hydraPrefix}}}member"].forEach((obj, pos) => {
-        eventSources.push(mercureSubscribe(hubURL, obj, (datum: T) => {
-          data["{{{hydraPrefix}}}member"][pos] = datum;
+        eventSources.push(mercureSubscribe(hubURL, obj, (datum) => {
+          if (data["{{{hydraPrefix}}}member"]) {
+            data["{{{hydraPrefix}}}member"][pos] = datum;
+          }
           setData({ ...data });
         }));
       });
@@ -46,7 +52,7 @@ export const useMercure = <T>(deps: T | PagedCollection<T>, hubURL: string | nul
     }
 
     // It's a single object
-    const eventSource = mercureSubscribe(hubURL, data, setData);
+    const eventSource = mercureSubscribe<TData>(hubURL, data, setData);
 
     return () => {
       eventSource.close();

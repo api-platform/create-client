@@ -7,7 +7,7 @@ interface Props {
 
 const Pagination = ({ collection }: Props) => {
   const view = collection && collection['{{{hydraPrefix}}}view'];
-  if (!view) return;
+  if (!view) return null;
 
   const {
     '{{{hydraPrefix}}}first': first,

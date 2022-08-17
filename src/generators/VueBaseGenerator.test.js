@@ -1,12 +1,16 @@
 import { Api, Resource, Field } from "@api-platform/api-doc-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 import fs from "fs";
 import tmp from "tmp";
-import VueBaseGenerator from "./VueBaseGenerator";
+import VueBaseGenerator from "./VueBaseGenerator.js";
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test("Test VueBaseGenerator", () => {
   const generator = new VueBaseGenerator({
     hydraPrefix: "hydra:",
-    templateDirectory: `${__dirname}/../../templates`,
+    templateDirectory: `${dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 

@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import BaseVueGenerator from "./VueBaseGenerator";
+import BaseVueGenerator from "./VueBaseGenerator.js";
 
 export default class NuxtGenerator extends BaseVueGenerator {
   constructor(params) {
@@ -106,9 +106,9 @@ export default class NuxtGenerator extends BaseVueGenerator {
 
     this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
 
-    for (let dir of [`${dir}/components/${lc}`, `${dir}/pages/${lc}s`]) {
+    [`${dir}/components/${lc}`, `${dir}/pages/${lc}s`].forEach((dir) => {
       this.createDir(dir);
-    }
+    });
 
     this.createFile("services/api.js", `${dir}/services/api.js`, {}, false);
 
