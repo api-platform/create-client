@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import handlebars from "handlebars";
-import hbh_comparison from "handlebars-helpers/lib/comparison.js";
+import hbhComparison from "handlebars-helpers/lib/comparison.js";
 import BaseGenerator from "./BaseGenerator.js";
 
 export default class NextGenerator extends BaseGenerator {
@@ -34,7 +34,7 @@ export default class NextGenerator extends BaseGenerator {
       "utils/mercure.ts",
     ]);
 
-    handlebars.registerHelper("compare", hbh_comparison.compare);
+    handlebars.registerHelper("compare", hbhComparison.compare);
   }
 
   help(resource) {
@@ -59,6 +59,10 @@ export default class NextGenerator extends BaseGenerator {
       imports,
       hydraPrefix: this.hydraPrefix,
       title: resource.title,
+      hasRelations: fields.some((field) => field.reference || field.embedded),
+      hasManyRelations: fields.some(
+        (field) => field.isReferences || field.isEmbeddeds
+      ),
     };
 
     // Create directories
@@ -134,6 +138,9 @@ export default class NextGenerator extends BaseGenerator {
         return list;
       }
 
+      const isReferences = field.reference && field.maxCardinality !== 1;
+      const isEmbeddeds = field.embedded && field.maxCardinality !== 1;
+
       return {
         ...list,
         [field.name]: {
@@ -141,6 +148,9 @@ export default class NextGenerator extends BaseGenerator {
           type: this.getType(field),
           description: this.getDescription(field),
           readonly: false,
+          isReferences,
+          isEmbeddeds,
+          isRelations: isEmbeddeds || isReferences,
         },
       };
     }, {});

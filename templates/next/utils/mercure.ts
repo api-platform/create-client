@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { PagedCollection, isPagedCollection } from "../types/collection";
 import { Item, isItem } from "../types/item";
-import { normalize } from "./dataAccess";
 
 const mercureSubscribe = <T extends Item | PagedCollection<Item> | undefined>(
   hubURL: string, data: T | PagedCollection<T>, setData: (data: T) => void
@@ -11,7 +10,7 @@ const mercureSubscribe = <T extends Item | PagedCollection<Item> | undefined>(
   const url = new URL(hubURL, window.origin);
   url.searchParams.append("topic", (new URL(data["@id"], window.origin)).toString());
   const eventSource = new EventSource(url.toString());
-  eventSource.addEventListener("message", (event) => setData(normalize(JSON.parse(event.data))));
+  eventSource.addEventListener("message", (event) => setData(JSON.parse(event.data)));
 
   return eventSource;
 }

@@ -24,7 +24,9 @@ jobs:
     - run: yarn lint
     - name: Install Playwright Browsers
       run: yarn playwright install --with-deps
-    - run: yarn test-gen && yarn test-app
+    - run: yarn test-gen
+    - run: yarn test-next-app
+    - run: yarn test-react-app
     - run: yarn test-gen-env
     - run: yarn test-gen-openapi3
     - run: yarn check

@@ -3,12 +3,10 @@ import { Fragment, FunctionComponent } from "react";
 
 interface Props {
   items: string | string[];
-  type: string;
   useIcon?: boolean;
 }
 const ReferenceLinks: FunctionComponent<Props> = ({
   items,
-  type,
   useIcon = false,
 }) => {
   if (Array.isArray(items)) {
@@ -16,7 +14,7 @@ const ReferenceLinks: FunctionComponent<Props> = ({
       <Fragment>
         {items.map((item, index) => (
           <div key={index}>
-            <ReferenceLinks items={item} type={type} />
+            <ReferenceLinks items={item} />
           </div>
         ))}
       </Fragment>

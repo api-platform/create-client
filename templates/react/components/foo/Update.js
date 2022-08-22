@@ -44,7 +44,7 @@ class Update extends Component {
 
     return (
       <div>
-        <h1>Edit {item && item['@id']}</h1>
+        <h1>Edit {{{ucf}}} {item && item['@id']}</h1>
 
         {this.props.created && (
           <div className="alert alert-success" role="status">
