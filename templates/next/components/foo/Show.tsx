@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
-{{#if reference}}import ReferenceLinks from "../common/ReferenceLinks";{{/if}}
+{{#if hasRelations}}import ReferenceLinks from "../common/ReferenceLinks";{{/if}}
 import { fetch } from "../../utils/dataAccess";
 import { {{{ucf}}} } from "../../types/{{{ucf}}}";
 
@@ -32,9 +32,9 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
   return (
     <div>
       <Head>
-            <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
-            <script type="application/ld+json" dangerouslySetInnerHTML={ { __html: text } } />
-          </Head>
+        <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
+        <script type="application/ld+json" dangerouslySetInnerHTML={ { __html: text } } />
+      </Head>
       <h1>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</h1>
       <table className="table table-responsive table-striped table-hover">
         <thead>
@@ -49,7 +49,11 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
             <th scope="row">{{name}}</th>
             <td>
               {{#if reference}}
-                <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'] } type="{{{reference.title}}}" />
+                <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'] } />
+              {{else if isEmbeddeds}}
+                <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((emb: any) => emb['@id']) } />
+              {{else if embedded}}
+                <ReferenceLinks items={ {{{../lc}}}['{{{name}}}']['@id'] } />
               {{else if (compare type "==" "Date") }}
                 { {{{../lc}}}['{{{name}}}']?.toLocaleString() }
               {{else}}
@@ -68,11 +72,11 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
       <Link href="/{{{name}}}">
         <a className="btn btn-primary">Back to list</a>
       </Link>{" "}
-      <Link  href={`${ {{~lc}}["@id"]}/edit`}>
+      <Link href={`${ {{~lc}}["@id"]}/edit`}>
         <a className="btn btn-warning">Edit</a>
       </Link>
       <button className="btn btn-danger" onClick={handleDelete}>
-        <a>Delete</a>
+        Delete
       </button>
     </div>
   );

@@ -61,9 +61,9 @@ class List extends Component {
           <thead>
             <tr>
               <th>id</th>
-{{#each fields}}
-              <th>{{name}}</th>
-{{/each}}
+              {{#each fields}}
+                <th>{{name}}</th>
+              {{/each}}
               <th colSpan={2} />
             </tr>
           </thead>
@@ -76,9 +76,19 @@ class List extends Component {
                       {item['@id']}
                     </Link>
                   </th>
-{{#each fields}}
-                  <td>{{#if reference}}{this.renderLinks('{{{reference.name}}}', item['{{{name}}}'])}{{else}}{item['{{{name}}}']}{{/if}}</td>
-{{/each}}
+                  {{#each fields}}
+                    <td>
+                      {{#if reference}}
+                        {this.renderLinks('{{{reference.name}}}', item['{{{name}}}'])}
+                      {{else if isEmbeddeds}}
+                        {this.renderLinks('{{{reference.name}}}', item['{{{name}}}'].map((emb) => emb['@id']))}
+                      {{else if embedded}}
+                        {this.renderLinks('{{{reference.name}}}', item['{{{name}}}']['@id'])}
+                      {{else}}
+                        {item['{{{name}}}']}
+                      {{/if}}
+                    </td>
+                  {{/each}}
                   <td>
                     <Link to={`show/${encodeURIComponent(item['@id'])}`}>
                       <span className="fa fa-search" aria-hidden="true" />

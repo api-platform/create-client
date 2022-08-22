@@ -45,18 +45,18 @@ class Form extends Component {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit}>
-{{#each formFields}}
-        <Field
-          component={this.renderField}
-          name="{{{name}}}"
-          type="{{{type}}}"{{#if step}}
-          step="{{{step}}}"{{/if}}
-          placeholder="{{{description}}}"{{#if required}}
-          required={true}{{/if}}{{#if reference}}{{#unless maxCardinality}}
-          normalize={v => (v === '' ? [] : v.split(','))}{{/unless}}{{/if}}{{#if number}}
-          normalize={v => parseFloat(v)}{{/if}}
-        />
-{{/each}}
+        {{#each formFields}}
+          <Field
+            component={this.renderField}
+            name="{{{name}}}"
+            type="{{{type}}}"{{#if step}}
+            step="{{{step}}}"{{/if}}
+            placeholder="{{{description}}}"{{#if required}}
+            required={true}{{/if}}{{#if reference}}{{#unless maxCardinality}}
+            normalize={v => (v === '' ? [] : v.split(','))}{{/unless}}{{/if}}{{#if number}}
+            normalize={v => parseFloat(v)}{{/if}}
+          />
+        {{/each}}
 
         <button type="submit" className="btn btn-success">
           Submit

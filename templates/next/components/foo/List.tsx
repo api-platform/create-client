@@ -28,11 +28,15 @@ export const List: FunctionComponent<Props> = ({ {{{name}}} }) => (
         { {{{name}}} && ({{{name}}}.length !== 0) && {{{name}}}.map( ( {{{lc}}} ) => (
           {{{lc}}}['@id'] &&
           <tr key={ {{{lc}}}['@id'] }>
-            <th scope="row"><ReferenceLinks items={ {{{lc}}}['@id'] } type="{{{lc}}}" /></th>
+            <th scope="row"><ReferenceLinks items={ {{{lc}}}['@id'] } /></th>
             {{#each fields}}
               <td>
                 {{#if reference}}
-                  <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'] } type="{{{reference.title}}}" />
+                  <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'] } />
+                {{else if isEmbeddeds}}
+                  <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((emb: any) => emb['@id']) } />
+                {{else if embedded}}
+                  <ReferenceLinks items={ {{{../lc}}}['{{{name}}}']['@id'] } />
                 {{else if (compare type "==" "Date") }}
                   { {{{../lc}}}['{{{name}}}']?.toLocaleString() }
                 {{else}}
@@ -40,7 +44,7 @@ export const List: FunctionComponent<Props> = ({ {{{name}}} }) => (
                 {{/if}}
               </td>
             {{/each}}
-            <td><ReferenceLinks items={ {{{lc}}}['@id'] } type="{{{lc}}}" useIcon={true} /></td>
+            <td><ReferenceLinks items={ {{{lc}}}['@id'] } useIcon={true} /></td>
           <td>
             <Link href={`${ {{~lc}}["@id"]}/edit`}>
               <a>

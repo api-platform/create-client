@@ -4,10 +4,12 @@ import type { LocatorFixtures as TestingLibraryFixtures } from '@playwright-test
 
 const test = baseTest.extend<TestingLibraryFixtures>(fixtures)
 
-test('resource list', async ({ page, queries: { getAllByRole, getByRole } }) => {
-  await page.goto('http://localhost:3000/books');
+test('resource list', async ({ page, queries: { getAllByRole, getByRole, queryByText } }) => {
+  await page.goto('http://localhost:3000/books/');
 
   await expect(getByRole('heading', { level: 1 })).toHaveText('Book List');
+
+  await expect(getByRole('link', { name: 'Create' })).toBeVisible();
 
   const cols = getAllByRole('rowgroup').nth(0);
   const { getByRole: getByRoleWithinCols } = within(cols);
@@ -15,6 +17,8 @@ test('resource list', async ({ page, queries: { getAllByRole, getByRole } }) => 
   await expect(getByRoleWithinCols('columnheader', { name: 'id' })).toBeVisible();
   await expect(getByRoleWithinCols('columnheader', { name: 'isbn' })).toBeVisible();
   await expect(getByRoleWithinCols('columnheader', { name: 'reviews' })).toBeVisible();
+
+  await expect(queryByText('Loading...')).not.toBeVisible();
 
   const list = getAllByRole('rowgroup').nth(1);
   const { getAllByRole: getAllByRoleWithinList } = within(list);

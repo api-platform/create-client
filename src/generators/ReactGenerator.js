@@ -68,18 +68,17 @@ combineReducers({ ${titleLc},/* ... */ }),
 
   generate(api, resource, dir) {
     const lc = resource.title.toLowerCase();
-    const titleUcFirst =
-      resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
+    const ucf = this.ucFirst(resource.title);
 
     const context = {
       title: resource.title,
       name: resource.name,
       lc,
       uc: resource.title.toUpperCase(),
-      fields: resource.readableFields,
+      ucf,
+      fields: this.parseFields(resource),
       formFields: this.buildFields(resource.writableFields),
       hydraPrefix: this.hydraPrefix,
-      titleUcFirst,
     };
 
     // Create directories
@@ -133,5 +132,41 @@ combineReducers({ ${titleLc},/* ... */ }),
     );
 
     this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
+  }
+
+  getDescription(field) {
+    return field.description ? field.description.replace(/"/g, "'") : "";
+  }
+
+  parseFields(resource) {
+    const fields = [
+      ...resource.writableFields,
+      ...resource.readableFields,
+    ].reduce((list, field) => {
+      if (list[field.name]) {
+        return list;
+      }
+
+      const isReferences = field.reference && field.maxCardinality !== 1;
+      const isEmbeddeds = field.embedded && field.maxCardinality !== 1;
+
+      return {
+        ...list,
+        [field.name]: {
+          ...field,
+          description: this.getDescription(field),
+          readonly: false,
+          isReferences,
+          isEmbeddeds,
+          isRelations: isEmbeddeds || isReferences,
+        },
+      };
+    }, {});
+
+    return fields;
+  }
+
+  ucFirst(target) {
+    return target.charAt(0).toUpperCase() + target.slice(1);
   }
 }

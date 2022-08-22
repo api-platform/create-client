@@ -4,8 +4,10 @@ import type { LocatorFixtures as TestingLibraryFixtures } from '@playwright-test
 
 const test = baseTest.extend<TestingLibraryFixtures>(fixtures)
 
-test('resource edit', async ({ page, queries: { getAllByRole, getByLabelText, getByRole } }) => {
-  await page.goto('http://localhost:3000/books');
+test('resource edit', async ({ page, queries: { getAllByRole, getByLabelText, getByRole, getByText, queryByText } }) => {
+  await page.goto('http://localhost:3000/books/');
+
+  await expect(queryByText('Loading...')).not.toBeVisible();
 
   const rows = getAllByRole('row');
 
@@ -16,14 +18,18 @@ test('resource edit', async ({ page, queries: { getAllByRole, getByLabelText, ge
 
   await expect(getByRole('heading', { level: 1 })).toHaveText(/^Show Book/);
 
+  await expect(queryByText('Loading...')).not.toBeVisible();
+
   const editLink = getByRole('link', { name: 'Edit' });
   editLink.click();
 
   await expect(getByRole('heading', { level: 1 })).toHaveText(/^Edit Book/);
 
+  await expect(queryByText('Loading...')).not.toBeVisible();
+
   await expect(getByLabelText('isbn')).toBeEditable();
   await expect(getByLabelText('description')).toBeEditable();
-  await expect(getByLabelText('reviews')).toBeEditable();
+  await expect(getByText('reviews')).toBeVisible();
 
   await expect(getByRole('button', { name: 'Submit' })).toBeVisible();
   await expect(getByRole('button', { name: 'Delete' })).toBeVisible();

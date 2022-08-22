@@ -1,6 +1,3 @@
-import get from "lodash/get";
-import has from "lodash/has";
-import mapValues from "lodash/mapValues";
 import isomorphicFetch from "isomorphic-unfetch";
 
 import { PagedCollection } from "../types/collection";
@@ -56,7 +53,7 @@ export const fetch = async <TData>(id: string, init: RequestInit = {}): Promise<
   if (resp.ok) {
     return {
       hubURL: extractHubURL(resp)?.toString() || null, // URL cannot be serialized as JSON, must be sent as string
-      data: normalize(json),
+      data: json,
       text,
     };
   }
@@ -71,24 +68,6 @@ export const fetch = async <TData>(id: string, init: RequestInit = {}): Promise<
   );
 
   throw { message: errorMessage, status, fields } as FetchError;
-};
-
-export const normalize = (data: any) => {
-  if (has(data, "{{{hydraPrefix}}}member")) {
-    // Normalize items in collections
-    data["{{{hydraPrefix}}}member"] = data[
-      "{{{hydraPrefix}}}member"
-    ].map((item: unknown) => normalize(item));
-
-    return data;
-  }
-
-  // Flatten nested documents
-  return mapValues(data, (value) =>
-    Array.isArray(value)
-      ? value.map((v) => get(v, "@id", v))
-      : get(value, "@id", value)
-  );
 };
 
 export const getPaths = async <TData extends Item>(response: FetchResponse<PagedCollection<TData>> | undefined, resourceName: string, isEdit: boolean) => {

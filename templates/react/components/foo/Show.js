@@ -39,7 +39,7 @@ class Show extends Component {
 
     return (
       <div>
-        <h1>Show {item && item['@id']}</h1>
+        <h1>Show {{{ucf}}} {item && item['@id']}</h1>
 
         {this.props.loading && (
           <div className="alert alert-info" role="status">
@@ -68,24 +68,34 @@ class Show extends Component {
               </tr>
             </thead>
             <tbody>
-{{#each fields}}
-              <tr>
-                <th scope="row">{{name}}</th>
-                <td>{{#if reference}}{this.renderLinks('{{{reference.name}}}', item['{{{name}}}'])}{{else}}{item['{{{name}}}']}{{/if}}</td>
-              </tr>
-{{/each}}
+              {{#each fields}}
+                <tr>
+                  <th scope="row">{{name}}</th>
+                  <td>
+                    {{#if reference}}
+                      {this.renderLinks('{{{reference.name}}}', item['{{{name}}}'])}
+                    {{else if isEmbeddeds}}
+                      {this.renderLinks('{{{reference.name}}}', item['{{{name}}}'].map((emb) => emb['@id']))}
+                    {{else if embedded}}
+                      {this.renderLinks('{{{reference.name}}}', item['{{{name}}}']['@id'])}
+                    {{else}}
+                      {item['{{{name}}}']}
+                    {{/if}}
+                  </td>
+                </tr>
+              {{/each}}
             </tbody>
           </table>
         )}
         <Link to=".." className="btn btn-primary">
           Back to list
-        </Link>
+        </Link>{" "}
         {item && (
           <Link to={`/{{{name}}}/edit/${encodeURIComponent(item['@id'])}`}>
-            <button className="btn btn-warning">Edit</button>
+            <a className="btn btn-warning">Edit</a>
           </Link>
         )}
-        <button onClick={this.del} className="btn btn-danger">
+        <button className="btn btn-danger" onClick={this.del}>
           Delete
         </button>
       </div>
