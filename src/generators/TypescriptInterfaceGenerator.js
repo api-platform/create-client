@@ -1,3 +1,5 @@
+import handlebars from "handlebars";
+import { keyword } from "esutils";
 import BaseGenerator from "./BaseGenerator.js";
 
 export default class TypescriptInterfaceGenerator extends BaseGenerator {
@@ -5,6 +7,10 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
     super(params);
 
     this.registerTemplates(`typescript/`, ["interface.ts"]);
+
+    handlebars.registerHelper("isIdentifier", (name) =>
+      keyword.isIdentifierES5(name)
+    );
   }
 
   help(resource) {
@@ -18,6 +24,8 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
     const dest = `${dir}/interfaces`;
     const { fields, imports } = this.parseFields(resource);
 
+    const normalizeTypeName = (name) => name.replace(/-/g, "_");
+
     this.createDir(dest, false);
     this.createFile(
       "interface.ts",
@@ -25,7 +33,7 @@ export default class TypescriptInterfaceGenerator extends BaseGenerator {
       {
         fields,
         imports,
-        name: resource.title,
+        name: normalizeTypeName(resource.title),
       }
     );
   }
