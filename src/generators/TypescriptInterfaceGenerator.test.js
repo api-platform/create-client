@@ -174,9 +174,9 @@ test("Generate a typescript interface with an explicit id field in the readableF
   tmpobj.removeCallback();
 });
 
-test("Generate a typescript interface with normalized JS identifiers", () => {
+test("Generate a typescript interface with invalid JS identifiers for fields and title", () => {
   const generator = new TypescriptInterfaceGenerator({
-    templateDirectory: `${__dirname}/../../templates`,
+    templateDirectory: `${dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });
 
@@ -220,8 +220,8 @@ test("Generate a typescript interface with normalized JS identifiers", () => {
 
   const res = `export interface Foo_foo {
   "@id"?: string;
-  foo_foo: any;
-  readonly bar_bar: string;
+  "foo-foo": any;
+  readonly "bar-bar": string;
   readonly id?: string;
 }
 `;

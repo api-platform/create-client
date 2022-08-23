@@ -37,19 +37,20 @@
     "jest-light-runner": "^0.3.0",
     "lint-staged": "^13.0.0",
     "start-server-and-test": "^1.14.0",
-    "tmp": "^0.2.1"
+    "tmp": "^0.2.0"
   },
   "dependencies": {
     "@api-platform/api-doc-parser": "^0.15.0",
     "@babel/runtime": "^7.0.0",
     "chalk": "^5.0.0",
     "commander": "^9.4.0",
-    "handlebars": "^4.0.12",
+    "esutils": "^2.0.0",
+    "handlebars": "^4.0.0",
     "handlebars-helpers": "^0.10.0",
     "isomorphic-fetch": "^3.0.0",
-    "mkdirp": "^1.0.4",
+    "mkdirp": "^1.0.0",
     "prettier": "^2.7.0",
-    "sprintf-js": "^1.1.1"
+    "sprintf-js": "^1.1.0"
   },
   "scripts": {
     "prepare": "husky install",
