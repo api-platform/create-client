@@ -13,6 +13,11 @@ export default class extends BaseGenerator {
       return options.inverse(this);
     });
 
+    this.registerTemplates("common/", [
+      // utils
+      "utils/mercure.js",
+    ]);
+
     this.registerTemplates(`react-common/`, [
       // actions
       "actions/foo/create.js",
@@ -133,6 +138,7 @@ combineReducers({ ${titleLc}, /* ... */ }),
 
     [
       "utils/dataAccess.js",
+      "utils/mercure.js",
       "utils/helpers.js",
       "components/Spinner.js",
       "components/Confirm.js",

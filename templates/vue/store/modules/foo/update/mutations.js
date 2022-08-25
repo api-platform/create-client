@@ -6,6 +6,7 @@ export default {
       error: '',
       isLoading: false,
       retrieved: null,
+      hubUrl: null,
       updated: null,
       violations: null,
     });
@@ -21,6 +22,10 @@ export default {
 
   [types.SET_RETRIEVED](state, retrieved) {
     Object.assign(state, { retrieved });
+  },
+
+  [types.SET_HUB_URL](state, hubUrl) {
+    Object.assign(state, { hubUrl });
   },
 
   [types.SET_UPDATED](state, updated) {

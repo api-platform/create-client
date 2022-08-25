@@ -8,6 +8,7 @@ export default {
     isLoading: false,
     error: '',
     deleted: null,
+    mercureDeleted: null,
   },
   actions,
   getters: {

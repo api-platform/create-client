@@ -5,6 +5,11 @@ export default class extends BaseGenerator {
   constructor(params) {
     super(params);
 
+    this.registerTemplates("common/", [
+      // utils
+      "utils/mercure.js",
+    ]);
+
     this.registerTemplates(`vue/`, [
       // modules
       "store/modules/foo/index.js",
@@ -35,6 +40,10 @@ export default class extends BaseGenerator {
       "components/foo/List.vue",
       "components/foo/Update.vue",
       "components/foo/Show.vue",
+
+      // mixins
+      "mixins/ItemWatcher.js",
+      "mixins/ListWatcher.js",
 
       // routes
       "router/foo.js",
@@ -102,9 +111,13 @@ export const store = new Vuex.Store({
 
     // Create directories
     // These directories may already exist
-    [`${dir}/config`, `${dir}/error`, `${dir}/router`, `${dir}/utils`].forEach(
-      (dir) => this.createDir(dir, false)
-    );
+    [
+      `${dir}/config`,
+      `${dir}/error`,
+      `${dir}/mixins`,
+      `${dir}/router`,
+      `${dir}/utils`,
+    ].forEach((dir) => this.createDir(dir, false));
 
     [
       `${dir}/store/modules/${lc}`,
@@ -153,6 +166,10 @@ export const store = new Vuex.Store({
       this.createFileFromPattern(pattern, dir, lc, context)
     );
 
+    for (const file of ["mixins/ItemWatcher.js", "mixins/ListWatcher.js"]) {
+      this.createFile(file, `${dir}/${file}`);
+    }
+
     // error
     this.createFile(
       "error/SubmissionError.js",
@@ -174,5 +191,6 @@ export const store = new Vuex.Store({
       { hydraPrefix: this.hydraPrefix },
       false
     );
+    this.createFile("utils/mercure.js", `${dir}/utils/mercure.js`);
   }
 }

@@ -5,6 +5,11 @@ export default class extends BaseGenerator {
   constructor(params) {
     super(params);
 
+    this.registerTemplates("common/", [
+      // utils
+      "utils/mercure.js",
+    ]);
+
     this.registerTemplates("react-common/", [
       // actions
       "actions/foo/create.js",
@@ -130,6 +135,7 @@ combineReducers({ ${titleLc},/* ... */ }),
       context,
       false
     );
+    this.createFile("utils/mercure.js", `${dir}/utils/mercure.js`);
 
     this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
   }

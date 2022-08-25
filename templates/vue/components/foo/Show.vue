@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Show \{{ item && item['@id'] }}</h1>
+    <h1>Show Book \{{ item && item['@id'] }}</h1>
 
     <div
       v-if="isLoading"
@@ -56,24 +56,52 @@
     </router-link>
     <button
       class="btn btn-danger"
-      @click="deleteItem(item)">Delete</button>
+      @click="del">Delete</button>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
+import ItemWatcher from '../../mixins/ItemWatcher';
+import * as types from '../../store/modules/{{{lc}}}/show/mutation_types';
+import * as delTypes from '../../store/modules/{{{lc}}}/delete/mutation_types';
 
 export default {
+  mixins: [ItemWatcher],
   computed: {
     ...mapFields('{{{lc}}}/del', {
       deleteError: 'error',
+      deleted: 'deleted',
+      mercureDeleted: 'mercureDeleted',
     }),
     ...mapFields('{{{lc}}}/show', {
       error: 'error',
       isLoading: 'isLoading',
       item: 'retrieved',
+      hubUrl: 'hubUrl',
     }),
+    itemUpdateMutation: () =>`{{{lc}}}/show/${types.{{{uc}}}_SHOW_SET_RETRIEVED}`,
+    itemMercureDeletedMutation: () => `{{{lc}}}/del/${delTypes.{{{uc}}}_DELETE_MERCURE_SET_DELETED}`,
+  },
+
+  watch: {
+    // eslint-disable-next-line object-shorthand,func-names
+    deleted: function(deleted) {
+      if (!deleted) {
+        return;
+      }
+
+      this.$router.push({ name: '{{{titleUcFirst}}}List' });
+    },
+    // eslint-disable-next-line object-shorthand,func-names
+    mercureDeleted: function(deleted) {
+      if (!deleted) {
+        return;
+      }
+
+      this.$router.push({ name: '{{{titleUcFirst}}}List' });
+    },
   },
 
   beforeDestroy () {
@@ -86,14 +114,14 @@ export default {
 
   methods: {
     ...mapActions({
-      del: '{{{lc}}}/del/del',
+      deleteItem: '{{{lc}}}/del/del',
       reset: '{{{lc}}}/show/reset',
       retrieve: '{{{lc}}}/show/retrieve',
     }),
 
-    deleteItem (item) {
-      if (window.confirm('Are you sure you want to delete this item?')) {
-        this.del(item).then(() => this.$router.push({ name: '{{{titleUcFirst}}}List' }));
+    del() {
+      if (window.confirm('Are you sure you want to delete this {{{lc}}}?')) {
+        this.deleteItem(this.item);
       }
     },
   },

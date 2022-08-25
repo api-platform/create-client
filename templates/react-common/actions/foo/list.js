@@ -1,9 +1,5 @@
-import {
-  fetch,
-  normalize,
-  extractHubURL,
-  mercureSubscribe as subscribe
-} from '../../utils/dataAccess';
+import { fetch, normalize } from '../../utils/dataAccess';
+import { extractHubURL, mercureSubscribe as subscribe } from "../../utils/mercure";
 import { success as deleteSuccess } from './delete';
 
 export function error(error) {
@@ -61,11 +57,9 @@ export function reset(eventSource) {
 
 export function mercureSubscribe(hubURL, topics) {
   return dispatch => {
-    const eventSource = subscribe(hubURL, topics);
+    const eventSource = subscribe(hubURL, topics, data =>
+      dispatch(mercureMessage(normalize(data))));
     dispatch(mercureOpen(eventSource));
-    eventSource.addEventListener('message', event =>
-      dispatch(mercureMessage(normalize(JSON.parse(event.data))))
-    );
   };
 }
 

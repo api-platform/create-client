@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>New {{{title}}}</h1>
+    <h1>Create {{{title}}}</h1>
 
     <div
       v-if="isLoading"
@@ -29,7 +29,7 @@
 <script>
 import { createHelpers } from 'vuex-map-fields';
 import { mapActions } from 'vuex';
-import {{{titleUcFirst}}}Form from './Form';
+import {{{titleUcFirst}}}Form from './Form.vue';
 
 const { mapFields } = createHelpers({
     getterType: '{{{lc}}}/create/getField',
