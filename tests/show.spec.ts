@@ -4,7 +4,7 @@ import type { LocatorFixtures as TestingLibraryFixtures } from '@playwright-test
 
 const test = baseTest.extend<TestingLibraryFixtures>(fixtures)
 
-test('resource show', async ({ page, queries: { getAllByRole, getByRole, queryByText } }) => {
+test('resource show', async ({ page, queries: { getAllByRole, getByRole, queryByRole, queryByText } }) => {
   await page.goto('http://localhost:3000/books/');
 
   await expect(queryByText('Loading...')).not.toBeVisible();
@@ -16,7 +16,7 @@ test('resource show', async ({ page, queries: { getAllByRole, getByRole, queryBy
   const bookLink = getAllByRoleWithinListRow('link').nth(0);
   bookLink.click();
 
-  await expect(getByRole('heading', { level: 1 })).toHaveText(/^Show Book/);
+  await expect(queryByRole('heading', { level: 1 })).toHaveText(/^\s*Show Book/);
 
   await expect(queryByText('Loading...')).not.toBeVisible();
 

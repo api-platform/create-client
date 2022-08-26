@@ -29,7 +29,7 @@ describe("generate", () => {
         description: "An URL",
       }),
     ];
-    const resource = new Resource("abc", "http://example.com/foos", {
+    const resource = new Resource("prefix/aBe_cd", "http://example.com/foos", {
       id: "foo",
       title: "Foo",
       readableFields: fields,
@@ -60,9 +60,10 @@ describe("generate", () => {
         "/utils/dates.js",
         "/utils/fetch.js",
         "/utils/hydra.js",
-        "/pages/foos/_id.vue",
+        "/pages/foos/_id/edit.vue",
+        "/pages/foos/_id/index.vue",
         "/pages/foos/index.vue",
-        "/pages/foos/new.vue",
+        "/pages/foos/create.vue",
       ].forEach((file) => {
         expect(fs.existsSync(tmpobj.name + file)).toBe(true);
       });

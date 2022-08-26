@@ -2,13 +2,10 @@ import Link from "next/link";
 import { Fragment, FunctionComponent } from "react";
 
 interface Props {
-  items: string | string[];
-  useIcon?: boolean;
+  items: string | string[] | { href: string; name: string } | { href: string; name: string }[];
 }
-const ReferenceLinks: FunctionComponent<Props> = ({
-  items,
-  useIcon = false,
-}) => {
+
+const ReferenceLinks: FunctionComponent<Props> = ({ items }) => {
   if (Array.isArray(items)) {
     return (
       <Fragment>
@@ -22,16 +19,9 @@ const ReferenceLinks: FunctionComponent<Props> = ({
   }
 
   return (
-    <Link href={items}>
+    <Link href={typeof items === "string" ? items : items.href}>
       <a>
-        {useIcon ? (
-          <Fragment>
-            <i className="bi bi-search" aria-hidden="true"></i>
-            <span className="sr-only">Show</span>
-          </Fragment>
-        ) : (
-          items
-        )}
+        {typeof items === "string" ? items : items.name}
       </a>
     </Link>
   );

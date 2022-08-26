@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 
 {{#if hasRelations}}import ReferenceLinks from "../common/ReferenceLinks";{{/if}}
-import { fetch } from "../../utils/dataAccess";
+import { fetch, getPath } from "../../utils/dataAccess";
 import { {{{ucf}}} } from "../../types/{{{ucf}}}";
 
 interface Props {
@@ -22,7 +22,7 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
 
     try {
       await fetch({{{lc}}}["@id"], { method: "DELETE" });
-      router.push("/{{{name}}}");
+      router.push("/{{{lc}}}s");
     } catch (error) {
       setError("Error when deleting the resource.");
       console.error(error);
@@ -48,12 +48,12 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
           <tr>
             <th scope="row">{{name}}</th>
             <td>
-              {{#if reference}}
-                <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'] } />
-              {{else if isEmbeddeds}}
-                <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((emb: any) => emb['@id']) } />
-              {{else if embedded}}
-                <ReferenceLinks items={ {{{../lc}}}['{{{name}}}']['@id'] } />
+            {{#if reference}}
+                  <ReferenceLinks items={ { href: getPath({{{../lc}}}['{{{name}}}'], '/{{{lowercase reference.title}}}s/[id]'), name: {{{../lc}}}['{{{name}}}'] } } />
+                {{else if isEmbeddeds}}
+                  <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((emb: any) => ({ href: getPath(emb['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: emb['@id'] })) } />
+                {{else if embedded}}
+                  <ReferenceLinks items={ { href: getPath({{{../lc}}}['{{{name}}}']['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: {{{../lc}}}['{{{name}}}']['@id'] } } />
               {{else if (compare type "==" "Date") }}
                 { {{{../lc}}}['{{{name}}}']?.toLocaleString() }
               {{else}}
@@ -69,10 +69,10 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
           {error}
         </div>
       )}
-      <Link href="/{{{name}}}">
+      <Link href="/{{{lc}}}s">
         <a className="btn btn-primary">Back to list</a>
       </Link>{" "}
-      <Link href={`${ {{~lc}}["@id"]}/edit`}>
+      <Link href={getPath({{{lc}}}["@id"], '/{{{lc}}}s/[id]/edit')}>
         <a className="btn btn-warning">Edit</a>
       </Link>
       <button className="btn btn-danger" onClick={handleDelete}>

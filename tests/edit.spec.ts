@@ -4,10 +4,12 @@ import type { LocatorFixtures as TestingLibraryFixtures } from '@playwright-test
 
 const test = baseTest.extend<TestingLibraryFixtures>(fixtures)
 
-test('resource edit', async ({ page, queries: { getAllByRole, getByLabelText, getByRole, getByText, queryByText } }) => {
+test('resource edit', async ({ page, queries: { getAllByRole, getByLabelText, getByRole, getByText, queryByRole, queryByText } }) => {
   await page.goto('http://localhost:3000/books/');
 
   await expect(queryByText('Loading...')).not.toBeVisible();
+
+  await expect(queryByRole('heading', { level: 1, name: 'Book List' })).toBeVisible();
 
   const rows = getAllByRole('row');
 
@@ -16,14 +18,16 @@ test('resource edit', async ({ page, queries: { getAllByRole, getByLabelText, ge
   const bookLink = getAllByRoleWithinRow('link').nth(0);
   bookLink.click();
 
-  await expect(getByRole('heading', { level: 1 })).toHaveText(/^Show Book/);
-
+  await expect(queryByRole('heading', { level: 1, name: /^\s*Show Book/ })).toBeVisible();
   await expect(queryByText('Loading...')).not.toBeVisible();
 
   const editLink = getByRole('link', { name: 'Edit' });
   editLink.click();
 
-  await expect(getByRole('heading', { level: 1 })).toHaveText(/^Edit Book/);
+  await expect(queryByRole('heading', { level: 1, name: /^\s*Show Book/ })).not.toBeVisible();
+  await expect(queryByText('Loading...')).not.toBeVisible();
+
+  await expect(queryByRole('heading', { level: 1 })).toHaveText(/^\s*Edit Book/);
 
   await expect(queryByText('Loading...')).not.toBeVisible();
 

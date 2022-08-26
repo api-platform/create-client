@@ -127,6 +127,7 @@ class List extends Component {
         <Link
           to="."
           className={`btn btn-primary${previous ? '' : ' disabled'}`}
+          aria-label="First page"
         >
           <span aria-hidden="true">&lArr;</span> First
         </Link>
@@ -135,18 +136,21 @@ class List extends Component {
             !previous || previous === first ? '.' : encodeURIComponent(previous)
           }
           className={`btn btn-primary${previous ? '' : ' disabled'}`}
+          aria-label="Previous page"
         >
           <span aria-hidden="true">&larr;</span> Previous
         </Link>
         <Link
           to={next ? encodeURIComponent(next) : '#'}
           className={`btn btn-primary${next ? '' : ' disabled'}`}
+          aria-label="Next page"
         >
           Next <span aria-hidden="true">&rarr;</span>
         </Link>
         <Link
           to={last ? encodeURIComponent(last) : '#'}
           className={`btn btn-primary${next ? '' : ' disabled'}`}
+          aria-label="Last page"
         >
           Last <span aria-hidden="true">&rArr;</span>
         </Link>

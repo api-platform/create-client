@@ -91,28 +91,32 @@
       <router-link
         :to="view['hydra:first'] ? view['hydra:first'] : '{{{titleUcFirst}}}ContactList'"
         :class="{ disabled: !view['hydra:previous'] }"
-        class="btn btn-primary">
+        class="btn btn-primary"
+        aria-label="First page">
         <span aria-hidden="true">&lArr;</span> First
       </router-link>
       &nbsp;
       <router-link
         :to="!view['hydra:previous'] || view['hydra:previous'] === view['hydra:first'] ? '{{{titleUcFirst}}}List' : view['hydra:previous']"
         :class="{ disabled: !view['hydra:previous'] }"
-        class="btn btn-primary">
+        class="btn btn-primary"
+        aria-label="Previous page">
         <span aria-hidden="true">&larr;</span> Previous
       </router-link>
 
       <router-link
         :to="view['hydra:next'] ? view['hydra:next'] : '#'"
         :class="{ disabled: !view['hydra:next'] }"
-        class="btn btn-primary">
+        class="btn btn-primary"
+        aria-label="Next page">
         Next <span aria-hidden="true">&rarr;</span>
       </router-link>
 
       <router-link
         :to="view['hydra:last'] ? view['hydra:last'] : '#'"
         :class="{ disabled: !view['hydra:next'] }"
-        class="btn btn-primary">
+        class="btn btn-primary"
+        aria-label="Last page">
         Last <span aria-hidden="true">&rArr;</span>
       </router-link>
     </nav>

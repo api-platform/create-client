@@ -27,13 +27,13 @@ export const useMercure = <TData extends Item | PagedCollection<Item> | undefine
       return;
     }
 
-    if (!isPagedCollection(data) && !isItem(data)) {
+    if (!isPagedCollection<Item>(data) && !isItem(data)) {
       console.error("Object sent is not in JSON-LD format.");
 
       return;
     }
 
-    if (isPagedCollection(data) && data["{{{hydraPrefix}}}member"] && data["{{{hydraPrefix}}}member"].length !== 0) {
+    if (isPagedCollection<Item>(data) && data["{{{hydraPrefix}}}member"] && data["{{{hydraPrefix}}}member"].length !== 0) {
       const eventSources: EventSource[] = [];
       // It's a PagedCollection
       data["{{{hydraPrefix}}}member"].forEach((obj, pos) => {

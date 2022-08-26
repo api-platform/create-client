@@ -151,7 +151,7 @@ export default {
       {{#each parameters}}
       {{#compare type "==" "text" }}
       {{#if reference}}
-      {{{name}}}SelectItems: '{{{downcase reference.title}}}/list/selectItems',
+      {{{name}}}SelectItems: '{{{lowercase reference.title}}}/list/selectItems',
       {{/if}}
       {{/compare}}
       {{/each}}
@@ -168,7 +168,7 @@ export default {
       {{#each parameters}}
       {{#compare type "==" "text" }}
       {{#if reference}}
-      {{{name}}}GetSelectItems: '{{{downcase reference.title}}}/list/getSelectItems',
+      {{{name}}}GetSelectItems: '{{{lowercase reference.title}}}/list/getSelectItems',
       {{/if}}
       {{/compare}}
       {{/each}}

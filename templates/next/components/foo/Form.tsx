@@ -35,7 +35,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 
   const deleteMutation = useMutation<FetchResponse<{{ucf}}> | undefined, Error|FetchError, DeleteParams>(({ id }) => delete{{{ucf}}}(id), {
     onSuccess: () => {
-      router.push("/{{{name}}}");
+      router.push("/{{{lc}}}s");
     },
     onError: (error)=> {
       setError(`Error when deleting the resource: ${error}`);
@@ -193,7 +193,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           </form>
         )}
       </Formik>
-      <Link href="/{{{name}}}">
+      <Link href="/{{{lc}}}s">
         <a className="btn btn-primary">Back to list</a>
       </Link>
       { {{{lc}}} && (

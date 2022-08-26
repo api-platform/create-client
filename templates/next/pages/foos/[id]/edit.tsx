@@ -48,7 +48,7 @@ export const getStaticProps: GetStaticProps = async ({ params: { id } = {} }) =>
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const response = await fetch<PagedCollection<{{{ucf}}}>>("/{{{name}}}");
-  const paths = await getPaths(response, "{{{name}}}", true);
+  const paths = await getPaths(response, "{{{name}}}", '/{{{lc}}}s/[id]/edit');
 
   return {
     paths,

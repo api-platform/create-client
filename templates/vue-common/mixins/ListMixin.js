@@ -9,9 +9,9 @@ export default {
     return {
       options: {
         sortBy: [],
-        sortDesc: [],        
+        sortDesc: [],
         page: 1,
-        itemsPerPage: 15
+        itemsPerPage: 30
       },
       filters: {}
     };
@@ -43,7 +43,7 @@ export default {
       if (!isEmpty(sortBy) && !isEmpty(sortDesc)) {
         params[`order[${sortBy[0]}]`] = sortDesc[0] ? 'desc' : 'asc'
       }
-      
+
       this.resetList = true;
 
       this.getPage(params).then(() => {

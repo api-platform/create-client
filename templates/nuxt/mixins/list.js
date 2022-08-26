@@ -15,7 +15,7 @@ export default {
         sortBy: [],
         sortDesc: [],
         page: 1,
-        itemsPerPage: 15
+        itemsPerPage: 30
       },
       filters: {}
     };
@@ -68,24 +68,6 @@ export default {
     resetFilter() {
       this.filters = {};
       this.onSendFilter();
-    },
-
-    addHandler() {
-      this.$router.push({ name: `${this.$options.servicePrefix}-new` });
-    },
-
-    showHandler(item) {
-      this.$router.push({
-        name: `${this.$options.servicePrefix}-id`,
-        params: { id: item['@id'] }
-      });
-    },
-
-    editHandler(item) {
-      this.$router.push({
-        name: `${this.$options.servicePrefix}-id`,
-        params: { id: item['@id'] }
-      });
     },
 
     deleteHandler(item) {

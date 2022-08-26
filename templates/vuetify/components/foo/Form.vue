@@ -157,7 +157,7 @@ export default {
     {{#each formFields}}
       {{#compare type "==" "text" }}
       {{#if reference}}
-      ...mapFields('{{{downcase reference.title}}}', {
+      ...mapFields('{{{lowercase reference.title}}}', {
         {{{name}}}SelectItems: 'selectItems'
       }),
       {{/if}}
@@ -194,7 +194,7 @@ export default {
       {{#compare type "==" "text" }}
       {{#if reference}}
       ...mapActions({
-        {{{name}}}GetSelectItems: '{{{downcase reference.title}}}/fetchSelectItems'
+        {{{name}}}GetSelectItems: '{{{lowercase reference.title}}}/fetchSelectItems'
       }),
       {{/if}}
       {{/compare}}

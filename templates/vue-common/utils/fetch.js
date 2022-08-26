@@ -8,6 +8,16 @@ const MIME_TYPE = 'application/ld+json';
 const makeParamArray = (key, arr) =>
   arr.map(val => `${key}[]=${val}`).join('&');
 
+export const getPath = (iri, pathTemplate) => {
+  if (!iri) {
+    return '';
+  }
+
+  const resourceId = iri.split('/').slice(-1)[0];
+
+  return pathTemplate.replace('[id]', resourceId);
+}
+
 export default function(id, options = {}) {
   if ('undefined' === typeof options.headers) {
     options.headers = {};

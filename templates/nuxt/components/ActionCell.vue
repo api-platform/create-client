@@ -1,9 +1,36 @@
 <template>
   <div>
     <v-row justify="space-around">
-      <v-icon v-if="handleShow" small class="mr-2" @click="handleShow">mdi-eye</v-icon>
-      <v-icon v-if="handleEdit" small class="mr-2" @click="handleEdit">mdi-pencil</v-icon>
-      <v-icon v-if="handleDelete" small @click="confirmDelete = true">mdi-delete</v-icon>
+      <v-btn
+        v-if="showHref"
+        color="primary"
+        dark
+        small
+        class="mr-2"
+        :href="showHref"
+      >
+        Show <v-icon dark>mdi-eye</v-icon>
+      </v-btn>
+      <v-btn
+        v-if="editHref"
+        color="primary"
+        dark
+        small
+        class="mr-2"
+        :href="editHref"
+      >
+        Edit <v-icon dark>mdi-pencil</v-icon>
+      </v-btn>
+      <v-btn
+        v-if="handleDelete"
+        color="primary"
+        dark
+        small
+        class="mr-2"
+        @click="handleDelete"
+      >
+        Delete <v-icon dark>mdi-delete</v-icon>
+      </v-btn>
     </v-row>
     <ConfirmDelete
       v-if="handleDelete"
@@ -26,12 +53,12 @@ export default {
     confirmDelete: false
   }),
   props: {
-    handleShow: {
-      type: Function,
+    showHref: {
+      type: String,
       required: false
     },
-    handleEdit: {
-      type: Function,
+    editHref: {
+      type: String,
       required: false
     },
     handleDelete: {
