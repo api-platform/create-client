@@ -4,10 +4,12 @@ import type { LocatorFixtures as TestingLibraryFixtures } from '@playwright-test
 
 const test = baseTest.extend<TestingLibraryFixtures>(fixtures)
 
-test('resource create', async ({ page, queries: { getByLabelText, getByRole, getByText } }) => {
+test('resource create', async ({ page, queries: { getByLabelText, getByRole, getByText, queryByRole, queryByText } }) => {
   await page.goto('http://localhost:3000/books/create');
 
-  await expect(getByRole('heading', { level: 1 })).toHaveText(/^Create Book/);
+  await expect(queryByText('Loading...')).not.toBeVisible();
+
+  await expect(queryByRole('heading', { level: 1 })).toHaveText(/^\s*Create Book/);
 
   await expect(getByLabelText('isbn')).toBeEditable();
   await expect(getByLabelText('description')).toBeEditable();

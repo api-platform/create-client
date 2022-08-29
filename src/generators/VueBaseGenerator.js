@@ -43,7 +43,7 @@ export default class extends BaseGenerator {
     handlebars.registerHelper("isArray", hbh_array.isArray);
     handlebars.registerHelper("inArray", hbh_array.inArray);
     handlebars.registerHelper("forEach", hbh_array.forEach);
-    handlebars.registerHelper("downcase", hbh_string.downcase);
+    handlebars.registerHelper("lowercase", hbh_string.lowercase);
 
     this.registerSwitchHelper();
   }
@@ -105,14 +105,12 @@ export default class extends BaseGenerator {
     const lc = resource.title.toLowerCase();
     const titleUcFirst =
       resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
+    const fields = this.parseFields(resource);
 
     const formFields = this.buildFields(resource.writableFields);
 
     const dateTypes = ["time", "date", "dateTime"];
     const formContainsDate = formFields.some((e) => dateTypes.includes(e.type));
-
-    const fields = this.buildFields(resource.readableFields);
-    const listContainsDate = fields.some((e) => dateTypes.includes(e.type));
 
     const parameters = [];
     params.forEach((p) => {
@@ -139,7 +137,6 @@ export default class extends BaseGenerator {
       uc: resource.title.toUpperCase(),
       fields,
       dateTypes,
-      listContainsDate,
       paramsHaveRefs,
       parameters,
       formFields,
@@ -303,5 +300,32 @@ export default class extends BaseGenerator {
       required: "Field is required",
       recPerPage: "Records per page:",
     };
+  }
+
+  parseFields(resource) {
+    const fields = [
+      ...resource.writableFields,
+      ...resource.readableFields,
+    ].reduce((list, field) => {
+      if (list[field.name]) {
+        return list;
+      }
+
+      const isReferences = field.reference && field.maxCardinality !== 1;
+      const isEmbeddeds = field.embedded && field.maxCardinality !== 1;
+
+      return {
+        ...list,
+        [field.name]: {
+          ...field,
+          readonly: false,
+          isReferences,
+          isEmbeddeds,
+          isRelations: isEmbeddeds || isReferences,
+        },
+      };
+    }, {});
+
+    return Object.values(fields);
   }
 }

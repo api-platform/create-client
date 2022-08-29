@@ -1,6 +1,12 @@
 <template>
   <div>
-    <Toolbar :handle-submit="onSendForm" :handle-reset="resetForm"></Toolbar>
+    <Toolbar :list-href="`/${$options.servicePrefix}`" :handle-submit="onSendForm" :handle-reset="resetForm">
+      <template #left>
+        <h1>
+          Create {{{titleUcFirst}}}
+        </h1>
+      </template>
+    </Toolbar>
     <{{{titleUcFirst}}}Form ref="createForm" :values="item" :errors="violations" />
     <Loading :visible="isLoading" />
   </div>
@@ -20,6 +26,7 @@ const { mapFields } = createHelpers({
 
 export default {
   servicePrefix,
+  pathTemplate: `/${servicePrefix}/[id]`,
   mixins: [create],
   components: {
     Loading: () => import('../../components/Loading'),

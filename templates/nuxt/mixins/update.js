@@ -9,23 +9,21 @@ export default {
     };
   },
   created() {
-    this.retrieve(decodeURIComponent(this.$route.params.id));
+    this.retrieve(`/${this.$options.name}/${this.$route.params.id}`);
   },
   beforeDestroy() {
     this.reset();
   },
   computed: {
     retrieved() {
-      return this.find(decodeURIComponent(this.$route.params.id));
+      return this.find(`/${this.$options.name}/${this.$route.params.id}`);
     }
   },
   methods: {
     del() {
       this.deleteItem(this.retrieved).then(() => {
-        this.showMessage(`${this.item['@id']} deleted.`);
-        this.$router
-          .push({ name: `${this.$options.servicePrefix}` })
-          .catch(() => {});
+        this.showMessage(`${this.deleted['@id']} deleted.`);
+        this.$router.push(`/${this.$options.servicePrefix}`)
       });
     },
     formatDateTime,
@@ -55,9 +53,7 @@ export default {
       if (!deleted) {
         return;
       }
-      this.$router
-        .push({ name: `${this.$options.servicePrefix}` })
-        .catch(() => {});
+      this.$router.push(`/${this.$options.servicePrefix}`)
     },
 
     error(message) {

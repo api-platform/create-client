@@ -1,5 +1,6 @@
 import notification from './notification';
 import { formatDateTime } from '../utils/dates';
+import { getPath } from '../utils/fetch';
 
 export default {
   mixins: [notification],
@@ -8,10 +9,7 @@ export default {
     onCreated(item) {
       this.showMessage(`${item['@id']} created`);
 
-      this.$router.push({
-        name: `${this.$options.servicePrefix}-id`,
-        params: { id: item['@id'] }
-      });
+      this.$router.push(getPath(item['@id'], this.$options.pathTemplate));
     },
     onSendForm() {
       const createForm = this.$refs.createForm;

@@ -2,13 +2,14 @@
 <template>
   <div>
     <Toolbar
+      :list-href="`/${$options.servicePrefix}`"
       :handle-submit="onSendForm"
       :handle-reset="resetForm"
       :handle-delete="del"
     >
       <template #left>
         <h1 v-if="item">
-          Edit \{{ item['@id'] }}
+          Edit {{{titleUcFirst}}} \{{ item['@id'] }}
         </h1>
       </template>
     </Toolbar>
@@ -25,17 +26,18 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
-import update from '../../mixins/update';
+import update from '../../../mixins/update';
 
 const servicePrefix = '{{{lc}}}s';
 
 export default {
+  name: '{{{name}}}',
   servicePrefix,
   mixins: [update],
   components: {
-    Loading: () => import('../../components/Loading'),
-    Toolbar: () => import('../../components/Toolbar'),
-    {{{titleUcFirst}}}Form: () => import('../../components/{{{lc}}}/Form.vue')
+    Loading: () => import('../../../components/Loading'),
+    Toolbar: () => import('../../../components/Toolbar'),
+    {{{titleUcFirst}}}Form: () => import('../../../components/{{{lc}}}/Form.vue')
   },
 
   computed: {
@@ -44,10 +46,10 @@ export default {
       isLoading: 'isLoading',
       error: 'error',
       updated: 'updated',
+      deleted: 'deleted',
       violations: 'violations'
     }),
     ...mapGetters('{{{lc}}}', ['find'])
-
   },
 
   methods: {

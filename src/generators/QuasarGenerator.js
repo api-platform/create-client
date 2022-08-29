@@ -116,7 +116,7 @@ export default class extends BaseGenerator {
     handlebars.registerHelper("ifOdd", hbh_comparison.ifOdd);
     handlebars.registerHelper("inArray", hbh_array.inArray);
     handlebars.registerHelper("forEach", hbh_array.forEach);
-    handlebars.registerHelper("downcase", hbh_string.downcase);
+    handlebars.registerHelper("lowercase", hbh_string.lowercase);
     handlebars.registerHelper("capitalize", hbh_string.capitalize);
 
     this.registerSwitchHelper();

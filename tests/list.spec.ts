@@ -4,19 +4,21 @@ import type { LocatorFixtures as TestingLibraryFixtures } from '@playwright-test
 
 const test = baseTest.extend<TestingLibraryFixtures>(fixtures)
 
-test('resource list', async ({ page, queries: { getAllByRole, getByRole, queryByText } }) => {
+test('resource list', async ({ page, queries: { getAllByRole, getByLabelText, getByRole, queryByRole, queryByText } }) => {
   await page.goto('http://localhost:3000/books/');
 
-  await expect(getByRole('heading', { level: 1 })).toHaveText('Book List');
+  await expect(queryByText('Loading...')).not.toBeVisible();
+
+  await expect(queryByRole('heading', { level: 1 })).toHaveText('Book List');
 
   await expect(getByRole('link', { name: 'Create' })).toBeVisible();
 
   const cols = getAllByRole('rowgroup').nth(0);
   const { getByRole: getByRoleWithinCols } = within(cols);
 
-  await expect(getByRoleWithinCols('columnheader', { name: 'id' })).toBeVisible();
-  await expect(getByRoleWithinCols('columnheader', { name: 'isbn' })).toBeVisible();
-  await expect(getByRoleWithinCols('columnheader', { name: 'reviews' })).toBeVisible();
+  await expect(getByRoleWithinCols('columnheader', { name: /^id/ })).toBeVisible();
+  await expect(getByRoleWithinCols('columnheader', { name: /^isbn/ })).toBeVisible();
+  await expect(getByRoleWithinCols('columnheader', { name: /^reviews/ })).toBeVisible();
 
   await expect(queryByText('Loading...')).not.toBeVisible();
 
@@ -32,13 +34,10 @@ test('resource list', async ({ page, queries: { getAllByRole, getByRole, queryBy
   await expect(getAllByRoleWithinRow('link', { name: 'Show' })).toBeVisible();
   await expect(getAllByRoleWithinRow('link', { name: 'Edit' })).toBeVisible();
 
-  const pagination = getByRole('navigation');
-  const { getAllByRole: getAllByRoleWithinPagination } = within(pagination);
-
-  await expect(getAllByRoleWithinPagination('link', { name: 'First' })).toBeVisible();
-  await expect(getAllByRoleWithinPagination('link', { name: 'Previous' })).toBeVisible();
-  await expect(getAllByRoleWithinPagination('link', { name: 'Next' })).toBeVisible();
-  await expect(getAllByRoleWithinPagination('link', { name: 'Last' })).toBeVisible();
+  await expect(getByLabelText(/^First/)).toBeVisible();
+  await expect(getByLabelText(/^Previous/)).toBeVisible();
+  await expect(getByLabelText(/^Next/)).toBeVisible();
+  await expect(getByLabelText(/^Last/)).toBeVisible();
 
   // @TODO Make sure data change when paginate
 });

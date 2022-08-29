@@ -1,5 +1,12 @@
 <template>
   <div class="{{{lc}}}-list">
+    <Toolbar>
+      <template #left>
+        <h1>
+          {{{titleUcFirst}}} List
+        </h1>
+      </template>
+    </Toolbar>
     <v-container grid-list-xl fluid>
       <v-layout row wrap>
         <v-flex lg12>
@@ -16,6 +23,9 @@
             item-key="@id"
             show-select
             @update:options="onUpdateOptions"
+            :footer-props="{
+              showFirstLastPage: true
+            }"
           >
             <template v-slot:top>
               <v-toolbar flat color="white">
@@ -37,54 +47,79 @@
                   color="primary"
                   dark
                   class="ml-2"
-                  @click="addHandler"
+                  :href="`/${$options.servicePrefix}/create`"
                 >
-                  New Item
+                  Create
                 </v-btn>
               </v-toolbar>
             </template>
 
-          {{#forEach fields~}}
-            {{#switch type~}}
-              {{#case "dateTime"}}
-                <template slot="item.{{{name}}}" slot-scope="{ item }">
-                  \{{ formatDateTime(item['{{{name}}}'], 'long') }}
-                </template>
-              {{/case~}}
-              {{#case "date"}}
-                <template slot="item.{{{name}}}" slot-scope="{ item }">
-                  \{{ formatDateTime(item['{{{name}}}'], 'short') }}
-                </template>
-              {{/case~}}
-              {{#case "number"}}
-                <template slot="item.{{{name}}}" slot-scope="{ item }">
-                  \{{ $t(item['{{{name}}}']) }}
-                </template>
-              {{/case~}}
-              {{#default}}
-                {{#if reference}}
-                <template slot="item.{{{name}}}" slot-scope="{ item }">
-                {{#if maxCardinality }}
-                  \{{ item['@id'] }}
-                  {{else}}
-                  <ul>
-                    <li v-for="_item in item['{{{name}}}']" :key="_item['@id']">
-                      <nuxt-link :to="{ name: '{{{name}}}-id', params: { id: _item['@id'] } }">
-                        \{{ _item['@id'] }}
+            <template slot="item.@id" slot-scope="{ item }">
+              <nuxt-link :to="getPath(item['@id'], '/{{{lc}}}s/[id]')">
+                \{{ item['@id'] }}
+              </nuxt-link>
+            </template>
+            {{#forEach fields~}}
+              {{#switch type~}}
+                {{#case "dateTime"}}
+                  <template slot="item.{{{name}}}" slot-scope="{ item }">
+                    \{{ formatDateTime(item['{{{name}}}'], 'long') }}
+                  </template>
+                {{/case~}}
+                {{#case "date"}}
+                  <template slot="item.{{{name}}}" slot-scope="{ item }">
+                    \{{ formatDateTime(item['{{{name}}}'], 'short') }}
+                  </template>
+                {{/case~}}
+                {{#case "number"}}
+                  <template slot="item.{{{name}}}" slot-scope="{ item }">
+                    \{{ $t(item['{{{name}}}']) }}
+                  </template>
+                {{/case~}}
+                {{#default}}
+                  {{#if reference}}
+                    <template slot="item.{{{name}}}" slot-scope="{ item }">
+                    {{#if maxCardinality }}
+                      <nuxt-link :to="getPath(item['{{{name}}}'], '/{{{lowercase reference.title}}}s/[id]')">
+                        \{{ item['{{{name}}}'] }}
                       </nuxt-link>
-                    </li>
-                  </ul>
-                {{/if}}
-                </template>
-                {{/if~}}
-              {{/default~}}
-            {{/switch}}
-          {{/forEach }}
+                    {{else}}
+                      <ul>
+                        <li v-for="_item in item['{{{name}}}']" :key="_item">
+                          <nuxt-link :to="getPath(_item, '/{{{lowercase reference.title}}}s/[id]')">
+                            \{{ _item }}
+                          </nuxt-link>
+                        </li>
+                      </ul>
+                    {{/if}}
+                    </template>
+                  {{/if~}}
+                  {{#if embedded}}
+                    <template slot="item.{{{name}}}" slot-scope="{ item }">
+                    {{#if maxCardinality }}
+                      <nuxt-link :to="getPath(item['{{{name}}}']['@id'], '/{{{lowercase embedded.title}}}s/[id]')">
+                        \{{ item['{{{name}}}']['@id'] }}
+                      </nuxt-link>
+                    {{else}}
+                      <ul>
+                        <li v-for="_item in item['{{{name}}}']" :key="_item['@id']">
+                          <nuxt-link :to="getPath(_item['@id'], '/{{{lowercase embedded.title}}}s/[id]')">
+                            \{{ _item['@id'] }}
+                          </nuxt-link>
+                        </li>
+                      </ul>
+                    {{/if}}
+                    </template>
+                  {{/if~}}
+                {{/default~}}
+              {{/switch}}
+            {{/forEach }}
 
             <ActionCell
               slot="item.action"
               slot-scope="props"
-              :handle-edit="() => editHandler(props.item)"
+              :show-href="getPath(props.item['@id'], '/{{{lc}}}s/[id]')"
+              :edit-href="getPath(props.item['@id'], '/{{{lc}}}s/[id]/edit')"
               :handle-delete="() => deleteHandler(props.item)"
             ></ActionCell>
           </v-data-table>
@@ -98,6 +133,7 @@
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 import list from '../../mixins/list';
+import { getPath } from '../../utils/fetch';
 
 export default {
   servicePrefix: '{{{lc}}}s',
@@ -110,6 +146,7 @@ export default {
   },
   data: () => ({
     headers: [
+      { text: 'id', value: '@id' },
       {{#forEach fields}}
       { text: '{{{name}}}', value: '{{{name}}}' },
       {{/forEach}}
@@ -138,7 +175,8 @@ export default {
     ...mapActions('{{{lc}}}', {
       fetchAll: 'fetchAll',
       deleteItem: 'del'
-    })
+    }),
+    getPath
   }
 };
 </script>

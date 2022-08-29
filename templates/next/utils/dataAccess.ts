@@ -70,20 +70,29 @@ export const fetch = async <TData>(id: string, init: RequestInit = {}): Promise<
   throw { message: errorMessage, status, fields } as FetchError;
 };
 
-export const getPaths = async <TData extends Item>(response: FetchResponse<PagedCollection<TData>> | undefined, resourceName: string, isEdit: boolean) => {
+export const getPath = (iri: string | undefined, pathTemplate: string): string => {
+  if (!iri) {
+    return '';
+  }
+
+  const resourceId = iri.split('/').slice(-1)[0];
+
+  return pathTemplate.replace('[id]', resourceId);
+}
+
+export const getPaths = async <TData extends Item>(response: FetchResponse<PagedCollection<TData>> | undefined, resourceName: string, pathTemplate: string) => {
   if (!response) return [];
 
   try {
-    const pathSuffix = isEdit ? "/edit" : "";
     const view = response.data["{{{hydraPrefix}}}view"];
-    const paths = response.data["{{{hydraPrefix}}}member"]?.map((resourceData) => `${resourceData['@id']}${pathSuffix}`) || [];
+    const paths = response.data["{{{hydraPrefix}}}member"]?.map((resourceData) => getPath(resourceData['@id'] ?? '', pathTemplate)) || [];
 
     const { "hydra:last": last } = view || {};
     if (last) {
       for (let page = 2; page <= parseInt(last.replace(new RegExp(`^\/${resourceName}\?page=(\d+)`), "$1")); page++) {
         paths.concat(
           (await fetch<PagedCollection<TData>>(`/${resourceName}?page=${page}`))
-            ?.data["{{{hydraPrefix}}}member"]?.map((resourceData) => `${ resourceData['@id'] }${pathSuffix}`) || []
+            ?.data["{{{hydraPrefix}}}member"]?.map((resourceData) => getPath(resourceData['@id'] ?? '', pathTemplate)) || []
         );
       }
     }

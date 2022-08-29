@@ -4,12 +4,20 @@
     <v-spacer />
     <div>
       <v-btn
-        v-if="handleEdit"
+        v-if="editHref"
         :loading="isLoading"
         color="primary"
-        @click="editItem"
+        :href="editHref"
       >
         Edit
+      </v-btn>
+      <v-btn
+        v-if="listHref"
+        :loading="isLoading"
+        color="primary"
+        :href="listHref"
+      >
+        Back to list
       </v-btn>
       <v-btn
         v-if="handleSubmit"
@@ -60,8 +68,12 @@ export default {
     confirmDelete: false
   }),
   props: {
-    handleEdit: {
-      type: Function,
+    editHref: {
+      type: String,
+      required: false
+    },
+    listHref: {
+      type: String,
       required: false
     },
     handleSubmit: {
@@ -94,11 +106,6 @@ export default {
     addItem() {
       if (this.handleAdd) {
         this.handleAdd();
-      }
-    },
-    editItem() {
-      if (this.handleEdit) {
-        this.handleEdit();
       }
     },
     submitItem() {

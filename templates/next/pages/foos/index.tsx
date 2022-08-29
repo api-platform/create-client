@@ -25,7 +25,7 @@ const Page: NextComponentType<NextPageContext> = () => {
           <title>{{{ucf}}} List</title>
         </Head>
       </div>
-      <List {{{name}}}={collection["{{{hydraPrefix}}}member"]} />
+      <List {{{lc}}}s={collection["{{{hydraPrefix}}}member"]} />
       <Pagination collection={collection} />
     </div>
   );
