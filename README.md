@@ -6,9 +6,9 @@
 API Platform Client Generator is a generator to scaffold app with Create-Retrieve-Update-Delete features for any API exposing a [Hydra](http://www.hydra-cg.com/spec/latest/core/) or [OpenAPI](https://www.openapis.org/) documentation for:
 
 * Next.js
-* Nuxt.js
-* Quasar Framework
-* React/Redux
+* Nuxt
+* Quasar
+* React
 * React Native
 * TypeScript Interfaces
 * Vue.js
@@ -34,22 +34,20 @@ The documentation of API Platform's Client Generator can be browsed [on the offi
 * The generated HTML is compatible with [Bootstrap](https://getbootstrap.com/) and includes mandatory classes
 * The generated HTML code is accessible to people with disabilities ([ARIA](https://www.w3.org/WAI/intro/aria) support)
 
-
 ## Usage
 
 ### Hydra
 
     npx @api-platform/client-generator https://demo.api-platform.com/ output/ --resource Book
 
-### OpenAPI v3 (experimental)
+### OpenAPI 3
 
-    npx @api-platform/client-generator https://demo.api-platform.com/docs.json?spec_version=3 output/ --resource Book --format openapi3
-
-### OpenAPI v2 (formerly known as Swagger, deprecated)
-
-    npx @api-platform/client-generator https://demo.api-platform.com/docs.json?spec_version=2 output/ --resource Book --format openapi2
+    npx @api-platform/client-generator https://demo.api-platform.com/docs.json output/ --resource Book --format openapi3
 
 ## Credits
 
-Created by [Kévin Dunglas](https://dunglas.fr). Sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
+Created by [Kévin Dunglas](https://dunglas.fr).
+
+Sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
+
 Commercial support available upon request.
