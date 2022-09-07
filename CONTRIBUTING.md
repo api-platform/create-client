@@ -25,13 +25,13 @@ Then, if it appears that it's a real bug, you may report it using Github by foll
 To install the source version of the API Platform Client Generator in your project and contribute a patch, run the following commands:
 
 ```console
-$ git clone git@github.com:api-platform/client-generator.git
-$ cd client-generator
+$ git clone git@github.com:api-platform/create-client.git
+$ cd create-client
 $ yarn install
 $ yarn watch
 ```
 
-You can now hack in the cloned repository of `client-generator`. If you want to test your work, a `lib/index.js` file containing your last changes will be created each time you invoke `yarn build`. You can also use `yarn watch` to make it created each time a change is performed in your code!
+You can now hack in the cloned repository of `create-client`. If you want to test your work, a `lib/index.js` file containing your last changes will be created each time you invoke `yarn build`. You can also use `yarn watch` to make it created each time a change is performed in your code!
 
 ### Testing your changes
 
