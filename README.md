@@ -1,4 +1,4 @@
-# API Platform Client Generator
+# API Platform Create Client
 
 [![GitHub Actions](https://github.com/api-platform/create-client/workflows/CI/badge.svg)](https://github.com/api-platform/create-client/actions?workflow=CI)
 [![npm version](https://badge.fury.io/js/%40api-platform%2Fcreate-client.svg)](https://badge.fury.io/js/%40api-platform%2Fcreate-client)
