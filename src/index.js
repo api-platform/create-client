@@ -56,8 +56,8 @@ async function main() {
 
   if (
     2 !== program.args.length &&
-    (!process.env.API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT ||
-      !process.env.API_PLATFORM_CLIENT_GENERATOR_OUTPUT)
+    (!process.env.API_PLATFORM_CREATE_CLIENT_ENTRYPOINT ||
+      !process.env.API_PLATFORM_CREATE_CLIENT_OUTPUT)
   ) {
     program.help();
   }
@@ -65,9 +65,9 @@ async function main() {
   const options = program.opts();
 
   const entrypoint =
-    program.args[0] || process.env.API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT;
+    program.args[0] || process.env.API_PLATFORM_CREATE_CLIENT_ENTRYPOINT;
   const outputDirectory =
-    program.args[1] || process.env.API_PLATFORM_CLIENT_GENERATOR_OUTPUT;
+    program.args[1] || process.env.API_PLATFORM_CREATE_CLIENT_OUTPUT;
 
   const entrypointWithSlash = entrypoint.endsWith("/")
     ? entrypoint
