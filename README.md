@@ -28,7 +28,7 @@ The documentation of API Platform Create Client can be browsed [on the official 
   * Editing form
   * Deletion button
 * Use the Hydra or OpenAPI documentation to generate the code
-* Generate the suitable  input type (`number`, `date`...) according to the type of the API property
+* Generate the suitable input type (`number`, `date`...) according to the type of the API property
 * Display of the server-side validation errors under the related input (if using API Platform Core)
 * Client-side validation (`required` attributes)
 * The generated HTML is compatible with [Bootstrap](https://getbootstrap.com/) and includes mandatory classes
