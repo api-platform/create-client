@@ -3,7 +3,7 @@
 [![GitHub Actions](https://github.com/api-platform/create-client/workflows/CI/badge.svg)](https://github.com/api-platform/create-client/actions?workflow=CI)
 [![npm version](https://badge.fury.io/js/%40api-platform%2Fcreate-client.svg)](https://badge.fury.io/js/%40api-platform%2Fcreate-client)
 
-API Platform Client Generator is a generator to scaffold app with Create-Retrieve-Update-Delete features for any API exposing a [Hydra](http://www.hydra-cg.com/spec/latest/core/) or [OpenAPI](https://www.openapis.org/) documentation for:
+API Platform Create Client is a generator to scaffold apps with Create-Retrieve-Update-Delete features for any API exposing a [Hydra](http://www.hydra-cg.com/spec/latest/core/) or [OpenAPI](https://www.openapis.org/) documentation for:
 
 * Next.js
 * Nuxt
@@ -33,16 +33,17 @@ The documentation of API Platform Create Client can be browsed [on the official 
 * Client-side validation (`required` attributes)
 * The generated HTML is compatible with [Bootstrap](https://getbootstrap.com/) and includes mandatory classes
 * The generated HTML code is accessible to people with disabilities ([ARIA](https://www.w3.org/WAI/intro/aria) support)
+* Bring your own templates
 
 ## Usage
 
 ### Hydra
 
-    pnpm create @api-platform/client https://demo.api-platform.com/ output/ --resource Book
+    npm init @api-platform/client https://demo.api-platform.com/ output/ --resource Book
 
 ### OpenAPI 3
 
-    pnpm create @api-platform/client https://demo.api-platform.com/docs.json output/ --resource Book --format openapi3
+    npm init @api-platform/client https://demo.api-platform.com/docs.json output/ --resource Book --format openapi3
 
 ## Credits
 

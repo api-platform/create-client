@@ -22,7 +22,7 @@ Then, if it appears that it's a real bug, you may report it using Github by foll
 
 ### Installing the source version
 
-To install the source version of the API Platform Client Generator in your project and contribute a patch, run the following commands:
+To install the source version of Create Client in your project and contribute a patch, run the following commands:
 
 ```console
 $ git clone git@github.com:api-platform/create-client.git
@@ -55,7 +55,7 @@ $ yarn test
 
 ### Matching coding standards
 
-The API Platform Client Generator project is inspired by the [Airbnb JavaScript style guide](https://github.com/airbnb/javascript).
+The style of the project is inspired by the [Airbnb JavaScript style guide](https://github.com/airbnb/javascript).
 But don't worry, you can fix CS issues automatically using [ESLint](https://eslint.org/) tool:
 
 ```console
