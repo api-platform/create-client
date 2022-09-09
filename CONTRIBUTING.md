@@ -22,16 +22,16 @@ Then, if it appears that it's a real bug, you may report it using Github by foll
 
 ### Installing the source version
 
-To install the source version of the API Platform Client Generator in your project and contribute a patch, run the following commands:
+To install the source version of Create Client in your project and contribute a patch, run the following commands:
 
 ```console
-$ git clone git@github.com:api-platform/client-generator.git
-$ cd client-generator
+$ git clone git@github.com:api-platform/create-client.git
+$ cd create-client
 $ yarn install
 $ yarn watch
 ```
 
-You can now hack in the cloned repository of `client-generator`. If you want to test your work, a `lib/index.js` file containing your last changes will be created each time you invoke `yarn build`. You can also use `yarn watch` to make it created each time a change is performed in your code!
+You can now hack in the cloned repository of `create-client`. If you want to test your work, a `lib/index.js` file containing your last changes will be created each time you invoke `yarn build`. You can also use `yarn watch` to make it created each time a change is performed in your code!
 
 ### Testing your changes
 
@@ -55,7 +55,7 @@ $ yarn test
 
 ### Matching coding standards
 
-The API Platform Client Generator project is inspired by the [Airbnb JavaScript style guide](https://github.com/airbnb/javascript).
+The style of the project is inspired by the [Airbnb JavaScript style guide](https://github.com/airbnb/javascript).
 But don't worry, you can fix CS issues automatically using [ESLint](https://eslint.org/) tool:
 
 ```console
