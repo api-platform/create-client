@@ -5,7 +5,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 import "isomorphic-fetch";
 import { program } from "commander";
-import apiDocParser from "@api-platform/api-doc-parser";
+import {
+  parseHydraDocumentation,
+  parseOpenApi3Documentation,
+  parseSwaggerDocumentation,
+} from "@api-platform/api-doc-parser";
 import generators from "./generators.js";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -102,14 +106,11 @@ async function main() {
     switch (options.format) {
       case "swagger": // deprecated
       case "openapi2":
-        return apiDocParser.parseSwaggerDocumentation(entrypointWithSlash);
+        return parseSwaggerDocumentation(entrypointWithSlash);
       case "openapi3":
-        return apiDocParser.parseOpenApi3Documentation(entrypointWithSlash);
+        return parseOpenApi3Documentation(entrypointWithSlash);
       default:
-        return apiDocParser.parseHydraDocumentation(
-          entrypointWithSlash,
-          parserOptions
-        );
+        return parseHydraDocumentation(entrypointWithSlash, parserOptions);
     }
   };
 
