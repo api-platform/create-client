@@ -9,7 +9,6 @@
     "src",
     "templates"
   ],
-  "type": "module",
   "exports": "./lib/index.js",
   "repository": "api-platform/create-client",
   "homepage": "https://github.com/api-platform/create-client",
