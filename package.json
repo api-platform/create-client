@@ -73,7 +73,7 @@
     "src/**/*.js": "yarn lint --fix"
   },
   "bin": {
-    "generate-api-platform-client": "./lib/index.js"
+    "create-client": "./lib/index.js"
   },
   "publishConfig": {
     "access": "public"
