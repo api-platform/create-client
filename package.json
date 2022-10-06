@@ -1,6 +1,6 @@
 {
   "name": "@api-platform/create-client",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Generate apps built with Next, Nuxt, Quasar, React, React Native, Vue or Vuetify for any API documented using Hydra or OpenAPI",
   "files": [
     "*.md",
