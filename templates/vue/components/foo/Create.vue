@@ -1,80 +1,43 @@
+<script lang="ts" setup>
+import {{{titleUcFirst}}}Form from './Form.vue';
+import { use{{{titleUcFirst}}}CreateStore } from "@/stores/{{{lc}}}/create";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import type { {{{titleUcFirst}}} } from "@/utils/types";
+
+const router = useRouter();
+
+const {{{lc}}}CreateStore = use{{{titleUcFirst}}}CreateStore();
+const { isLoading, error, violations } = storeToRefs({{{lc}}}CreateStore);
+
+async function onSendForm(item: {{{titleUcFirst}}}) {
+  await {{{lc}}}CreateStore.create(item);
+
+  if (!{{{lc}}}CreateStore.created) return;
+
+  router.push({
+    name: "{{{titleUcFirst}}}Update",
+    params: { id: {{{lc}}}CreateStore.created["@id"] },
+  });
+}
+</script>
+
 <template>
   <div>
     <h1>Create {{{title}}}</h1>
 
-    <div
-      v-if="isLoading"
-      class="alert alert-info"
-      role="status">Loading...</div>
-    <div
-      v-if="error"
-      class="alert alert-danger"
-      role="alert">
-      <span
-        class="fa fa-exclamation-triangle"
-        aria-hidden="true">\{{ error }}</span>
+    <div v-if="isLoading" class="alert alert-info" role="status">
+      Loading...
+    </div>
+    <div v-if="error" class="alert alert-danger" role="alert">
+      <i class="bi-exclamation-triangle" />
+      {{ error }}
     </div>
 
-    <{{{titleUcFirst}}}Form
-      :handle-submit="onSendForm"
-      :values="item"
-      :errors="violations" />
+    <{{{titleUcFirst}}}Form :errors="violations" @send-form="onSendForm" />
 
-    <router-link
-      :to="{ name: '{{{titleUcFirst}}}List' }"
-      class="btn btn-default">Back to list</router-link>
+    <router-link :to="{ name: '{{{titleUcFirst}}}List' }" class="btn btn-primary">
+      Back to list
+    </router-link>
   </div>
 </template>
-
-<script>
-import { createHelpers } from 'vuex-map-fields';
-import { mapActions } from 'vuex';
-import {{{titleUcFirst}}}Form from './Form.vue';
-
-const { mapFields } = createHelpers({
-    getterType: '{{{lc}}}/create/getField',
-    mutationType: '{{{lc}}}/create/updateField',
-});
-
-export default {
-  components: {
-    {{{titleUcFirst}}}Form,
-  },
-
-  data () {
-    return {
-      item: {},
-    };
-  },
-
-  computed: {
-    ...mapFields([
-      'error',
-      'isLoading',
-      'created',
-      'violations',
-    ]),
-  },
-
-  watch: {
-    // eslint-disable-next-line object-shorthand,func-names
-    created: function(created) {
-      if (!created) {
-        return;
-      }
-
-      this.$router.push({ name: '{{{titleUcFirst}}}Update', params: { id: created['@id'] } });
-    }
-  },
-
-  methods: {
-    ...mapActions('{{{lc}}}/create', [
-      'create',
-    ]),
-
-    onSendForm () {
-      this.create(this.item);
-    },
-  },
-};
-</script>
