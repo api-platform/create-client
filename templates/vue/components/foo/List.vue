@@ -1,24 +1,78 @@
+<script lang="ts" setup>
+import { use{{{titleUcFirst}}}DeleteStore } from "@/stores/{{{lc}}}/delete";
+import type { {{{titleUcFirst}}} } from "@/utils/types";
+import { storeToRefs } from "pinia";
+import { onBeforeUnmount } from "vue";
+import { use{{{titleUcFirst}}}ListStore } from "@/stores/{{{lc}}}/list";
+import { mercureSubscribe } from "@/utils/mercure";
+
+const {{{lc}}}ListStore = use{{{titleUcFirst}}}ListStore();
+const { items, error, view, isLoading } = storeToRefs({{{lc}}}ListStore);
+
+const mercureEl = (data: {{{titleUcFirst}}}) => {
+  if (Object.keys(data).length === 1) {
+    {{{lc}}}ListStore.deleteItem(data);
+    {{{lc}}}DeleteStore.setMercureDeleted(data);
+    return;
+  }
+
+  {{{lc}}}ListStore.updateItem(data);
+};
+
+let mercureSub: EventSource | null = null;
+
+{{{lc}}}ListStore.$subscribe((mutation, state) => {
+  if (!state.hubUrl) {
+    return;
+  }
+
+  if (mercureSub) {
+    mercureSub.close();
+  }
+
+  if (!state.items?.length) {
+    return;
+  }
+
+  mercureSub = mercureSubscribe(
+    state.hubUrl,
+    state.items.map((i) => i["@id"] ?? ""),
+    mercureEl
+  );
+});
+
+await {{{lc}}}ListStore.getItems();
+
+const {{{lc}}}DeleteStore = use{{{titleUcFirst}}}DeleteStore();
+const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
+  storeToRefs({{{lc}}}DeleteStore);
+
+onBeforeUnmount(() => {
+  mercureSub?.close();
+  {{{lc}}}DeleteStore.$reset();
+});
+</script>
+
 <template>
   <div>
     <h1>{{{title}}} List</h1>
 
-    <div
-      v-if="isLoading"
-      class="alert alert-info">Loading...</div>
-    <div
-      v-if="deletedItem"
-      class="alert alert-success">\{{ deletedItem['@id'] }} deleted.</div>
-    <div
-      v-if="mercureDeletedItem"
-      class="alert alert-success">\{{ mercureDeletedItem['@id'] }} deleted by another user.</div>
-    <div
-      v-if="error"
-      class="alert alert-danger">\{{ error }}</div>
+    <div v-if="isLoading" class="alert alert-info">Loading...</div>
+    <div v-if="deletedItem" class="alert alert-success">
+      \{{ deletedItem['@id'] }} deleted.
+    </div>
+    <div v-if="mercureDeletedItem" class="alert alert-success">
+      \{{ mercureDeletedItem['@id'] }} deleted by another user.
+    </div>
+    <div v-if="error" class="alert alert-danger">\{{ error }}</div>
 
     <p>
-      <router-link
-        :to="{ name: '{{{titleUcFirst}}}Create' }"
-        class="btn btn-primary">Create</router-link>
+      <router-link 
+        :to="{ name: '{{{titleUcFirst}}}Create' }" 
+        class="btn btn-primary"
+      >
+        Create
+      </router-link>
     </p>
 
     <table class="table table-responsive table-striped table-hover">
@@ -34,11 +88,13 @@
       <tbody>
         <tr
           v-for="item in items"
-          :key="item['@id']">
+          :key="item['@id']"
+        >
           <th scope="row">
             <router-link
               v-if="item"
-              :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">
+              :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}"
+            >
               \{{ item['@id'] }}
             </router-link>
           </th>
@@ -46,40 +102,36 @@
         <td>
           {{#if reference}}
             <template>
-              <div
-                v-if="Array.isArray(item['{{{reference.name}}}'])">
+              <div v-if="Array.isArray(item['{{{reference.name}}}'])">
                 <router-link
                   v-for="link in item['{{{reference.name}}}']"
                   :key="link['@id']"
-                  :to="{ name: '{{{reference.title}}}Show', params: { id: link['@id'] } }">
+                  :to="{ name: '{{{reference.title}}}Show', params: { id: link['@id'] } }"
+                >
                   \{{ link['@id'] }}
                 </router-link>
               </div>
               <router-link
                 v-else
-                :to="{ name: '{{{reference.title}}}Show', params: { id: item['{{{reference.name}}}'] } }">
+                :to="{ name: '{{{reference.title}}}Show', params: { id: item['{{{reference.name}}}'] } }"
+              >
                 \{{ item['{{{reference.name}}}'] }}
               </router-link>
             </template>
           {{else}}
-            \{{ item['{{{name}}}'] }}
+            \{{ item.{{{name}}} }}
           {{/if}}
         </td>
 {{/each}}
           <td>
-            <router-link
-              :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">
-              <span
-                class="fa fa-search"
-                aria-hidden="true"></span>
+            <router-link :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">
+              <i class="bi-search" />
               <span class="sr-only">Show</span>
             </router-link>
           </td>
           <td>
             <router-link :to="{name: '{{{titleUcFirst}}}Update', params: { id: item['@id'] }}">
-              <span
-                class="fa fa-pencil"
-                aria-hidden="true"></span>
+              <i class="bi-pencil" />
               <span class="sr-only">Edit</span>
             </router-link>
           </td>
@@ -89,18 +141,20 @@
 
     <nav aria-label="Page navigation" v-if="view">
       <router-link
-        :to="view['hydra:first'] ? view['hydra:first'] : '{{{titleUcFirst}}}ContactList'"
+        :to="view['hydra:first'] ? view['hydra:first'] : { name: '{{{titleUcFirst}}}List' }"
         :class="{ disabled: !view['hydra:previous'] }"
         class="btn btn-primary"
-        aria-label="First page">
+        aria-label="First page"
+      >
         <span aria-hidden="true">&lArr;</span> First
       </router-link>
       &nbsp;
       <router-link
-        :to="!view['hydra:previous'] || view['hydra:previous'] === view['hydra:first'] ? '{{{titleUcFirst}}}List' : view['hydra:previous']"
+        :to="!view['hydra:previous'] || view['hydra:previous'] === view['hydra:first'] ? { name: '{{{titleUcFirst}}}List' } : view['hydra:previous']"
         :class="{ disabled: !view['hydra:previous'] }"
         class="btn btn-primary"
-        aria-label="Previous page">
+        aria-label="Previous page"
+      >
         <span aria-hidden="true">&larr;</span> Previous
       </router-link>
 
@@ -108,7 +162,8 @@
         :to="view['hydra:next'] ? view['hydra:next'] : '#'"
         :class="{ disabled: !view['hydra:next'] }"
         class="btn btn-primary"
-        aria-label="Next page">
+        aria-label="Next page"
+      >
         Next <span aria-hidden="true">&rarr;</span>
       </router-link>
 
@@ -116,47 +171,11 @@
         :to="view['hydra:last'] ? view['hydra:last'] : '#'"
         :class="{ disabled: !view['hydra:next'] }"
         class="btn btn-primary"
-        aria-label="Last page">
+        aria-label="Last page"
+      >
         Last <span aria-hidden="true">&rArr;</span>
       </router-link>
     </nav>
   </div>
 </template>
 
-<script>
-import { mapActions } from 'vuex';
-import { mapFields } from 'vuex-map-fields';
-import ListWatcher from '../../mixins/ListWatcher';
-import * as types from '../../store/modules/{{{lc}}}/list/mutation_types'
-import * as delTypes from '../../store/modules/{{{lc}}}/delete/mutation_types';
-
-export default {
-  mixins: [ListWatcher],
-  computed: {
-      ...mapFields('{{{lc}}}/del', {
-          deletedItem: 'deleted',
-          mercureDeletedItem: 'mercureDeleted',
-      }),
-      ...mapFields('{{{lc}}}/list', {
-          error: 'error',
-          items: 'items',
-          hubUrl: 'hubUrl',
-          isLoading: 'isLoading',
-          view: 'view',
-      }),
-      itemUpdateMutation: () => `{{{lc}}}/list/${types.UPDATE_ITEM}`,
-      itemDeleteMutation: () => `{{{lc}}}/list/${types.DELETE_ITEM}`,
-      itemMercureDeletedMutation: () => `{{{lc}}}/del/${delTypes.{{{uc}}}_DELETE_MERCURE_SET_DELETED}`,
-  },
-
-  mounted() {
-    this.getPage();
-  },
-
-  methods: {
-    ...mapActions({
-      getPage: '{{{lc}}}/list/default',
-    }),
-  },
-};
-</script>
