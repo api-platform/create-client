@@ -23,21 +23,19 @@ async function onSendForm(item: {{{titleUcFirst}}}) {
 </script>
 
 <template>
-  <div>
-    <h1>Create {{{title}}}</h1>
+  <h1>Create {{{title}}}</h1>
 
-    <div v-if="isLoading" class="alert alert-info" role="status">
-      Loading...
-    </div>
-    <div v-if="error" class="alert alert-danger" role="alert">
-      <i class="bi-exclamation-triangle" />
-      {{ error }}
-    </div>
-
-    <{{{titleUcFirst}}}Form :errors="violations" @send-form="onSendForm" />
-
-    <router-link :to="{ name: '{{{titleUcFirst}}}List' }" class="btn btn-primary">
-      Back to list
-    </router-link>
+  <div v-if="isLoading" class="alert alert-info" role="status">
+    Loading...
   </div>
+  <div v-if="error" class="alert alert-danger" role="alert">
+    <i class="bi-exclamation-triangle" />
+    {{ error }}
+  </div>
+
+  <{{{titleUcFirst}}}Form :errors="violations" @send-form="onSendForm" />
+
+  <router-link :to="{ name: '{{{titleUcFirst}}}List' }" class="btn btn-primary">
+    Back to list
+  </router-link>
 </template>
