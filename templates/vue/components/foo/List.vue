@@ -96,32 +96,47 @@ onBeforeUnmount(() => {
           >
             \{{ item['@id'] }}
           </router-link>
-        </th>
-{{#each fields}}
-      <td>
-        {{#if reference}}
-          <template>
-            <div v-if="Array.isArray(item['{{{reference.name}}}'])">
-              <router-link
-                v-for="link in item['{{{reference.name}}}']"
-                :key="link['@id']"
-                :to="{ name: '{{{reference.title}}}Show', params: { id: link['@id'] } }"
-              >
-                \{{ link['@id'] }}
-              </router-link>
-            </div>
-            <router-link
-              v-else
-              :to="{ name: '{{{reference.title}}}Show', params: { id: item['{{{reference.name}}}'] } }"
-            >
-              \{{ item['{{{reference.name}}}'] }}
-            </router-link>
-          </template>
-        {{else}}
-          \{{ item.{{{name}}} }}
-        {{/if}}
-      </td>
-{{/each}}
+        {{#each fields}}
+        <td>
+          {{#if isReferences}}
+          <router-link
+            v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+            :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
+            :key="{{lowercase reference.title}}"
+          >
+            \{{ {{lowercase reference.title}} }}
+
+            <br />
+          </router-link>
+          {{else if reference}}
+          <router-link
+          :to="{ name: '{{reference.title}}Show', params: { id: item.{{lowercase reference.title}} } }"
+          >
+            \{{ item.{{lowercase reference.title}} }}
+          </router-link>
+          {{else if isEmbeddeds}}
+          <router-link
+            v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
+            :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
+            :key="{{lowercase embedded.title}}['@id']"
+          >
+            \{{ {{lowercase embedded.title}}["@id"] }}
+
+            <br />
+          </router-link>
+          {{else if embedded}}
+          <router-link
+            :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
+          >
+            \{{ item.{{lowercase embedded.title}}['@id'] }}
+          </router-link>
+          {{else if (compare type "==" "dateTime") }}
+            \{{ formatDateTime(item.{{name}}) }}
+          {{else}}
+            \{{ item.{{name}} }}
+          {{/if}}
+        </td>
+        {{/each}}
         <td>
           <router-link :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">
             <i class="bi-search" />
