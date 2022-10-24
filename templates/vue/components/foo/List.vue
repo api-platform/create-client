@@ -1,27 +1,28 @@
 <script lang="ts" setup>
-import { use{{{titleUcFirst}}}DeleteStore } from "@/stores/{{{lc}}}/delete";
-import type { {{{titleUcFirst}}} } from "@/utils/types";
+import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
+import type { {{titleUcFirst}} } from "@/utils/types";
 import { storeToRefs } from "pinia";
 import { onBeforeUnmount } from "vue";
-import { use{{{titleUcFirst}}}ListStore } from "@/stores/{{{lc}}}/list";
+import { use{{titleUcFirst}}ListStore } from "@/stores/{{lc}}/list";
 import { mercureSubscribe } from "@/utils/mercure";
+import { formatDateTime } from "@/utils/date";
 
-const {{{lc}}}ListStore = use{{{titleUcFirst}}}ListStore();
-const { items, error, view, isLoading } = storeToRefs({{{lc}}}ListStore);
+const {{lc}}ListStore = use{{titleUcFirst}}ListStore();
+const { items, error, view, isLoading } = storeToRefs({{lc}}ListStore);
 
-const mercureEl = (data: {{{titleUcFirst}}}) => {
+const mercureEl = (data: {{titleUcFirst}}) => {
   if (Object.keys(data).length === 1) {
-    {{{lc}}}ListStore.deleteItem(data);
-    {{{lc}}}DeleteStore.setMercureDeleted(data);
+    {{lc}}ListStore.deleteItem(data);
+    {{lc}}DeleteStore.setMercureDeleted(data);
     return;
   }
 
-  {{{lc}}}ListStore.updateItem(data);
+  {{lc}}ListStore.updateItem(data);
 };
 
 let mercureSub: EventSource | null = null;
 
-{{{lc}}}ListStore.$subscribe((mutation, state) => {
+{{lc}}ListStore.$subscribe((mutation, state) => {
   if (!state.hubUrl) {
     return;
   }
@@ -41,20 +42,20 @@ let mercureSub: EventSource | null = null;
   );
 });
 
-await {{{lc}}}ListStore.getItems();
+await {{lc}}ListStore.getItems();
 
-const {{{lc}}}DeleteStore = use{{{titleUcFirst}}}DeleteStore();
+const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
 const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
-  storeToRefs({{{lc}}}DeleteStore);
+  storeToRefs({{lc}}DeleteStore);
 
 onBeforeUnmount(() => {
   mercureSub?.close();
-  {{{lc}}}DeleteStore.$reset();
+  {{lc}}DeleteStore.$reset();
 });
 </script>
 
 <template>
-  <h1>{{{title}}} List</h1>
+  <h1>{{title}} List</h1>
 
   <div v-if="isLoading" class="alert alert-info">Loading...</div>
   <div v-if="deletedItem" class="alert alert-success">
@@ -67,7 +68,7 @@ onBeforeUnmount(() => {
 
   <p>
     <router-link 
-      :to="{ name: '{{{titleUcFirst}}}Create' }" 
+      :to="{ name: '{{titleUcFirst}}Create' }" 
       class="btn btn-primary"
     >
       Create
@@ -78,9 +79,9 @@ onBeforeUnmount(() => {
     <thead>
       <tr>
         <th>id</th>
-{{#each fields}}
+        {{#each fields}}
         <th>{{name}}</th>
-{{/each }}
+        {{/each }}
         <th colspan="2"></th>
       </tr>
     </thead>
@@ -89,13 +90,14 @@ onBeforeUnmount(() => {
         v-for="item in items"
         :key="item['@id']"
       >
-        <th scope="row">
+        <td>
           <router-link
             v-if="item"
-            :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}"
+            :to="{name: '{{titleUcFirst}}Show', params: { id: item['@id'] }}"
           >
             \{{ item['@id'] }}
           </router-link>
+        </td>
         {{#each fields}}
         <td>
           {{#if isReferences}}
@@ -138,13 +140,13 @@ onBeforeUnmount(() => {
         </td>
         {{/each}}
         <td>
-          <router-link :to="{name: '{{{titleUcFirst}}}Show', params: { id: item['@id'] }}">
+          <router-link :to="{name: '{{titleUcFirst}}Show', params: { id: item['@id'] }}">
             <i class="bi-search" />
             <span class="sr-only">Show</span>
           </router-link>
         </td>
         <td>
-          <router-link :to="{name: '{{{titleUcFirst}}}Update', params: { id: item['@id'] }}">
+          <router-link :to="{name: '{{titleUcFirst}}Update', params: { id: item['@id'] }}">
             <i class="bi-pencil" />
             <span class="sr-only">Edit</span>
           </router-link>
@@ -155,7 +157,7 @@ onBeforeUnmount(() => {
 
   <nav aria-label="Page navigation" v-if="view">
     <router-link
-      :to="view['hydra:first'] ? view['hydra:first'] : { name: '{{{titleUcFirst}}}List' }"
+      :to="view['hydra:first'] ? view['hydra:first'] : { name: '{{titleUcFirst}}List' }"
       :class="{ disabled: !view['hydra:previous'] }"
       class="btn btn-primary"
       aria-label="First page"
@@ -164,7 +166,7 @@ onBeforeUnmount(() => {
     </router-link>
     &nbsp;
     <router-link
-      :to="!view['hydra:previous'] || view['hydra:previous'] === view['hydra:first'] ? { name: '{{{titleUcFirst}}}List' } : view['hydra:previous']"
+      :to="!view['hydra:previous'] || view['hydra:previous'] === view['hydra:first'] ? { name: '{{titleUcFirst}}List' } : view['hydra:previous']"
       :class="{ disabled: !view['hydra:previous'] }"
       class="btn btn-primary"
       aria-label="Previous page"
