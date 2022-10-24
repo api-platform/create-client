@@ -1,38 +1,38 @@
 <script lang="ts" setup>
-import { use{{{titleUcFirst}}}CreateStore } from "@/stores/{{{lc}}}/create";
-import { use{{{titleUcFirst}}}DeleteStore } from "@/stores/{{{lc}}}/delete";
-import { use{{{titleUcFirst}}}UpdateStore } from "@/stores/{{{lc}}}/update";
-import type { {{{titleUcFirst}}} } from "@/utils/types";
+import { use{{titleUcFirst}}CreateStore } from "@/stores/{{lc}}/create";
+import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
+import { use{{titleUcFirst}}UpdateStore } from "@/stores/{{lc}}/update";
+import type { {{titleUcFirst}} } from "@/utils/types";
 import { storeToRefs } from "pinia";
 import { onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import {{{titleUcFirst}}}Form from "./{{{titleUcFirst}}}Form.vue";
+import {{titleUcFirst}}Form from "./Form.vue";
 import { mercureSubscribe } from "../../utils/mercure";
 
 const route = useRoute();
 const router = useRouter();
 
-const {{{lc}}}UpdateStore = use{{{titleUcFirst}}}UpdateStore();
+const {{lc}}UpdateStore = use{{titleUcFirst}}UpdateStore();
 const {
   retrieved: item,
   updated,
   error,
   isLoading,
   violations,
-} = storeToRefs({{{lc}}}UpdateStore);
+} = storeToRefs({{lc}}UpdateStore);
 
-const mercureEl = (data: {{{titleUcFirst}}}) => {
+const mercureEl = (data: {{titleUcFirst}}) => {
   if (Object.keys(data).length === 1) {
-    {{{lc}}}DeleteStore.setMercureDeleted(data);
+    {{lc}}DeleteStore.setMercureDeleted(data);
     return;
   }
 
-  {{{lc}}}UpdateStore.setUpdated(data);
+  {{lc}}UpdateStore.setUpdated(data);
 };
 
 let mercureSub: EventSource | null = null;
 
-{{{lc}}}UpdateStore.$subscribe((mutation, state) => {
+{{lc}}UpdateStore.$subscribe((mutation, state) => {
   if (!state.hubUrl) {
     return;
   }
@@ -52,50 +52,50 @@ let mercureSub: EventSource | null = null;
   );
 });
 
-await {{{lc}}}UpdateStore.retrieve(decodeURIComponent(route.params.id as string));
+await {{lc}}UpdateStore.retrieve(decodeURIComponent(route.params.id as string));
 
-function onSendForm(item: {{{titleUcFirst}}}) {
-  {{{lc}}}UpdateStore.update(item);
+function onSendForm(item: {{titleUcFirst}}) {
+  {{lc}}UpdateStore.update(item);
 }
 
-const {{{lc}}}CreateStore = use{{{titleUcFirst}}}CreateStore();
-const { created } = storeToRefs({{{lc}}}CreateStore);
+const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
+const { created } = storeToRefs({{lc}}CreateStore);
 
-const {{{lc}}}DeleteStore = use{{{titleUcFirst}}}DeleteStore();
+const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
 const { error: deleteError, isLoading: deleteLoading } =
-  storeToRefs({{{lc}}}DeleteStore);
+  storeToRefs({{lc}}DeleteStore);
 
-{{{lc}}}DeleteStore.$subscribe((mutation, state) => {
+{{lc}}DeleteStore.$subscribe((mutation, state) => {
   if (state.mercureDeleted) {
-    router.push({ name: "{{{titleUcFirst}}}List" });
+    router.push({ name: "{{titleUcFirst}}List" });
   }
 });
 
 async function deleteItem() {
   if (!item.value) {
-    {{{lc}}}UpdateStore.setError("No {{{lc}}} found. Please reload");
+    {{lc}}UpdateStore.setError("No {{lc}} found. Please reload");
     return;
   }
 
-  if (window.confirm("Are you sure you want to delete this {{{lc}}}?")) {
-    await {{{lc}}}DeleteStore.deleteItem(item.value);
+  if (window.confirm("Are you sure you want to delete this {{lc}}?")) {
+    await {{lc}}DeleteStore.deleteItem(item.value);
 
-    if ({{{lc}}}DeleteStore.deleted) {
-      router.push({ name: "{{{titleUcFirst}}}List" });
+    if ({{lc}}DeleteStore.deleted) {
+      router.push({ name: "{{titleUcFirst}}List" });
     }
   }
 }
 
 onBeforeUnmount(() => {
   mercureSub?.close();
-  {{{lc}}}UpdateStore.$reset();
-  {{{lc}}}CreateStore.$reset();
+  {{lc}}UpdateStore.$reset();
+  {{lc}}CreateStore.$reset();
 });
 </script>
 
 <template>
   <div>
-    <h1>Edit {{{titleUcFirst}}} \{{ item?.['@id'] }}</h1>
+    <h1>Edit {{titleUcFirst}} \{{ item?.['@id'] }}</h1>
 
     <div
       v-if="created"
@@ -124,7 +124,7 @@ onBeforeUnmount(() => {
       role="alert"
     >
       <i class="bi-exclamation-triangle" />
-      {{ error }}
+      \{{ error }}
     </div>
     <div
       v-if="deleteError"
@@ -132,10 +132,10 @@ onBeforeUnmount(() => {
       role="alert"
     >
       <i class="bi-exclamation-triangle" />
-      {{ deleteError }}
+      \{{ deleteError }}
     </div>
 
-    <{{{titleUcFirst}}}Form
+    <{{titleUcFirst}}Form
       v-if="item"
       :values="item"
       :errors="violations"
@@ -144,7 +144,7 @@ onBeforeUnmount(() => {
 
     <router-link
       v-if="item"
-      :to="{ name: '{{{titleUcFirst}}}List' }"
+      :to="{ name: '{{titleUcFirst}}List' }"
       class="btn btn-primary"
     >
       Back to list
