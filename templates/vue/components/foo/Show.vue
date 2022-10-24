@@ -85,7 +85,7 @@ onBeforeUnmount(() => {
     \{{ error }}
   </div>
   <div v-if="deleteError" class="alert alert-danger" role="alert">
-    <<i class="bi-exclamation-triangle" />
+    <i class="bi-exclamation-triangle" />
     \{{ deleteError }}
   </div>
   
@@ -98,12 +98,47 @@ onBeforeUnmount(() => {
         </tr>
       </thead>
       <tbody>
-    {{#each fields}}
-        <tr>
-          <th scope="row">{{name}}</th>
-          <td>\{{ item.{{name}} }}</td>
-        </tr>
-    {{/each }}
+        {{#each fields}}
+        <td>
+          {{#if isReferences}}
+          <router-link
+            v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+            :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
+            :key="{{lowercase reference.title}}"
+          >
+            \{{ {{lowercase reference.title}} }}
+
+            <br />
+          </router-link>
+          {{else if reference}}
+          <router-link
+          :to="{ name: '{{reference.title}}Show', params: { id: item.{{lowercase reference.title}} } }"
+          >
+            \{{ item.{{lowercase reference.title}} }}
+          </router-link>
+          {{else if isEmbeddeds}}
+          <router-link
+            v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
+            :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
+            :key="{{lowercase embedded.title}}['@id']"
+          >
+            \{{ {{lowercase embedded.title}}["@id"] }}
+
+            <br />
+          </router-link>
+          {{else if embedded}}
+          <router-link
+            :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
+          >
+            \{{ item.{{lowercase embedded.title}}['@id'] }}
+          </router-link>
+          {{else if (compare type "==" "dateTime") }}
+            \{{ formatDateTime(item.{{name}}) }}
+          {{else}}
+            \{{ item.{{name}} }}
+          {{/if}}
+        </td>
+        {{/each}}
       </tbody>
     </table>
   </div>
