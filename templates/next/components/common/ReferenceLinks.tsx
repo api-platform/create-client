@@ -20,7 +20,7 @@ const ReferenceLinks: FunctionComponent<Props> = ({ items }) => {
 
   return (
     <Link href={typeof items === "string" ? items : items.href}>
-      <a>
+      <a className="text-cyan-700 font-bold">
         {typeof items === "string" ? items : items.name}
       </a>
     </Link>
