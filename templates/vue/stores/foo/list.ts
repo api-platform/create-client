@@ -4,8 +4,8 @@ import { extractHubURL } from "@/utils/mercure";
 import type { {{{titleUcFirst}}}, View } from "@/utils/types";
 
 interface ResponseData {
-  "hydra:member": {{{titleUcFirst}}}[];
-  "hydra:view": View;
+  "{{hydraPrefix}}member": {{{titleUcFirst}}}[];
+  "{{hydraPrefix}}view": View;
 }
 
 interface State {
@@ -42,8 +42,8 @@ export const use{{{titleUcFirst}}}ListStore = defineStore("{{{lc}}}List", {
             this.setError("");
             this.toggleLoading();
 
-            this.setItems(data["hydra:member"]);
-            this.setView(data["hydra:view"]);
+            this.setItems(data["{{hydraPrefix}}member"]);
+            this.setView(data["{{hydraPrefix}}view"]);
 
             if (hubUrl) {
               this.setHubUrl(hubUrl);

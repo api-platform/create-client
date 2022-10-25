@@ -1,13 +1,13 @@
 import { get, has, mapValues } from "lodash";
 
 interface HydraData {
-  "hydra:member": HydraData[];
+  "{{hydraPrefix}}member": HydraData[];
 }
 
 export function normalize(data: HydraData) {
-  if (has(data, "hydra:member")) {
+  if (has(data, "{{hydraPrefix}}member")) {
     // Normalize items in collections
-    data["hydra:member"] = data["hydra:member"].map((item) => normalize(item));
+    data["{{hydraPrefix}}member"] = data["{{hydraPrefix}}member"].map((item) => normalize(item));
 
     return data;
   }
