@@ -17,7 +17,7 @@ interface Review {
   publicationDate: string | null;
 }
 
-interface Topbook {
+interface TopBook {
   "@id"?: string;
   id: number;
   title: string;
@@ -40,4 +40,4 @@ interface SubmissionErrors {
   _error: string;
 }
 
-export type { Book, Review, Topbook, View, SubmissionErrors };
+export type { Book, Review, TopBook, View, SubmissionErrors };
