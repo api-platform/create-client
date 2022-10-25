@@ -71,6 +71,30 @@ export default class {
     if (warn) console.log(`The file "${dest}" already exists`);
   }
 
+  overwriteFile(template, dest, context = {}, warn = true) {
+    if (undefined === this.templates[template]) {
+      console.log(
+        `The template ${template} does not exists in the registered templates.`
+      );
+
+      return;
+    }
+
+    // Format the generated code using Prettier
+    let content = this.templates[template](context);
+    if (template.endsWith(".js")) {
+      content = prettier.format(content, { parser: "babel" });
+    } else if (template.endsWith(".ts") || template.endsWith(".tsx")) {
+      content = prettier.format(content, { parser: "babel-ts" });
+    }
+
+    fs.writeFileSync(dest, content);
+
+    if (warn)
+      console.log(`The file "${dest}" already exists and has been overwritted`);
+    return;
+  }
+
   createEntrypoint(entrypoint, dest) {
     this.createFile("entrypoint.js", dest, { entrypoint }, false);
   }

@@ -126,9 +126,9 @@
 <script>
 import { mapActions } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
-import ListWatcher from '../../mixins/ListWatcher';
-import * as types from '../../store/modules/{{{lc}}}/list/mutation_types'
-import * as delTypes from '../../store/modules/{{{lc}}}/delete/mutation_types';
+import ListWatcher from '../../../mixins/ListWatcher';
+import * as types from '../../../store/modules/{{{lc}}}/list/mutation_types'
+import * as delTypes from '../../../store/modules/{{{lc}}}/delete/mutation_types';
 
 export default {
   mixins: [ListWatcher],

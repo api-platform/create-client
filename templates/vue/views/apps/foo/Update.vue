@@ -51,10 +51,10 @@
 <script>
 import { mapActions } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
-import ItemWatcher from '../../mixins/ItemWatcher';
+import ItemWatcher from '../../../mixins/ItemWatcher';
 import {{{titleUcFirst}}}Form from './Form.vue';
-import * as types from '../../store/modules/{{{lc}}}/update/mutation_types';
-import * as delTypes from '../../store/modules/{{{lc}}}/delete/mutation_types';
+import * as types from '../../../store/modules/{{{lc}}}/update/mutation_types';
+import * as delTypes from '../../../store/modules/{{{lc}}}/delete/mutation_types';
 
 export default {
   mixins: [ItemWatcher],

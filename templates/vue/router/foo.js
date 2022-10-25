@@ -2,21 +2,21 @@ export default [
   {
     name: '{{{titleUcFirst}}}List',
     path: '/{{{name}}}/',
-    component: () => import('../components/{{{lc}}}/List.vue'),
+    component: () => import('../views/apps/{{{lc}}}/List.vue'),
   },
   {
     name: '{{{titleUcFirst}}}Create',
     path: '/{{{name}}}/create',
-    component: () => import('../components/{{{lc}}}/Create.vue'),
+    component: () => import('../views/apps/{{{lc}}}/Create.vue'),
   },
   {
     name: '{{{titleUcFirst}}}Update',
     path: '/{{{name}}}/edit/:id',
-    component: () => import('../components/{{{lc}}}/Update.vue'),
+    component: () => import('../views/apps/{{{lc}}}/Update.vue'),
   },
   {
     name: '{{{titleUcFirst}}}Show',
     path: '/{{{name}}}/show/:id',
-    component: () => import('../components/{{{lc}}}/Show.vue'),
+    component: () => import('../views/apps/{{{lc}}}/Show.vue'),
   },
 ]

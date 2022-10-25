@@ -11,8 +11,8 @@ import {
   parseSwaggerDocumentation,
 } from "@api-platform/api-doc-parser";
 import generators from "./generators.js";
-
-const dirname = path.dirname(fileURLToPath(import.meta.url));
+const resourcesList = [];
+const dirname = path.dirname(fileURLToPath(import.meta.url)); // jshint ignore:line
 
 const packageJson = JSON.parse(
   fs.readFileSync(`${dirname}/../package.json`, "utf-8")
@@ -124,7 +124,6 @@ async function main() {
         .filter((resource) => {
           const nameLc = resource.name.toLowerCase();
           const titleLc = resource.title.toLowerCase();
-
           return (
             null === resourceToGenerate ||
             nameLc === resourceToGenerate ||
@@ -140,11 +139,95 @@ async function main() {
           resource.writableFields = filterDeprecated(resource.writableFields);
 
           generator.generate(ret.api, resource, outputDirectory, serverPath);
-
+          resourcesList.push({ name: resource.name, title: resource.title });
           return resource;
         })
         // display helps after all resources have been generated to check relation dependency for example
         .forEach((resource) => generator.help(resource, outputDirectory));
+    })
+    .then(() => {
+      const currProjectPackage = JSON.parse(
+        fs.readFileSync(`${outputDirectory}/../package.json`, "utf-8")
+      );
+      currProjectPackage.dependencies["vue-i18n"] = "^8.27.2";
+      const packageFilePath = `${outputDirectory}/../package.json`;
+      fs.writeFileSync(
+        packageFilePath,
+        JSON.stringify(currProjectPackage, null, 2)
+      );
+    })
+    .then(() => {
+      // Register every route list of each resource
+      const routesPath = "router/index.js";
+
+      // resource routes import template
+      const importRoutesContent = resourcesList.reduce(
+        (_prevRes, _currRes) =>
+          _prevRes +
+          `import ${_currRes.title.toLowerCase()}Routes from "./${_currRes.title.toLowerCase()}"\n`,
+        ""
+      );
+      // resource routes add in routes list
+      const routesSpreadContent = resourcesList.reduce(
+        (_prevRes, _currRes) =>
+          _prevRes + `...${_currRes.title.toLowerCase()}Routes,\n`,
+        ""
+      );
+      generator.overwriteFile(routesPath, `${outputDirectory}/${routesPath}`, {
+        importRoutes: importRoutesContent,
+        routesSpread: routesSpreadContent,
+      });
+
+      // Register every store module of each resource
+      const storePath = "store/index.js";
+
+      // resource modules import template
+      const importModulesContent = resourcesList.reduce(
+        (_prevMod, _currMod) =>
+          _prevMod +
+          `import ${_currMod.title.toLowerCase()} from "./modules/${_currMod.title.toLowerCase()}/"\n`,
+        ""
+      );
+
+      // resource modules add in modules list
+      const modulesSpreadContent = resourcesList.reduce(
+        (_prevMod, _currMod) => _prevMod + `${_currMod.title.toLowerCase()},\n`,
+        ""
+      );
+      generator.overwriteFile(storePath, `${outputDirectory}/${storePath}`, {
+        importModules: importModulesContent,
+        modulesSpread: modulesSpreadContent,
+      });
+
+      // vue
+      for (const file of ["views/Home.vue", "App.vue"]) {
+        generator.overwriteFile(file, `${outputDirectory}/${file}`);
+      }
+
+      // Main
+      const libsContent = 'import i18n from "@/libs/i18n"\n';
+      const addLibsContent = "i18n,\n";
+      generator.overwriteFile("resourceMain.js", `${outputDirectory}/main.js`, {
+        importLibs: libsContent,
+        addLibs: addLibsContent,
+      });
+
+      // add sidebar with resource as items
+      const sideBarPath = "components/Sidebar.vue"; //menu items from resources list
+      const menuContent = resourcesList.reduce(
+        (prevRes, currRes) =>
+          prevRes +
+          `<li class="nav-item">
+          <router-link to="/${currRes.name}/" class="nav-link align-middle px-0">
+            <i class="fs-4 bi-house"></i>
+            <span class="ms-1 d-none d-sm-inline">${currRes.title}</span>
+          </router-link>
+        </li>\n`,
+        ""
+      );
+      generator.createFile(sideBarPath, `${outputDirectory}/${sideBarPath}`, {
+        menu: menuContent,
+      });
     })
     .catch((e) => {
       console.log(e);

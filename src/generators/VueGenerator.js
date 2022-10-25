@@ -12,6 +12,7 @@ export default class extends BaseGenerator {
 
     this.registerTemplates(`vue/`, [
       // modules
+      "store/index.js",
       "store/modules/foo/index.js",
       "store/modules/foo/create/actions.js",
       "store/modules/foo/create/index.js",
@@ -35,11 +36,22 @@ export default class extends BaseGenerator {
       "store/modules/foo/update/mutations.js",
 
       // components
-      "components/foo/Create.vue",
-      "components/foo/Form.vue",
-      "components/foo/List.vue",
-      "components/foo/Update.vue",
-      "components/foo/Show.vue",
+      "components/Sidebar.vue",
+
+      // views
+      "App.vue",
+      "views/Home.vue",
+      "views/apps/foo/Create.vue",
+      "views/apps/foo/Form.vue",
+      "views/apps/foo/List.vue",
+      "views/apps/foo/Update.vue",
+      "views/apps/foo/Show.vue",
+      "views/Layout/DashboardLayout.vue",
+
+      //internationalization plugin
+      "libs/i18n/locales/fr.json",
+      "libs/i18n/locales/en.json",
+      "libs/i18n/index.js",
 
       // mixins
       "mixins/ItemWatcher.js",
@@ -47,6 +59,7 @@ export default class extends BaseGenerator {
 
       // routes
       "router/foo.js",
+      "router/index.js",
 
       // error
       "error/SubmissionError.js",
@@ -54,6 +67,9 @@ export default class extends BaseGenerator {
       // utils
       "utils/fetch.js",
       "utils/hydra.js",
+
+      // main
+      "resourceMain.js",
     ]);
   }
 
@@ -117,6 +133,8 @@ export const store = new Vuex.Store({
       `${dir}/mixins`,
       `${dir}/router`,
       `${dir}/utils`,
+      `${dir}/views/Layout`,
+      `${dir}/libs/i18n/locales`,
     ].forEach((dir) => this.createDir(dir, false));
 
     [
@@ -127,6 +145,7 @@ export const store = new Vuex.Store({
       `${dir}/store/modules/${lc}/show`,
       `${dir}/store/modules/${lc}/update`,
       `${dir}/components/${lc}`,
+      `${dir}/views/apps/${lc}`,
     ].forEach((dir) => this.createDir(dir));
 
     [
@@ -153,12 +172,12 @@ export const store = new Vuex.Store({
       "store/modules/%s/update/mutation_types.js",
       "store/modules/%s/update/mutations.js",
 
-      // components
-      "components/%s/Create.vue",
-      "components/%s/Form.vue",
-      "components/%s/List.vue",
-      "components/%s/Update.vue",
-      "components/%s/Show.vue",
+      //views
+      "views/apps/%s/Create.vue",
+      "views/apps/%s/Form.vue",
+      "views/apps/%s/List.vue",
+      "views/apps/%s/Update.vue",
+      "views/apps/%s/Show.vue",
 
       // routes
       "router/%s.js",
@@ -166,7 +185,14 @@ export const store = new Vuex.Store({
       this.createFileFromPattern(pattern, dir, lc, context)
     );
 
-    for (const file of ["mixins/ItemWatcher.js", "mixins/ListWatcher.js"]) {
+    for (const file of [
+      "views/Layout/DashboardLayout.vue",
+      "libs/i18n/locales/en.json",
+      "libs/i18n/locales/fr.json",
+      "libs/i18n/index.js",
+      "mixins/ItemWatcher.js",
+      "mixins/ListWatcher.js",
+    ]) {
       this.createFile(file, `${dir}/${file}`);
     }
 
