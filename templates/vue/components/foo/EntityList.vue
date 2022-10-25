@@ -2,13 +2,17 @@
 import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
 import type { {{titleUcFirst}} } from "@/utils/types";
 import { storeToRefs } from "pinia";
+{{#if hasRelationsOrManyRelations}}
 import { useRouter } from "vue-router";
+{{/if}}
 import { onBeforeUnmount } from "vue";
 import { use{{titleUcFirst}}ListStore } from "@/stores/{{lc}}/list";
 import { mercureSubscribe } from "@/utils/mercure";
 import { formatDateTime } from "@/utils/date";
 
+{{#if hasRelationsOrManyRelations}}
 const router = useRouter();
+{{/if}}
 
 const {{lc}}ListStore = use{{titleUcFirst}}ListStore();
 const { items, error, view, isLoading } = storeToRefs({{lc}}ListStore);
@@ -128,7 +132,7 @@ onBeforeUnmount(() => {
             \{{ item.{{lowercase reference.title}} }}
           </p>
           {{else if isEmbeddeds}}
-          <template v-if="router.hasRoute('{{reference.title}}Show')">
+          <template v-if="router.hasRoute('{{embedded.title}}Show')">
             <router-link
               v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
               :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
@@ -150,10 +154,10 @@ onBeforeUnmount(() => {
           </template>
           {{else if embedded}}
           <router-link
-            v-if="router.hasRoute('{{reference.title}}Show')"
+            v-if="router.hasRoute('{{embedded.title}}Show')"
             :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
           >
-            \{{ item.{{lowercase embedded.title}}['@id'] }}
+            \{{ item.{{lowercase embedded.title}}["@id"] }}
           </router-link>
 
           <p v-else>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 {{#if hasManyRelations}}
-  import FormRepeater from "@/components/common/FormRepeater.vue";
+import FormRepeater from "@/components/common/FormRepeater.vue";
 {{/if}}
 import { formatDateInput } from "@/utils/date";
 import type { {{titleUcFirst}}, SubmissionErrors } from "@/utils/types";
@@ -44,18 +44,20 @@ function emitSendForm() {
   <form @submit.prevent="emitSendForm">
   {{#each formFields}}
     <div class="form-group">
-      <label for="{{../lc}}_{{name}}" class="form-control-label">{{name}}</label>
+      <label for="{{../lc}}_{{name}}" class="form-control-label">
+        {{name}}
+      </label>
       {{#if isRelations}}
       <FormRepeater 
         :values="item.{{name}}" 
-        @update="(values) => item.{{name}} = values" 
+        @update="(values) => (item.{{name}} = values)" 
       />
       {{else}}
       <input
         id="{{../lc}}_{{name}}"
         v-model="item.{{name}}"
         :class="[
-          'form-control', 
+          'form-control',
           violations?.{{name}} ? 'is-invalid' : 'is-valid'
         ]"
         {{#compare type "==" "dateTime" }}
@@ -71,7 +73,7 @@ function emitSendForm() {
         required
         {{/if}}
         placeholder="{{description}}"
-      >
+      />
       {{/if}}
       <div v-if="violations?.{{name}}" class="invalid-feedback">
         \{{ violations.{{name}} }}

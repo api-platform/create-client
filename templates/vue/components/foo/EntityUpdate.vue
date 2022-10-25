@@ -114,7 +114,7 @@ onBeforeUnmount(() => {
       <i class="bi-exclamation-triangle" />
       \{{ error }}
     </div>
-    <div  v-if="deleteError" class="alert alert-danger" role="alert">
+    <div v-if="deleteError" class="alert alert-danger" role="alert">
       <i class="bi-exclamation-triangle" />
       \{{ deleteError }}
     </div>

@@ -136,7 +136,7 @@ onBeforeUnmount(() => {
               \{{ item.{{lowercase reference.title}} }}
             </p>
             {{else if isEmbeddeds}}
-            <template v-if="router.hasRoute('{{reference.title}}Show')">
+            <template v-if="router.hasRoute('{{embedded.title}}Show')">
               <router-link
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
                 :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
@@ -158,10 +158,10 @@ onBeforeUnmount(() => {
             </template>
             {{else if embedded}}
             <router-link
-              v-if="router.hasRoute('{{reference.title}}Show')"
+              v-if="router.hasRoute('{{embedded.title}}Show')"
               :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
             >
-              \{{ item.{{lowercase embedded.title}}['@id'] }}
+              \{{ item.{{lowercase embedded.title}}["@id"] }}
             </router-link>
 
             <p v-else>
