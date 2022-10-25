@@ -78,7 +78,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <h1>Show {{titleUcFirst}} \{{ item?.['@id'] }}</h1>
+  <h1>Show {{titleUcFirst}} \{{ item?.["@id"] }}</h1>
 
   <div v-if="isLoading" class="alert alert-info" role="status">Loading...</div>
   <div v-if="error" class="alert alert-danger" role="alert">
@@ -89,7 +89,7 @@ onBeforeUnmount(() => {
     <i class="bi-exclamation-triangle" />
     \{{ deleteError }}
   </div>
-  
+
   <div v-if="item" class="table-responsive">
     <table class="table table-striped table-hover">
       <thead>
@@ -168,9 +168,9 @@ onBeforeUnmount(() => {
               \{{ item.{{lowercase embedded.title}}["@id"] }}
             </p>
             {{else if (compare type "==" "dateTime") }}
-              \{{ formatDateTime(item.{{name}}) }}
+            \{{ formatDateTime(item.{{name}}) }}
             {{else}}
-              \{{ item.{{name}} }}
+            \{{ item.{{name}} }}
             {{/if}}
           </td>
         </tr>
@@ -179,10 +179,7 @@ onBeforeUnmount(() => {
     </table>
   </div>
 
-  <router-link
-    :to="{ name: '{{titleUcFirst}}List' }"
-    class="btn btn-primary"
-  >
+  <router-link :to="{ name: '{{titleUcFirst}}List' }" class="btn btn-primary">
     Back to list
   </router-link>
   <router-link
