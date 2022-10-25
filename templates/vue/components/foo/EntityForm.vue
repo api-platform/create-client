@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-{{#if hasManyRelations}}import FormRepeater from '@/components/common/FormRepeater.vue';{{/if}}
+{{#if hasManyRelations}}
+  import FormRepeater from "@/components/common/FormRepeater.vue";
+{{/if}}
 import { formatDateInput } from "@/utils/date";
 import type { {{titleUcFirst}}, SubmissionErrors } from "@/utils/types";
 import { toRef } from "vue";
@@ -42,33 +44,34 @@ function emitSendForm() {
   <form @submit.prevent="emitSendForm">
   {{#each formFields}}
     <div class="form-group">
-      <label for="{{../lc}}_{{name}}" class="form-control-label">
-        {{name}}
-      </label>
+      <label for="{{../lc}}_{{name}}" class="form-control-label">{{name}}</label>
       {{#if isRelations}}
-      <FormRepeater :values="item.{{name}}" @update="(values) => item.{{name}} = values" />
+      <FormRepeater 
+        :values="item.{{name}}" 
+        @update="(values) => item.{{name}} = values" 
+      />
       {{else}}
-        <input
-          id="{{../lc}}_{{name}}"
-          v-model="item.{{name}}"
-          :class="[
-            'form-control', 
-            violations?.{{name}} ? 'is-invalid' : 'is-valid'
-          ]"
-          {{#compare type "==" "dateTime" }}
-          type="date"
-          {{/compare}}
-          {{#compare type "!=" "dateTime" }}
-          type="{{type}}"
-          {{/compare}}
-          {{#if step}}
-          step="{{step}}"
-          {{/if}}
-          {{#if required}}
-          required
-          {{/if}}
-          placeholder="{{description}}"
-        >
+      <input
+        id="{{../lc}}_{{name}}"
+        v-model="item.{{name}}"
+        :class="[
+          'form-control', 
+          violations?.{{name}} ? 'is-invalid' : 'is-valid'
+        ]"
+        {{#compare type "==" "dateTime" }}
+        type="date"
+        {{/compare}}
+        {{#compare type "!=" "dateTime" }}
+        type="{{type}}"
+        {{/compare}}
+        {{#if step}}
+        step="{{step}}"
+        {{/if}}
+        {{#if required}}
+        required
+        {{/if}}
+        placeholder="{{description}}"
+      >
       {{/if}}
       <div v-if="violations?.{{name}}" class="invalid-feedback">
         \{{ violations.{{name}} }}

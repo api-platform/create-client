@@ -25,9 +25,7 @@ async function onSendForm(item: {{titleUcFirst}}) {
 <template>
   <h1>Create {{title}}</h1>
 
-  <div v-if="isLoading" class="alert alert-info" role="status">
-    Loading...
-  </div>
+  <div v-if="isLoading" class="alert alert-info" role="status">Loading...</div>
   <div v-if="error" class="alert alert-danger" role="alert">
     <i class="bi-exclamation-triangle" />
     \{{ error }}

@@ -95,21 +95,13 @@ onBeforeUnmount(() => {
 
 <template>
   <div>
-    <h1>Edit {{titleUcFirst}} \{{ item?.['@id'] }}</h1>
+    <h1>Edit {{titleUcFirst}} \{{ item?.["@id"] }}</h1>
 
-    <div
-      v-if="created"
-      class="alert alert-success"
-      role="status"
-    >
-      \{{ created['@id'] }} created.
+    <div v-if="created" class="alert alert-success" role="status">
+      \{{ created["@id"] }} created.
     </div>
-    <div
-      v-if="updated"
-      class="alert alert-success"
-      role="status"
-    >
-      \{{ updated['@id'] }} updated.
+    <div v-if="updated" class="alert alert-success" role="status">
+      \{{ updated["@id"] }} updated.
     </div>
     <div
       v-if="isLoading || deleteLoading"
@@ -118,19 +110,11 @@ onBeforeUnmount(() => {
     >
       Loading...
     </div>
-    <div
-      v-if="error"
-      class="alert alert-danger"
-      role="alert"
-    >
+    <div v-if="error" class="alert alert-danger" role="alert">
       <i class="bi-exclamation-triangle" />
       \{{ error }}
     </div>
-    <div
-      v-if="deleteError"
-      class="alert alert-danger"
-      role="alert"
-    >
+    <div  v-if="deleteError" class="alert alert-danger" role="alert">
       <i class="bi-exclamation-triangle" />
       \{{ deleteError }}
     </div>
@@ -142,11 +126,7 @@ onBeforeUnmount(() => {
       @send-form="onSendForm"
     />
 
-    <router-link
-      v-if="item"
-      :to="{ name: '{{titleUcFirst}}List' }"
-      class="btn btn-primary"
-    >
+    <router-link v-if="item" :to="{ name: '{{titleUcFirst}}List' }" class="btn btn-primary">
       Back to list
     </router-link>
     <button class="btn btn-danger" @click="deleteItem">Delete</button>

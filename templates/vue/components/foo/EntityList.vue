@@ -62,21 +62,16 @@ onBeforeUnmount(() => {
 
   <div v-if="isLoading" class="alert alert-info">Loading...</div>
   <div v-if="deletedItem" class="alert alert-success">
-    \{{ deletedItem['@id'] }} deleted.
+    \{{ deletedItem["@id"] }} deleted.
   </div>
   <div v-if="mercureDeletedItem" class="alert alert-success">
-    \{{ mercureDeletedItem['@id'] }} deleted by another user.
+    \{{ mercureDeletedItem["@id"] }} deleted by another user.
   </div>
   <div v-if="error" class="alert alert-danger">\{{ error }}</div>
 
-  <p>
-    <router-link 
-      :to="{ name: '{{titleUcFirst}}Create' }" 
-      class="btn btn-primary"
-    >
-      Create
-    </router-link>
-  </p>
+  <router-link :to="{ name: '{{titleUcFirst}}Create' }" class="btn btn-primary">
+    Create
+  </router-link>
 
   <table class="table table-responsive table-striped table-hover">
     <thead>
@@ -89,16 +84,13 @@ onBeforeUnmount(() => {
       </tr>
     </thead>
     <tbody>
-      <tr
-        v-for="item in items"
-        :key="item['@id']"
-      >
+      <tr v-for="item in items" :key="item['@id']">
         <td>
           <router-link
             v-if="item"
-            :to="{name: '{{titleUcFirst}}Show', params: { id: item['@id'] }}"
+            :to="{ name: '{{titleUcFirst}}Show', params: { id: item['@id'] } }"
           >
-            \{{ item['@id'] }}
+            \{{ item["@id"] }}
           </router-link>
         </td>
         {{#each fields}}
@@ -168,20 +160,20 @@ onBeforeUnmount(() => {
             \{{ item.{{lowercase embedded.title}}["@id"] }}
           </p>
           {{else if (compare type "==" "dateTime") }}
-            \{{ formatDateTime(item.{{name}}) }}
+          \{{ formatDateTime(item.{{name}}) }}
           {{else}}
-            \{{ item.{{name}} }}
+          \{{ item.{{name}} }}
           {{/if}}
         </td>
         {{/each}}
         <td>
-          <router-link :to="{name: '{{titleUcFirst}}Show', params: { id: item['@id'] }}">
+          <router-link :to="{ name: '{{titleUcFirst}}Show', params: { id: item['@id'] } }">
             <i class="bi-search" />
             <span class="sr-only">Show</span>
           </router-link>
         </td>
         <td>
-          <router-link :to="{name: '{{titleUcFirst}}Update', params: { id: item['@id'] }}">
+          <router-link :to="{ name: '{{titleUcFirst}}Update', params: { id: item['@id'] } }">
             <i class="bi-pencil" />
             <span class="sr-only">Edit</span>
           </router-link>
@@ -228,4 +220,3 @@ onBeforeUnmount(() => {
     </router-link>
   </nav>
 </template>
-
