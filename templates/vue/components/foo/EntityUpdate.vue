@@ -6,7 +6,7 @@ import type { {{titleUcFirst}} } from "@/utils/types";
 import { storeToRefs } from "pinia";
 import { onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import {{titleUcFirst}}Form from "./Form.vue";
+import {{titleUcFirst}}Form from "@/components/{{lc}}/EntityForm.vue";
 import { mercureSubscribe } from "../../utils/mercure";
 
 const route = useRoute();

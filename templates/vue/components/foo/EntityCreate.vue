@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {{titleUcFirst}}Form from './Form.vue';
+import {{titleUcFirst}}Form from "@/components/{{lc}}/EntityForm.vue";
 import { use{{titleUcFirst}}CreateStore } from "@/stores/{{lc}}/create";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
