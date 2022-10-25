@@ -20,17 +20,17 @@ let item: any = {};
 if (props.values) {
   item = {
     ...props.values,
-    {{#compare type "==" "dateTime" }}
-    publicationDate: formatDateInput(item.publicationDate),
-    {{/compare}}
     {{#each fields}}
+    {{#compare type "==" "dateTime" }}
+    publicationDate: formatDateInput(props.values.publicationDate),
+    {{/compare}}
     {{#if isEmbeddeds}}
-    {{name}}: props.value.{{name}}?.((item) => item["@id"] ?? "") ?? [],
+    {{name}}: props.values.{{name}}?.map((item) => item["@id"] ?? "") ?? [],
     {{else if embedded}}
-    {{name}}: props.value.{{name}}?.["@id"],
+    {{name}}: props.values.{{name}}?.["@id"],
     {{/if}}
     {{/each}}
-  }
+  };
 }
 
 function emitSendForm() {
