@@ -2,10 +2,13 @@
 import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
 import type { {{titleUcFirst}} } from "@/utils/types";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 import { onBeforeUnmount } from "vue";
 import { use{{titleUcFirst}}ListStore } from "@/stores/{{lc}}/list";
 import { mercureSubscribe } from "@/utils/mercure";
 import { formatDateTime } from "@/utils/date";
+
+const router = useRouter();
 
 const {{lc}}ListStore = use{{titleUcFirst}}ListStore();
 const { items, error, view, isLoading } = storeToRefs({{lc}}ListStore);
@@ -101,37 +104,69 @@ onBeforeUnmount(() => {
         {{#each fields}}
         <td>
           {{#if isReferences}}
-          <router-link
-            v-for="{{lowercase reference.title}} in item.{{reference.name}}"
-            :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
-            :key="{{lowercase reference.title}}"
-          >
-            \{{ {{lowercase reference.title}} }}
+          <template v-if="router.hasRoute('{{reference.title}}Show')">
+            <router-link
+              v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+              :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
+              :key="{{lowercase reference.title}}"
+            >
+              \{{ {{lowercase reference.title}} }}
 
-            <br />
-          </router-link>
+              <br />
+            </router-link>
+          </template>
+
+          <template v-else>
+            <p 
+              v-for="{{lowercase reference.title}} in item.{{reference.name}}" 
+              :key="{{lowercase reference.title}}"
+            >
+              \{{ {{lowercase reference.title}} }}
+            </p>
+          </template>
           {{else if reference}}
           <router-link
-          :to="{ name: '{{reference.title}}Show', params: { id: item.{{lowercase reference.title}} } }"
+            v-if="router.hasRoute('{{reference.title}}Show')"
+            :to="{ name: '{{reference.title}}Show', params: { id: item.{{lowercase reference.title}} } }"
           >
             \{{ item.{{lowercase reference.title}} }}
           </router-link>
-          {{else if isEmbeddeds}}
-          <router-link
-            v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-            :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
-            :key="{{lowercase embedded.title}}['@id']"
-          >
-            \{{ {{lowercase embedded.title}}["@id"] }}
 
-            <br />
-          </router-link>
+          <p v-else>
+            \{{ item.{{lowercase reference.title}} }}
+          </p>
+          {{else if isEmbeddeds}}
+          <template v-if="router.hasRoute('{{reference.title}}Show')">
+            <router-link
+              v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
+              :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
+              :key="{{lowercase embedded.title}}['@id']"
+            >
+              \{{ {{lowercase embedded.title}}["@id"] }}
+
+              <br />
+            </router-link>
+          </template>
+
+          <template v-else>
+            <p 
+              v-for="{{lowercase embedded.title}} in item.{{embedded.name}}" 
+              :key="{{lowercase embedded.title}}['@id']"
+            >
+              \{{ {{lowercase embedded.title}}["@id"] }}
+            </p>
+          </template>
           {{else if embedded}}
           <router-link
+            v-if="router.hasRoute('{{reference.title}}Show')"
             :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
           >
             \{{ item.{{lowercase embedded.title}}['@id'] }}
           </router-link>
+
+          <p v-else>
+            \{{ item.{{lowercase embedded.title}}["@id"] }}
+          </p>
           {{else if (compare type "==" "dateTime") }}
             \{{ formatDateTime(item.{{name}}) }}
           {{else}}
