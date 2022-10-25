@@ -20,7 +20,7 @@ function addField() {
 }
 
 function updateField(index: number, value: string) {
-  fields.value.splice(index, 1, value);
+  fields.value.splice(index, 1, value.trim());
 
   emitUpdate();
 }
