@@ -157,8 +157,8 @@ onBeforeUnmount(() => {
 
   <nav aria-label="Page navigation" v-if="view">
     <router-link
-      :to="view['hydra:first'] ? view['hydra:first'] : { name: '{{titleUcFirst}}List' }"
-      :class="{ disabled: !view['hydra:previous'] }"
+      :to="view['{{hydraPrefix}}first'] ? view['{{hydraPrefix}}first'] : { name: '{{titleUcFirst}}List' }"
+      :class="{ disabled: !view['{{hydraPrefix}}previous'] }"
       class="btn btn-primary"
       aria-label="First page"
     >
@@ -166,8 +166,8 @@ onBeforeUnmount(() => {
     </router-link>
     &nbsp;
     <router-link
-      :to="!view['hydra:previous'] || view['hydra:previous'] === view['hydra:first'] ? { name: '{{titleUcFirst}}List' } : view['hydra:previous']"
-      :class="{ disabled: !view['hydra:previous'] }"
+      :to="!view['{{hydraPrefix}}previous'] || view['{{hydraPrefix}}previous'] === view['{{hydraPrefix}}first'] ? { name: '{{titleUcFirst}}List' } : view['{{hydraPrefix}}previous']"
+      :class="{ disabled: !view['{{hydraPrefix}}previous'] }"
       class="btn btn-primary"
       aria-label="Previous page"
     >
@@ -175,8 +175,8 @@ onBeforeUnmount(() => {
     </router-link>
 
     <router-link
-      :to="view['hydra:next'] ? view['hydra:next'] : '#'"
-      :class="{ disabled: !view['hydra:next'] }"
+      :to="view['{{hydraPrefix}}next'] ? view['{{hydraPrefix}}next'] : '#'"
+      :class="{ disabled: !view['{{hydraPrefix}}next'] }"
       class="btn btn-primary"
       aria-label="Next page"
     >
@@ -184,8 +184,8 @@ onBeforeUnmount(() => {
     </router-link>
 
     <router-link
-      :to="view['hydra:last'] ? view['hydra:last'] : '#'"
-      :class="{ disabled: !view['hydra:next'] }"
+      :to="view['{{hydraPrefix}}last'] ? view['{{hydraPrefix}}last'] : '#'"
+      :class="{ disabled: !view['{{hydraPrefix}}next'] }"
       class="btn btn-primary"
       aria-label="Last page"
     >
