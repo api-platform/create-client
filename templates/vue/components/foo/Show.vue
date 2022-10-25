@@ -6,6 +6,7 @@ import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
 import { mercureSubscribe } from "../../utils/mercure";
 import { storeToRefs } from "pinia";
 import type { {{titleUcFirst}} } from "@/utils/types";
+import { formatDateTime } from "@/utils/date";
 
 const route = useRoute();
 const router = useRouter();
@@ -99,45 +100,80 @@ onBeforeUnmount(() => {
       </thead>
       <tbody>
         {{#each fields}}
-        <td>
-          {{#if isReferences}}
-          <router-link
-            v-for="{{lowercase reference.title}} in item.{{reference.name}}"
-            :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
-            :key="{{lowercase reference.title}}"
-          >
-            \{{ {{lowercase reference.title}} }}
+        <tr>
+          <th scope="row">{{name}}</th>
+          <td>
+            {{#if isReferences}}
+            <template v-if="router.hasRoute('{{reference.title}}Show')">
+              <router-link
+                v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+                :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
+                :key="{{lowercase reference.title}}"
+              >
+                \{{ {{lowercase reference.title}} }}
 
-            <br />
-          </router-link>
-          {{else if reference}}
-          <router-link
-          :to="{ name: '{{reference.title}}Show', params: { id: item.{{lowercase reference.title}} } }"
-          >
-            \{{ item.{{lowercase reference.title}} }}
-          </router-link>
-          {{else if isEmbeddeds}}
-          <router-link
-            v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-            :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
-            :key="{{lowercase embedded.title}}['@id']"
-          >
-            \{{ {{lowercase embedded.title}}["@id"] }}
+                <br />
+              </router-link>
+            </template>
 
-            <br />
-          </router-link>
-          {{else if embedded}}
-          <router-link
-            :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
-          >
-            \{{ item.{{lowercase embedded.title}}['@id'] }}
-          </router-link>
-          {{else if (compare type "==" "dateTime") }}
-            \{{ formatDateTime(item.{{name}}) }}
-          {{else}}
-            \{{ item.{{name}} }}
-          {{/if}}
-        </td>
+            <template v-else>
+              <p 
+                v-for="{{lowercase reference.title}} in item.{{reference.name}}" 
+                :key="{{lowercase reference.title}}"
+              >
+                \{{ {{lowercase reference.title}} }}
+              </p>
+            </template>
+            {{else if reference}}
+            <router-link
+              v-if="router.hasRoute('{{reference.title}}Show')"
+              :to="{ name: '{{reference.title}}Show', params: { id: item.{{lowercase reference.title}} } }"
+            >
+              \{{ item.{{lowercase reference.title}} }}
+            </router-link>
+
+            <p v-else>
+              \{{ item.{{lowercase reference.title}} }}
+            </p>
+            {{else if isEmbeddeds}}
+            <template v-if="router.hasRoute('{{reference.title}}Show')">
+              <router-link
+                v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
+                :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
+                :key="{{lowercase embedded.title}}['@id']"
+              >
+                \{{ {{lowercase embedded.title}}["@id"] }}
+
+                <br />
+              </router-link>
+            </template>
+
+            <template v-else>
+              <p 
+                v-for="{{lowercase embedded.title}} in item.{{embedded.name}}" 
+                :key="{{lowercase embedded.title}}['@id']"
+              >
+                \{{ {{lowercase embedded.title}}["@id"] }}
+              </p>
+            </template>
+            {{else if embedded}}
+            <router-link
+              v-if="router.hasRoute('{{reference.title}}Show')"
+              :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
+            >
+              \{{ item.{{lowercase embedded.title}}['@id'] }}
+            </router-link>
+
+            <p v-else>
+              \{{ item.{{lowercase embedded.title}}["@id"] }}
+            </p>
+            {{else if (compare type "==" "dateTime") }}
+              \{{ formatDateTime(item.{{name}}) }}
+            {{else}}
+              \{{ item.{{name}} }}
+            {{/if}}
+          </td>
+        </tr>
         {{/each}}
       </tbody>
     </table>
