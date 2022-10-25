@@ -1,16 +1,16 @@
 import { defineStore } from "pinia";
 import fetch from "@/utils/fetch";
 import SubmissionError from "@/error/SubmissionError";
-import type { {{{titleUcFirst}}}, SubmissionErrors } from "@/utils/types";
+import type { {{titleUcFirst}}, SubmissionErrors } from "@/utils/types";
 
 interface State {
   isLoading: boolean;
   error: string;
-  created: {{{titleUcFirst}}} | null;
+  created: {{titleUcFirst}} | null;
   violations: SubmissionErrors | null;
 }
 
-export const use{{{titleUcFirst}}}CreateStore = defineStore("{{{lc}}}Create", {
+export const use{{titleUcFirst}}CreateStore = defineStore("{{lc}}Create", {
   state: (): State => ({
     isLoading: false,
     error: "",
@@ -19,18 +19,18 @@ export const use{{{titleUcFirst}}}CreateStore = defineStore("{{{lc}}}Create", {
   }),
 
   actions: {
-    create(item: {{{titleUcFirst}}}) {
+    create(item: {{titleUcFirst}}) {
       this.setError("");
       this.toggleLoading();
 
-      return fetch("{{{name}}}", { method: "POST", body: JSON.stringify(item) })
+      return fetch("{{name}}", { method: "POST", body: JSON.stringify(item) })
         .then((response: Response) => {
           this.setError("");
           this.toggleLoading();
 
           return response.json();
         })
-        .then((data: {{{titleUcFirst}}}) => {
+        .then((data: {{titleUcFirst}}) => {
           this.setCreated(data);
         })
         .catch((e: Error | SubmissionError) => {
@@ -46,7 +46,7 @@ export const use{{{titleUcFirst}}}CreateStore = defineStore("{{{lc}}}Create", {
         });
     },
 
-    setCreated(created: {{{titleUcFirst}}}) {
+    setCreated(created: {{titleUcFirst}}) {
       this.created = created;
     },
 

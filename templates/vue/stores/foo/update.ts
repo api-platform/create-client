@@ -2,18 +2,18 @@ import { defineStore } from "pinia";
 import fetch from "@/utils/fetch";
 import { extractHubURL } from "@/utils/mercure";
 import SubmissionError from "@/error/SubmissionError";
-import type { {{{titleUcFirst}}}, SubmissionErrors } from "@/utils/types";
+import type { {{titleUcFirst}}, SubmissionErrors } from "@/utils/types";
 
 interface State {
   isLoading: boolean;
   error: string;
-  retrieved: {{{titleUcFirst}}} | null;
+  retrieved: {{titleUcFirst}} | null;
   hubUrl: URL | null;
-  updated: {{{titleUcFirst}}} | null;
+  updated: {{titleUcFirst}} | null;
   violations: SubmissionErrors | null;
 }
 
-export const use{{{titleUcFirst}}}UpdateStore = defineStore("{{{lc}}}Update", {
+export const use{{titleUcFirst}}UpdateStore = defineStore("{{lc}}Update", {
   state: (): State => ({
     isLoading: false,
     error: "",
@@ -30,12 +30,12 @@ export const use{{{titleUcFirst}}}UpdateStore = defineStore("{{{lc}}}Update", {
 
       return fetch(id)
         .then((response: Response) =>
-          response.json().then((data: {{{titleUcFirst}}}) => ({
+          response.json().then((data: {{titleUcFirst}}) => ({
             data,
             hubUrl: extractHubURL(response),
           }))
         )
-        .then(({ data, hubUrl }: { data: {{{titleUcFirst}}}; hubUrl: URL | null }) => {
+        .then(({ data, hubUrl }: { data: {{titleUcFirst}}; hubUrl: URL | null }) => {
           this.setError("");
           this.toggleLoading();
           this.setRetrieved(data);
@@ -50,12 +50,12 @@ export const use{{{titleUcFirst}}}UpdateStore = defineStore("{{{lc}}}Update", {
         });
     },
 
-    update(payload: {{{titleUcFirst}}}) {
+    update(payload: {{titleUcFirst}}) {
       this.setError("");
       this.toggleLoading();
 
       if (!this.retrieved) {
-        this.setError("No {{{lc}}} found. Please reload");
+        this.setError("No {{lc}} found. Please reload");
         return;
       }
 
@@ -65,7 +65,7 @@ export const use{{{titleUcFirst}}}UpdateStore = defineStore("{{{lc}}}Update", {
         body: JSON.stringify(payload),
       })
         .then((response: Response) => response.json())
-        .then((data: {{{titleUcFirst}}}) => {
+        .then((data: {{titleUcFirst}}) => {
           this.toggleLoading();
           this.setUpdated(data);
         })
@@ -82,11 +82,11 @@ export const use{{{titleUcFirst}}}UpdateStore = defineStore("{{{lc}}}Update", {
         });
     },
 
-    setRetrieved(retrieved: {{{titleUcFirst}}}) {
+    setRetrieved(retrieved: {{titleUcFirst}}) {
       this.retrieved = retrieved;
     },
 
-    setUpdated(updated: {{{titleUcFirst}}}) {
+    setUpdated(updated: {{titleUcFirst}}) {
       this.updated = updated;
     },
 

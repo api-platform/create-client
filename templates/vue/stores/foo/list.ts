@@ -1,22 +1,22 @@
 import { defineStore } from "pinia";
 import fetch from "@/utils/fetch";
 import { extractHubURL } from "@/utils/mercure";
-import type { {{{titleUcFirst}}}, View } from "@/utils/types";
+import type { {{titleUcFirst}}, View } from "@/utils/types";
 
 interface ResponseData {
-  "{{hydraPrefix}}member": {{{titleUcFirst}}}[];
+  "{{hydraPrefix}}member": {{titleUcFirst}}[];
   "{{hydraPrefix}}view": View;
 }
 
 interface State {
   isLoading: boolean;
   error: string;
-  items: {{{titleUcFirst}}}[];
+  items: {{titleUcFirst}}[];
   hubUrl: URL | null;
   view: View | null;
 }
 
-export const use{{{titleUcFirst}}}ListStore = defineStore("{{{lc}}}List", {
+export const use{{titleUcFirst}}ListStore = defineStore("{{lc}}List", {
   state: (): State => ({
     isLoading: false,
     error: "",
@@ -26,7 +26,7 @@ export const use{{{titleUcFirst}}}ListStore = defineStore("{{{lc}}}List", {
   }),
 
   actions: {
-    getItems(page: string = "{{{name}}}") {
+    getItems(page: string = "{{name}}") {
       this.setError("");
       this.toggleLoading();
 
@@ -60,7 +60,7 @@ export const use{{{titleUcFirst}}}ListStore = defineStore("{{{lc}}}List", {
       this.isLoading = !this.isLoading;
     },
 
-    setItems(items: {{{titleUcFirst}}}[]) {
+    setItems(items: {{titleUcFirst}}[]) {
       this.items = items;
     },
 
@@ -76,8 +76,8 @@ export const use{{{titleUcFirst}}}ListStore = defineStore("{{{lc}}}List", {
       this.error = error;
     },
 
-    updateItem(updatedItem: {{{titleUcFirst}}}) {
-      const item: {{{titleUcFirst}}} | undefined = this.items.find(
+    updateItem(updatedItem: {{titleUcFirst}}) {
+      const item: {{titleUcFirst}} | undefined = this.items.find(
         (i) => i["@id"] === updatedItem["@id"]
       );
 
@@ -86,7 +86,7 @@ export const use{{{titleUcFirst}}}ListStore = defineStore("{{{lc}}}List", {
       Object.assign(item, updatedItem);
     },
 
-    deleteItem(deletedItem: {{{titleUcFirst}}}) {
+    deleteItem(deletedItem: {{titleUcFirst}}) {
       this.items = this.items.filter((item) => {
         return item["@id"] !== deletedItem["@id"];
       });
