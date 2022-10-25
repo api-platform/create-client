@@ -5,14 +5,14 @@ interface Book {
   description: string;
   author: string;
   publicationDate: string | null;
-  reviews?: Review[] | (string | undefined)[];
+  reviews?: Review[];
 }
 
 interface Review {
   "@id"?: string;
   body: string;
   rating: string;
-  book: Book | string | null;
+  book: Book;
   author: string;
   publicationDate: string | null;
 }
