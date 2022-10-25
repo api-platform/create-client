@@ -1,16 +1,16 @@
 import { defineStore } from "pinia";
 import { extractHubURL } from "@/utils/mercure";
 import fetch from "@/utils/fetch";
-import type { {{{titleUcFirst}}} } from "@/utils/types";
+import type { {{titleUcFirst}} } from "@/utils/types";
 
 interface State {
   isLoading: boolean;
   error: string;
-  retrieved: {{{titleUcFirst}}} | null;
+  retrieved: {{titleUcFirst}} | null;
   hubUrl: URL | null;
 }
 
-export const use{{{titleUcFirst}}}ShowStore = defineStore("{{{lc}}}Show", {
+export const use{{titleUcFirst}}ShowStore = defineStore("{{lc}}Show", {
   state: (): State => ({
     isLoading: false,
     error: "",
@@ -25,12 +25,12 @@ export const use{{{titleUcFirst}}}ShowStore = defineStore("{{{lc}}}Show", {
 
       return fetch(id)
         .then((response: Response) =>
-          response.json().then((data: {{{titleUcFirst}}}) => ({
+          response.json().then((data: {{titleUcFirst}}) => ({
             data,
             hubUrl: extractHubURL(response),
           }))
         )
-        .then(({ data, hubUrl }: { data: {{{titleUcFirst}}}; hubUrl: URL | null }) => {
+        .then(({ data, hubUrl }: { data: {{titleUcFirst}}; hubUrl: URL | null }) => {
           this.setError("");
           this.toggleLoading();
           this.setRetrieved(data);
@@ -49,7 +49,7 @@ export const use{{{titleUcFirst}}}ShowStore = defineStore("{{{lc}}}Show", {
       this.isLoading = !this.isLoading;
     },
 
-    setRetrieved(retrieved: {{{titleUcFirst}}}) {
+    setRetrieved(retrieved: {{titleUcFirst}}) {
       this.retrieved = retrieved;
     },
 
