@@ -36,38 +36,41 @@ test("Generate a Vue app", () => {
   });
   generator.generate(api, resource, tmpobj.name);
 
-  expect(fs.existsSync(tmpobj.name + "/components/foo/Create.vue")).toBe(true);
-  expect(fs.existsSync(tmpobj.name + "/components/foo/Form.vue")).toBe(true);
-  expect(fs.existsSync(tmpobj.name + "/components/foo/List.vue")).toBe(true);
-  expect(fs.existsSync(tmpobj.name + "/components/foo/Show.vue")).toBe(true);
-  expect(fs.existsSync(tmpobj.name + "/components/foo/Update.vue")).toBe(true);
-
-  expect(fs.existsSync(tmpobj.name + "/config/entrypoint.js")).toBe(true);
-
-  expect(fs.existsSync(tmpobj.name + "/error/SubmissionError.js")).toBe(true);
-
-  expect(fs.existsSync(tmpobj.name + "/router/foo.js")).toBe(true);
-
-  expect(fs.existsSync(tmpobj.name + "/store/modules/foo/index.js")).toBe(true);
-
+  // modules
   ["create", "delete", "list", "show", "update"].forEach((action) => {
+    expect(fs.existsSync(`${tmpobj.name}/stores/foo/${action}.ts`)).toBe(true);
+  });
+
+  ["Create", "List", "Update", "Show"].forEach((action) => {
+    // views
+    expect(fs.existsSync(`${tmpobj.name}/views/foo/${action}View.vue`)).toBe(
+      true
+    );
+
+    // components
     expect(
-      fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/actions.js`)
-    ).toBe(true);
-    expect(
-      fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/index.js`)
-    ).toBe(true);
-    expect(
-      fs.existsSync(
-        `${tmpobj.name}/store/modules/foo/${action}/mutation_types.js`
-      )
-    ).toBe(true);
-    expect(
-      fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/mutations.js`)
+      fs.existsSync(`${tmpobj.name}/components/foo/Entity${action}.vue`)
     ).toBe(true);
   });
 
-  expect(fs.existsSync(tmpobj.name + "/utils/fetch.js")).toBe(true);
+  // composables
+  expect(fs.existsSync(`${tmpobj.name}/composables/mercureItem.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/composables/mercureList.ts`)).toBe(true);
+
+  // routes
+  expect(fs.existsSync(tmpobj.name + "/router/foo.ts")).toBe(true);
+
+  // error
+  expect(fs.existsSync(tmpobj.name + "/error/SubmissionError.ts")).toBe(true);
+
+  // config
+  expect(fs.existsSync(tmpobj.name + "/config/entrypoint.ts")).toBe(true);
+
+  // utils
+  expect(fs.existsSync(tmpobj.name + "/utils/date.ts")).toBe(true);
+  expect(fs.existsSync(tmpobj.name + "/utils/fetch.ts")).toBe(true);
+  expect(fs.existsSync(tmpobj.name + "/utils/hydra.ts")).toBe(true);
+  expect(fs.existsSync(tmpobj.name + "/utils/types.ts")).toBe(true);
 
   tmpobj.removeCallback();
 });
