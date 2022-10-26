@@ -7,10 +7,17 @@ import { storeToRefs } from "pinia";
 import { onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import {{titleUcFirst}}Form from "@/components/{{lc}}/EntityForm.vue";
-import { mercureSubscribe } from "../../utils/mercure";
+import { useMercureItem } from "@/composables/mercureItem";
 
 const route = useRoute();
 const router = useRouter();
+
+const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
+const { created } = storeToRefs({{lc}}CreateStore);
+
+const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
+const { error: deleteError, isLoading: deleteLoading } =
+  storeToRefs({{lc}}DeleteStore);
 
 const {{lc}}UpdateStore = use{{titleUcFirst}}UpdateStore();
 const {
@@ -21,35 +28,10 @@ const {
   violations,
 } = storeToRefs({{lc}}UpdateStore);
 
-const mercureEl = (data: {{titleUcFirst}}) => {
-  if (Object.keys(data).length === 1) {
-    {{lc}}DeleteStore.setMercureDeleted(data);
-    return;
-  }
-
-  {{lc}}UpdateStore.setUpdated(data);
-};
-
-let mercureSub: EventSource | null = null;
-
-{{lc}}UpdateStore.$subscribe((mutation, state) => {
-  if (!state.hubUrl) {
-    return;
-  }
-
-  if (mercureSub) {
-    mercureSub.close();
-  }
-
-  if (!state.retrieved) {
-    return;
-  }
-
-  mercureSub = mercureSubscribe(
-    state.hubUrl,
-    [state.retrieved["@id"] ?? ""],
-    mercureEl
-  );
+useMercureItem({
+  store: {{lc}}UpdateStore,
+  deleteStore: {{lc}}DeleteStore,
+  redirectRouteName: "{{titleUcFirst}}List",
 });
 
 await {{lc}}UpdateStore.retrieve(decodeURIComponent(route.params.id as string));
@@ -57,19 +39,6 @@ await {{lc}}UpdateStore.retrieve(decodeURIComponent(route.params.id as string));
 function onSendForm(item: {{titleUcFirst}}) {
   {{lc}}UpdateStore.update(item);
 }
-
-const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
-const { created } = storeToRefs({{lc}}CreateStore);
-
-const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
-const { error: deleteError, isLoading: deleteLoading } =
-  storeToRefs({{lc}}DeleteStore);
-
-{{lc}}DeleteStore.$subscribe((mutation, state) => {
-  if (state.mercureDeleted) {
-    router.push({ name: "{{titleUcFirst}}List" });
-  }
-});
 
 async function deleteItem() {
   if (!item.value) {
@@ -87,7 +56,6 @@ async function deleteItem() {
 }
 
 onBeforeUnmount(() => {
-  mercureSub?.close();
   {{lc}}UpdateStore.$reset();
   {{lc}}CreateStore.$reset();
 });
