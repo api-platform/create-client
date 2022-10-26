@@ -1,62 +1,30 @@
 <script lang="ts" setup>
 import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
-import type { {{titleUcFirst}} } from "@/utils/types";
 import { storeToRefs } from "pinia";
 {{#if hasRelationsOrManyRelations}}
 import { useRouter } from "vue-router";
 {{/if}}
 import { onBeforeUnmount } from "vue";
 import { use{{titleUcFirst}}ListStore } from "@/stores/{{lc}}/list";
-import { mercureSubscribe } from "@/utils/mercure";
 import { formatDateTime } from "@/utils/date";
+import { useMercureList } from "@/composables/mercureList";
 
 {{#if hasRelationsOrManyRelations}}
 const router = useRouter();
 {{/if}}
 
-const {{lc}}ListStore = use{{titleUcFirst}}ListStore();
-const { items, error, view, isLoading } = storeToRefs({{lc}}ListStore);
-
-const mercureEl = (data: {{titleUcFirst}}) => {
-  if (Object.keys(data).length === 1) {
-    {{lc}}ListStore.deleteItem(data);
-    {{lc}}DeleteStore.setMercureDeleted(data);
-    return;
-  }
-
-  {{lc}}ListStore.updateItem(data);
-};
-
-let mercureSub: EventSource | null = null;
-
-{{lc}}ListStore.$subscribe((mutation, state) => {
-  if (!state.hubUrl) {
-    return;
-  }
-
-  if (mercureSub) {
-    mercureSub.close();
-  }
-
-  if (!state.items?.length) {
-    return;
-  }
-
-  mercureSub = mercureSubscribe(
-    state.hubUrl,
-    state.items.map((i) => i["@id"] ?? ""),
-    mercureEl
-  );
-});
-
-await {{lc}}ListStore.getItems();
-
 const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
 const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
   storeToRefs({{lc}}DeleteStore);
 
+const {{lc}}ListStore = use{{titleUcFirst}}ListStore();
+const { items, error, view, isLoading } = storeToRefs({{lc}}ListStore);
+
+useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
+
+await {{lc}}ListStore.getItems();
+
 onBeforeUnmount(() => {
-  mercureSub?.close();
   {{lc}}DeleteStore.$reset();
 });
 </script>

@@ -3,58 +3,26 @@ import { onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { use{{titleUcFirst}}ShowStore } from "@/stores/{{lc}}/show";
 import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
-import { mercureSubscribe } from "../../utils/mercure";
 import { storeToRefs } from "pinia";
-import type { {{titleUcFirst}} } from "@/utils/types";
 import { formatDateTime } from "@/utils/date";
+import { useMercureItem } from "@/composables/mercureItem";
 
 const route = useRoute();
 const router = useRouter();
 
-const {{lc}}ShowStore = use{{titleUcFirst}}ShowStore();
-const { retrieved: item, isLoading, error } = storeToRefs({{lc}}ShowStore);
-
-const mercureEl = (data: {{titleUcFirst}}) => {
-  if (Object.keys(data).length === 1) {
-    {{lc}}DeleteStore.setMercureDeleted(data);
-    return;
-  }
-
-  {{lc}}ShowStore.setRetrieved(data);
-};
-
-let mercureSub: EventSource | null = null;
-
-{{lc}}ShowStore.$subscribe((mutation, state) => {
-  if (!state.hubUrl) {
-    return;
-  }
-
-  if (mercureSub) {
-    mercureSub.close();
-  }
-
-  if (!state.retrieved) {
-    return;
-  }
-
-  mercureSub = mercureSubscribe(
-    state.hubUrl,
-    [state.retrieved["@id"] ?? ""],
-    mercureEl
-  );
-});
-
-await {{lc}}ShowStore.retrieve(decodeURIComponent(route.params.id as string));
-
 const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
 const { error: deleteError, deleted } = storeToRefs({{lc}}DeleteStore);
 
-{{lc}}DeleteStore.$subscribe((mutation, state) => {
-  if (state.mercureDeleted) {
-    router.push({ name: "{{titleUcFirst}}List" });
-  }
+const {{lc}}ShowStore = use{{titleUcFirst}}ShowStore();
+const { retrieved: item, isLoading, error } = storeToRefs({{lc}}ShowStore);
+
+useMercureItem({
+  store: {{lc}}ShowStore,
+  deleteStore: {{lc}}DeleteStore,
+  redirectRouteName: "{{titleUcFirst}}List",
 });
+
+await {{lc}}ShowStore.retrieve(decodeURIComponent(route.params.id as string));
 
 async function deleteItem() {
   if (!item.value) {
@@ -72,7 +40,6 @@ async function deleteItem() {
 }
 
 onBeforeUnmount(() => {
-  mercureSub?.close();
   {{lc}}ShowStore.$reset();
 });
 </script>
