@@ -68,16 +68,16 @@ export default class extends BaseGenerator {
     );
     console.log(
       chalk.green(`
-        // Import routes
-        import ${titleLc}Routes from '@/router/${titleLc}';
+// Import routes
+import ${titleLc}Routes from '@/router/${titleLc}';
 
-        // Add routes to VueRouter
-        const router = createRouter({
-          // ...
-          routes: [
-              ...${titleLc}Routes,
-          ]
-        });
+// Add routes to VueRouter
+const router = createRouter({
+  // ...
+  routes: [
+      ...${titleLc}Routes,
+  ]
+});
       `)
     );
   }
