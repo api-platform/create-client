@@ -1,19 +1,21 @@
 import { useRouter } from "vue-router";
 import { mercureSubscribe } from "@/utils/mercure";
 import { onBeforeUnmount } from "vue";
+import type { StoreGeneric } from "pinia";
+import type { Item } from "@/types/item";
 
 export function useMercureItem({
   store,
   deleteStore,
   redirectRouteName,
 }: {
-  store: any;
-  deleteStore: any;
+  store: StoreGeneric;
+  deleteStore: StoreGeneric;
   redirectRouteName: string;
 }) {
   const router = useRouter();
 
-  const mercureEl = (data: any) => {
+  const mercureEl = <T extends Item>(data: T) => {
     if (Object.keys(data).length === 1) {
       deleteStore.setMercureDeleted(data);
       return;

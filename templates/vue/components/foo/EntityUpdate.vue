@@ -2,7 +2,7 @@
 import { use{{titleUcFirst}}CreateStore } from "@/stores/{{lc}}/create";
 import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
 import { use{{titleUcFirst}}UpdateStore } from "@/stores/{{lc}}/update";
-import type { {{titleUcFirst}} } from "@/utils/types";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 import { storeToRefs } from "pinia";
 import { onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -41,7 +41,7 @@ function onSendForm(item: {{titleUcFirst}}) {
 }
 
 async function deleteItem() {
-  if (!item.value) {
+  if (!item?.value) {
     {{lc}}UpdateStore.setError("No {{lc}} found. Please reload");
     return;
   }

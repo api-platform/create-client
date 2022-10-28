@@ -1,14 +1,16 @@
 import { mercureSubscribe } from "@/utils/mercure";
 import { onBeforeUnmount } from "vue";
+import type { Item } from "@/types/item";
+import type { StoreGeneric } from "pinia";
 
 export function useMercureList({
   store,
   deleteStore,
 }: {
-  store: any;
-  deleteStore: any;
+  store: StoreGeneric;
+  deleteStore: StoreGeneric;
 }) {
-  const mercureEl = (data: any) => {
+  const mercureEl = <T extends Item>(data: T) => {
     if (Object.keys(data).length === 1) {
       store.deleteItem(data);
       deleteStore.setMercureDeleted(data);

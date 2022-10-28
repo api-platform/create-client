@@ -1,20 +1,16 @@
 import { defineStore } from "pinia";
 import fetch from "@/utils/fetch";
-import type { {{titleUcFirst}} } from "@/utils/types";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
+import type { DeleteState } from "@/types/stores";
 
-interface State {
-  isLoading: boolean;
-  error: string;
-  deleted: {{titleUcFirst}} | null;
-  mercureDeleted: {{titleUcFirst}} | null;
-}
+interface State extends DeleteState<{{titleUcFirst}}> {}
 
 export const use{{titleUcFirst}}DeleteStore = defineStore("{{lc}}Delete", {
   state: (): State => ({
+    deleted: undefined,
+    mercureDeleted: undefined,
     isLoading: false,
-    error: "",
-    deleted: null,
-    mercureDeleted: null,
+    error: undefined,
   }),
 
   actions: {
@@ -27,7 +23,7 @@ export const use{{titleUcFirst}}DeleteStore = defineStore("{{lc}}Delete", {
           this.setError("");
           this.toggleLoading();
           this.setDeleted(item);
-          this.setMercureDeleted(null);
+          this.setMercureDeleted(undefined);
         })
         .catch((e: Error) => {
           this.toggleLoading();
@@ -43,7 +39,7 @@ export const use{{titleUcFirst}}DeleteStore = defineStore("{{lc}}Delete", {
       this.deleted = deleted;
     },
 
-    setMercureDeleted(mercureDeleted: {{titleUcFirst}} | null) {
+    setMercureDeleted(mercureDeleted: {{titleUcFirst}} | undefined) {
       this.mercureDeleted = mercureDeleted;
     },
 

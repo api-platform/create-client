@@ -10,23 +10,10 @@ export default class extends BaseGenerator {
 
     this.registerTemplates("common/", [
       // utils
-      "utils/mercure.js",
+      "utils/mercure.ts",
     ]);
 
     this.registerTemplates(`vue/`, [
-      // modules
-      "stores/foo/create.ts",
-      "stores/foo/delete.ts",
-      "stores/foo/list.ts",
-      "stores/foo/show.ts",
-      "stores/foo/update.ts",
-
-      // views
-      "views/foo/CreateView.vue",
-      "views/foo/ListView.vue",
-      "views/foo/UpdateView.vue",
-      "views/foo/ShowView.vue",
-
       // components
       "components/foo/EntityCreate.vue",
       "components/foo/EntityForm.vue",
@@ -42,14 +29,31 @@ export default class extends BaseGenerator {
       // routes
       "router/foo.ts",
 
-      // error
-      "error/SubmissionError.ts",
+      // stores
+      "stores/foo/create.ts",
+      "stores/foo/delete.ts",
+      "stores/foo/list.ts",
+      "stores/foo/show.ts",
+      "stores/foo/update.ts",
+
+      // types
+      "types/collection.ts",
+      "types/error.ts",
+      "types/foo.ts",
+      "types/item.ts",
+      "types/stores.ts",
+      "types/view.ts",
 
       // utils
       "utils/date.ts",
       "utils/fetch.ts",
       "utils/hydra.ts",
-      "utils/types.ts",
+
+      // views
+      "views/foo/CreateView.vue",
+      "views/foo/ListView.vue",
+      "views/foo/UpdateView.vue",
+      "views/foo/ShowView.vue",
     ]);
 
     handlebars.registerHelper("compare", hbhComparison.compare);
@@ -112,33 +116,20 @@ const router = createRouter({
     // These directories may already exist
     [
       `${dir}/config`,
-      `${dir}/error`,
-      `${dir}/router`,
-      `${dir}/utils`,
       `${dir}/composables`,
+      `${dir}/router`,
+      `${dir}/types`,
+      `${dir}/utils`,
     ].forEach((dir) => this.createDir(dir, false));
 
     [
-      `${dir}/stores/${lc}`,
       `${dir}/components/${lc}`,
       `${dir}/components/common`,
+      `${dir}/stores/${lc}`,
       `${dir}/views/${lc}`,
     ].forEach((dir) => this.createDir(dir));
 
     [
-      // modules
-      "stores/%s/create.ts",
-      "stores/%s/delete.ts",
-      "stores/%s/list.ts",
-      "stores/%s/show.ts",
-      "stores/%s/update.ts",
-
-      // views
-      "views/%s/CreateView.vue",
-      "views/%s/ListView.vue",
-      "views/%s/ShowView.vue",
-      "views/%s/UpdateView.vue",
-
       // components
       "components/%s/EntityCreate.vue",
       "components/%s/EntityForm.vue",
@@ -146,63 +137,54 @@ const router = createRouter({
       "components/%s/EntityUpdate.vue",
       "components/%s/EntityShow.vue",
 
-      // routes
+      // router
       "router/%s.ts",
+
+      // stores
+      "stores/%s/create.ts",
+      "stores/%s/delete.ts",
+      "stores/%s/list.ts",
+      "stores/%s/show.ts",
+      "stores/%s/update.ts",
+
+      // types
+      "types/%s.ts",
+
+      // views
+      "views/%s/CreateView.vue",
+      "views/%s/ListView.vue",
+      "views/%s/ShowView.vue",
+      "views/%s/UpdateView.vue",
     ].forEach((pattern) =>
       this.createFileFromPattern(pattern, dir, lc, context)
     );
 
-    // common components
-    this.createFile(
+    [
+      // components
       "components/common/FormRepeater.vue",
-      `${dir}/components/common/FormRepeater.vue`,
-      context,
-      false
-    );
 
-    // composables
-    this.createFile(
+      // composables
       "composables/mercureItem.ts",
-      `${dir}/composables/mercureItem.ts`,
-      {},
-      false
-    );
-    this.createFile(
       "composables/mercureList.ts",
-      `${dir}/composables/mercureList.ts`,
-      {},
-      false
-    );
 
-    // error
-    this.createFile(
-      "error/SubmissionError.ts",
-      `${dir}/error/SubmissionError.ts`,
-      context,
-      false
-    );
-
-    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.ts`);
-    this.createFile("utils/date.ts", `${dir}/utils/date.ts`, {}, false);
-    this.createFile(
+      // utils
+      "utils/date.ts",
       "utils/fetch.ts",
-      `${dir}/utils/fetch.ts`,
-      { hydraPrefix: this.hydraPrefix },
-      false
-    );
-    this.createFile(
       "utils/hydra.ts",
-      `${dir}/utils/hydra.ts`,
-      { hydraPrefix: this.hydraPrefix },
-      false
+      "utils/mercure.ts",
+
+      // types
+      "types/collection.ts",
+      "types/error.ts",
+      "types/item.ts",
+      "types/stores.ts",
+      "types/view.ts",
+    ].forEach((path) =>
+      this.createFile(path, `${dir}/${path}`, context, false)
     );
-    this.createFile(
-      "utils/types.ts",
-      `${dir}/utils/types.ts`,
-      { hydraPrefix: this.hydraPrefix },
-      false
-    );
-    this.createFile("utils/mercure.js", `${dir}/utils/mercure.ts`);
+
+    // entrypoint
+    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.ts`);
   }
 
   parseFields(resource) {
@@ -225,7 +207,8 @@ const router = createRouter({
           ...field,
           isReferences,
           isEmbeddeds,
-          isRelations: isEmbeddeds || isReferences,
+          isRelations: field.reference || field.embedded,
+          isManyRelations: isEmbeddeds || isReferences,
         },
       };
     }, {});
