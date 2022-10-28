@@ -1,10 +1,10 @@
 import { test as baseTest, expect } from '@playwright/test';
-import { locatorFixtures as fixtures, within } from '@playwright-testing-library/test/fixture.js';
+import { locatorFixtures as fixtures,  } from '@playwright-testing-library/test/fixture.js';
 import type { LocatorFixtures as TestingLibraryFixtures } from '@playwright-testing-library/test/fixture.js';
 
 const test = baseTest.extend<TestingLibraryFixtures>(fixtures)
 
-test('resource edit', async ({ page, queries: { getAllByRole, getByLabelText, getByRole, getByText, queryByRole, queryByText } }) => {
+test('resource edit', async ({ page, within, queries: { getAllByRole, getByLabelText, getByRole, getByText, queryByRole, queryByText } }) => {
   await page.goto('http://localhost:3000/books/');
 
   await expect(queryByText('Loading...')).not.toBeVisible();
