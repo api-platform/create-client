@@ -21,6 +21,7 @@ test("Generate a Vue app", () => {
       reference: null,
       required: true,
       description: "An URL",
+      type: "string",
     }),
   ];
   const resource = new Resource("abc", "http://example.com/foos", {
@@ -36,21 +37,16 @@ test("Generate a Vue app", () => {
   });
   generator.generate(api, resource, tmpobj.name);
 
-  // modules
-  ["create", "delete", "list", "show", "update"].forEach((action) => {
-    expect(fs.existsSync(`${tmpobj.name}/stores/foo/${action}.ts`)).toBe(true);
-  });
-
   ["Create", "List", "Update", "Show"].forEach((action) => {
-    // views
-    expect(fs.existsSync(`${tmpobj.name}/views/foo/${action}View.vue`)).toBe(
-      true
-    );
-
     // components
     expect(
       fs.existsSync(`${tmpobj.name}/components/foo/Entity${action}.vue`)
     ).toBe(true);
+
+    // views
+    expect(fs.existsSync(`${tmpobj.name}/views/foo/${action}View.vue`)).toBe(
+      true
+    );
   });
 
   // composables
@@ -60,17 +56,26 @@ test("Generate a Vue app", () => {
   // routes
   expect(fs.existsSync(tmpobj.name + "/router/foo.ts")).toBe(true);
 
-  // error
-  expect(fs.existsSync(tmpobj.name + "/error/SubmissionError.ts")).toBe(true);
+  // stores
+  ["create", "delete", "list", "show", "update"].forEach((action) => {
+    expect(fs.existsSync(`${tmpobj.name}/stores/foo/${action}.ts`)).toBe(true);
+  });
 
-  // config
-  expect(fs.existsSync(tmpobj.name + "/config/entrypoint.ts")).toBe(true);
+  // types
+  expect(fs.existsSync(tmpobj.name + "/types/collection.ts")).toBe(true);
+  expect(fs.existsSync(tmpobj.name + "/types/error.ts")).toBe(true);
+  expect(fs.existsSync(tmpobj.name + "/types/foo.ts")).toBe(true);
+  expect(fs.existsSync(tmpobj.name + "/types/item.ts")).toBe(true);
+  expect(fs.existsSync(tmpobj.name + "/types/stores.ts")).toBe(true);
+  expect(fs.existsSync(tmpobj.name + "/types/view.ts")).toBe(true);
 
   // utils
   expect(fs.existsSync(tmpobj.name + "/utils/date.ts")).toBe(true);
   expect(fs.existsSync(tmpobj.name + "/utils/fetch.ts")).toBe(true);
   expect(fs.existsSync(tmpobj.name + "/utils/hydra.ts")).toBe(true);
-  expect(fs.existsSync(tmpobj.name + "/utils/types.ts")).toBe(true);
+
+  // config
+  expect(fs.existsSync(tmpobj.name + "/config/entrypoint.ts")).toBe(true);
 
   tmpobj.removeCallback();
 });
