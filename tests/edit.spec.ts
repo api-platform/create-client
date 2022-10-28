@@ -11,7 +11,7 @@ test('resource edit', async ({ page, within, queries: { getAllByRole, getByLabel
 
   await expect(queryByRole('heading', { level: 1, name: 'Book List' })).toBeVisible();
 
-  const rows = getAllByRole('row');
+  const rows = page.locator('table tr');
 
   const { getAllByRole: getAllByRoleWithinRow } = within(rows.nth(3));
 
