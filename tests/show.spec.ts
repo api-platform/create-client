@@ -1,19 +1,17 @@
 import { test as baseTest, expect } from '@playwright/test';
-import { locatorFixtures as fixtures } from '@playwright-testing-library/test/fixture.js';
+import { locatorFixtures as fixtures, within } from '@playwright-testing-library/test/fixture.js';
 import type { LocatorFixtures as TestingLibraryFixtures } from '@playwright-testing-library/test/fixture.js';
 
 const test = baseTest.extend<TestingLibraryFixtures>(fixtures)
 
-test('resource show', async ({ page, within, queries: { getAllByRole, getByRole, queryByRole, queryByText } }) => {
+test('resource show', async ({ page, queries: { getAllByRole, getByRole, queryByRole, queryByText } }) => {
   await page.goto('http://localhost:3000/books/');
 
   await expect(queryByText('Loading...')).not.toBeVisible();
 
-  const listRows = getAllByRole('row');
+  const listRows = page.locator('table tr');
 
-  const { getAllByRole: getAllByRoleWithinListRow } = within(listRows.nth(3));
-
-  const bookLink = getAllByRoleWithinListRow('link').nth(0);
+  const bookLink = listRows.nth(3).locator('a').first();
   bookLink.click();
 
   await expect(queryByRole('heading', { level: 1 })).toHaveText(/^\s*Show Book/);
