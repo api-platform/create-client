@@ -3,7 +3,7 @@ import {{titleUcFirst}}Form from "@/components/{{lc}}/EntityForm.vue";
 import { use{{titleUcFirst}}CreateStore } from "@/stores/{{lc}}/create";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
-import type { {{titleUcFirst}} } from "@/utils/types";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 
 const router = useRouter();
 

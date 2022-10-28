@@ -1,28 +1,20 @@
 import { defineStore } from "pinia";
 import fetch from "@/utils/fetch";
 import { extractHubURL } from "@/utils/mercure";
-import type { {{titleUcFirst}}, View } from "@/utils/types";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
+import type { View } from "@/types/view";
+import type { ListState } from "@/types/stores";
+import type { PagedCollection } from "@/types/collection";
 
-interface ResponseData {
-  "{{hydraPrefix}}member": {{titleUcFirst}}[];
-  "{{hydraPrefix}}view": View;
-}
-
-interface State {
-  isLoading: boolean;
-  error: string;
-  items: {{titleUcFirst}}[];
-  hubUrl: URL | null;
-  view: View | null;
-}
+interface State extends ListState<{{titleUcFirst}}> {}
 
 export const use{{titleUcFirst}}ListStore = defineStore("{{lc}}List", {
   state: (): State => ({
-    isLoading: false,
-    error: "",
     items: [],
-    hubUrl: null,
-    view: null,
+    isLoading: false,
+    error: undefined,
+    hubUrl: undefined,
+    view: undefined,
   }),
 
   actions: {
@@ -32,13 +24,19 @@ export const use{{titleUcFirst}}ListStore = defineStore("{{lc}}List", {
 
       return fetch(page)
         .then((response: Response) =>
-          response.json().then((data: ResponseData) => ({
+          response.json().then((data: PagedCollection<{{titleUcFirst}}>) => ({
             data,
             hubUrl: extractHubURL(response),
           }))
         )
         .then(
-          ({ data, hubUrl }: { data: ResponseData; hubUrl: URL | null }) => {
+          ({ 
+            data, 
+            hubUrl 
+          }: { 
+            data: PagedCollection<{{titleUcFirst}}>; 
+            hubUrl: URL | null 
+          }) => {
             this.setError("");
             this.toggleLoading();
 

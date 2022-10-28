@@ -1,21 +1,17 @@
 import { defineStore } from "pinia";
 import { extractHubURL } from "@/utils/mercure";
 import fetch from "@/utils/fetch";
-import type { {{titleUcFirst}} } from "@/utils/types";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
+import type { ShowState } from "@/types/stores";
 
-interface State {
-  isLoading: boolean;
-  error: string;
-  retrieved: {{titleUcFirst}} | null;
-  hubUrl: URL | null;
-}
+interface State extends ShowState<{{titleUcFirst}}> {}
 
 export const use{{titleUcFirst}}ShowStore = defineStore("{{lc}}Show", {
   state: (): State => ({
+    retrieved: undefined,
     isLoading: false,
     error: "",
-    retrieved: null,
-    hubUrl: null,
+    hubUrl: undefined,
   }),
 
   actions: {

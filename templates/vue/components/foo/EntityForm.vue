@@ -3,12 +3,13 @@
 import FormRepeater from "@/components/common/FormRepeater.vue";
 {{/if}}
 import { formatDateInput } from "@/utils/date";
-import type { {{titleUcFirst}}, SubmissionErrors } from "@/utils/types";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
+import type { SubmissionErrors } from "@/types/error";
 import { toRef } from "vue";
 
 const props = defineProps<{
   values?: {{titleUcFirst}};
-  errors: SubmissionErrors | null;
+  errors?: SubmissionErrors;
 }>();
 
 const emit = defineEmits<{
@@ -27,7 +28,7 @@ if (props.values) {
     publicationDate: formatDateInput(props.values.publicationDate),
     {{/compare}}
     {{#if isEmbeddeds}}
-    {{name}}: props.values.{{name}}?.map((item) => item["@id"] ?? "") ?? [],
+    {{name}}: props.values.{{name}}?.map((item: any) => item["@id"] ?? "") ?? [],
     {{else if embedded}}
     {{name}}: props.values.{{name}}?.["@id"],
     {{/if}}
@@ -47,7 +48,7 @@ function emitSendForm() {
       <label for="{{../lc}}_{{name}}" class="form-control-label">
         {{name}}
       </label>
-      {{#if isRelations}}
+      {{#if isManyRelations}}
       <FormRepeater 
         :values="item.{{name}}" 
         @update="(values) => (item.{{name}} = values)" 

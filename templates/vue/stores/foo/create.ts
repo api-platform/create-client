@@ -1,21 +1,18 @@
 import { defineStore } from "pinia";
 import fetch from "@/utils/fetch";
-import SubmissionError from "@/error/SubmissionError";
-import type { {{titleUcFirst}}, SubmissionErrors } from "@/utils/types";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
+import type { SubmissionErrors, TError } from "@/types/error";
+import { SubmissionError } from "@/types/error";
+import type { CreateState } from "@/types/stores";
 
-interface State {
-  isLoading: boolean;
-  error: string;
-  created: {{titleUcFirst}} | null;
-  violations: SubmissionErrors | null;
-}
+interface State extends CreateState<{{titleUcFirst}}> {}
 
 export const use{{titleUcFirst}}CreateStore = defineStore("{{lc}}Create", {
   state: (): State => ({
+    created: undefined,
     isLoading: false,
-    error: "",
-    created: null,
-    violations: null,
+    error: undefined,
+    violations: undefined,
   }),
 
   actions: {
@@ -33,7 +30,7 @@ export const use{{titleUcFirst}}CreateStore = defineStore("{{lc}}Create", {
         .then((data: {{titleUcFirst}}) => {
           this.setCreated(data);
         })
-        .catch((e: Error | SubmissionError) => {
+        .catch((e: TError) => {
           this.toggleLoading();
 
           if (e instanceof SubmissionError) {

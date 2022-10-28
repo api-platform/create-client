@@ -1,26 +1,24 @@
 import { defineStore } from "pinia";
 import fetch from "@/utils/fetch";
 import { extractHubURL } from "@/utils/mercure";
-import SubmissionError from "@/error/SubmissionError";
-import type { {{titleUcFirst}}, SubmissionErrors } from "@/utils/types";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
+import {
+  SubmissionError,
+  type SubmissionErrors,
+  type TError,
+} from "@/types/error";
+import type { UpdateState } from "@/types/stores";
 
-interface State {
-  isLoading: boolean;
-  error: string;
-  retrieved: {{titleUcFirst}} | null;
-  hubUrl: URL | null;
-  updated: {{titleUcFirst}} | null;
-  violations: SubmissionErrors | null;
-}
+interface State extends UpdateState<{{titleUcFirst}}> {}
 
 export const use{{titleUcFirst}}UpdateStore = defineStore("{{lc}}Update", {
   state: (): State => ({
+    updated: undefined,
+    retrieved: undefined,
     isLoading: false,
-    error: "",
-    retrieved: null,
-    hubUrl: null,
-    updated: null,
-    violations: null,
+    error: undefined,
+    hubUrl: undefined,
+    violations: undefined,
   }),
 
   actions: {
@@ -69,7 +67,7 @@ export const use{{titleUcFirst}}UpdateStore = defineStore("{{lc}}Update", {
           this.toggleLoading();
           this.setUpdated(data);
         })
-        .catch((e: Error | SubmissionError) => {
+        .catch((e: TError) => {
           this.toggleLoading();
 
           if (e instanceof SubmissionError) {

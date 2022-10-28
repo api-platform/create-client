@@ -25,7 +25,7 @@ useMercureItem({
 await {{lc}}ShowStore.retrieve(decodeURIComponent(route.params.id as string));
 
 async function deleteItem() {
-  if (!item.value) {
+  if (!item?.value) {
     {{lc}}DeleteStore.setError("This item does not exist anymore");
     return;
   }
