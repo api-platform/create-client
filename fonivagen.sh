@@ -73,10 +73,12 @@ echo "Create vue project...." &&
 npm init -y vue@2 -- --router ../$PROJECT_NAME &&
 echo "Create vue project....Done"  &&
 
-echo "Add packages...."  &&
-npm --cwd ../$PROJECT_NAME add vuex@3 vuex-map-fields lodash bootstrap font-awesome &&
-
-echo "Add packages....Done"  &&
 ./src/index.js $entrypoint ../$PROJECT_NAME/src --generator vue $format
+
+cd ../$PROJECT_NAME
+
+echo "Add packages...."  &&
+npm add vuex@3 vuex-map-fields lodash bootstrap font-awesome &&
+echo "Add packages....Done"  &&
 
 echo "You are good to go!"
