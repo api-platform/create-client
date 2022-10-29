@@ -193,7 +193,7 @@ export const store = new Vuex.Store({
       "mixins/ItemWatcher.js",
       "mixins/ListWatcher.js",
     ]) {
-      this.createFile(file, `${dir}/${file}`);
+      this.createFile(file, `${dir}/${file}`, {}, false);
     }
 
     // error
