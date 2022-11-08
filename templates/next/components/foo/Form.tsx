@@ -52,13 +52,13 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 	return (
     <div className="container mx-auto px-4 max-w-2xl mt-4">
       <Link href="/{{{lc}}}s">
-          <a className="text-sm text-cyan-500 font-bold hover:text-cyan-700">
-            {`< Back to list`}
-          </a>
-        </Link>
-        <h1 className="text-3xl my-2">
-          { {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }
-        </h1>
+        <a className="text-sm text-cyan-500 font-bold hover:text-cyan-700">
+          {`< Back to list`}
+        </a>
+      </Link>
+      <h1 className="text-3xl my-2">
+        { {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }
+      </h1>
       <Formik
         initialValues={
           {{lc}} ?
@@ -173,7 +173,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                   onBlur={handleBlur}
                 />
                 <ErrorMessage
-                   className="text-xs text-red-500 pt-1"
+                  className="text-xs text-red-500 pt-1"
                   component="div"
                   name="{{name}}"
                 />

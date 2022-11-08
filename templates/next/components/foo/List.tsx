@@ -10,14 +10,14 @@ interface Props {
 }
 
 export const List: FunctionComponent<Props> = ({ {{{lc}}}s }) => (
-   <div className="p-4">
+  <div className="p-4">
     <div className="flex justify-between items-center">
-    <h1 className="text-3xl mb-2">{{{ucf}}} List</h1>
-    <Link href="/{{{lc}}}s/create">
-      <a className="bg-cyan-500 hover:bg-cyan-700 text-white text-sm font-bold py-2 px-4 rounded">
+      <h1 className="text-3xl mb-2">{{{ucf}}} List</h1>
+      <Link href="/{{{lc}}}s/create">
+        <a className="bg-cyan-500 hover:bg-cyan-700 text-white text-sm font-bold py-2 px-4 rounded">
           Create
         </a>
-    </Link>
+      </Link>
     </div>
     <table cellPadding={10} className="shadow-md table border-collapse min-w-full leading-normal table-auto text-left my-3">
       <thead className="w-full text-xs uppercase font-light text-gray-700 bg-gray-200 py-2 px-4">
@@ -26,14 +26,14 @@ export const List: FunctionComponent<Props> = ({ {{{lc}}}s }) => (
           {{#each fields}}
             <th>{{name}}</th>
           {{/each}}
-           <th colSpan={2} />
+          <th colSpan={2} />
         </tr>
       </thead>
-       <tbody className="text-sm divide-y divide-gray-200">
+      <tbody className="text-sm divide-y divide-gray-200">
         { {{{lc}}}s && ({{{lc}}}s.length !== 0) && {{{lc}}}s.map( ( {{{lc}}} ) => (
           {{{lc}}}['@id'] &&
           <tr className="py-2" key={ {{{lc}}}['@id'] }>
-            <th  scope="row">
+            <th scope="row">
               <ReferenceLinks items={ { href: getPath({{{lc}}}['@id'], '/{{{lc}}}s/[id]'), name: {{{lc}}}['@id'] } } />
             </th>
             {{#each fields}}
