@@ -133,7 +133,7 @@ import Breadcrumb from 'src/components/common/BreadcrumbComponent.vue';
 import ActionCell from 'src/components/common/ActionCellComponent.vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { formatDateTime } from 'src/utils/dates';
+import { formatDateTime } from 'src/utils/date';
 import { use{{titleUcFirst}}ListStore } from 'stores/{{lc}}/list';
 import { use{{titleUcFirst}}DeleteStore } from 'stores/{{lc}}/delete';
 import { storeToRefs } from 'pinia';
