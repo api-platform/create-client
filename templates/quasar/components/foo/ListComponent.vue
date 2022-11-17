@@ -6,10 +6,10 @@
   </Toolbar>
 
   <q-banner v-if="deleted" class="bg-positive text-white q-ma-md">
-    {{ deleted['@id'] }} deleted.
+    \{{ deleted['@id'] }} deleted.
   </q-banner>
   <q-banner v-if="mercureDeleted" class="bg-positive text-white q-ma-md">
-    {{ mercureDeleted['@id'] }} deleted by another user.
+    \{{ mercureDeleted['@id'] }} deleted by another user.
   </q-banner>
 
   {{#if parameters.length}}
@@ -53,7 +53,7 @@
             :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
             :key="{{lowercase reference.title}}"
           >
-            {{ {{lowercase reference.title}} }}
+            \{{ {{lowercase reference.title}} }}
 
             <br />
           </router-link>
@@ -61,7 +61,7 @@
 
         <template v-else>
           <p v-for="{{lowercase reference.title}} in value" :key="{{lowercase reference.title}}">
-            {{ {{lowercase reference.title}} }}
+            \{{ {{lowercase reference.title}} }}
           </p>
         </template>
       </td>
@@ -73,11 +73,11 @@
           v-if="router.hasRoute('{{reference.title}}Show')"
           :to="{ name: '{{reference.title}}Show', params: { id: value } }"
         >
-          {{ value }}
+          \{{ value }}
         </router-link>
 
         <p v-else>
-          {{ value }}
+          \{{ value }}
         </p>
       </td>
     </template>
@@ -90,7 +90,7 @@
             :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
             :key="{{lowercase embedded.title}}['@id']"
           >
-            {{ {{lowercase embedded.title}}['@id'] }}
+            \{{ {{lowercase embedded.title}}['@id'] }}
 
             <br />
           </router-link>
@@ -98,7 +98,7 @@
 
         <template v-else>
           <p v-for="{{lowercase embedded.title}} in value" :key="{{lowercase embedded.title}}['@id']">
-            {{ {{lowercase embedded.title}}['@id'] }}
+            \{{ {{lowercase embedded.title}}['@id'] }}
           </p>
         </template>
       </td>
@@ -110,11 +110,11 @@
           v-if="router.hasRoute('{{embedded.title}}Show')"
           :to="{ name: '{{embedded.title}}Show', params: { id: value['@id'] } }"
         >
-          {{ value['@id'] }}
+          \{{ value['@id'] }}
         </router-link>
 
         <p v-else>
-          {{ value['@id'] }}
+          \{{ value['@id'] }}
         </p>
       </td>
     </template>
