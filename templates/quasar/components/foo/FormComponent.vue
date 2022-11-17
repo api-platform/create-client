@@ -60,7 +60,7 @@ import { Ref, ref, toRef } from 'vue';
 import FormRepeater from 'src/components/common/FormRepeaterComponent.vue';
 {{/if}}
 import { Item } from 'src/types/item';
-import { formatDateInput } from 'src/utils/dates';
+import { formatDateInput } from 'src/utils/date';
 
 let props = defineProps<{
   values?: {{titleUcFirst}};
