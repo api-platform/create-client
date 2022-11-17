@@ -2,7 +2,7 @@
   <div>
     <label for="book_reviews" class="text-body1 form-control-label">
       <span class="q-mr-sm">
-        {{ label }}
+        \{{ label }}
       </span>
 
       <q-btn color="secondary" @click="addField">Add</q-btn>

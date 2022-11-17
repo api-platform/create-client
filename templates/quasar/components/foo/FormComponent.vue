@@ -56,7 +56,7 @@
 import { {{titleUcFirst}} } from 'src/types/{{lc}}';
 import { SubmissionErrors } from 'src/types/error';
 import { Ref, ref, toRef } from 'vue';
-{#if hasManyRelations}}
+{{#if hasManyRelations}}
 import FormRepeater from 'src/components/common/FormRepeaterComponent.vue';
 {{/if}}
 import { Item } from 'src/types/item';
@@ -74,6 +74,7 @@ let item: Ref<{{titleUcFirst}}> = ref({});
 if (props.values) {
   item.value = {
     ...props.values,
+    {{#each formFields}}
     {{#compare type "==" "dateTime" }}
     publicationDate: formatDateInput(props.values.publicationDate),
     {{/compare}}
