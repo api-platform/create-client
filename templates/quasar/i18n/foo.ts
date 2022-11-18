@@ -1,5 +1,5 @@
 export default {
   {{#each labels}}
-  {{@key}}: {{this}},
+  {{this}}: '{{capitalize this}}',
   {{/each }}
 };
