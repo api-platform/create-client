@@ -30,7 +30,7 @@
           <q-icon
             name="close"
             class="cursor-pointer"
-            @click.prevent.stop="item.{{name}} = ''"
+            @click.prevent.stop="item.{{name}} = undefined"
           />
         </template>
       </q-input>
@@ -58,9 +58,11 @@ import { SubmissionErrors } from 'src/types/error';
 import { Ref, ref, toRef } from 'vue';
 {{#if hasManyRelations}}
 import FormRepeater from 'src/components/common/FormRepeaterComponent.vue';
-{{/if}}
 import { Item } from 'src/types/item';
+{{/if}}
+{{#if hasDateField}}
 import { formatDateInput } from 'src/utils/date';
+{{/if}}
 
 let props = defineProps<{
   values?: {{titleUcFirst}};

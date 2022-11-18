@@ -105,7 +105,9 @@ import Loading from 'src/components/common/LoadingComponent.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { use{{titleUcFirst}}ShowStore } from 'src/stores/{{lc}}/show';
 import { storeToRefs } from 'pinia';
+{{#if hasDateField}}
 import { formatDateTime } from 'src/utils/date';
+{{/if}}
 import { onBeforeUnmount } from 'vue';
 import { use{{titleUcFirst}}DeleteStore } from 'src/stores/{{lc}}/delete';
 import { useBreadcrumb } from 'src/composables/breadcrumb';

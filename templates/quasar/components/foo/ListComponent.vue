@@ -133,7 +133,9 @@ import Breadcrumb from 'src/components/common/BreadcrumbComponent.vue';
 import ActionCell from 'src/components/common/ActionCellComponent.vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+{{#if hasDateField}}
 import { formatDateTime } from 'src/utils/date';
+{{/if}}
 import { use{{titleUcFirst}}ListStore } from 'stores/{{lc}}/list';
 import { use{{titleUcFirst}}DeleteStore } from 'stores/{{lc}}/delete';
 import { storeToRefs } from 'pinia';
@@ -167,7 +169,6 @@ const pagination = {
   rowsPerPage: 3, // maximum displayed rows
   rowsNumber: 10, // max number of rows
 };
-const filters = ref({});
 const columns = [
   { name: 'actions', label: t('actions'), field: '' },
   { name: 'id', field: '@id', label: t('id') },
@@ -196,6 +197,9 @@ watch(items, () => {
   nextPage.value = 1;
 });
 
+{{#if parameters.length}}
+const filters = ref({});
+
 function onSendFilter() {
   sendRequest({
     filters: filters.value,
@@ -206,6 +210,7 @@ function onSendFilter() {
 function resetFilter() {
   filters.value = {};
 }
+{{/if}}
 
 function goToCreatePage() {
   router.push({ name: '{{titleUcFirst}}Create' });
