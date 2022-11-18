@@ -16,7 +16,7 @@
       <tbody>
         {{#each fields}}
         <tr>
-          <td>\{{ $t('{{lc}}.{{name}}') }}</td>
+          <td>\{{ $t('{{../lc}}.{{name}}') }}</td>
 
           <td>
             {{#if isReferences}}
@@ -90,7 +90,7 @@
             {{/if}}
           </td>
         </tr>
-        {{/each }}
+        {{/each}}
       </tbody>
     </q-markup-table>
   </div>

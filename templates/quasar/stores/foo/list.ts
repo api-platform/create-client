@@ -28,7 +28,7 @@ export const use{{titleUcFirst}}ListStore = defineStore('{{lc}}List', {
     getItems(params: any) {
       this.toggleLoading();
 
-      return fetch('{{lc}}s', { params })
+      return fetch('{{name}}', { params })
         .then((response: Response) =>
           response.json().then((data: PagedCollection<{{titleUcFirst}}>) => ({
             data,

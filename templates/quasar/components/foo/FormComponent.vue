@@ -5,14 +5,14 @@
       {{#if isManyRelations}}
       <FormRepeater
         :values="item.{{name}}"
-        :label="$t('{{lc}}.{{name}}')"
+        :label="$t('{{../lc}}.{{name}}')"
         class="col-12 col-md-8"
         @update="(values) => (item.{{name}} = values)"
       />
       {{else}}
       <q-input
         v-model="item.{{name}}"
-        :label="$t('{{lc}}.{{name}}')"
+        :label="$t('{{../lc}}.{{name}}')"
         :error="Boolean(violations?.{{name}})"
         :error-message="violations?.{{name}}"
         name="{{name}}"
@@ -79,9 +79,9 @@ if (props.values) {
     publicationDate: formatDateInput(props.values.publicationDate),
     {{/compare}}
     {{#if isEmbeddeds}}
-    {{name}}: props.values.{{name}}?.map((item: any) => item["@id"] ?? "") ?? [],
+    {{name}}: props.values.{{name}}?.map((item: Item) => item['@id'] ?? '') ?? [],
     {{else if embedded}}
-    {{name}}: props.values.{{name}}?.["@id"],
+    {{name}}: props.values.{{name}}?.['@id'],
     {{/if}}
     {{/each}}
   };

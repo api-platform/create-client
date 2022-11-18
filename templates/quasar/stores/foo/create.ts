@@ -24,7 +24,7 @@ export const use{{titleUcFirst}}CreateStore = defineStore('{{lc}}Create', {
       this.setViolations(undefined);
       this.toggleLoading();
 
-      return fetch('{{lc}}s', { method: 'POST', body: JSON.stringify(values) })
+      return fetch('{{name}}', { method: 'POST', body: JSON.stringify(values) })
         .then((response: Response) => {
           this.toggleLoading();
 
