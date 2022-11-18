@@ -1,7 +1,7 @@
 export interface View {
   '@id': string;
-  'hydra:first': string;
-  'hydra:last': string;
-  'hydra:next': string;
-  'hydra:previous': string;
+  '{{hydraPrefix}}first': string;
+  '{{hydraPrefix}}last': string;
+  '{{hydraPrefix}}next': string;
+  '{{hydraPrefix}}previous': string;
 }
