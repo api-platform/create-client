@@ -4,6 +4,7 @@ import { {{titleUcFirst}} } from 'src/types/{{lc}}';
 import { View } from 'src/types/view';
 import { extractHubURL } from 'src/utils/mercure';
 import type { PagedCollection } from 'src/types/collection';
+import { ListParams } from 'src/types/list';
 
 interface State {
   items: {{titleUcFirst}}[];
@@ -25,7 +26,7 @@ export const use{{titleUcFirst}}ListStore = defineStore('{{lc}}List', {
   }),
 
   actions: {
-    getItems(params: any) {
+    getItems(params: ListParams) {
       this.toggleLoading();
 
       return fetch('{{name}}', { params })

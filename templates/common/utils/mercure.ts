@@ -21,13 +21,13 @@ export const mercureSubscribe = (
   return eventSource;
 };
 
-export const extractHubURL = (response: Response): URL | null => {
+export const extractHubURL = (response: Response): URL | undefined => {
   const linkHeader = response.headers.get("Link");
-  if (!linkHeader) return null;
+  if (!linkHeader) return undefined;
 
   const matches = linkHeader.match(
     /<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/
   );
 
-  return matches && matches[1] ? new URL(matches[1], ENTRYPOINT) : null;
+  return matches && matches[1] ? new URL(matches[1], ENTRYPOINT) : undefined;
 };

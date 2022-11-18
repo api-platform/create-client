@@ -22,7 +22,7 @@ export function useMercureList({
 
   let mercureSub: EventSource | null = null;
 
-  store.$subscribe((mutation: any, state: any) => {
+  store.$subscribe((mutation, state) => {
     if (!state.hubUrl) {
       return;
     }

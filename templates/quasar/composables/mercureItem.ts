@@ -26,7 +26,7 @@ export function useMercureItem({
 
   let mercureSub: EventSource | null = null;
 
-  store.$subscribe((mutation: any, state: any) => {
+  store.$subscribe((mutation, state) => {
     if (!state.hubUrl) {
       return;
     }
@@ -46,7 +46,7 @@ export function useMercureItem({
     );
   });
 
-  deleteStore.$subscribe((mutation: any, state: any) => {
+  deleteStore.$subscribe((mutation, state) => {
     if (state.mercureDeleted) {
       router.push({ name: redirectRouteName });
     }
