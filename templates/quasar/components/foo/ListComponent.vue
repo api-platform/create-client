@@ -139,11 +139,12 @@ import { formatDateTime } from 'src/utils/date';
 import { use{{titleUcFirst}}ListStore } from 'stores/{{lc}}/list';
 import { use{{titleUcFirst}}DeleteStore } from 'stores/{{lc}}/delete';
 import { storeToRefs } from 'pinia';
-import { onBeforeUnmount, ref, watch } from 'vue';
+import { onBeforeUnmount, Ref, ref, watch } from 'vue';
 import { useBreadcrumb } from 'src/composables/breadcrumb';
 import { useWatchErrors } from 'src/composables/errors';
 import { useMercureList } from 'src/composables/mercureList';
 import { {{titleUcFirst}} } from 'src/types/{{lc}}';
+import { Pagination{{#if parameters.length}}, Filters{{/if}} } from 'src/types/list';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -162,7 +163,7 @@ async function sendRequest(params = {}) {
 useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
 
 const nextPage = ref(1);
-const pagination = {
+const pagination: Pagination = {
   sortBy: undefined,
   descending: false,
   page: 1, // page to be displayed
@@ -198,7 +199,7 @@ watch(items, () => {
 });
 
 {{#if parameters.length}}
-const filters = ref({});
+const filters: Ref<Filters> = ref({});
 
 function onSendFilter() {
   sendRequest({
