@@ -36,7 +36,7 @@ export default function (id: string, options: any = {}) {
     if (response.ok) return response;
 
     return response.json().then((json) => {
-      const error = json['hydra:description'] ?? response.statusText;
+      const error = json['{{hydraPrefix}}description'] ?? response.statusText;
       if (!json.violations) throw Error(error);
 
       const errors: SubmissionErrors = { _error: error };

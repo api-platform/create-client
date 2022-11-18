@@ -38,9 +38,9 @@ export const use{{titleUcFirst}}ListStore = defineStore('{{lc}}List', {
         .then(
           ({ data, hubUrl }: { data: PagedCollection<{{titleUcFirst}}>; hubUrl?: URL }) => {
             this.toggleLoading();
-            this.setItems(data['hydra:member']);
-            this.setTotalItems(data['hydra:totalItems'] ?? 0);
-            this.setView(data['hydra:view']);
+            this.setItems(data['{{hydraPrefix}}member']);
+            this.setTotalItems(data['{{hydraPrefix}}totalItems'] ?? 0);
+            this.setView(data['{{hydraPrefix}}view']);
 
             if (hubUrl) {
               this.setHubUrl(hubUrl);
