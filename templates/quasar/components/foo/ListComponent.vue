@@ -141,6 +141,7 @@ import { onBeforeUnmount, ref, watch } from 'vue';
 import { useBreadcrumb } from 'src/composables/breadcrumb';
 import { useWatchErrors } from 'src/composables/errors';
 import { useMercureList } from 'src/composables/mercureList';
+import { {{titleUcFirst}} } from 'src/types/{{lc}}';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -174,7 +175,7 @@ const columns = [
   {
     name: '{{name}}',
     field: '{{name}}',
-    label: t('{{lc}}.{{name}}'),
+    label: t('{{../lc}}.{{name}}'),
     {{#if sortable }}
     sortable: true,
     {{/if}}
@@ -183,7 +184,7 @@ const columns = [
       return formatDateTime(value);
     },
     {{/compare}}
-  }
+  },
   {{/each }}
 ];
 
