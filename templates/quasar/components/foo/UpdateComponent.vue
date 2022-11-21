@@ -28,7 +28,7 @@ import { storeToRefs } from 'pinia';
 import { use{{titleUcFirst}}DeleteStore } from 'src/stores/{{lc}}/delete';
 import { onBeforeUnmount } from 'vue';
 import { {{titleUcFirst}} } from 'src/types/{{lc}}';
-import { displaySuccessNotification } from 'src/utils/notifications';
+import { useNotifications } from 'src/composables/notifications';
 import { useI18n } from 'vue-i18n';
 import { useBreadcrumb } from 'src/composables/breadcrumb';
 import { useWatchErrors } from 'src/composables/errors';
@@ -38,6 +38,7 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const breadcrumb = useBreadcrumb();
+const { displaySuccessNotification } = useNotifications();
 
 const {{lc}}UpdateStore = use{{titleUcFirst}}UpdateStore();
 const {
@@ -78,7 +79,7 @@ async function submitForm(item: {{titleUcFirst}}) {
     return;
   }
 
-  displaySuccessNotification(`${item['@id']} ${t('updated')}.`, t('close'));
+  displaySuccessNotification(`${item['@id']} ${t('updated')}.`);
 }
 
 useWatchErrors([error, deleteError]);
