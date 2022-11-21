@@ -1,11 +1,10 @@
 import { Ref, watch } from 'vue';
-import { displayErrorNotification } from 'src/utils/notifications';
-import { useI18n } from 'vue-i18n';
+import { useNotifications } from './notifications';
 
 export function useWatchErrors(
   errors: (Ref<string | undefined> | undefined)[]
 ) {
-  const { t } = useI18n();
+  const { displayErrorNotification } = useNotifications();
 
   watch(errors, (newErrors) => {
     newErrors.forEach((newError) => {
@@ -13,7 +12,7 @@ export function useWatchErrors(
         return;
       }
 
-      displayErrorNotification(newError.value, t('close'));
+      displayErrorNotification(newError.value);
     });
   });
 }
