@@ -5,7 +5,7 @@
         <q-avatar icon="warning" color="primary" text-color="white" />
 
         <span class="q-ml-sm">
-          \{{ $t('Are you sure you want to delete this item?') }}
+          \{{ $t('confirmDelete') }}
         </span>
       </q-card-section>
 
