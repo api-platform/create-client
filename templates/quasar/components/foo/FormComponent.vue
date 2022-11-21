@@ -24,7 +24,7 @@
         {{/compare}}
         bottom-slots
         filled
-        class="col-12 col-md"
+        class="col-12 col-md-4"
       >
         <template #append>
           <q-icon

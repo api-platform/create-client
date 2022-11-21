@@ -9,8 +9,8 @@
     <q-markup-table>
       <thead>
         <tr>
-          <th>\{{ $t('{{labels.field}}') }}</th>
-          <th>\{{ $t('{{labels.value}}') }}</th>
+          <th>\{{ $t('field') }}</th>
+          <th>\{{ $t('value') }}</th>
         </tr>
       </thead>
       <tbody>

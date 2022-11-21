@@ -25,10 +25,10 @@
     :rows="items"
     :columns="columns"
     :loading="isLoading"
-    :no-data-label="$t('{{{labels.unavail}}}')"
-    :no-results-label="$t('{{{labels.noresults}}}')"
-    :loading-label="$t('{{{labels.loading}}}')"
-    :rows-per-page-label="$t('{{{labels.recPerPage}}}')"
+    :no-data-label="$t('unavail')"
+    :no-results-label="$t('noresults')"
+    :loading-label="$t('loading')"
+    :rows-per-page-label="$t('recPerPage')"
     row-key="id"
     flat
     wrap-cells
@@ -45,7 +45,7 @@
 
     {{#each fields}}
     {{#if isReferences}}
-    <template #body-cell-{{lowercase reference.title}}="{ value }">
+    <template #body-cell-{{reference.name}}="{ value }">
       <td>
         <template v-if="router.hasRoute('{{reference.title}}Show')">
           <router-link
@@ -82,7 +82,7 @@
       </td>
     </template>
     {{else if isEmbeddeds}}
-    <template #body-cell-{{lowercase embedded.title}}="{ value }">
+    <template #body-cell-{{embedded.name}}="{ value }">
       <td>
         <template v-if="router.hasRoute('{{embedded.title}}Show')">
           <router-link

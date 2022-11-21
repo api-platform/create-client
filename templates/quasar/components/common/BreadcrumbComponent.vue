@@ -5,7 +5,7 @@
     <q-breadcrumbs-el
       v-for="(breadcrumb, index) in props.values"
       :key="index"
-      :label="`${$t(breadcrumb.label)} ${
+      :label="`${breadcrumb.label} ${
         index === props.values.length - 1 && props.item?.['@id']
           ? props.item['@id']
           : ''
