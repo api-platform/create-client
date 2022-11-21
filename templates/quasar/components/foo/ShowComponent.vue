@@ -58,7 +58,7 @@
                 :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
                 :key="{{lowercase embedded.title}}['@id']"
               >
-                \{{ {{lowercase embedded.title}}["@id"] }}
+                \{{ {{lowercase embedded.title}}['@id'] }}
 
                 <br />
               </router-link>
@@ -69,7 +69,7 @@
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
                 :key="{{lowercase embedded.title}}['@id']"
               >
-                \{{ {{lowercase embedded.title}}["@id"] }}
+                \{{ {{lowercase embedded.title}}['@id'] }}
               </p>
             </template>
             {{else if embedded}}
@@ -77,11 +77,11 @@
               v-if="router.hasRoute('{{embedded.title}}Show')"
               :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
             >
-              \{{ item.{{lowercase embedded.title}}["@id"] }}
+              \{{ item.{{lowercase embedded.title}}['@id'] }}
             </router-link>
 
             <p v-else>
-              \{{ item.{{lowercase embedded.title}}["@id"] }}
+              \{{ item.{{lowercase embedded.title}}['@id'] }}
             </p>
             {{else if (compare type "==" "dateTime") }}
             \{{ formatDateTime(item.{{name}}) }}
