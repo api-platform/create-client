@@ -42,7 +42,6 @@
         @delete="deleteItem(row)"
       />
     </template>
-
     {{#each fields}}
     {{#if isReferences}}
     <template #body-cell-{{reference.name}}="{ value }">
@@ -139,7 +138,7 @@ import { formatDateTime } from 'src/utils/date';
 import { use{{titleUcFirst}}ListStore } from 'stores/{{lc}}/list';
 import { use{{titleUcFirst}}DeleteStore } from 'stores/{{lc}}/delete';
 import { storeToRefs } from 'pinia';
-import { onBeforeUnmount, Ref, ref, watch } from 'vue';
+import { onBeforeUnmount{{#if parameters.length}}, Ref{{/if}}, ref, watch } from 'vue';
 import { useBreadcrumb } from 'src/composables/breadcrumb';
 import { useWatchErrors } from 'src/composables/errors';
 import { useMercureList } from 'src/composables/mercureList';

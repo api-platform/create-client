@@ -89,7 +89,7 @@ export default class extends BaseGenerator {
     );
     console.log(
       chalk.green(`
-// Add to quasar.conf
+// Add to quasar.config.js
 // 1. in 'framework.config', can be customized later
 notify: {
   position: 'top',

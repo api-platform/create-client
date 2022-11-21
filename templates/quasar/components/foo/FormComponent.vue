@@ -11,7 +11,7 @@
       />
       {{else}}
       <q-input
-        v-model="item.{{name}}"
+        v-model{{#compare type "==" "number" }}.number{{/compare}}="item.{{name}}"
         :label="$t('{{../lc}}.{{name}}')"
         :error="Boolean(violations?.{{name}})"
         :error-message="violations?.{{name}}"
