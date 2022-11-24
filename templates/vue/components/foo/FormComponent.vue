@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 {{#if hasManyRelations}}
-import FormRepeater from "@/components/common/FormRepeater.vue";
+import FormRepeater from "@/components/common/FormRepeaterComponent.vue";
 {{/if}}
 import { formatDateInput } from "@/utils/date";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
@@ -49,9 +49,9 @@ function emitSendForm() {
         {{name}}
       </label>
       {{#if isManyRelations}}
-      <FormRepeater 
-        :values="item.{{name}}" 
-        @update="(values) => (item.{{name}} = values)" 
+      <FormRepeater
+        :values="item.{{name}}"
+        @update="(values) => (item.{{name}} = values)"
       />
       {{else}}
       <input

@@ -15,12 +15,12 @@ export default class extends BaseGenerator {
 
     this.registerTemplates(`vue/`, [
       // components
-      "components/foo/EntityCreate.vue",
-      "components/foo/EntityForm.vue",
-      "components/foo/EntityList.vue",
-      "components/foo/EntityUpdate.vue",
-      "components/foo/EntityShow.vue",
-      "components/common/FormRepeater.vue",
+      "components/foo/CreateComponent.vue",
+      "components/foo/FormComponent.vue",
+      "components/foo/ListComponent.vue",
+      "components/foo/UpdateComponent.vue",
+      "components/foo/ShowComponent.vue",
+      "components/common/FormRepeaterComponent.vue",
 
       // composables
       "composables/mercureItem.ts",
@@ -131,11 +131,11 @@ const router = createRouter({
 
     [
       // components
-      "components/%s/EntityCreate.vue",
-      "components/%s/EntityForm.vue",
-      "components/%s/EntityList.vue",
-      "components/%s/EntityUpdate.vue",
-      "components/%s/EntityShow.vue",
+      "components/%s/CreateComponent.vue",
+      "components/%s/FormComponent.vue",
+      "components/%s/ListComponent.vue",
+      "components/%s/UpdateComponent.vue",
+      "components/%s/ShowComponent.vue",
 
       // router
       "router/%s.ts",
@@ -161,7 +161,7 @@ const router = createRouter({
 
     [
       // components
-      "components/common/FormRepeater.vue",
+      "components/common/FormRepeaterComponent.vue",
 
       // composables
       "composables/mercureItem.ts",

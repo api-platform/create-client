@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {{titleUcFirst}}Create from "@/components/{{lc}}/EntityCreate.vue";
+import {{titleUcFirst}}Create from "@/components/{{lc}}/CreateComponent.vue";
 </script>
 
 <template>

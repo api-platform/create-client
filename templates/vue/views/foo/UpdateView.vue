@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {{titleUcFirst}}Update from "@/components/{{lc}}/EntityUpdate.vue";
+import {{titleUcFirst}}Update from "@/components/{{lc}}/UpdateComponent.vue";
 </script>
 
 <template>
