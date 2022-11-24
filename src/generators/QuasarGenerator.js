@@ -13,7 +13,7 @@ export default class extends BaseGenerator {
       "utils/mercure.ts",
     ]);
 
-    this.registerTemplates(`quasar/`, [
+    this.registerTemplates("quasar/", [
       // common components
       "components/common/ActionCellComponent.vue",
       "components/common/BreadcrumbComponent.vue",
@@ -191,8 +191,8 @@ export default {
       const paramIndex = fields.findIndex((field) => field.name === p.variable);
       if (paramIndex === -1) {
         if (p.variable.startsWith("order[")) {
-          var v = p.variable.slice(6, -1);
-          var found = fields.findIndex((field) => field.name === v);
+          let v = p.variable.slice(6, -1);
+          let found = fields.findIndex((field) => field.name === v);
           if (found !== -1) {
             fields[found].sortable = true;
           }
@@ -200,8 +200,8 @@ export default {
         }
 
         if (p.variable.startsWith("exists[")) {
-          var exists = p.variable.slice(7, -1);
-          var foundExistsFieldIndex = fields.findIndex(
+          let exists = p.variable.slice(7, -1);
+          let foundExistsFieldIndex = fields.findIndex(
             (field) => field.name === exists
           );
           if (foundExistsFieldIndex !== -1) {
@@ -244,7 +244,10 @@ export default {
     [
       `${dir}/components/common`,
       `${dir}/composables`,
+      `${dir}/i18n`,
+      `${dir}/i18n/en-US`,
       `${dir}/config`,
+      `${dir}/router`,
       `${dir}/types`,
       `${dir}/utils`,
     ].forEach((dir) => this.createDir(dir, false));
