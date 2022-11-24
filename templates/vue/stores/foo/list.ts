@@ -18,11 +18,11 @@ export const use{{titleUcFirst}}ListStore = defineStore("{{lc}}List", {
   }),
 
   actions: {
-    getItems(page: string = "{{name}}") {
+    getItems() {
       this.setError("");
       this.toggleLoading();
 
-      return fetch(page)
+      return fetch("{{name}}")
         .then((response: Response) =>
           response.json().then((data: PagedCollection<{{titleUcFirst}}>) => ({
             data,
@@ -30,12 +30,12 @@ export const use{{titleUcFirst}}ListStore = defineStore("{{lc}}List", {
           }))
         )
         .then(
-          ({ 
-            data, 
-            hubUrl 
-          }: { 
-            data: PagedCollection<{{titleUcFirst}}>; 
-            hubUrl: URL | null 
+          ({
+            data,
+            hubUrl
+          }: {
+            data: PagedCollection<{{titleUcFirst}}>;
+            hubUrl: URL | null
           }) => {
             this.setError("");
             this.toggleLoading();
