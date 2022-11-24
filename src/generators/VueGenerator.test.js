@@ -54,7 +54,7 @@ test("Generate a Vue app", () => {
   expect(fs.existsSync(`${tmpobj.name}/composables/mercureList.ts`)).toBe(true);
 
   // routes
-  expect(fs.existsSync(tmpobj.name + "/router/foo.ts")).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/router/foo.ts`)).toBe(true);
 
   // stores
   ["create", "delete", "list", "show", "update"].forEach((action) => {
@@ -62,20 +62,20 @@ test("Generate a Vue app", () => {
   });
 
   // types
-  expect(fs.existsSync(tmpobj.name + "/types/collection.ts")).toBe(true);
-  expect(fs.existsSync(tmpobj.name + "/types/error.ts")).toBe(true);
-  expect(fs.existsSync(tmpobj.name + "/types/foo.ts")).toBe(true);
-  expect(fs.existsSync(tmpobj.name + "/types/item.ts")).toBe(true);
-  expect(fs.existsSync(tmpobj.name + "/types/stores.ts")).toBe(true);
-  expect(fs.existsSync(tmpobj.name + "/types/view.ts")).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/types/collection.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/types/error.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/types/foo.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/types/item.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/types/stores.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/types/view.ts`)).toBe(true);
 
   // utils
-  expect(fs.existsSync(tmpobj.name + "/utils/date.ts")).toBe(true);
-  expect(fs.existsSync(tmpobj.name + "/utils/fetch.ts")).toBe(true);
-  expect(fs.existsSync(tmpobj.name + "/utils/hydra.ts")).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/date.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/fetch.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/hydra.ts`)).toBe(true);
 
   // config
-  expect(fs.existsSync(tmpobj.name + "/config/entrypoint.ts")).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/config/entrypoint.ts`)).toBe(true);
 
   tmpobj.removeCallback();
 });
