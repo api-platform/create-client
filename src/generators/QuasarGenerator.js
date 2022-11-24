@@ -89,17 +89,6 @@ export default class extends BaseGenerator {
     );
     console.log(
       chalk.green(`
-// Add to quasar.config.js
-// 1. in 'framework.config', can be customized later
-notify: {
-  position: 'top',
-  multiLine: true,
-  timeout: 0,
-},
-
-// 2. in 'framework.plugins
-  'Notify'
-
 // Import routes in src/router/routes.ts
 import ${titleLc}Routes from './${titleLc}';
 
@@ -109,12 +98,10 @@ const routes: RouteRecordRaw[] = [
 ];
 
 // import translations in src/i18n/en-US/index.ts
-import common from './common';
 import ${titleLc} from './${titleLc}';
 
 export default {
   // ...
-  ...common,
   ${titleLc},
 }
 `)
