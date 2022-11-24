@@ -40,7 +40,7 @@ test("Generate a Vue app", () => {
   ["Create", "List", "Update", "Show"].forEach((action) => {
     // components
     expect(
-      fs.existsSync(`${tmpobj.name}/components/foo/Entity${action}.vue`)
+      fs.existsSync(`${tmpobj.name}/components/foo/${action}Component.vue`)
     ).toBe(true);
 
     // views

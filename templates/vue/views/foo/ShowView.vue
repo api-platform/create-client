@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {{titleUcFirst}}Show from "@/components/{{lc}}/EntityShow.vue";
+import {{titleUcFirst}}Show from "@/components/{{lc}}/ShowComponent.vue";
 </script>
 
 <template>
