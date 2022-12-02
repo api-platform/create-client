@@ -29,7 +29,7 @@ jobs:
     - run: yarn test-react-app
     - run: yarn test-vue-app
     - env:
-        NODE_OPTIONS: "${{ matrix.node-version == 'current' && '--openssl-legacy-provider' || '' }}"
+        NODE_OPTIONS: --openssl-legacy-provider
       run: yarn test-nuxt-app
     - run: yarn test-gen-env
     - run: yarn test-gen-openapi3
