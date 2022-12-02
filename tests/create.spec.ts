@@ -16,5 +16,5 @@ test('resource create', async ({ page, queries: { getByLabelText, getByRole, get
   await expect(getByText('reviews')).toBeVisible();
 
   await expect(getByRole('button', { name: 'Submit' })).toBeVisible();
-  await expect(getByRole('link', { name: 'Back to list' })).toBeVisible();
+  await expect(getByRole('link', { name: /Back to list/ })).toBeVisible();
 });
