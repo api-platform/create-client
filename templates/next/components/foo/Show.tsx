@@ -30,20 +30,25 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
   };
 
   return (
-    <div>
+    <div className="p-4">
       <Head>
         <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
         <script type="application/ld+json" dangerouslySetInnerHTML={ { __html: text } } />
       </Head>
-      <h1>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</h1>
-      <table className="table table-responsive table-striped table-hover">
-        <thead>
+      <Link href="/{{{lc}}}s">
+        <a className="text-sm text-cyan-500 font-bold hover:text-cyan-700">
+          {`< Back to list`}
+        </a>
+      </Link>
+      <h1 className="text-3xl mb-2">{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</h1>
+      <table cellPadding={10} className="shadow-md table border-collapse min-w-full leading-normal table-auto text-left my-3">
+        <thead className="w-full text-xs uppercase font-light text-gray-700 bg-gray-200 py-2 px-4">
         <tr>
           <th>Field</th>
           <th>Value</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody className="text-sm divide-y divide-gray-200">
         {{#each fields}}
           <tr>
             <th scope="row">{{name}}</th>
@@ -67,19 +72,23 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
         </tbody>
       </table>
       {error && (
-        <div className="alert alert-danger" role="alert">
+        <div className="border px-4 py-3 my-4 rounded text-red-700 border-red-400 bg-red-100" role="alert">
           {error}
         </div>
       )}
-      <Link href="/{{{lc}}}s">
-        <a className="btn btn-primary">Back to list</a>
-      </Link>{" "}
-      <Link href={getPath({{{lc}}}["@id"], '/{{{lc}}}s/[id]/edit')}>
-        <a className="btn btn-warning">Edit</a>
-      </Link>
-      <button className="btn btn-danger" onClick={handleDelete}>
-        Delete
-      </button>
+      <div className="flex space-x-2 mt-4 items-center justify-end">
+        <Link href={getPath({{{lc}}}["@id"], '/{{{lc}}}s/[id]/edit')}>
+          <a className="inline-block mt-2 border-2 border-cyan-500 bg-cyan-500 hover:border-cyan-700 hover:bg-cyan-700 text-xs text-white font-bold py-2 px-4 rounded">
+            Edit
+          </a>
+        </Link>
+        <button
+          className="inline-block mt-2 border-2 border-red-400 hover:border-red-700 hover:text-red-700 text-xs text-red-400 font-bold py-2 px-4 rounded"
+          onClick={handleDelete}
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 };
