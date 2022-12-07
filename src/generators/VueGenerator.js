@@ -20,7 +20,7 @@ export default class extends BaseGenerator {
       "components/foo/ListComponent.vue",
       "components/foo/UpdateComponent.vue",
       "components/foo/ShowComponent.vue",
-      "components/common/FormRepeaterComponent.vue",
+      "components/common/FormRepeater.vue",
 
       // composables
       "composables/mercureItem.ts",
@@ -82,7 +82,7 @@ const router = createRouter({
       ...${titleLc}Routes,
   ]
 });
-      `)
+`)
     );
   }
 
@@ -90,7 +90,7 @@ const router = createRouter({
     const lc = resource.title.toLowerCase();
     const titleUcFirst =
       resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
-    const { fields } = this.parseFields(resource);
+    const fields = this.parseFields(resource);
     const hasRelations = fields.some(
       (field) => field.reference || field.embedded
     );
@@ -161,7 +161,7 @@ const router = createRouter({
 
     [
       // components
-      "components/common/FormRepeaterComponent.vue",
+      "components/common/FormRepeater.vue",
 
       // composables
       "composables/mercureItem.ts",
@@ -213,8 +213,6 @@ const router = createRouter({
       };
     }, {});
 
-    const fieldsArray = Object.values(fields);
-
-    return { fields: fieldsArray };
+    return Object.values(fields);
   }
 }

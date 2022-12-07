@@ -137,8 +137,10 @@ export default class NextGenerator extends BaseGenerator {
         return list;
       }
 
-      const isReferences = field.reference && field.maxCardinality !== 1;
-      const isEmbeddeds = field.embedded && field.maxCardinality !== 1;
+      const isReferences = Boolean(
+        field.reference && field.maxCardinality !== 1
+      );
+      const isEmbeddeds = Boolean(field.embedded && field.maxCardinality !== 1);
 
       return {
         ...list,

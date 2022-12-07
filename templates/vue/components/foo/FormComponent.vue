@@ -1,11 +1,11 @@
 <script lang="ts" setup>
+import { toRef } from "vue";
 {{#if hasManyRelations}}
-import FormRepeater from "@/components/common/FormRepeaterComponent.vue";
+import FormRepeater from "@/components/common/FormRepeater.vue";
 {{/if}}
 import { formatDateInput } from "@/utils/date";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 import type { SubmissionErrors } from "@/types/error";
-import { toRef } from "vue";
 
 const props = defineProps<{
   values?: {{titleUcFirst}};

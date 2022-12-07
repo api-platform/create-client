@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
-import { storeToRefs } from "pinia";
+import { onBeforeUnmount } from "vue";
 {{#if hasRelationsOrManyRelations}}
 import { useRouter } from "vue-router";
 {{/if}}
-import { onBeforeUnmount } from "vue";
+import { storeToRefs } from "pinia";
+import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
 import { use{{titleUcFirst}}ListStore } from "@/stores/{{lc}}/list";
 import { formatDateTime } from "@/utils/date";
 import { useMercureList } from "@/composables/mercureList";
@@ -12,7 +12,6 @@ import { useMercureList } from "@/composables/mercureList";
 {{#if hasRelationsOrManyRelations}}
 const router = useRouter();
 {{/if}}
-
 const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
 const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
   storeToRefs({{lc}}DeleteStore);
@@ -81,8 +80,8 @@ onBeforeUnmount(() => {
           </template>
 
           <template v-else>
-            <p 
-              v-for="{{lowercase reference.title}} in item.{{reference.name}}" 
+            <p
+              v-for="{{lowercase reference.title}} in item.{{reference.name}}"
               :key="{{lowercase reference.title}}"
             >
               \{{ {{lowercase reference.title}} }}
@@ -113,8 +112,8 @@ onBeforeUnmount(() => {
           </template>
 
           <template v-else>
-            <p 
-              v-for="{{lowercase embedded.title}} in item.{{embedded.name}}" 
+            <p
+              v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
               :key="{{lowercase embedded.title}}['@id']"
             >
               \{{ {{lowercase embedded.title}}["@id"] }}

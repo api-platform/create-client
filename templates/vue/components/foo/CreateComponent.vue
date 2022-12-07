@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import {{titleUcFirst}}Form from "@/components/{{lc}}/FormComponent.vue";
-import { use{{titleUcFirst}}CreateStore } from "@/stores/{{lc}}/create";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
+import {{titleUcFirst}}Form from "@/components/{{lc}}/FormComponent.vue";
+import { use{{titleUcFirst}}CreateStore } from "@/stores/{{lc}}/create";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 
 const router = useRouter();
