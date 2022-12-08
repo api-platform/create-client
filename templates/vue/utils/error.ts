@@ -1,4 +1,4 @@
-import { SubmissionErrors } from "@/types/error";
+import type { SubmissionErrors } from "@/types/error";
 
 export class SubmissionError extends Error {
   private readonly _errors: SubmissionErrors;

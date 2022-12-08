@@ -1,4 +1,4 @@
-import { SubmissionError } from "@/utils/error";
+import type { SubmissionError } from "@/utils/error";
 
 export type TError = SubmissionError | Error;
 

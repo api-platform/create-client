@@ -48,6 +48,7 @@ export default class extends BaseGenerator {
 
       // utils
       "utils/date.ts",
+      "utils/error.ts",
       "utils/fetch.ts",
       "utils/hydra.ts",
 
@@ -175,6 +176,7 @@ const router = createRouter({
 
       // utils
       "utils/date.ts",
+      "utils/error.ts",
       "utils/fetch.ts",
       "utils/hydra.ts",
       "utils/mercure.ts",
