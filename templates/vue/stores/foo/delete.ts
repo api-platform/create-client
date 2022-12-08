@@ -14,21 +14,28 @@ export const use{{titleUcFirst}}DeleteStore = defineStore("{{lc}}Delete", {
   }),
 
   actions: {
-    deleteItem(item: {{titleUcFirst}}) {
+    async deleteItem(item: {{titleUcFirst}}) {
       this.setError("");
       this.toggleLoading();
 
-      return fetch(item["@id"] ?? "", { method: "DELETE" })
-        .then(() => {
-          this.setError("");
-          this.toggleLoading();
-          this.setDeleted(item);
-          this.setMercureDeleted(undefined);
-        })
-        .catch((e: Error) => {
-          this.toggleLoading();
-          this.setError(e.message);
-        });
+      if (!item?.["@id"]) {
+        this.setError("No {{lc}} found. Please reload");
+        return;
+      }
+
+      try {
+        await fetch(item["@id"], { method: "DELETE" });
+
+        this.toggleLoading();
+        this.setDeleted(item);
+        this.setMercureDeleted(undefined);
+      } catch (error) {
+        this.toggleLoading();
+
+        if (error instanceof Error) {
+          this.setError(error.message);
+        }
+      }
     },
 
     toggleLoading() {

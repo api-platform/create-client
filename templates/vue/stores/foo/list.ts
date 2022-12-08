@@ -18,40 +18,30 @@ export const use{{titleUcFirst}}ListStore = defineStore("{{lc}}List", {
   }),
 
   actions: {
-    getItems() {
+    async getItems() {
       this.setError("");
       this.toggleLoading();
 
-      return fetch("{{name}}")
-        .then((response: Response) =>
-          response.json().then((data: PagedCollection<{{titleUcFirst}}>) => ({
-            data,
-            hubUrl: extractHubURL(response),
-          }))
-        )
-        .then(
-          ({
-            data,
-            hubUrl
-          }: {
-            data: PagedCollection<{{titleUcFirst}}>;
-            hubUrl: URL | null
-          }) => {
-            this.setError("");
-            this.toggleLoading();
+      try {
+        const response = await fetch("{{name}}");
+        const data: PagedCollection<{{titleUcFirst}}> = await response.json();
+        const hubUrl = extractHubURL(response);
 
-            this.setItems(data["{{hydraPrefix}}member"]);
-            this.setView(data["{{hydraPrefix}}view"]);
+        this.toggleLoading();
 
-            if (hubUrl) {
-              this.setHubUrl(hubUrl);
-            }
-          }
-        )
-        .catch((e: Error) => {
-          this.toggleLoading();
-          this.setError(e.message);
-        });
+        this.setItems(data["hydra:member"]);
+        this.setView(data["hydra:view"]);
+
+        if (hubUrl) {
+          this.setHubUrl(hubUrl);
+        }
+      } catch (error) {
+        this.toggleLoading();
+
+        if (error instanceof Error) {
+          this.setError(error.message);
+        }
+      }
     },
 
     toggleLoading() {

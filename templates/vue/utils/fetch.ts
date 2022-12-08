@@ -17,7 +17,7 @@ const transformRelationToIri = (payload: any) => {
   return payload;
 };
 
-export default function (id: string, options: any = {}) {
+export default async function (id: string, options: any = {}) {
   if (options.headers !== "undefined") {
     options.headers = new Headers();
   }
@@ -40,20 +40,22 @@ export default function (id: string, options: any = {}) {
     options.body = JSON.stringify(transformRelationToIri(payload));
   }
 
-  return fetch(new URL(id, ENTRYPOINT), options).then((response: Response) => {
-    if (response.ok) return response;
+  const response = await fetch(new URL(id, ENTRYPOINT), options);
 
-    return response.json().then((json) => {
-      const error = json["{{hydraPrefix}}description"] || response.statusText;
-      if (!json.violations) throw Error(error);
+  if (!response.ok) {
+    const data = await response.json();
+    const error = data["hydra:description"] || response.statusText;
+    if (!data.violations) throw Error(error);
 
-      const errors: SubmissionErrors = { _error: error };
-      json.violations.map(
-        (violation: { propertyPath: string; message: string }) =>
-          (errors[violation.propertyPath] = violation.message)
-      );
+    const errors: SubmissionErrors = { _error: error };
+    data.violations.forEach(
+      (violation: { propertyPath: string; message: string }) => {
+        errors[violation.propertyPath] = violation.message;
+      }
+    );
 
-      throw new SubmissionError(errors);
-    });
-  });
+    throw new SubmissionError(errors);
+  }
+
+  return response;
 }

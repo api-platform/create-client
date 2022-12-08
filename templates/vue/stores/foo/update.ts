@@ -3,7 +3,7 @@ import fetch from "@/utils/fetch";
 import { extractHubURL } from "@/utils/mercure";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 import type { UpdateState } from "@/types/stores";
-import type { SubmissionErrors, TError } from "@/types/error";
+import type { SubmissionErrors } from "@/types/error";
 import { SubmissionError } from "@/utils/error";
 
 interface State extends UpdateState<{{titleUcFirst}}> {}
@@ -19,62 +19,62 @@ export const use{{titleUcFirst}}UpdateStore = defineStore("{{lc}}Update", {
   }),
 
   actions: {
-    retrieve(id: string) {
+    async retrieve(id: string) {
       this.setError("");
       this.toggleLoading();
 
-      return fetch(id)
-        .then((response: Response) =>
-          response.json().then((data: {{titleUcFirst}}) => ({
-            data,
-            hubUrl: extractHubURL(response),
-          }))
-        )
-        .then(({ data, hubUrl }: { data: {{titleUcFirst}}; hubUrl: URL | null }) => {
-          this.setError("");
-          this.toggleLoading();
-          this.setRetrieved(data);
+      try {
+        const response = await fetch(id);
+        const data: {{titleUcFirst}} = await response.json();
+        const hubUrl = extractHubURL(response);
 
-          if (hubUrl) {
-            this.setHubUrl(hubUrl);
-          }
-        })
-        .catch((e: Error) => {
-          this.toggleLoading();
-          this.setError(e.message);
-        });
+        this.toggleLoading();
+        this.setRetrieved(data);
+
+        if (hubUrl) {
+          this.setHubUrl(hubUrl);
+        }
+      } catch (error) {
+        this.toggleLoading();
+
+        if (error instanceof Error) {
+          this.setError(error.message);
+        }
+      }
     },
 
-    update(payload: {{titleUcFirst}}) {
+    async update(payload: {{titleUcFirst}}) {
       this.setError("");
       this.toggleLoading();
 
-      if (!this.retrieved) {
+      if (!this.retrieved?.["@id"]) {
         this.setError("No {{lc}} found. Please reload");
         return;
       }
 
-      return fetch(this.retrieved["@id"] ?? "", {
-        method: "PUT",
-        headers: new Headers({ "Content-Type": "application/ld+json" }),
-        body: JSON.stringify(payload),
-      })
-        .then((response: Response) => response.json())
-        .then((data: {{titleUcFirst}}) => {
-          this.toggleLoading();
-          this.setUpdated(data);
-        })
-        .catch((e: TError) => {
-          this.toggleLoading();
-
-          if (e instanceof SubmissionError) {
-            this.setViolations(e.errors);
-            this.setError(e.errors._error);
-            return;
-          }
-
-          this.setError(e.message);
+      try {
+        const response = await fetch(this.retrieved["@id"], {
+          method: "PUT",
+          headers: new Headers({ "Content-Type": "application/ld+json" }),
+          body: JSON.stringify(payload),
         });
+        const data: {{titleUcFirst}} = await response.json();
+
+        this.toggleLoading();
+        this.setUpdated(data);
+      } catch (error) {
+        this.toggleLoading();
+
+        if (error instanceof SubmissionError) {
+          this.setViolations(error.errors);
+          this.setError(error.errors._error);
+          return;
+        }
+
+        if (error instanceof Error) {
+          this.setError(error.message);
+        }
+      }
     },
 
     setRetrieved(retrieved: {{titleUcFirst}}) {

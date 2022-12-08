@@ -15,30 +15,28 @@ export const use{{titleUcFirst}}ShowStore = defineStore("{{lc}}Show", {
   }),
 
   actions: {
-    retrieve(id: string) {
+    async retrieve(id: string) {
       this.setError("");
       this.toggleLoading();
 
-      return fetch(id)
-        .then((response: Response) =>
-          response.json().then((data: {{titleUcFirst}}) => ({
-            data,
-            hubUrl: extractHubURL(response),
-          }))
-        )
-        .then(({ data, hubUrl }: { data: {{titleUcFirst}}; hubUrl: URL | null }) => {
-          this.setError("");
-          this.toggleLoading();
-          this.setRetrieved(data);
+      try {
+        const response = await fetch(id);
+        const data: {{titleUcFirst}} = await response.json();
+        const hubUrl = extractHubURL(response);
 
-          if (hubUrl) {
-            this.setHubUrl(hubUrl);
-          }
-        })
-        .catch((e: Error) => {
-          this.toggleLoading();
-          this.setError(e.message);
-        });
+        this.toggleLoading();
+        this.setRetrieved(data);
+
+        if (hubUrl) {
+          this.setHubUrl(hubUrl);
+        }
+      } catch (error) {
+        this.toggleLoading();
+
+        if (error instanceof Error) {
+          this.setError(error.message);
+        }
+      }
     },
 
     toggleLoading() {
