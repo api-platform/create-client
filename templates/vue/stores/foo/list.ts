@@ -18,12 +18,13 @@ export const use{{titleUcFirst}}ListStore = defineStore("{{lc}}List", {
   }),
 
   actions: {
-    async getItems() {
+    async getItems(page?: string) {
       this.setError("");
       this.toggleLoading();
 
       try {
-        const response = await fetch("{{name}}");
+        const path = page ? `{{name}}?page=${page}` : "{{name}}";
+        const response = await fetch(path);
         const data: PagedCollection<{{titleUcFirst}}> = await response.json();
         const hubUrl = extractHubURL(response);
 

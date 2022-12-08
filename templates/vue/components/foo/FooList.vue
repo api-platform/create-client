@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { onBeforeUnmount } from "vue";
+import { onBeforeUnmount, watch } from "vue";
+import { useRoute } from "vue-router";
 {{#if hasRelationsOrManyRelations}}
 import { useRouter } from "vue-router";
 {{/if}}
@@ -9,6 +10,7 @@ import { use{{titleUcFirst}}ListStore } from "@/stores/{{lc}}/list";
 import { formatDateTime } from "@/utils/date";
 import { useMercureList } from "@/composables/mercureList";
 
+const route = useRoute();
 {{#if hasRelationsOrManyRelations}}
 const router = useRouter();
 {{/if}}
@@ -21,7 +23,14 @@ const { items, error, view, isLoading } = storeToRefs({{lc}}ListStore);
 
 useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
 
-await {{lc}}ListStore.getItems();
+watch(
+  () => route.query.page,
+  (newPage) => {
+    const page = newPage as string;
+    {{lc}}ListStore.getItems(page);
+  },
+  { immediate: true }
+);
 
 onBeforeUnmount(() => {
   {{lc}}DeleteStore.$reset();
@@ -162,7 +171,7 @@ onBeforeUnmount(() => {
     >
       <span aria-hidden="true">&lArr;</span> First
     </router-link>
-    &nbsp;
+
     <router-link
       :to="!view['{{hydraPrefix}}previous'] || view['{{hydraPrefix}}previous'] === view['{{hydraPrefix}}first'] ? { name: '{{titleUcFirst}}List' } : view['{{hydraPrefix}}previous']"
       :class="{ disabled: !view['{{hydraPrefix}}previous'] }"
