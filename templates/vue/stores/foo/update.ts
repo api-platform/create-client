@@ -2,12 +2,9 @@ import { defineStore } from "pinia";
 import fetch from "@/utils/fetch";
 import { extractHubURL } from "@/utils/mercure";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
-import {
-  SubmissionError,
-  type SubmissionErrors,
-  type TError,
-} from "@/types/error";
 import type { UpdateState } from "@/types/stores";
+import type { SubmissionErrors, TError } from "@/types/error";
+import { SubmissionError } from "@/utils/error";
 
 interface State extends UpdateState<{{titleUcFirst}}> {}
 

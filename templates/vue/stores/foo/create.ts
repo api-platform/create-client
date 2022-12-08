@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 import fetch from "@/utils/fetch";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
-import type { SubmissionErrors, TError } from "@/types/error";
-import { SubmissionError } from "@/types/error";
 import type { CreateState } from "@/types/stores";
+import type { SubmissionErrors, TError } from "@/types/error";
+import { SubmissionError } from "@/utils/error";
 
 interface State extends CreateState<{{titleUcFirst}}> {}
 
