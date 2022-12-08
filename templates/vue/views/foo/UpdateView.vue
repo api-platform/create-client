@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {{titleUcFirst}}Update from "@/components/{{lc}}/UpdateComponent.vue";
+import Update from "@/components/{{lc}}/{{titleUcFirst}}Update.vue";
 </script>
 
 <template>
   <Suspense>
-    <{{titleUcFirst}}Update />
+    <Update />
 
     <template #fallback>Loading...</template>
   </Suspense>

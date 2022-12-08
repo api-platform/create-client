@@ -15,11 +15,13 @@ export default class extends BaseGenerator {
 
     this.registerTemplates(`vue/`, [
       // components
-      "components/foo/CreateComponent.vue",
-      "components/foo/FormComponent.vue",
-      "components/foo/ListComponent.vue",
-      "components/foo/UpdateComponent.vue",
-      "components/foo/ShowComponent.vue",
+      "components/foo/FooCreate.vue",
+      "components/foo/FooForm.vue",
+      "components/foo/FooList.vue",
+      "components/foo/FooShow.vue",
+      "components/foo/FooUpdate.vue",
+
+      // common components
       "components/common/FormRepeater.vue",
 
       // composables
@@ -131,12 +133,16 @@ const router = createRouter({
 
     [
       // components
-      "components/%s/CreateComponent.vue",
-      "components/%s/FormComponent.vue",
-      "components/%s/ListComponent.vue",
-      "components/%s/UpdateComponent.vue",
-      "components/%s/ShowComponent.vue",
+      "components/%s/%sCreate.vue",
+      "components/%s/%sForm.vue",
+      "components/%s/%sList.vue",
+      "components/%s/%sShow.vue",
+      "components/%s/%sUpdate.vue",
+    ].forEach((pattern) =>
+      this.createFileFromPatterns(pattern, dir, [lc, titleUcFirst], context)
+    );
 
+    [
       // router
       "router/%s.ts",
 

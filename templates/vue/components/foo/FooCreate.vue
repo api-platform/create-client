@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
-import {{titleUcFirst}}Form from "@/components/{{lc}}/FormComponent.vue";
+import Form from "@/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { use{{titleUcFirst}}CreateStore } from "@/stores/{{lc}}/create";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 
@@ -31,7 +31,7 @@ async function onSendForm(item: {{titleUcFirst}}) {
     \{{ error }}
   </div>
 
-  <{{titleUcFirst}}Form :errors="violations" @send-form="onSendForm" />
+  <Form :errors="violations" @send-form="onSendForm" />
 
   <router-link :to="{ name: '{{titleUcFirst}}List' }" class="btn btn-primary">
     Back to list

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {{titleUcFirst}}Create from "@/components/{{lc}}/CreateComponent.vue";
+import Create from "@/components/{{lc}}/{{titleUcFirst}}Create.vue";
 </script>
 
 <template>
   <Suspense>
-    <{{titleUcFirst}}Create />
+    <Create />
 
     <template #fallback>Loading...</template>
   </Suspense>

@@ -6,7 +6,7 @@ import { use{{titleUcFirst}}CreateStore } from "@/stores/{{lc}}/create";
 import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
 import { use{{titleUcFirst}}UpdateStore } from "@/stores/{{lc}}/update";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
-import {{titleUcFirst}}Form from "@/components/{{lc}}/FormComponent.vue";
+import Form from "@/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { useMercureItem } from "@/composables/mercureItem";
 
 const route = useRoute();
@@ -87,7 +87,7 @@ onBeforeUnmount(() => {
       \{{ deleteError }}
     </div>
 
-    <{{titleUcFirst}}Form
+    <Form
       v-if="item"
       :values="item"
       :errors="violations"

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {{titleUcFirst}}Show from "@/components/{{lc}}/ShowComponent.vue";
+import Show from "@/components/{{lc}}/{{titleUcFirst}}Show.vue";
 </script>
 
 <template>
   <Suspense>
-    <{{titleUcFirst}}Show />
+    <Show />
 
     <template #fallback>Loading...</template>
   </Suspense>

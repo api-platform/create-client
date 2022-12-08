@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {{titleUcFirst}}List from "@/components/{{lc}}/ListComponent.vue";
+import List from "@/components/{{lc}}/{{titleUcFirst}}List.vue";
 </script>
 
 <template>
   <Suspense>
-    <{{titleUcFirst}}List />
+    <List />
 
     <template #fallback>Loading...</template>
   </Suspense>

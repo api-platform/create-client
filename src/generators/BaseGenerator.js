@@ -2,7 +2,7 @@ import chalk from "chalk";
 import fs from "fs";
 import handlebars from "handlebars";
 import mkdirp from "mkdirp";
-import { sprintf } from "sprintf-js";
+import { sprintf, vsprintf } from "sprintf-js";
 import prettier from "prettier";
 
 export default class {
@@ -41,6 +41,20 @@ export default class {
     this.createFile(
       sprintf(pattern, templateValue),
       sprintf(`${dir}/${pattern}`, value),
+      context
+    );
+  }
+
+  createFileFromPatterns(
+    pattern,
+    dir,
+    values,
+    context,
+    templateValues = ["foo", "Foo"]
+  ) {
+    this.createFile(
+      vsprintf(pattern, templateValues),
+      vsprintf(`${dir}/${pattern}`, values),
       context
     );
   }
