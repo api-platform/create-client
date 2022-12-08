@@ -533,7 +533,7 @@ export const store = new Vuex.Store({
       ) {
         return;
       }
-      this.createFileFromPattern(pattern, dir, lc, context);
+      this.createFileFromPattern(pattern, dir, [lc], context);
     });
 
     // error

@@ -93,7 +93,7 @@ export default class NextGenerator extends BaseGenerator {
       "pages/%ss/index.tsx",
       "pages/%ss/create.tsx",
     ].forEach((pattern) =>
-      this.createFileFromPattern(pattern, dir, context.lc, context)
+      this.createFileFromPattern(pattern, dir, [context.lc], context)
     );
 
     // interface pattern should be camel cased

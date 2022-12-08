@@ -139,11 +139,7 @@ const router = createRouter({
       "components/%s/%sList.vue",
       "components/%s/%sShow.vue",
       "components/%s/%sUpdate.vue",
-    ].forEach((pattern) =>
-      this.createFileFromPatterns(pattern, dir, [lc, titleUcFirst], context)
-    );
 
-    [
       // router
       "router/%s.ts",
 
@@ -163,7 +159,7 @@ const router = createRouter({
       "views/%s/ShowView.vue",
       "views/%s/UpdateView.vue",
     ].forEach((pattern) =>
-      this.createFileFromPattern(pattern, dir, lc, context)
+      this.createFileFromPattern(pattern, dir, [lc, titleUcFirst], context)
     );
 
     [
