@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 import { use{{titleUcFirst}}ShowStore } from "@/stores/{{lc}}/show";
 import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
-import { storeToRefs } from "pinia";
 import { formatDateTime } from "@/utils/date";
 import { useMercureItem } from "@/composables/mercureItem";
 
@@ -84,8 +84,8 @@ onBeforeUnmount(() => {
             </template>
 
             <template v-else>
-              <p 
-                v-for="{{lowercase reference.title}} in item.{{reference.name}}" 
+              <p
+                v-for="{{lowercase reference.title}} in item.{{reference.name}}"
                 :key="{{lowercase reference.title}}"
               >
                 \{{ {{lowercase reference.title}} }}
@@ -116,8 +116,8 @@ onBeforeUnmount(() => {
             </template>
 
             <template v-else>
-              <p 
-                v-for="{{lowercase embedded.title}} in item.{{embedded.name}}" 
+              <p
+                v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
                 :key="{{lowercase embedded.title}}['@id']"
               >
                 \{{ {{lowercase embedded.title}}["@id"] }}

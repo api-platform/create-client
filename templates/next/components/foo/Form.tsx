@@ -50,8 +50,15 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
 	};
 
 	return (
-    <div>
-      <h1>{ {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }</h1>
+    <div className="container mx-auto px-4 max-w-2xl mt-4">
+      <Link href="/{{{lc}}}s">
+        <a className="text-sm text-cyan-500 font-bold hover:text-cyan-700">
+          {`< Back to list`}
+        </a>
+      </Link>
+      <h1 className="text-3xl my-2">
+        { {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }
+      </h1>
       <Formik
         initialValues={
           {{lc}} ?
@@ -110,15 +117,15 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           handleSubmit,
           isSubmitting,
         }) => (
-          <form onSubmit={handleSubmit}>
+          <form className="shadow-md p-4" onSubmit={handleSubmit}>
           {{#each formFields}}
-            <div className="form-group">
+            <div className="mb-2">
               {{#if isRelations}}
-                <div className="form-control-label">{{name}}</div>
+                <div className="text-gray-700 block text-sm font-bold">{{name}}</div>
                 <FieldArray
                   name="{{name}}"
                   render={(arrayHelpers) => (
-                    <div id="{{../lc}}_{{name}}">
+                    <div className="mb-2" id="{{../lc}}_{{name}}">
                       {values.{{name}} && values.{{name}}.length > 0 ? (
                         values.{{name}}.map((item: any, index: number) => (
                           <div key={index}>
@@ -146,7 +153,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                   )}
                 />
               {{else}}
-                <label className="form-control-label" htmlFor="{{../lc}}_{{name}}">{{name}}</label>
+                <label className="text-gray-700 block text-sm font-bold" htmlFor="{{../lc}}_{{name}}">{{name}}</label>
                 <input
                   name="{{name}}"
                   id="{{../lc}}_{{name}}"
@@ -160,13 +167,13 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                   {{#if step}}step="{{{step}}}"{{/if}}
                   placeholder="{{{description}}}"
                   {{#if required}}required={true}{{/if}}
-                  className={`form-control${errors.{{name}} && touched.{{name}} ? ' is-invalid' : ''}`}
+                  className={`mt-1 block w-full ${errors.{{name}} && touched.{{name}} ? 'border-red-500' : ''}`}
                   aria-invalid={errors.{{name}} && touched.{{name~}} ? 'true' : undefined}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
                 <ErrorMessage
-                  className="invalid-feedback"
+                  className="text-xs text-red-500 pt-1"
                   component="div"
                   name="{{name}}"
                 />
@@ -175,8 +182,8 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           {{/each}}
             {status && status.msg && (
               <div
-                className={`alert ${
-                  status.isValid ? "alert-success" : "alert-danger"
+                className={`border px-4 py-3 my-4 rounded ${
+                  status.isValid ? "text-cyan-700 border-cyan-500 bg-cyan-200/50" : "text-red-700 border-red-400 bg-red-100"
                 }`}
                 role="alert"
               >
@@ -185,7 +192,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
             )}
             <button
               type="submit"
-              className="btn btn-success"
+              className="inline-block mt-2 bg-cyan-500 hover:bg-cyan-700 text-sm text-white font-bold py-2 px-4 rounded"
               disabled={isSubmitting}
             >
               Submit
@@ -193,14 +200,13 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           </form>
         )}
       </Formik>
-      <Link href="/{{{lc}}}s">
-        <a className="btn btn-primary">Back to list</a>
-      </Link>
+      <div className="flex space-x-2 mt-4 justify-end">
       { {{{lc}}} && (
-        <button className="btn btn-danger" onClick={handleDelete}>
-          <a>Delete</a>
+        <button className="inline-block mt-2 border-2 border-red-400 hover:border-red-700 hover:text-red-700 text-sm text-red-400 font-bold py-2 px-4 rounded" onClick={handleDelete}>
+          Delete
         </button>
       )}
+      </div>
     </div>
   );
 };

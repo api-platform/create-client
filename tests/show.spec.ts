@@ -33,7 +33,7 @@ test('resource show', async ({ page, within, queries: { getAllByRole, getByRole,
 
   await expect(getByRoleWithinRow('rowheader')).toHaveText('isbn');
 
-  await expect(getByRole('link', { name: 'Back to list' })).toBeVisible();
+  await expect(getByRole('link', { name: /Back to list/ })).toBeVisible();
   await expect(getByRole('link', { name: 'Edit' })).toBeVisible();
   await expect(getByRole('button', { name: 'Delete' })).toBeVisible();
 });

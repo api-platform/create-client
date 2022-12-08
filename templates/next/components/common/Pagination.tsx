@@ -17,28 +17,53 @@ const Pagination = ({ collection }: Props) => {
   } = view;
 
   return (
-    <nav aria-label="Page navigation">
-      <Link href={first ? first : '#'}>
-        <a className={`btn btn-primary${previous ? '' : ' disabled'}`} aria-label="First page">
-          <span aria-hidden="true">&lArr;</span> First
-        </a>
-      </Link>
-      <Link href={previous ? previous : '#'}>
-        <a className={`btn btn-primary${previous ? '' : ' disabled'}`} aria-label="Previous page">
-          <span aria-hidden="true">&larr;</span> Previous
-        </a>
-      </Link>
-      <Link href={next ? next : '#'}>
-        <a className={`btn btn-primary${next ? '' : ' disabled'}`} aria-label="Next page">
-          Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </Link>
-      <Link href={last ? last : '#'}>
-        <a className={`btn btn-primary${next ? '' : ' disabled'}`} aria-label="Last page">
-          Last <span aria-hidden="true">&rArr;</span>
-        </a>
-      </Link>
-    </nav>
+    <div className="text-center">
+      <nav
+        className="text-xs font-bold inline-flex mx-auto divide-x-2 divide-gray-200 flex-row flex-wrap items-center justify-center mb-4 border-2 border-gray-200 rounded-2xl overflow-hidden"
+        aria-label="Page navigation"
+      >
+        <Link href={first ? first : "#"}>
+          <a
+            className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
+              previous ? "" : " text-gray-500 pointer-events-none"
+            }`}
+            aria-label="First page"
+          >
+            <span aria-hidden="true">&lArr;</span> First
+          </a>
+        </Link>
+        <Link href={previous ? previous : "#"}>
+          <a
+            className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
+              previous ? "" : " text-gray-500 pointer-events-none"
+            }`}
+            aria-label="Previous page"
+          >
+            <span aria-hidden="true">&larr;</span> Previous
+          </a>
+        </Link>
+        <Link href={next ? next : "#"}>
+          <a
+            className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
+              next ? "" : " text-gray-500 pointer-events-none"
+            }`}
+            aria-label="Next page"
+          >
+            Next <span aria-hidden="true">&rarr;</span>
+          </a>
+        </Link>
+        <Link href={last ? last : "#"}>
+          <a
+            className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
+              next ? "" : "text-gray-500 pointer-events-none"
+            }`}
+            aria-label="Last page"
+          >
+            Last <span aria-hidden="true">&rArr;</span>
+          </a>
+        </Link>
+      </nav>
+    </div>
   );
 };
 

@@ -37,5 +37,5 @@ test('resource edit', async ({ page, within, queries: { getAllByRole, getByLabel
 
   await expect(getByRole('button', { name: 'Submit' })).toBeVisible();
   await expect(getByRole('button', { name: 'Delete' })).toBeVisible();
-  await expect(getByRole('link', { name: 'Back to list' })).toBeVisible();
+  await expect(getByRole('link', { name: /Back to list/ })).toBeVisible();
 });

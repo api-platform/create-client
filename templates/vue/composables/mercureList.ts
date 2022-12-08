@@ -1,7 +1,7 @@
-import { mercureSubscribe } from "@/utils/mercure";
 import { onBeforeUnmount } from "vue";
-import type { Item } from "@/types/item";
+import { mercureSubscribe } from "@/utils/mercure";
 import type { StoreGeneric } from "pinia";
+import type { Item } from "@/types/item";
 
 export function useMercureList({
   store,
