@@ -10,11 +10,16 @@ export default class extends BaseGenerator {
 
     this.registerTemplates("common/", [
       // types
+      "types/collection.ts",
+      "types/error.ts",
+      "types/foo.ts",
       "types/item.ts",
+      "types/view.ts",
 
       // utils
-      "utils/mercure.ts",
       "utils/config.ts",
+      "utils/error.ts",
+      "utils/mercure.ts",
     ]);
 
     this.registerTemplates(`vue/`, [
@@ -43,15 +48,10 @@ export default class extends BaseGenerator {
       "stores/foo/update.ts",
 
       // types
-      "types/collection.ts",
-      "types/error.ts",
-      "types/foo.ts",
       "types/stores.ts",
-      "types/view.ts",
 
       // utils
       "utils/date.ts",
-      "utils/error.ts",
       "utils/fetch.ts",
 
       // views
@@ -172,18 +172,18 @@ const router = createRouter({
       "composables/mercureItem.ts",
       "composables/mercureList.ts",
 
-      // utils
-      "utils/date.ts",
-      "utils/error.ts",
-      "utils/fetch.ts",
-      "utils/mercure.ts",
-
       // types
       "types/collection.ts",
       "types/error.ts",
       "types/item.ts",
       "types/stores.ts",
       "types/view.ts",
+
+      // utils
+      "utils/date.ts",
+      "utils/error.ts",
+      "utils/fetch.ts",
+      "utils/mercure.ts",
     ].forEach((path) =>
       this.createFile(path, `${dir}/${path}`, context, false)
     );
