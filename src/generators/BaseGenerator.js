@@ -81,6 +81,10 @@ export default class {
     this.createFile("entrypoint.js", dest, { entrypoint }, false);
   }
 
+  createConfigFile(dest, context) {
+    this.createFile("utils/config.ts", dest, context, false);
+  }
+
   // eslint-disable-next-line no-unused-vars
   checkDependencies(dir) {}
 

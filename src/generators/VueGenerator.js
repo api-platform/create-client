@@ -9,8 +9,12 @@ export default class extends BaseGenerator {
     super(params);
 
     this.registerTemplates("common/", [
+      // types
+      "types/item.ts",
+
       // utils
       "utils/mercure.ts",
+      "utils/config.ts",
     ]);
 
     this.registerTemplates(`vue/`, [
@@ -42,7 +46,6 @@ export default class extends BaseGenerator {
       "types/collection.ts",
       "types/error.ts",
       "types/foo.ts",
-      "types/item.ts",
       "types/stores.ts",
       "types/view.ts",
 
@@ -185,8 +188,10 @@ const router = createRouter({
       this.createFile(path, `${dir}/${path}`, context, false)
     );
 
-    // entrypoint
-    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.ts`);
+    // config
+    this.createConfigFile(`${dir}/utils/config.ts`, {
+      entrypoint: api.entrypoint,
+    });
   }
 
   parseFields(resource) {

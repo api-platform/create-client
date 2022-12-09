@@ -1,4 +1,4 @@
-import { ENTRYPOINT } from "../config/entrypoint";
+import { ENTRYPOINT } from "./config";
 import type { Item } from "../types/item";
 
 export const mercureSubscribe = (
