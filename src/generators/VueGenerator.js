@@ -50,7 +50,6 @@ export default class extends BaseGenerator {
       "utils/date.ts",
       "utils/error.ts",
       "utils/fetch.ts",
-      "utils/hydra.ts",
 
       // views
       "views/foo/CreateView.vue",
@@ -174,7 +173,6 @@ const router = createRouter({
       "utils/date.ts",
       "utils/error.ts",
       "utils/fetch.ts",
-      "utils/hydra.ts",
       "utils/mercure.ts",
 
       // types
