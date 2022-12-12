@@ -1,27 +1,3 @@
-<script lang="ts" setup>
-import { useRouter } from "vue-router";
-import { storeToRefs } from "pinia";
-import Form from "@/components/{{lc}}/{{titleUcFirst}}Form.vue";
-import { use{{titleUcFirst}}CreateStore } from "@/stores/{{lc}}/create";
-import type { {{titleUcFirst}} } from "@/types/{{lc}}";
-
-const router = useRouter();
-
-const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
-const { isLoading, error, violations } = storeToRefs({{lc}}CreateStore);
-
-async function onSendForm(item: {{titleUcFirst}}) {
-  await {{lc}}CreateStore.create(item);
-
-  if (!{{lc}}CreateStore.created) return;
-
-  router.push({
-    name: "{{titleUcFirst}}Update",
-    params: { id: {{lc}}CreateStore.created["@id"] },
-  });
-}
-</script>
-
 <template>
   <div class="container mx-auto px-4 max-w-2xl mt-4">
     <router-link
@@ -51,3 +27,27 @@ async function onSendForm(item: {{titleUcFirst}}) {
     <Form :errors="violations" @send-form="onSendForm" />
   </div>
 </template>
+
+<script lang="ts" setup>
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import Form from "@/components/{{lc}}/{{titleUcFirst}}Form.vue";
+import { use{{titleUcFirst}}CreateStore } from "@/stores/{{lc}}/create";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
+
+const router = useRouter();
+
+const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
+const { isLoading, error, violations } = storeToRefs({{lc}}CreateStore);
+
+async function onSendForm(item: {{titleUcFirst}}) {
+  await {{lc}}CreateStore.create(item);
+
+  if (!{{lc}}CreateStore.created) return;
+
+  router.push({
+    name: "{{titleUcFirst}}Update",
+    params: { id: {{lc}}CreateStore.created["@id"] },
+  });
+}
+</script>

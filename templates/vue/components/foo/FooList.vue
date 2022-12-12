@@ -1,42 +1,3 @@
-<script lang="ts" setup>
-import { onBeforeUnmount, watch } from "vue";
-import { useRoute } from "vue-router";
-{{#if hasRelationsOrManyRelations}}
-import { useRouter } from "vue-router";
-{{/if}}
-import { storeToRefs } from "pinia";
-import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
-import { use{{titleUcFirst}}ListStore } from "@/stores/{{lc}}/list";
-import { formatDateTime } from "@/utils/date";
-import { useMercureList } from "@/composables/mercureList";
-
-const route = useRoute();
-{{#if hasRelationsOrManyRelations}}
-const router = useRouter();
-{{/if}}
-const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
-const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
-  storeToRefs({{lc}}DeleteStore);
-
-const {{lc}}ListStore = use{{titleUcFirst}}ListStore();
-const { items, error, view, isLoading } = storeToRefs({{lc}}ListStore);
-
-useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
-
-watch(
-  () => route.query.page,
-  (newPage) => {
-    const page = newPage as string;
-    {{lc}}ListStore.getItems(page);
-  },
-  { immediate: true }
-);
-
-onBeforeUnmount(() => {
-  {{lc}}DeleteStore.$reset();
-});
-</script>
-
 <template>
   <div class="p-4">
     <div class="flex items-center justify-between">
@@ -288,3 +249,42 @@ onBeforeUnmount(() => {
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+import { onBeforeUnmount, watch } from "vue";
+import { useRoute } from "vue-router";
+{{#if hasRelationsOrManyRelations}}
+import { useRouter } from "vue-router";
+{{/if}}
+import { storeToRefs } from "pinia";
+import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
+import { use{{titleUcFirst}}ListStore } from "@/stores/{{lc}}/list";
+import { formatDateTime } from "@/utils/date";
+import { useMercureList } from "@/composables/mercureList";
+
+const route = useRoute();
+{{#if hasRelationsOrManyRelations}}
+const router = useRouter();
+{{/if}}
+const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
+const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
+  storeToRefs({{lc}}DeleteStore);
+
+const {{lc}}ListStore = use{{titleUcFirst}}ListStore();
+const { items, error, view, isLoading } = storeToRefs({{lc}}ListStore);
+
+useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
+
+watch(
+  () => route.query.page,
+  (newPage) => {
+    const page = newPage as string;
+    {{lc}}ListStore.getItems(page);
+  },
+  { immediate: true }
+);
+
+onBeforeUnmount(() => {
+  {{lc}}DeleteStore.$reset();
+});
+</script>

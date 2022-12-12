@@ -1,49 +1,3 @@
-<script lang="ts" setup>
-import { onBeforeUnmount } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { storeToRefs } from "pinia";
-import { use{{titleUcFirst}}ShowStore } from "@/stores/{{lc}}/show";
-import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
-import { formatDateTime } from "@/utils/date";
-import { useMercureItem } from "@/composables/mercureItem";
-
-const route = useRoute();
-const router = useRouter();
-
-const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
-const { error: deleteError, deleted } = storeToRefs({{lc}}DeleteStore);
-
-const {{lc}}ShowStore = use{{titleUcFirst}}ShowStore();
-const { retrieved: item, isLoading, error } = storeToRefs({{lc}}ShowStore);
-
-useMercureItem({
-  store: {{lc}}ShowStore,
-  deleteStore: {{lc}}DeleteStore,
-  redirectRouteName: "{{titleUcFirst}}List",
-});
-
-await {{lc}}ShowStore.retrieve(decodeURIComponent(route.params.id as string));
-
-async function deleteItem() {
-  if (!item?.value) {
-    {{lc}}DeleteStore.setError("This item does not exist anymore");
-    return;
-  }
-
-  if (window.confirm("Are you sure you want to delete this {{lc}}?")) {
-    await {{lc}}DeleteStore.deleteItem(item.value);
-
-    if (deleted) {
-      router.push({ name: "{{titleUcFirst}}List" });
-    }
-  }
-}
-
-onBeforeUnmount(() => {
-  {{lc}}ShowStore.$reset();
-});
-</script>
-
 <template>
   <div class="container mx-auto px-4 max-w-2xl mt-4">
     <div class="flex items-center justify-between">
@@ -192,3 +146,50 @@ onBeforeUnmount(() => {
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+import { onBeforeUnmount } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import { use{{titleUcFirst}}ShowStore } from "@/stores/{{lc}}/show";
+import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
+import { formatDateTime } from "@/utils/date";
+import { useMercureItem } from "@/composables/mercureItem";
+
+const route = useRoute();
+const router = useRouter();
+
+const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
+const { error: deleteError, deleted } = storeToRefs({{lc}}DeleteStore);
+
+const {{lc}}ShowStore = use{{titleUcFirst}}ShowStore();
+const { retrieved: item, isLoading, error } = storeToRefs({{lc}}ShowStore);
+
+useMercureItem({
+  store: {{lc}}ShowStore,
+  deleteStore: {{lc}}DeleteStore,
+  redirectRouteName: "{{titleUcFirst}}List",
+});
+
+await {{lc}}ShowStore.retrieve(decodeURIComponent(route.params.id as string));
+
+async function deleteItem() {
+  if (!item?.value) {
+    {{lc}}DeleteStore.setError("This item does not exist anymore");
+    return;
+  }
+
+  if (window.confirm("Are you sure you want to delete this {{lc}}?")) {
+    await {{lc}}DeleteStore.deleteItem(item.value);
+
+    if (deleted) {
+      router.push({ name: "{{titleUcFirst}}List" });
+    }
+  }
+}
+
+onBeforeUnmount(() => {
+  {{lc}}ShowStore.$reset();
+});
+</script>
+

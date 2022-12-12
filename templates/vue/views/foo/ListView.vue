@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import List from "@/components/{{lc}}/{{titleUcFirst}}List.vue";
-</script>
-
 <template>
   <Suspense>
     <List />
@@ -9,3 +5,7 @@ import List from "@/components/{{lc}}/{{titleUcFirst}}List.vue";
     <template #fallback>Loading...</template>
   </Suspense>
 </template>
+
+<script setup lang="ts">
+import List from "@/components/{{lc}}/{{titleUcFirst}}List.vue";
+</script>

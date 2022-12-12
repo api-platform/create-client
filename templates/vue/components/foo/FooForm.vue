@@ -1,46 +1,3 @@
-<script lang="ts" setup>
-import { toRef } from "vue";
-{{#if hasManyRelations}}
-import FormRepeater from "@/components/common/FormRepeater.vue";
-{{/if}}
-import { formatDateInput } from "@/utils/date";
-import type { {{titleUcFirst}} } from "@/types/{{lc}}";
-import type { SubmissionErrors } from "@/types/error";
-
-const props = defineProps<{
-  values?: {{titleUcFirst}};
-  errors?: SubmissionErrors;
-}>();
-
-const emit = defineEmits<{
-  (e: "sendForm", item: {{titleUcFirst}}): void;
-}>();
-
-const violations = toRef(props, "errors");
-
-let item: any = {};
-
-if (props.values) {
-  item = {
-    ...props.values,
-    {{#each fields}}
-    {{#compare type "==" "dateTime" }}
-    publicationDate: formatDateInput(props.values.publicationDate),
-    {{/compare}}
-    {{#if isEmbeddeds}}
-    {{name}}: props.values.{{name}}?.map((item: any) => item["@id"] ?? "") ?? [],
-    {{else if embedded}}
-    {{name}}: props.values.{{name}}?.["@id"],
-    {{/if}}
-    {{/each}}
-  };
-}
-
-function emitSendForm() {
-  emit("sendForm", item);
-}
-</script>
-
 <template>
   <form class="py-4" @submit.prevent="emitSendForm">
     {{#each formFields}}
@@ -96,3 +53,46 @@ function emitSendForm() {
     </button>
   </form>
 </template>
+
+<script lang="ts" setup>
+import { toRef } from "vue";
+{{#if hasManyRelations}}
+import FormRepeater from "@/components/common/FormRepeater.vue";
+{{/if}}
+import { formatDateInput } from "@/utils/date";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
+import type { SubmissionErrors } from "@/types/error";
+
+const props = defineProps<{
+  values?: {{titleUcFirst}};
+  errors?: SubmissionErrors;
+}>();
+
+const emit = defineEmits<{
+  (e: "sendForm", item: {{titleUcFirst}}): void;
+}>();
+
+const violations = toRef(props, "errors");
+
+let item: any = {};
+
+if (props.values) {
+  item = {
+    ...props.values,
+    {{#each fields}}
+    {{#compare type "==" "dateTime" }}
+    publicationDate: formatDateInput(props.values.publicationDate),
+    {{/compare}}
+    {{#if isEmbeddeds}}
+    {{name}}: props.values.{{name}}?.map((item: any) => item["@id"] ?? "") ?? [],
+    {{else if embedded}}
+    {{name}}: props.values.{{name}}?.["@id"],
+    {{/if}}
+    {{/each}}
+  };
+}
+
+function emitSendForm() {
+  emit("sendForm", item);
+}
+</script>
