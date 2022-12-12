@@ -23,17 +23,31 @@ async function onSendForm(item: {{titleUcFirst}}) {
 </script>
 
 <template>
-  <h1>Create {{title}}</h1>
+  <div class="container mx-auto px-4 max-w-2xl mt-4">
+    <router-link
+      :to="{ name: '{{titleUcFirst}}List' }"
+      class="text-blue-600 hover:text-blue-800"
+    >
+      &lt; Back to list
+    </router-link>
 
-  <div v-if="isLoading" class="alert alert-info" role="status">Loading...</div>
-  <div v-if="error" class="alert alert-danger" role="alert">
-    <i class="bi-exclamation-triangle" />
-    \{{ error }}
+    <h1 class="text-3xl my-4">Create {{title}}</h1>
+
+    <div
+      v-if="isLoading"
+      class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm"
+      role="status"
+    >
+      Loading...
+    </div>
+    <div
+      v-if="error"
+      class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm"
+      role="alert"
+    >
+      \{{ error }}
+    </div>
+
+    <Form :errors="violations" @send-form="onSendForm" />
   </div>
-
-  <Form :errors="violations" @send-form="onSendForm" />
-
-  <router-link :to="{ name: '{{titleUcFirst}}List' }" class="btn btn-primary">
-    Back to list
-  </router-link>
 </template>

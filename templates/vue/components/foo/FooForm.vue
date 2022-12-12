@@ -42,10 +42,13 @@ function emitSendForm() {
 </script>
 
 <template>
-  <form @submit.prevent="emitSendForm">
-  {{#each formFields}}
-    <div class="form-group">
-      <label for="{{../lc}}_{{name}}" class="form-control-label">
+  <form class="py-4" @submit.prevent="emitSendForm">
+    {{#each formFields}}
+    <div class="mb-2">
+      <label
+        for="{{../lc}}_{{name}}"
+        class="text-gray-700 block text-sm font-bold capitalize"
+      >
         {{name}}
       </label>
       {{#if isManyRelations}}
@@ -58,8 +61,8 @@ function emitSendForm() {
         id="{{../lc}}_{{name}}"
         v-model="item.{{name}}"
         :class="[
-          'form-control',
-          violations?.{{name}} ? 'is-invalid' : 'is-valid'
+          'mt-1 w-full px-3 py-2 border rounded',
+          violations?.{{name}} ? 'border-red-500' : 'border-gray-300',
         ]"
         {{#compare type "==" "dateTime" }}
         type="date"
@@ -76,12 +79,20 @@ function emitSendForm() {
         placeholder="{{description}}"
       />
       {{/if}}
-      <div v-if="violations?.{{name}}" class="invalid-feedback">
+      <div
+        v-if="violations?.{{name}}"
+        class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm"
+      >
         \{{ violations.{{name}} }}
       </div>
     </div>
     {{/each}}
 
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button
+      type="submit"
+      class="px-6 py-2 bg-green-500 text-white font-medium rounded shadow-md hover:bg-green-600"
+    >
+      Submit
+    </button>
   </form>
 </template>

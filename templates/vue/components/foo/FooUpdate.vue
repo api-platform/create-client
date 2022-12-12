@@ -62,29 +62,48 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div>
-    <h1>Edit {{titleUcFirst}} \{{ item?.["@id"] }}</h1>
+  <div class="container mx-auto px-4 max-w-2xl mt-4">
+    <div class="flex items-center justify-between">
+      <router-link
+        :to="{ name: '{{titleUcFirst}}List' }"
+        class="text-blue-600 hover:text-blue-800"
+      >
+        &lt; Back to list
+      </router-link>
 
-    <div v-if="created" class="alert alert-success" role="status">
-      \{{ created["@id"] }} created.
+      <button
+        class="px-6 py-2 bg-red-600 text-white text-xs rounded shadow-md hover:bg-red-700"
+        @click="deleteItem"
+      >
+        Delete
+      </button>
     </div>
-    <div v-if="updated" class="alert alert-success" role="status">
-      \{{ updated["@id"] }} updated.
-    </div>
+
+    <h1 class="text-3xl my-4">Edit {{titleUcFirst}} \{{ item?.["@id"] }}</h1>
+
     <div
       v-if="isLoading || deleteLoading"
-      class="alert alert-info"
+      class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm"
       role="status"
     >
       Loading...
     </div>
-    <div v-if="error" class="alert alert-danger" role="alert">
-      <i class="bi-exclamation-triangle" />
-      \{{ error }}
+
+    <div
+      v-if="error || deleteError"
+      class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm"
+      role="alert"
+    >
+      \{{ error || deleteError }}
     </div>
-    <div v-if="deleteError" class="alert alert-danger" role="alert">
-      <i class="bi-exclamation-triangle" />
-      \{{ deleteError }}
+
+    <div
+      v-if="created || updated"
+      class="bg-green-100 rounded py-4 px-4 my-2 text-green-700 text-sm"
+      role="status"
+    >
+      <template v-if="created">\{{ created["@id"] }} created. </template>
+      <template v-else-if="updated">\{{ updated["@id"] }} updated. </template>
     </div>
 
     <Form
@@ -93,10 +112,5 @@ onBeforeUnmount(() => {
       :errors="violations"
       @send-form="onSendForm"
     />
-
-    <router-link v-if="item" :to="{ name: '{{titleUcFirst}}List' }" class="btn btn-primary">
-      Back to list
-    </router-link>
-    <button class="btn btn-danger" @click="deleteItem">Delete</button>
   </div>
 </template>

@@ -45,37 +45,79 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <h1>Show {{titleUcFirst}} \{{ item?.["@id"] }}</h1>
+  <div class="container mx-auto px-4 max-w-2xl mt-4">
+    <div class="flex items-center justify-between">
+      <router-link
+        :to="{ name: '{{titleUcFirst}}List' }"
+        class="text-blue-600 hover:text-blue-800"
+      >
+        &lt; Back to list
+      </router-link>
 
-  <div v-if="isLoading" class="alert alert-info" role="status">Loading...</div>
-  <div v-if="error" class="alert alert-danger" role="alert">
-    <i class="bi-exclamation-triangle" />
-    \{{ error }}
-  </div>
-  <div v-if="deleteError" class="alert alert-danger" role="alert">
-    <i class="bi-exclamation-triangle" />
-    \{{ deleteError }}
-  </div>
+      <div>
+        <router-link
+          v-if="item"
+          :to="{ name: '{{titleUcFirst}}Update', params: { id: item['@id'] } }"
+          class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
+        >
+          Edit
+        </router-link>
+        <button
+          class="px-6 py-2 bg-red-600 text-white text-xs rounded shadow-md hover:bg-red-700"
+          @click="deleteItem"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
 
-  <div v-if="item" class="table-responsive">
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th>Field</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each fields}}
-        <tr>
-          <th scope="row">{{name}}</th>
-          <td>
+    <h1 class="text-3xl my-4">Show {{titleUcFirst}} \{{ item?.["@id"] }}</h1>
+
+    <div
+      v-if="isLoading"
+      class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm"
+      role="status"
+    >
+      Loading...
+    </div>
+
+    <div
+      v-if="error || deleteError"
+      class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm"
+      role="alert"
+    >
+      \{{ error || deleteError }}
+    </div>
+
+    <div v-if="item" class="overflow-x-auto">
+      <table class="min-w-full">
+        <thead class="border-b">
+          <tr>
+            <th scope="col" class="text-sm font-medium px-6 py-4 text-left">
+              Field
+            </th>
+            <th scope="col" class="text-sm font-medium px-6 py-4 text-left">
+              Value
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each fields}}
+          <tr class="border-b">
+            <th
+              class="text-sm font-medium px-6 py-4 text-left capitalize"
+              scope="row"
+            >
+              {{name}}
+            </th>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">
             {{#if isReferences}}
             <template v-if="router.hasRoute('{{reference.title}}Show')">
               <router-link
                 v-for="{{lowercase reference.title}} in item.{{reference.name}}"
                 :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
                 :key="{{lowercase reference.title}}"
+                class="text-blue-600 hover:text-blue-800"
               >
                 \{{ {{lowercase reference.title}} }}
 
@@ -95,6 +137,7 @@ onBeforeUnmount(() => {
             <router-link
               v-if="router.hasRoute('{{reference.title}}Show')"
               :to="{ name: '{{reference.title}}Show', params: { id: item.{{lowercase reference.title}} } }"
+              class="text-blue-600 hover:text-blue-800"
             >
               \{{ item.{{lowercase reference.title}} }}
             </router-link>
@@ -108,6 +151,7 @@ onBeforeUnmount(() => {
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
                 :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
                 :key="{{lowercase embedded.title}}['@id']"
+                class="text-blue-600 hover:text-blue-800"
               >
                 \{{ {{lowercase embedded.title}}["@id"] }}
 
@@ -127,6 +171,7 @@ onBeforeUnmount(() => {
             <router-link
               v-if="router.hasRoute('{{embedded.title}}Show')"
               :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
+              class="text-blue-600 hover:text-blue-800"
             >
               \{{ item.{{lowercase embedded.title}}["@id"] }}
             </router-link>
@@ -139,22 +184,11 @@ onBeforeUnmount(() => {
             {{else}}
             \{{ item.{{name}} }}
             {{/if}}
-          </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
   </div>
-
-  <router-link :to="{ name: '{{titleUcFirst}}List' }" class="btn btn-primary">
-    Back to list
-  </router-link>
-  <router-link
-    v-if="item"
-    :to="{ name: '{{titleUcFirst}}Update', params: { id: item['@id'] } }"
-    class="btn btn-warning"
-  >
-    Edit
-  </router-link>
-  <button class="btn btn-danger" @click="deleteItem">Delete</button>
 </template>
