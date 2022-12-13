@@ -19,30 +19,33 @@ export const use{{titleUcFirst}}CreateStore = defineStore('{{lc}}Create', {
   }),
 
   actions: {
-    create(values: {{titleUcFirst}}) {
+    async create(payload: {{titleUcFirst}}) {
       this.setError(undefined);
       this.setViolations(undefined);
       this.toggleLoading();
 
-      return fetch('{{name}}', { method: 'POST', body: JSON.stringify(values) })
-        .then((response: Response) => {
-          this.toggleLoading();
-
-          return response.json();
-        })
-        .then((data) => {
-          this.setCreated(data);
-        })
-        .catch((e: Error | SubmissionError) => {
-          this.toggleLoading();
-
-          if (e instanceof SubmissionError) {
-            this.setViolations(e.errors);
-            return;
-          }
-
-          this.setError(e.message);
+      try {
+        const response = await fetch('{{name}}', {
+          method: 'POST',
+          body: JSON.stringify(payload),
         });
+        const data: {{titleUcFirst}} = await response.json();
+
+        this.toggleLoading();
+        this.setCreated(data);
+      } catch (error) {
+        this.toggleLoading();
+
+        if (error instanceof SubmissionError) {
+          this.setViolations(error.errors);
+          this.setError(error.errors._error);
+          return;
+        }
+
+        if (error instanceof Error) {
+          this.setError(error.message);
+        }
+      }
     },
 
     setCreated(created: {{titleUcFirst}}) {
