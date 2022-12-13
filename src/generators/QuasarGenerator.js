@@ -163,7 +163,7 @@ export default {
     const titleUcFirst =
       resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
 
-    const { fields } = this.parseFields(resource);
+    const fields = this.parseFields(resource);
     const formFields = this.buildFields(fields);
     const hasRelations = fields.some(
       (field) => field.reference || field.embedded
@@ -379,10 +379,8 @@ export default {
         return list;
       }
 
-      const isReferences = Boolean(
-        field.reference && field.maxCardinality !== 1
-      );
-      const isEmbeddeds = Boolean(field.embedded && field.maxCardinality !== 1);
+      const isReferences = field.reference && field.maxCardinality !== 1;
+      const isEmbeddeds = field.embedded && field.maxCardinality !== 1;
 
       return {
         ...list,
@@ -396,8 +394,6 @@ export default {
       };
     }, {});
 
-    const fieldsArray = Object.values(fields);
-
-    return { fields: fieldsArray };
+    return Object.values(fields);
   }
 }
