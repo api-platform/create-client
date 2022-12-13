@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts" setup>
-import ConfirmDelete from 'src/components/common/ConfirmDeleteComponent.vue';
+import ConfirmDelete from 'src/components/common/CommonConfirmDelete.vue';
 import { ref, toRefs } from 'vue';
 
 const props = defineProps<{

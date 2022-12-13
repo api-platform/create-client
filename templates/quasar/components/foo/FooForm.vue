@@ -7,7 +7,7 @@
         :values="item.{{name}}"
         :label="$t('{{../lc}}.{{name}}')"
         class="col-12 col-md-8"
-        @update="(values) => (item.{{name}} = values)"
+        @update="(values: any) => (item.{{name}} = values)"
       />
       {{else}}
       <q-input
@@ -57,7 +57,7 @@ import { {{titleUcFirst}} } from 'src/types/{{lc}}';
 import { SubmissionErrors } from 'src/types/error';
 import { Ref, ref, toRef } from 'vue';
 {{#if hasManyRelations}}
-import FormRepeater from 'src/components/common/FormRepeaterComponent.vue';
+import FormRepeater from 'src/components/common/CommonFormRepeater.vue';
 import { Item } from 'src/types/item';
 {{/if}}
 {{#if hasDateField}}

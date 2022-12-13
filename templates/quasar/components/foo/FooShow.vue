@@ -99,9 +99,9 @@
 </template>
 
 <script lang="ts" setup>
-import Toolbar from 'src/components/common/ToolbarComponent.vue';
-import Breadcrumb from 'src/components/common/BreadcrumbComponent.vue';
-import Loading from 'src/components/common/LoadingComponent.vue';
+import Toolbar from 'src/components/common/CommonToolbar.vue';
+import Breadcrumb from 'src/components/common/CommonBreadcrumb.vue';
+import Loading from 'src/components/common/CommonLoading.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { use{{titleUcFirst}}ShowStore } from 'src/stores/{{lc}}/show';
 import { storeToRefs } from 'pinia';

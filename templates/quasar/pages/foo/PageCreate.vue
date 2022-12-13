@@ -1,11 +1,11 @@
 <template>
   <Suspense>
-    <{{titleUcFirst}}Show />
+    <Create />
 
     <template #fallback>Loading...</template>
   </Suspense>
 </template>
 
 <script setup lang="ts">
-import {{titleUcFirst}}Show from 'components/{{lc}}/ShowComponent.vue';
+import Create from 'components/{{lc}}/{{titleUcFirst}}Create.vue';
 </script>
