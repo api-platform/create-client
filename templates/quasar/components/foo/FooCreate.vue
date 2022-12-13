@@ -5,16 +5,16 @@
     </template>
   </Toolbar>
 
-  <{{titleUcFirst}}Form :errors="violations" @submit="submitForm" />
+  <Form :errors="violations" @submit="submitForm" />
 
   <Loading :showing="isLoading" />
 </template>
 
 <script lang="ts" setup>
-import Toolbar from 'src/components/common/ToolbarComponent.vue';
-import Breadcrumb from 'src/components/common/BreadcrumbComponent.vue';
-import Loading from 'components/common/LoadingComponent.vue';
-import {{titleUcFirst}}Form from 'components/{{lc}}/FormComponent.vue';
+import Toolbar from 'src/components/common/CommonToolbar.vue';
+import Breadcrumb from 'src/components/common/CommonBreadcrumb.vue';
+import Loading from 'components/common/CommonLoading.vue';
+import Form from 'components/{{lc}}/{{titleUcFirst}}Form.vue';
 import { useRouter } from 'vue-router';
 import { use{{titleUcFirst}}CreateStore } from 'stores/{{lc}}/create';
 import { storeToRefs } from 'pinia';

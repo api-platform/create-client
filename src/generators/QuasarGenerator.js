@@ -14,22 +14,22 @@ export default class extends BaseGenerator {
     ]);
 
     this.registerTemplates("quasar/", [
-      // common components
-      "components/common/ActionCellComponent.vue",
-      "components/common/BreadcrumbComponent.vue",
-      "components/common/ConfirmDeleteComponent.vue",
-      "components/common/DataFilterComponent.vue",
-      "components/common/FormRepeaterComponent.vue",
-      "components/common/LoadingComponent.vue",
-      "components/common/ToolbarComponent.vue",
-
       // components
-      "components/foo/CreateComponent.vue",
-      "components/foo/FilterComponent.vue",
-      "components/foo/FormComponent.vue",
-      "components/foo/ListComponent.vue",
-      "components/foo/ShowComponent.vue",
-      "components/foo/UpdateComponent.vue",
+      "components/foo/FooCreate.vue",
+      "components/foo/FooFilter.vue",
+      "components/foo/FooForm.vue",
+      "components/foo/FooList.vue",
+      "components/foo/FooShow.vue",
+      "components/foo/FooUpdate.vue",
+
+      // common components
+      "components/common/CommonActionCell.vue",
+      "components/common/CommonBreadcrumb.vue",
+      "components/common/CommonConfirmDelete.vue",
+      "components/common/CommonDataFilter.vue",
+      "components/common/CommonFormRepeater.vue",
+      "components/common/CommonLoading.vue",
+      "components/common/CommonToolbar.vue",
 
       // composables
       "composables/breadcrumb.ts",
@@ -43,10 +43,10 @@ export default class extends BaseGenerator {
       "i18n/common.ts",
 
       // pages
-      "pages/foo/CreatePage.vue",
-      "pages/foo/ListPage.vue",
-      "pages/foo/ShowPage.vue",
-      "pages/foo/UpdatePage.vue",
+      "pages/foo/PageCreate.vue",
+      "pages/foo/PageList.vue",
+      "pages/foo/PageShow.vue",
+      "pages/foo/PageUpdate.vue",
 
       // router
       "router/foo.ts",
@@ -247,13 +247,13 @@ export default {
 
     [
       // common components
-      "components/common/ActionCellComponent.vue",
-      "components/common/BreadcrumbComponent.vue",
-      "components/common/ConfirmDeleteComponent.vue",
-      "components/common/DataFilterComponent.vue",
-      "components/common/FormRepeaterComponent.vue",
-      "components/common/LoadingComponent.vue",
-      "components/common/ToolbarComponent.vue",
+      "components/common/CommonActionCell.vue",
+      "components/common/CommonBreadcrumb.vue",
+      "components/common/CommonConfirmDelete.vue",
+      "components/common/CommonDataFilter.vue",
+      "components/common/CommonFormRepeater.vue",
+      "components/common/CommonLoading.vue",
+      "components/common/CommonToolbar.vue",
 
       // composables
       "composables/breadcrumb.ts",
@@ -280,18 +280,18 @@ export default {
 
     [
       // components
-      "components/%s/CreateComponent.vue",
-      "components/%s/FilterComponent.vue",
-      "components/%s/FormComponent.vue",
-      "components/%s/ListComponent.vue",
-      "components/%s/ShowComponent.vue",
-      "components/%s/UpdateComponent.vue",
+      "components/%s/%sCreate.vue",
+      "components/%s/%sFilter.vue",
+      "components/%s/%sForm.vue",
+      "components/%s/%sList.vue",
+      "components/%s/%sShow.vue",
+      "components/%s/%sUpdate.vue",
 
       // pages
-      "pages/%s/CreatePage.vue",
-      "pages/%s/ListPage.vue",
-      "pages/%s/ShowPage.vue",
-      "pages/%s/UpdatePage.vue",
+      "pages/%s/PageCreate.vue",
+      "pages/%s/PageList.vue",
+      "pages/%s/PageShow.vue",
+      "pages/%s/PageUpdate.vue",
 
       // routes
       "router/%s.ts",
@@ -307,12 +307,12 @@ export default {
       "types/%s.ts",
     ].forEach((pattern) => {
       if (
-        pattern === "components/%s/FilterComponent.vue" &&
+        pattern === "components/%s/%sFilter.vue" &&
         !context.parameters.length
       ) {
         return;
       }
-      this.createFileFromPattern(pattern, dir, [lc], context);
+      this.createFileFromPattern(pattern, dir, [lc, titleUcFirst], context);
     });
 
     // entrypoint

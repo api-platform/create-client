@@ -6,7 +6,7 @@
       </template>
     </Toolbar>
 
-    <{{titleUcFirst}}Form
+    <Form
       v-if="item"
       :values="item"
       :errors="violations"
@@ -18,10 +18,10 @@
 </template>
 
 <script lang="ts" setup>
-import Toolbar from 'components/common/ToolbarComponent.vue';
-import Breadcrumb from 'components/common/BreadcrumbComponent.vue';
-import Loading from 'components/common/LoadingComponent.vue';
-import {{titleUcFirst}}Form from 'components/{{lc}}/FormComponent.vue';
+import Toolbar from 'components/common/CommonToolbar.vue';
+import Breadcrumb from 'components/common/CommonBreadcrumb.vue';
+import Loading from 'components/common/CommonLoading.vue';
+import Form from 'components/{{lc}}/{{titleUcFirst}}Form.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { use{{titleUcFirst}}UpdateStore } from 'src/stores/{{lc}}/update';
 import { storeToRefs } from 'pinia';

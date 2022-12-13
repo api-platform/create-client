@@ -52,15 +52,15 @@ test("Generate a Quasar app", async () => {
     "Toolbar",
   ].forEach((name) => {
     expect(
-      fs.existsSync(`${tmpobj.name}/components/common/${name}Component.vue`)
+      fs.existsSync(`${tmpobj.name}/components/common/Common${name}.vue`)
     ).toBe(true);
   });
 
   // components
   ["Create", "Form", "List", "Show", "Update"].forEach((name) => {
-    expect(
-      fs.existsSync(`${tmpobj.name}/components/foo/${name}Component.vue`)
-    ).toBe(true);
+    expect(fs.existsSync(`${tmpobj.name}/components/foo/Foo${name}.vue`)).toBe(
+      true
+    );
   });
 
   // i18n
@@ -69,7 +69,7 @@ test("Generate a Quasar app", async () => {
 
   // pages
   ["Create", "List", "Show", "Update"].forEach((name) => {
-    expect(fs.existsSync(`${tmpobj.name}/pages/foo/${name}Page.vue`)).toBe(
+    expect(fs.existsSync(`${tmpobj.name}/pages/foo/Page${name}.vue`)).toBe(
       true
     );
   });

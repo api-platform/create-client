@@ -21,7 +21,7 @@ export default [
   {
     name: list.label,
     path: '/{{name}}/',
-    component: () => import('pages/{{lc}}/ListPage.vue'),
+    component: () => import('pages/{{lc}}/PageList.vue'),
     meta: {
       breadcrumb: [list],
     },
@@ -29,7 +29,7 @@ export default [
   {
     name: create.label,
     path: '/{{name}}/create',
-    component: () => import('pages/{{lc}}/CreatePage.vue'),
+    component: () => import('pages/{{lc}}/PageCreate.vue'),
     meta: {
       breadcrumb: [{ ...list, to: { name: list.label } }, create],
     },
@@ -37,7 +37,7 @@ export default [
   {
     name: update.label,
     path: '/{{name}}/edit/:id',
-    component: () => import('pages/{{lc}}/UpdatePage.vue'),
+    component: () => import('pages/{{lc}}/PageUpdate.vue'),
     meta: {
       breadcrumb: [{ ...list, to: { name: list.label } }, update],
     },
@@ -45,7 +45,7 @@ export default [
   {
     name: show.label,
     path: '/{{name}}/show/:id',
-    component: () => import('pages/{{lc}}/ShowPage.vue'),
+    component: () => import('pages/{{lc}}/PageShow.vue'),
     meta: {
       breadcrumb: [{ ...list, to: { name: list.label } }, show],
     },

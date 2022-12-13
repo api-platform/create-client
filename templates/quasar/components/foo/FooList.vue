@@ -15,7 +15,7 @@
   {{#if parameters.length}}
   <DataFilter @filter="onSendFilter" @reset="resetFilter">
     <template #filter>
-      <{{titleUcFirst}}Filter :values="filters" />
+      <Filter :values="filters" />
     </template>
   </DataFilter>
   {{/if}}
@@ -124,12 +124,12 @@
 
 <script lang="ts" setup>
 {{#if parameters.length }}
-import DataFilter from 'src/components/common/DataFilterComponent.vue';
-import {{titleUcFirst}}Filter from 'src/components/{{lc}}/FilterComponent.vue';
+import DataFilter from 'src/components/common/CommonDataFilter.vue';
+import Filter from 'src/components/{{lc}}/{{titleUcFirst}}Filter.vue';
 {{/if}}
-import Toolbar from 'src/components/common/ToolbarComponent.vue';
-import Breadcrumb from 'src/components/common/BreadcrumbComponent.vue';
-import ActionCell from 'src/components/common/ActionCellComponent.vue';
+import Toolbar from 'src/components/common/CommonToolbar.vue';
+import Breadcrumb from 'src/components/common/CommonBreadcrumb.vue';
+import ActionCell from 'src/components/common/CommonActionCell.vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 {{#if hasDateField}}
