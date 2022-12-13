@@ -163,7 +163,7 @@ export const store = new Vuex.Store({
       // routes
       "router/%s.js",
     ].forEach((pattern) =>
-      this.createFileFromPattern(pattern, dir, lc, context)
+      this.createFileFromPattern(pattern, dir, [lc], context)
     );
 
     for (const file of ["mixins/ItemWatcher.js", "mixins/ListWatcher.js"]) {

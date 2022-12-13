@@ -312,7 +312,7 @@ export default {
       ) {
         return;
       }
-      this.createFileFromPattern(pattern, dir, lc, context);
+      this.createFileFromPattern(pattern, dir, [lc], context);
     });
 
     // entrypoint
