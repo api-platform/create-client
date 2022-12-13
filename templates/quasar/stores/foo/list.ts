@@ -26,32 +26,30 @@ export const use{{titleUcFirst}}ListStore = defineStore('{{lc}}List', {
   }),
 
   actions: {
-    getItems(params: ListParams) {
+    async getItems(params: ListParams) {
       this.toggleLoading();
 
-      return fetch('{{name}}', { params })
-        .then((response: Response) =>
-          response.json().then((data: PagedCollection<{{titleUcFirst}}>) => ({
-            data,
-            hubUrl: extractHubURL(response),
-          }))
-        )
-        .then(
-          ({ data, hubUrl }: { data: PagedCollection<{{titleUcFirst}}>; hubUrl?: URL }) => {
-            this.toggleLoading();
-            this.setItems(data['{{hydraPrefix}}member']);
-            this.setTotalItems(data['{{hydraPrefix}}totalItems'] ?? 0);
-            this.setView(data['{{hydraPrefix}}view']);
+      try {
+        const response = await fetch('{{name}}', { params });
+        const data: PagedCollection<{{titleUcFirst}}> = await response.json();
+        const hubUrl = extractHubURL(response);
 
-            if (hubUrl) {
-              this.setHubUrl(hubUrl);
-            }
-          }
-        )
-        .catch((e: Error) => {
-          this.toggleLoading();
-          this.setError(e.message);
-        });
+        this.toggleLoading();
+
+        this.setItems(data['{{hydraPrefix}}member']);
+        this.setTotalItems(data['{{hydraPrefix}}totalItems'] ?? 0);
+        this.setView(data['{{hydraPrefix}}view']);
+
+        if (hubUrl) {
+          this.setHubUrl(hubUrl);
+        }
+      } catch (error) {
+        this.toggleLoading();
+
+        if (error instanceof Error) {
+          this.setError(error.message);
+        }
+      }
     },
 
     toggleLoading() {
