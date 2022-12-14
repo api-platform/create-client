@@ -9,7 +9,16 @@ export default class extends BaseGenerator {
     super(params);
 
     this.registerTemplates("common/", [
+      // types
+      "types/collection.ts",
+      "types/error.ts",
+      "types/foo.ts",
+      "types/item.ts",
+      "types/view.ts",
+
       // utils
+      "utils/config.ts",
+      "utils/error.ts",
       "utils/mercure.ts",
     ]);
 
@@ -60,12 +69,7 @@ export default class extends BaseGenerator {
 
       // types
       "types/breadcrumb.ts",
-      "types/collection.ts",
-      "types/error.ts",
-      "types/foo.ts",
-      "types/item.ts",
       "types/list.ts",
-      "types/view.ts",
 
       // utils
       "utils/date.ts",
@@ -233,7 +237,6 @@ export default {
       `${dir}/composables`,
       `${dir}/i18n`,
       `${dir}/i18n/en-US`,
-      `${dir}/config`,
       `${dir}/router`,
       `${dir}/types`,
       `${dir}/utils`,
@@ -272,6 +275,7 @@ export default {
 
       // utils
       "utils/date.ts",
+      "utils/error.ts",
       "utils/fetch.ts",
       "utils/mercure.ts",
     ].forEach((common) =>
@@ -315,8 +319,10 @@ export default {
       this.createFileFromPattern(pattern, dir, [lc, titleUcFirst], context);
     });
 
-    // entrypoint
-    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.ts`);
+    // config
+    this.createConfigFile(`${dir}/utils/config.ts`, {
+      entrypoint: api.entrypoint,
+    });
 
     this.createFile(
       "i18n/common.ts",
