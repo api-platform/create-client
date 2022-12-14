@@ -15,7 +15,7 @@
         :key="index"
         filled
         class="q-mb-sm"
-        @update:model-value="(value: string) => updateField(index, value)"
+        @update:model-value="(value) => updateField(index, value as string)"
       >
         <template #append>
           <q-icon
