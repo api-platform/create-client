@@ -54,7 +54,7 @@
 
 <script lang="ts" setup>
 import { {{titleUcFirst}} } from 'src/types/{{lc}}';
-import { SubmissionErrors } from 'src/types/error';
+import type { SubmissionErrors } from 'src/types/error';
 import { Ref, ref, toRef } from 'vue';
 {{#if hasManyRelations}}
 import FormRepeater from 'src/components/common/CommonFormRepeater.vue';

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { {{titleUcFirst}} } from 'src/types/{{lc}}';
-import { SubmissionError, type SubmissionErrors } from 'src/types/error';
+import type { SubmissionErrors } from 'src/types/error';
+import { SubmissionError } from 'src/utils/error';
 import fetch from 'src/utils/fetch';
 
 interface State {

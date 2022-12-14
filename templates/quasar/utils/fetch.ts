@@ -1,6 +1,7 @@
-import { SubmissionError, SubmissionErrors } from 'src/types/error';
+import type { SubmissionErrors } from 'src/types/error';
+import { SubmissionError } from 'src/utils/error';
 import qs from 'qs';
-import { ENTRYPOINT } from 'src/config/entrypoint';
+import { ENTRYPOINT } from 'src/utils/config';
 
 const MIME_TYPE = 'application/ld+json';
 
