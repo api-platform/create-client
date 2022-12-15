@@ -21,9 +21,10 @@
   {{/if}}
 
   <q-table
-    v-model:pagination="pagination"
+    :pagination="pagination"
     :rows="items"
     :columns="columns"
+    :rows-per-page-options="[30]"
     :loading="isLoading"
     :no-data-label="$t('unavail')"
     :no-results-label="$t('noresults')"
@@ -42,6 +43,7 @@
         @delete="deleteItem(row)"
       />
     </template>
+
     {{#each fields}}
     {{#if isReferences}}
     <template #body-cell-{{reference.name}}="{ value }">
@@ -119,6 +121,57 @@
     </template>
     {{/if}}
     {{/each}}
+
+    <template #pagination="{ pagesNumber }">
+      <template v-if="view">
+        <q-btn
+          v-if="pagesNumber > 2"
+          :to="view['hydra:first'] ? view['hydra:first'] : { name: 'BookList' }"
+          :disable="!view['hydra:previous']"
+          icon="first_page"
+          color="grey-8"
+          round
+          dense
+          flat
+        />
+
+        <q-btn
+          :to="
+            !view['hydra:previous'] ||
+            view['hydra:previous'] === view['hydra:first']
+              ? { name: 'BookList' }
+              : view['hydra:previous']
+          "
+          :disable="!view['hydra:previous']"
+          icon="chevron_left"
+          color="grey-8"
+          round
+          dense
+          flat
+        />
+
+        <q-btn
+          :to="view['hydra:next'] ? view['hydra:next'] : '#'"
+          :disable="!view['hydra:next']"
+          icon="chevron_right"
+          color="grey-8"
+          round
+          dense
+          flat
+        />
+
+        <q-btn
+          v-if="pagesNumber > 2"
+          :to="view['hydra:last'] ? view['hydra:last'] : '#'"
+          :disable="!view['hydra:next']"
+          icon="last_page"
+          color="grey-8"
+          round
+          dense
+          flat
+        />
+      </template>
+    </template>
   </q-table>
 </template>
 
@@ -130,7 +183,7 @@ import Filter from 'src/components/{{lc}}/{{titleUcFirst}}Filter.vue';
 import Toolbar from 'src/components/common/CommonToolbar.vue';
 import Breadcrumb from 'src/components/common/CommonBreadcrumb.vue';
 import ActionCell from 'src/components/common/CommonActionCell.vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 {{#if hasDateField}}
 import { formatDateTime } from 'src/utils/date';
@@ -146,28 +199,26 @@ import { {{titleUcFirst}} } from 'src/types/{{lc}}';
 import { Pagination{{#if parameters.length}}, Filters{{/if}} } from 'src/types/list';
 
 const { t } = useI18n();
+const route = useRoute();
 const router = useRouter();
 const breadcrumb = useBreadcrumb();
 
 const {{lc}}ListStore = use{{titleUcFirst}}ListStore();
-const { items, totalItems, error, isLoading } = storeToRefs({{lc}}ListStore);
+const { items, totalItems, view, error, isLoading } = storeToRefs({{lc}}ListStore);
 
 const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
 const { deleted, mercureDeleted } = storeToRefs({{lc}}DeleteStore);
 
-async function sendRequest(params = {}) {
-  await {{lc}}ListStore.getItems(params);
-}
-
-useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
-
-const nextPage = ref(1);
+const page = ref('1');
+{{#if parameters.length}}
+const filters: Ref<Filters> = ref({});
+{{/if}}
 const pagination: Pagination = {
   sortBy: undefined,
   descending: false,
-  page: 1, // page to be displayed
-  rowsPerPage: 3, // maximum displayed rows
-  rowsNumber: 10, // max number of rows
+  page: 1,
+  rowsPerPage: 3,
+  rowsNumber: 1,
 };
 const columns = [
   { name: 'actions', label: t('actions'), field: '' },
@@ -189,22 +240,29 @@ const columns = [
   {{/each }}
 ];
 
-await sendRequest({ pagination });
+watch(
+  () => route.query.page,
+  (newPage) => {
+    page.value = newPage as string;
+    sendRequest();
+  },
+  { immediate: true }
+);
 
-watch(items, () => {
-  pagination.page = nextPage.value;
-  pagination.rowsNumber = totalItems.value;
-  nextPage.value = 1;
-});
+async function sendRequest() {
+  await {{lc}}ListStore.getItems(page.value, { {{#if parameters.length}}filters: filters.value{{/if}} });
+}
+
+useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
+
+await sendRequest();
+
+pagination.rowsPerPage = items.value.length;
+pagination.rowsNumber = totalItems.value;
 
 {{#if parameters.length}}
-const filters: Ref<Filters> = ref({});
-
 function onSendFilter() {
-  sendRequest({
-    filters: filters.value,
-    pagination,
-  });
+  sendRequest();
 }
 
 function resetFilter() {
@@ -233,7 +291,7 @@ function gotToEditPage(item: {{titleUcFirst}}) {
 async function deleteItem(item: {{titleUcFirst}}) {
   await {{lc}}DeleteStore.deleteItem(item);
 
-  sendRequest({ pagination });
+  sendRequest();
 }
 
 useWatchErrors([error]);
