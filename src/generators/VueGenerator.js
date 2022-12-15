@@ -55,10 +55,10 @@ export default class extends BaseGenerator {
       "utils/fetch.ts",
 
       // views
-      "views/foo/CreateView.vue",
-      "views/foo/ListView.vue",
-      "views/foo/UpdateView.vue",
-      "views/foo/ShowView.vue",
+      "views/foo/ViewCreate.vue",
+      "views/foo/ViewList.vue",
+      "views/foo/ViewUpdate.vue",
+      "views/foo/ViewShow.vue",
     ]);
 
     handlebars.registerHelper("compare", hbhComparison.compare);
@@ -156,10 +156,10 @@ const router = createRouter({
       "types/%s.ts",
 
       // views
-      "views/%s/CreateView.vue",
-      "views/%s/ListView.vue",
-      "views/%s/ShowView.vue",
-      "views/%s/UpdateView.vue",
+      "views/%s/ViewCreate.vue",
+      "views/%s/ViewList.vue",
+      "views/%s/ViewShow.vue",
+      "views/%s/ViewUpdate.vue",
     ].forEach((pattern) =>
       this.createFileFromPattern(pattern, dir, [lc, titleUcFirst], context)
     );

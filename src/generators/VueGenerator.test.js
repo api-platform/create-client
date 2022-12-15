@@ -44,7 +44,7 @@ test("Generate a Vue app", () => {
     ).toBe(true);
 
     // views
-    expect(fs.existsSync(`${tmpobj.name}/views/foo/${action}View.vue`)).toBe(
+    expect(fs.existsSync(`${tmpobj.name}/views/foo/View${action}.vue`)).toBe(
       true
     );
   });
