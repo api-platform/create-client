@@ -90,11 +90,10 @@ test("Generate a Quasar app", async () => {
   );
 
   // utils
+  expect(fs.existsSync(`${tmpobj.name}/utils/config.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/error.ts`)).toBe(true);
   expect(fs.existsSync(`${tmpobj.name}/utils/date.ts`)).toBe(true);
   expect(fs.existsSync(`${tmpobj.name}/utils/fetch.ts`)).toBe(true);
-
-  // config
-  expect(fs.existsSync(`${tmpobj.name}/config/entrypoint.ts`)).toBe(true);
 
   tmpobj.removeCallback();
 });
