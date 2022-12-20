@@ -56,7 +56,7 @@
 
 <script lang="ts" setup>
 {{#if hasManyRelations}}
-import FormRepeater from "~~/components/common/CommonFormRepeater.vue";
+import FormRepeater from "~~/components/common/FormRepeater.vue";
 {{/if}}
 import { Ref } from "vue";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
