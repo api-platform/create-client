@@ -35,10 +35,11 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
         <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
         <script type="application/ld+json" dangerouslySetInnerHTML={ { __html: text } } />
       </Head>
-      <Link href="/{{{lc}}}s">
-        <a className="text-sm text-cyan-500 font-bold hover:text-cyan-700">
-          {`< Back to list`}
-        </a>
+      <Link
+        href="/{{{lc}}}s"
+        className="text-sm text-cyan-500 font-bold hover:text-cyan-700"
+      >
+        {"< Back to list"}
       </Link>
       <h1 className="text-3xl mb-2">{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</h1>
       <table cellPadding={10} className="shadow-md table border-collapse min-w-full leading-normal table-auto text-left my-3">
@@ -77,10 +78,11 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
         </div>
       )}
       <div className="flex space-x-2 mt-4 items-center justify-end">
-        <Link href={getPath({{{lc}}}["@id"], '/{{{lc}}}s/[id]/edit')}>
-          <a className="inline-block mt-2 border-2 border-cyan-500 bg-cyan-500 hover:border-cyan-700 hover:bg-cyan-700 text-xs text-white font-bold py-2 px-4 rounded">
-            Edit
-          </a>
+        <Link
+          href={getPath({{{lc}}}["@id"], "/{{{lc}}}s/[id]/edit")}
+          className="inline-block mt-2 border-2 border-cyan-500 bg-cyan-500 hover:border-cyan-700 hover:bg-cyan-700 text-xs text-white font-bold py-2 px-4 rounded"
+        >
+          Edit
         </Link>
         <button
           className="inline-block mt-2 border-2 border-red-400 hover:border-red-700 hover:text-red-700 text-xs text-red-400 font-bold py-2 px-4 rounded"
