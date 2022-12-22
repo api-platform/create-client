@@ -6,7 +6,7 @@
       :to="{ name: '{{name}}-create' }"
       class="px-6 py-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
     >
-      Add a {{lc}}
+      Create
     </nuxt-link>
   </div>
 
