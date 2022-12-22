@@ -23,7 +23,7 @@
     class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm"
     role="alert"
   >
-    {{ error }}
+    \{{ error }}
   </div>
 
   <div
@@ -31,9 +31,9 @@
     class="bg-green-100 rounded py-4 px-4 my-2 text-green-700 text-sm"
     role="status"
   >
-    <template v-if="deletedItem"> {{ deletedItem["@id"] }} deleted. </template>
+    <template v-if="deletedItem">\{{ deletedItem["@id"] }} deleted.</template>
     <template v-else-if="mercureDeletedItem">
-      {{ mercureDeletedItem["@id"] }} deleted by another user.
+      \{{ mercureDeletedItem["@id"] }} deleted by another user.
     </template>
   </div>
 
@@ -69,79 +69,79 @@
               :to="{ name: '{{name}}-id', params: { id: item['@id'] } }"
               class="text-blue-600 hover:text-blue-800"
             >
-              {{ item["@id"] }}
+              \{{ item["@id"] }}
             </nuxt-link>
           </td>
           {{#each fields}}
           <td class="px-6 py-4 text-sm">
           {{#if isReferences}}
-          <template v-if="router.hasRoute('{{reference.name}}-id')">
-            <router-link
-              v-for="{{lowercase reference.title}} in item.{{reference.name}}"
-              :to="{ name: '{{reference.name}}-id', params: { id: {{lowercase reference.title}} } }"
-              :key="{{lowercase reference.title}}"
-              class="text-blue-600 hover:text-blue-800"
-            >
-              \{{ {{lowercase reference.title}} }}
+            <template v-if="router.hasRoute('{{reference.name}}-id')">
+              <nuxt-link
+                v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+                :key="{{lowercase reference.title}}"
+                :to="{ name: '{{reference.name}}-id', params: { id: {{lowercase reference.title}} } }"
+                class="text-blue-600 hover:text-blue-800"
+              >
+                \{{ {{lowercase reference.title}} }}
 
-              <br />
-            </router-link>
-          </template>
+                <br />
+              </nuxt-link>
+            </template>
 
-          <template v-else>
-            <p
-              v-for="{{lowercase reference.title}} in item.{{reference.name}}"
-              :key="{{lowercase reference.title}}"
-            >
-              \{{ {{lowercase reference.title}} }}
-            </p>
-          </template>
+            <template v-else>
+              <p
+                v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+                :key="{{lowercase reference.title}}"
+              >
+                \{{ {{lowercase reference.title}} }}
+              </p>
+            </template>
           {{else if reference}}
-          <router-link
-            v-if="router.hasRoute('{{reference.name}}-id')"
-            :to="{ name: '{{reference.name}}-id', params: { id: item.{{lowercase reference.title}} } }"
-              class="text-blue-600 hover:text-blue-800"
-          >
-            \{{ item.{{lowercase reference.title}} }}
-          </router-link>
-
-          <p v-else>
-            \{{ item.{{lowercase reference.title}} }}
-          </p>
-          {{else if isEmbeddeds}}
-          <template v-if="router.hasRoute('{{embedded.name}}-id')">
-            <router-link
-              v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-              :to="{ name: '{{embedded.name}}-id', params: { id: {{lowercase embedded.title}}['@id'] } }"
-              :key="{{lowercase embedded.title}}['@id']"
+            <nuxt-link
+              v-if="router.hasRoute('{{reference.name}}-id')"
+              :to="{ name: '{{reference.name}}-id', params: { id: item.{{lowercase reference.title}} } }"
               class="text-blue-600 hover:text-blue-800"
             >
-              \{{ {{lowercase embedded.title}}["@id"] }}
+              \{{ item.{{lowercase reference.title}} }}
+            </nuxt-link>
 
-              <br />
-            </router-link>
-          </template>
-
-          <template v-else>
-            <p
-              v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-              :key="{{lowercase embedded.title}}['@id']"
-            >
-              \{{ {{lowercase embedded.title}}["@id"] }}
+            <p v-else>
+              \{{ item.{{lowercase reference.title}} }}
             </p>
-          </template>
-          {{else if embedded}}
-          <router-link
-            v-if="router.hasRoute('{{embedded.name}}-id')"
-            :to="{ name: '{{embedded.name}}-id', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
-            class="text-blue-600 hover:text-blue-800"
-          >
-            \{{ item.{{lowercase embedded.title}}["@id"] }}
-          </router-link>
+          {{else if isEmbeddeds}}
+            <template v-if="router.hasRoute('{{embedded.name}}-id')">
+              <nuxt-link
+                v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
+                :key="{{lowercase embedded.title}}['@id']"
+                :to="{ name: '{{embedded.name}}-id', params: { id: {{lowercase embedded.title}}['@id'] } }"
+                class="text-blue-600 hover:text-blue-800"
+              >
+                \{{ {{lowercase embedded.title}}["@id"] }}
 
-          <p v-else>
-            \{{ item.{{lowercase embedded.title}}["@id"] }}
-          </p>
+                <br />
+              </nuxt-link>
+            </template>
+
+            <template v-else>
+              <p
+                v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
+                :key="{{lowercase embedded.title}}['@id']"
+              >
+                \{{ {{lowercase embedded.title}}["@id"] }}
+              </p>
+            </template>
+          {{else if embedded}}
+            <nuxt-link
+              v-if="router.hasRoute('{{embedded.name}}-id')"
+              :to="{ name: '{{embedded.name}}-id', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              \{{ item.{{lowercase embedded.title}}["@id"] }}
+            </nuxt-link>
+
+            <p v-else>
+              \{{ item.{{lowercase embedded.title}}["@id"] }}
+            </p>
           {{else if (compare type "==" "dateTime") }}
             \{{ formatDateTime(item.{{name}}) }}
           {{else}}
@@ -150,20 +150,20 @@
           </td>
           {{/each}}
           <td class="px-6 py-4 text-sm">
-            <router-link
+            <nuxt-link
               :to="{ name: '{{name}}-id', params: { id: item['@id'] } }"
               class="px-6 py-2 bg-blue-600 text-white text-xs rounded shadow-md hover:bg-blue-700"
             >
               Show
-            </router-link>
+            </nuxt-link>
           </td>
           <td class="px-6 py-4 text-sm">
-            <router-link
+            <nuxt-link
               :to="{ name: '{{name}}-id-edit', params: { id: item['@id'] } }"
               class="px-6 py-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
             >
               Edit
-            </router-link>
+            </nuxt-link>
           </td>
         </tr>
       </tbody>
@@ -249,7 +249,9 @@ import { use{{titleUcFirst}}DeleteStore } from "~~/stores/{{lc}}/delete";
 import { use{{titleUcFirst}}ListStore } from "~~/stores/{{lc}}/list";
 
 const route = useRoute();
+{{#if hasRelationsOrManyRelations}}
 const router = useRouter();
+{{/if}}
 
 const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
 const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =

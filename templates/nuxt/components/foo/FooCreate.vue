@@ -27,13 +27,13 @@
 <script lang="ts" setup>
 import Form from "~~/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { storeToRefs } from "pinia";
-import { use{titleUcFirst}}CreateStore } from "~~/stores/{{lc}}/create";
-import { {titleUcFirst}} } from "~~/types/{{lc}}";
+import { use{{titleUcFirst}}CreateStore } from "~~/stores/{{lc}}/create";
+import { {{titleUcFirst}} } from "~~/types/{{lc}}";
 
-const {{lc}}CreateStore = use{titleUcFirst}}CreateStore();
+const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
 const { created, isLoading, violations, error } = storeToRefs({{lc}}CreateStore);
 
-async function submitForm(item: {titleUcFirst}}) {
+async function submitForm(item: {{titleUcFirst}}) {
   await {{lc}}CreateStore.create(item);
 
   if (!created?.value) {

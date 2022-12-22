@@ -57,7 +57,7 @@ export const use{{titleUcFirst}}UpdateStore = defineStore("{{lc}}Update", {
       }
 
       try {
-        const response = await fetch(this.retrieved["@id"], {
+        const response = await api(this.retrieved["@id"], {
           method: "PUT",
           headers: new Headers({ "Content-Type": "application/ld+json" }),
           body: JSON.stringify(payload),

@@ -11,7 +11,7 @@
       {{#if isManyRelations}}
       <FormRepeater
         :values="item.{{name}}"
-        @update="(values) => (item.{{name}} = values)"
+        @update="(values: any) => (item.{{name}} = values)"
       />
       {{else}}
       <input

@@ -15,7 +15,7 @@
     </button>
   </div>
 
-  <h1 class="text-3xl my-4">Edit {{titleUcFirst}} {{ item?.["@id"] }}</h1>
+  <h1 class="text-3xl my-4">Edit {{titleUcFirst}} \{{ item?.["@id"] }}</h1>
 
   <div
     v-if="isLoading || deleteLoading"
@@ -30,7 +30,7 @@
     class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm"
     role="alert"
   >
-    {{ error || deleteError }}
+    \{{ error || deleteError }}
   </div>
 
   <div
@@ -38,8 +38,8 @@
     class="bg-green-100 rounded py-4 px-4 my-2 text-green-700 text-sm"
     role="status"
   >
-    <template v-if="created">{{ created["@id"] }} created. </template>
-    <template v-else-if="updated">{{ updated["@id"] }} updated. </template>
+    <template v-if="created">\{{ created["@id"] }} created. </template>
+    <template v-else-if="updated">\{{ updated["@id"] }} updated. </template>
   </div>
 
   <Form :values="item" :errors="violations" @submit="updateItem" />
@@ -83,12 +83,6 @@ await {{lc}}UpdateStore.retrieve(decodeURIComponent(route.params.id as string));
 
 async function updateItem(item: {{titleUcFirst}}) {
   await {{lc}}UpdateStore.update(item);
-
-  if (!updated?.value) {
-    return;
-  }
-
-  navigateTo({ name: "{{name}}" });
 }
 
 async function deleteItem() {
