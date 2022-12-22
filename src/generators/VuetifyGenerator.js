@@ -106,7 +106,7 @@ export const store = new Vuex.Store({
       "views/%s/Show.vue",
       "views/%s/Update.vue",
     ].forEach((pattern) =>
-      this.createFileFromPattern(pattern, dir, lc, context)
+      this.createFileFromPattern(pattern, dir, [lc], context)
     );
 
     // components

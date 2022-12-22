@@ -214,7 +214,7 @@ export default class extends BaseGenerator {
     this.createFileFromPattern(
       "services/%s.js",
       dir,
-      resource.title.toLowerCase(),
+      [resource.title.toLowerCase()],
       { name: resource.name }
     );
 

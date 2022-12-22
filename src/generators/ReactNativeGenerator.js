@@ -133,7 +133,7 @@ combineReducers({ ${titleLc}, /* ... */ }),
       // routes
       "routes/%s.js",
     ].forEach((pattern) =>
-      this.createFileFromPattern(pattern, dir, lc, context)
+      this.createFileFromPattern(pattern, dir, [lc], context)
     );
 
     [

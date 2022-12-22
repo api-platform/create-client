@@ -111,7 +111,7 @@ import ${titleLc}Routes from './routes/${titleLc}';
       // routes
       "routes/%s.tsx",
     ].forEach((pattern) =>
-      this.createFileFromPattern(pattern, dir, lc, context)
+      this.createFileFromPattern(pattern, dir, [lc], context)
     );
 
     // interface pattern should be camel cased
