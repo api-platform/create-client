@@ -1,3 +1,4 @@
+import { defineStore } from "pinia";
 import { {{titleUcFirst}} } from "~~/types/{{lc}}";
 import { PagedCollection } from "~~/types/collection";
 import { View } from "~~/types/view";

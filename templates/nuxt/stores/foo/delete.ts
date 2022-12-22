@@ -1,3 +1,4 @@
+import { defineStore } from "pinia";
 import api from "~~/utils/api";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 

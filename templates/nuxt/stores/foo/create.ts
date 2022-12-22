@@ -1,3 +1,4 @@
+import { defineStore } from "pinia";
 import { {{titleUcFirst}} } from "~~/types/{{lc}}";
 import type { SubmissionErrors } from "~~/types/error";
 import { SubmissionError } from "~~/utils/error";
