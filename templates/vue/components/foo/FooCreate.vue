@@ -24,7 +24,7 @@
       \{{ error }}
     </div>
 
-    <Form :errors="violations" @send-form="onSendForm" />
+    <Form :errors="violations" @submit="create" />
   </div>
 </template>
 
@@ -40,7 +40,7 @@ const router = useRouter();
 const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
 const { isLoading, error, violations } = storeToRefs({{lc}}CreateStore);
 
-async function onSendForm(item: {{titleUcFirst}}) {
+async function create(item: {{titleUcFirst}}) {
   await {{lc}}CreateStore.create(item);
 
   if (!{{lc}}CreateStore.created) return;

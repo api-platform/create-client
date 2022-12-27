@@ -266,6 +266,7 @@ const route = useRoute();
 {{#if hasRelationsOrManyRelations}}
 const router = useRouter();
 {{/if}}
+
 const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
 const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
   storeToRefs({{lc}}DeleteStore);

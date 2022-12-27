@@ -1,5 +1,5 @@
 <template>
-  <form class="py-4" @submit.prevent="emitSendForm">
+  <form class="py-4" @submit.prevent="emitSubmit">
     {{#each formFields}}
     <div class="mb-2">
       <label
@@ -69,7 +69,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "sendForm", item: {{titleUcFirst}}): void;
+  (e: "submit", item: {{titleUcFirst}}): void;
 }>();
 
 const violations = toRef(props, "errors");
@@ -92,7 +92,7 @@ if (props.values) {
   };
 }
 
-function emitSendForm() {
-  emit("sendForm", item);
+function emitSubmit() {
+  emit("submit", item);
 }
 </script>
