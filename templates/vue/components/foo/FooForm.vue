@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts" setup>
-import { toRef } from "vue";
+import { toRef, ref, type Ref } from "vue";
 {{#if hasManyRelations}}
 import FormRepeater from "@/components/common/FormRepeater.vue";
 {{/if}}
@@ -74,10 +74,10 @@ const emit = defineEmits<{
 
 const violations = toRef(props, "errors");
 
-let item: any = {};
+let item: Ref<{{titleUcFirst}}> = ref({});
 
 if (props.values) {
-  item = {
+  item.value = {
     ...props.values,
     {{#each fields}}
     {{#compare type "==" "dateTime" }}
@@ -93,6 +93,6 @@ if (props.values) {
 }
 
 function emitSubmit() {
-  emit("submit", item);
+  emit("submit", item.value);
 }
 </script>
