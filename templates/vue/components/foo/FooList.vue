@@ -253,7 +253,7 @@
 <script lang="ts" setup>
 import { onBeforeUnmount, watch } from "vue";
 import { useRoute } from "vue-router";
-{{#if hasRelationsOrManyRelations}}
+{{#if hasRelations}}
 import { useRouter } from "vue-router";
 {{/if}}
 import { storeToRefs } from "pinia";
@@ -265,7 +265,7 @@ import { formatDateTime } from "@/utils/date";
 import { useMercureList } from "@/composables/mercureList";
 
 const route = useRoute();
-{{#if hasRelationsOrManyRelations}}
+{{#if hasRelations}}
 const router = useRouter();
 {{/if}}
 

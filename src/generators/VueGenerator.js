@@ -96,12 +96,8 @@ const router = createRouter({
     const titleUcFirst =
       resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
     const fields = this.parseFields(resource);
-    const hasRelations = fields.some(
-      (field) => field.reference || field.embedded
-    );
-    const hasManyRelations = fields.some(
-      (field) => field.isReferences || field.isEmbeddeds
-    );
+    const hasIsRelation = fields.some((field) => field.isRelation);
+    const hasIsRelations = fields.some((field) => field.isRelations);
     const hasDateField = fields.some((field) => field.type === "dateTime");
 
     const context = {
@@ -113,9 +109,9 @@ const router = createRouter({
       formFields: this.buildFields(fields),
       hydraPrefix: this.hydraPrefix,
       titleUcFirst,
-      hasRelations,
-      hasManyRelations,
-      hasRelationsOrManyRelations: hasRelations || hasManyRelations,
+      hasIsRelation,
+      hasIsRelations,
+      hasRelations: hasIsRelation || hasIsRelations,
       hasDateField,
     };
 
