@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import fetch from "@/utils/fetch";
+import api from "@/utils/api";
 import { extractHubURL } from "@/utils/mercure";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 import type { View } from "@/types/view";
@@ -24,7 +24,7 @@ export const use{{titleUcFirst}}ListStore = defineStore("{{lc}}List", {
 
       try {
         const path = page ? `{{name}}?page=${page}` : "{{name}}";
-        const response = await fetch(path);
+        const response = await api(path);
         const data: PagedCollection<{{titleUcFirst}}> = await response.json();
         const hubUrl = extractHubURL(response);
 

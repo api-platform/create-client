@@ -70,9 +70,9 @@ test("Generate a Vue app", () => {
   expect(fs.existsSync(`${tmpobj.name}/types/view.ts`)).toBe(true);
 
   // utils
+  expect(fs.existsSync(`${tmpobj.name}/utils/api.ts`)).toBe(true);
   expect(fs.existsSync(`${tmpobj.name}/utils/config.ts`)).toBe(true);
   expect(fs.existsSync(`${tmpobj.name}/utils/date.ts`)).toBe(true);
-  expect(fs.existsSync(`${tmpobj.name}/utils/fetch.ts`)).toBe(true);
 
   tmpobj.removeCallback();
 });

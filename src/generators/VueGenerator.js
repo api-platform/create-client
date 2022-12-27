@@ -51,8 +51,8 @@ export default class extends BaseGenerator {
       "types/stores.ts",
 
       // utils
+      "utils/api.ts",
       "utils/date.ts",
-      "utils/fetch.ts",
 
       // views
       "views/foo/ViewCreate.vue",
@@ -180,9 +180,9 @@ const router = createRouter({
       "types/view.ts",
 
       // utils
+      "utils/api.ts",
       "utils/date.ts",
       "utils/error.ts",
-      "utils/fetch.ts",
       "utils/mercure.ts",
     ].forEach((path) =>
       this.createFile(path, `${dir}/${path}`, context, false)

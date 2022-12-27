@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import fetch from "@/utils/fetch";
+import api from "@/utils/api";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 import type { CreateState } from "@/types/stores";
 import type { SubmissionErrors } from "@/types/error";
@@ -21,7 +21,7 @@ export const use{{titleUcFirst}}CreateStore = defineStore("{{lc}}Create", {
       this.toggleLoading();
 
       try {
-        const response = await fetch("{{name}}", {
+        const response = await api("{{name}}", {
           method: "POST",
           body: JSON.stringify(payload),
         });

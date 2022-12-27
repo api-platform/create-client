@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { extractHubURL } from "@/utils/mercure";
-import fetch from "@/utils/fetch";
+import api from "@/utils/api";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 import type { ShowState } from "@/types/stores";
 
@@ -20,7 +20,7 @@ export const use{{titleUcFirst}}ShowStore = defineStore("{{lc}}Show", {
       this.toggleLoading();
 
       try {
-        const response = await fetch(id);
+        const response = await api(id);
         const data: {{titleUcFirst}} = await response.json();
         const hubUrl = extractHubURL(response);
 

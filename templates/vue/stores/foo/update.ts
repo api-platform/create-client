@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import fetch from "@/utils/fetch";
+import api from "@/utils/api";
 import { extractHubURL } from "@/utils/mercure";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 import type { UpdateState } from "@/types/stores";
@@ -24,7 +24,7 @@ export const use{{titleUcFirst}}UpdateStore = defineStore("{{lc}}Update", {
       this.toggleLoading();
 
       try {
-        const response = await fetch(id);
+        const response = await api(id);
         const data: {{titleUcFirst}} = await response.json();
         const hubUrl = extractHubURL(response);
 
@@ -53,7 +53,7 @@ export const use{{titleUcFirst}}UpdateStore = defineStore("{{lc}}Update", {
       }
 
       try {
-        const response = await fetch(this.retrieved["@id"], {
+        const response = await api(this.retrieved["@id"], {
           method: "PUT",
           headers: new Headers({ "Content-Type": "application/ld+json" }),
           body: JSON.stringify(payload),
