@@ -102,6 +102,7 @@ const router = createRouter({
     const hasManyRelations = fields.some(
       (field) => field.isReferences || field.isEmbeddeds
     );
+    const hasDateField = fields.some((field) => field.type === "dateTime");
 
     const context = {
       title: resource.title,
@@ -115,12 +116,12 @@ const router = createRouter({
       hasRelations,
       hasManyRelations,
       hasRelationsOrManyRelations: hasRelations || hasManyRelations,
+      hasDateField,
     };
 
     // Create directories
     // These directories may already exist
     [
-      `${dir}/config`,
       `${dir}/composables`,
       `${dir}/router`,
       `${dir}/types`,

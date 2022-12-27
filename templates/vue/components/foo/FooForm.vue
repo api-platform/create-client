@@ -59,7 +59,9 @@ import { toRef, ref, type Ref } from "vue";
 {{#if hasManyRelations}}
 import FormRepeater from "@/components/common/FormRepeater.vue";
 {{/if}}
+{{#if hasDateField}}
 import { formatDateInput } from "@/utils/date";
+{{/if}}
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 import type { SubmissionErrors } from "@/types/error";
 

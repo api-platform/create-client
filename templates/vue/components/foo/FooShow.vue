@@ -153,7 +153,9 @@ import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { use{{titleUcFirst}}ShowStore } from "@/stores/{{lc}}/show";
 import { use{{titleUcFirst}}DeleteStore } from "@/stores/{{lc}}/delete";
+{{#if hasDateField}}
 import { formatDateTime } from "@/utils/date";
+{{/if}}
 import { useMercureItem } from "@/composables/mercureItem";
 
 const route = useRoute();
