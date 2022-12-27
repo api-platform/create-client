@@ -214,8 +214,8 @@ const router = createRouter({
           ...field,
           isReferences,
           isEmbeddeds,
-          isRelations: field.reference || field.embedded,
-          isManyRelations: isEmbeddeds || isReferences,
+          isRelation: field.reference || field.embedded,
+          isRelations: isEmbeddeds || isReferences,
         },
       };
     }, {});

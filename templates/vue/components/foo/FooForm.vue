@@ -8,7 +8,7 @@
       >
         {{name}}
       </label>
-      {{#if isManyRelations}}
+      {{#if isRelations}}
       <FormRepeater
         :values="item.{{name}}"
         @update="(values) => (item.{{name}} = values)"
