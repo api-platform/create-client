@@ -169,12 +169,7 @@ export default {
 
     const fields = this.parseFields(resource);
     const formFields = this.buildFields(fields);
-    const hasRelations = fields.some(
-      (field) => field.reference || field.embedded
-    );
-    const hasManyRelations = fields.some(
-      (field) => field.isReferences || field.isEmbeddeds
-    );
+    const hasIsRelations = fields.some((field) => field.isRelations);
     const hasDateField = fields.some((field) => field.type === "dateTime");
 
     const parameters = [];
@@ -220,8 +215,7 @@ export default {
       name: resource.name,
       lc,
       fields,
-      hasRelations,
-      hasManyRelations,
+      hasIsRelations,
       hasDateField,
       parameters,
       formFields,
@@ -394,8 +388,8 @@ export default {
           ...field,
           isReferences,
           isEmbeddeds,
-          isRelations: field.reference || field.embedded,
-          isManyRelations: isEmbeddeds || isReferences,
+          isRelation: field.reference || field.embedded,
+          isRelations: isEmbeddeds || isReferences,
         },
       };
     }, {});

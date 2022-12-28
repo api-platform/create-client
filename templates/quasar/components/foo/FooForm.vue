@@ -2,7 +2,7 @@
   <q-form class="q-pa-md q-col-gutter-y-md" @submit="emitSubmit">
     <div class="row q-gutter-md">
     {{#each formFields}}
-      {{#if isManyRelations}}
+    {{#if isRelations}}
       <FormRepeater
         :values="item.{{name}}"
         :label="$t('{{../lc}}.{{name}}')"
@@ -56,7 +56,7 @@
 import { {{titleUcFirst}} } from 'src/types/{{lc}}';
 import type { SubmissionErrors } from 'src/types/error';
 import { Ref, ref, toRef } from 'vue';
-{{#if hasManyRelations}}
+{{#if hasIsRelations}}
 import FormRepeater from 'src/components/common/CommonFormRepeater.vue';
 import { Item } from 'src/types/item';
 {{/if}}
