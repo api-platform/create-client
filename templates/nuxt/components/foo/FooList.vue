@@ -249,7 +249,7 @@ import { use{{titleUcFirst}}DeleteStore } from "~~/stores/{{lc}}/delete";
 import { use{{titleUcFirst}}ListStore } from "~~/stores/{{lc}}/list";
 
 const route = useRoute();
-{{#if hasRelationsOrManyRelations}}
+{{#if hasRelations}}
 const router = useRouter();
 {{/if}}
 

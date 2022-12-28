@@ -8,7 +8,7 @@
       >
         {{name}}
       </label>
-      {{#if isManyRelations}}
+      {{#if isRelations}}
       <FormRepeater
         :values="item.{{name}}"
         @update="(values: any) => (item.{{name}} = values)"
@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts" setup>
-{{#if hasManyRelations}}
+{{#if hasIsRelations}}
 import FormRepeater from "~~/components/common/FormRepeater.vue";
 {{/if}}
 import { Ref } from "vue";

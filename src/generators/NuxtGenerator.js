@@ -77,9 +77,9 @@ export default class NuxtGenerator extends BaseGenerator {
     const titleUcFirst =
       resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
     const fields = this.parseFields(resource);
-    const hasRelations = fields.some((field) => field.isRelations);
-    const hasManyRelations = fields.some((field) => field.isManyRelations);
-    const hasRelationsOrManyRelations = hasRelations || hasManyRelations;
+    const hasIsRelation = fields.some((field) => field.isRelation);
+    const hasIsRelations = fields.some((field) => field.isRelations);
+    const hasRelations = hasIsRelation || hasIsRelations;
 
     const formFields = this.buildFields(fields);
 
@@ -89,9 +89,9 @@ export default class NuxtGenerator extends BaseGenerator {
       lc,
       uc: resource.title.toUpperCase(),
       fields,
+      hasIsRelation,
+      hasIsRelations,
       hasRelations,
-      hasManyRelations,
-      hasRelationsOrManyRelations,
       formFields,
       hydraPrefix: this.hydraPrefix,
       titleUcFirst,
@@ -199,8 +199,8 @@ export default class NuxtGenerator extends BaseGenerator {
           readonly: false,
           isReferences,
           isEmbeddeds,
-          isRelations: field.reference || field.embedded,
-          isManyRelations: isEmbeddeds || isReferences,
+          isRelation: field.reference || field.embedded,
+          isRelations: isEmbeddeds || isReferences,
         },
       };
     }, {});
