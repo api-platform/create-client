@@ -6,12 +6,7 @@
       </template>
     </Toolbar>
 
-    <Form
-      v-if="item"
-      :values="item"
-      :errors="violations"
-      @submit="submitForm"
-    />
+    <Form v-if="item" :values="item" :errors="violations" @submit="update" />
 
     <Loading :showing="isLoading || deleteLoading" />
   </div>
@@ -72,7 +67,7 @@ async function deleteItem() {
   router.push({ name: '{{titleUcFirst}}List' });
 }
 
-async function submitForm(item: {{titleUcFirst}}) {
+async function update(item: {{titleUcFirst}}) {
   await {{lc}}UpdateStore.update(item);
 
   if (!updated?.value) {

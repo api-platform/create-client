@@ -5,7 +5,7 @@
     </template>
   </Toolbar>
 
-  <Form :errors="violations" @submit="submitForm" />
+  <Form :errors="violations" @submit="create" />
 
   <Loading :showing="isLoading" />
 </template>
@@ -28,7 +28,7 @@ const breadcrumb = useBreadcrumb();
 const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
 const { created, isLoading, violations, error } = storeToRefs({{lc}}CreateStore);
 
-async function submitForm(item: {{titleUcFirst}}) {
+async function create(item: {{titleUcFirst}}) {
   await {{lc}}CreateStore.create(item);
 
   if (!created?.value) {
