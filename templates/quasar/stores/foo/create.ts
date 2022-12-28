@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { {{titleUcFirst}} } from 'src/types/{{lc}}';
 import type { SubmissionErrors } from 'src/types/error';
 import { SubmissionError } from 'src/utils/error';
-import fetch from 'src/utils/fetch';
+import api from 'src/utils/api';
 
 interface State {
   created?: {{titleUcFirst}};
@@ -26,7 +26,7 @@ export const use{{titleUcFirst}}CreateStore = defineStore('{{lc}}Create', {
       this.toggleLoading();
 
       try {
-        const response = await fetch('{{name}}', {
+        const response = await api('{{name}}', {
           method: 'POST',
           body: JSON.stringify(payload),
         });

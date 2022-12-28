@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { {{titleUcFirst}} } from 'src/types/{{lc}}';
-import fetch from 'src/utils/fetch';
+import api from 'src/utils/api';
 
 interface State {
   deleted?: {{titleUcFirst}};
@@ -27,7 +27,7 @@ export const use{{titleUcFirst}}DeleteStore = defineStore('{{lc}}Delete', {
       }
 
       try {
-        await fetch(item['@id'], { method: 'DELETE' });
+        await api(item['@id'], { method: 'DELETE' });
 
         this.toggleLoading();
         this.setDeleted(item);
