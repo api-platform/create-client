@@ -21,7 +21,7 @@
     \{{ error }}
   </div>
 
-  <Form :errors="violations" @submit="submitForm" />
+  <Form :errors="violations" @submit="create" />
 </template>
 
 <script lang="ts" setup>
@@ -33,7 +33,7 @@ import { {{titleUcFirst}} } from "~~/types/{{lc}}";
 const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
 const { created, isLoading, violations, error } = storeToRefs({{lc}}CreateStore);
 
-async function submitForm(item: {{titleUcFirst}}) {
+async function create(item: {{titleUcFirst}}) {
   await {{lc}}CreateStore.create(item);
 
   if (!created?.value) {

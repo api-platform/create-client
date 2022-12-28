@@ -42,7 +42,7 @@
     <template v-else-if="updated">\{{ updated["@id"] }} updated. </template>
   </div>
 
-  <Form :values="item" :errors="violations" @submit="updateItem" />
+  <Form :values="item" :errors="violations" @submit="update" />
 </template>
 
 <script lang="ts" setup>
@@ -81,7 +81,7 @@ useMercureItem({
 
 await {{lc}}UpdateStore.retrieve(decodeURIComponent(route.params.id as string));
 
-async function updateItem(item: {{titleUcFirst}}) {
+async function update(item: {{titleUcFirst}}) {
   await {{lc}}UpdateStore.update(item);
 }
 
