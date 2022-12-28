@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { {{titleUcFirst}} } from 'src/types/{{lc}}';
 import type { SubmissionErrors } from 'src/types/error';
 import { SubmissionError } from 'src/utils/error';
-import fetch from 'src/utils/fetch';
+import api from 'src/utils/api';
 import { extractHubURL } from 'src/utils/mercure';
 
 interface State {
@@ -29,7 +29,7 @@ export const use{{titleUcFirst}}UpdateStore = defineStore('{{lc}}Update', {
       this.toggleLoading();
 
       try {
-        const response = await fetch(id);
+        const response = await api(id);
         const data: {{titleUcFirst}} = await response.json();
         const hubUrl = extractHubURL(response);
 
@@ -58,7 +58,7 @@ export const use{{titleUcFirst}}UpdateStore = defineStore('{{lc}}Update', {
       }
 
       try {
-        const response = await fetch(
+        const response = await api(
           this.retrieved['@id'] ?? payload['@id'] ?? '',
           {
             method: 'PUT',

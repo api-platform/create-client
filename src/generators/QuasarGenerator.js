@@ -72,8 +72,8 @@ export default class extends BaseGenerator {
       "types/list.ts",
 
       // utils
+      "utils/api.ts",
       "utils/date.ts",
-      "utils/fetch.ts",
     ]);
 
     handlebars.registerHelper("compare", hbh_comparison.compare);
@@ -274,9 +274,9 @@ export default {
       "types/view.ts",
 
       // utils
+      "utils/api.ts",
       "utils/date.ts",
       "utils/error.ts",
-      "utils/fetch.ts",
       "utils/mercure.ts",
     ].forEach((common) =>
       this.createFile(common, `${dir}/${common}`, context, false)
