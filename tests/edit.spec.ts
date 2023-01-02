@@ -1,5 +1,5 @@
 import { test as baseTest, expect } from '@playwright/test';
-import { locatorFixtures as fixtures,  } from '@playwright-testing-library/test/fixture.js';
+import { locatorFixtures as fixtures } from '@playwright-testing-library/test/fixture.js';
 import type { LocatorFixtures as TestingLibraryFixtures } from '@playwright-testing-library/test/fixture.js';
 
 const test = baseTest.extend<TestingLibraryFixtures>(fixtures)
@@ -11,7 +11,7 @@ test('resource edit', async ({ page, within, queries: { getAllByRole, getByLabel
 
   await expect(queryByRole('heading', { level: 1, name: 'Book List' })).toBeVisible();
 
-  const rows = page.locator('table tr');
+  const rows = getAllByRole('row');
 
   const { getAllByRole: getAllByRoleWithinRow } = within(rows.nth(3));
 

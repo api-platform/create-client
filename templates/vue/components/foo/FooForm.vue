@@ -56,7 +56,7 @@
 
 <script lang="ts" setup>
 import { toRef, ref, type Ref } from "vue";
-{{#if hasManyRelations}}
+{{#if hasIsRelations}}
 import FormRepeater from "@/components/common/FormRepeater.vue";
 {{/if}}
 {{#if hasDateField}}

@@ -1,7 +1,7 @@
 import { isArray, isObject, isUndefined, forEach } from "lodash";
-import type { SubmissionErrors } from "@/types/error";
 import { ENTRYPOINT } from "@/utils/config";
 import { SubmissionError } from "@/utils/error";
+import type { SubmissionErrors } from "@/types/error";
 
 const MIME_TYPE = "application/ld+json";
 

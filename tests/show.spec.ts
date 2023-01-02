@@ -9,9 +9,11 @@ test('resource show', async ({ page, within, queries: { getAllByRole, getByRole,
 
   await expect(queryByText('Loading...')).not.toBeVisible();
 
-  const listRows = page.locator('table tr');
+  const listRows = getAllByRole('row');
 
-  const bookLink = listRows.nth(3).locator('a').first();
+  const { getAllByRole: getAllByRoleWithinListRow } = within(listRows.nth(3));
+
+  const bookLink = getAllByRoleWithinListRow('link').nth(0);
   bookLink.click();
 
   await expect(queryByRole('heading', { level: 1 })).toHaveText(/^\s*Show Book/);
