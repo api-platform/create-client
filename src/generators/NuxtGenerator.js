@@ -134,7 +134,7 @@ export default class NuxtGenerator extends BaseVueGenerator {
       // store
       "store/%s.js",
     ].forEach((pattern) =>
-      this.createFileFromPattern(pattern, dir, lc, context)
+      this.createFileFromPattern(pattern, dir, [lc], context)
     );
 
     // components
