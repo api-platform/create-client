@@ -1,8 +1,8 @@
-import { DeepMap, FieldError, FieldValues, Path, UseFormRegister } from "react-hook-form";
+import { DeepMap, FieldError, FieldValues, Path, UnPackAsyncDefaultValues, UseFormRegister } from "react-hook-form";
 
 interface FieldProps<TFieldValues extends FieldValues> {
   register: UseFormRegister<TFieldValues>;
-  name: Path<TFieldValues>;
+  name: Path<UnPackAsyncDefaultValues<TFieldValues>>;
   placeholder: string;
   type: string;
   step?: string;

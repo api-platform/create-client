@@ -22,45 +22,41 @@ const Pagination = ({ collection }: Props) => {
         className="text-xs font-bold inline-flex mx-auto divide-x-2 divide-gray-200 flex-row flex-wrap items-center justify-center mb-4 border-2 border-gray-200 rounded-2xl overflow-hidden"
         aria-label="Page navigation"
       >
-        <Link href={first ? first : "#"}>
-          <a
-            className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
-              previous ? "" : " text-gray-500 pointer-events-none"
-            }`}
-            aria-label="First page"
-          >
-            <span aria-hidden="true">&lArr;</span> First
-          </a>
+        <Link
+          href={first ? first : "#"}
+          className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
+            previous ? "" : " text-gray-500 pointer-events-none"
+          }`}
+          aria-label="First page"
+        >
+          <span aria-hidden="true">&lArr;</span> First
         </Link>
-        <Link href={previous ? previous : "#"}>
-          <a
-            className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
-              previous ? "" : " text-gray-500 pointer-events-none"
-            }`}
-            aria-label="Previous page"
-          >
-            <span aria-hidden="true">&larr;</span> Previous
-          </a>
+        <Link
+          href={previous ? previous : "#"}
+          className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
+            previous ? "" : " text-gray-500 pointer-events-none"
+          }`}
+          aria-label="Previous page"
+        >
+          <span aria-hidden="true">&larr;</span> Previous
         </Link>
-        <Link href={next ? next : "#"}>
-          <a
-            className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
-              next ? "" : " text-gray-500 pointer-events-none"
-            }`}
-            aria-label="Next page"
-          >
-            Next <span aria-hidden="true">&rarr;</span>
-          </a>
+        <Link
+          href={next ? next : "#"}
+          className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
+            next ? "" : " text-gray-500 pointer-events-none"
+          }`}
+          aria-label="Next page"
+        >
+          Next <span aria-hidden="true">&rarr;</span>
         </Link>
-        <Link href={last ? last : "#"}>
-          <a
-            className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
-              next ? "" : "text-gray-500 pointer-events-none"
-            }`}
-            aria-label="Last page"
-          >
-            Last <span aria-hidden="true">&rArr;</span>
-          </a>
+        <Link
+          href={last ? last : "#"}
+          className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
+            next ? "" : "text-gray-500 pointer-events-none"
+          }`}
+          aria-label="Last page"
+        >
+          Last <span aria-hidden="true">&rArr;</span>
         </Link>
       </nav>
     </div>
