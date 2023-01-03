@@ -250,7 +250,7 @@ watch(
 );
 
 async function sendRequest() {
-  await {{lc}}ListStore.getItems(page.value, { {{#if parameters.length}}filters: filters.value{{/if}} });
+  await {{lc}}ListStore.getItems(page.value, { {{#if parameters.length}}...filters.value{{/if}} });
 }
 
 useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
@@ -267,6 +267,8 @@ function onSendFilter() {
 
 function resetFilter() {
   filters.value = {};
+
+  sendRequest();
 }
 {{/if}}
 
