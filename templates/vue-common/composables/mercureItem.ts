@@ -1,8 +1,8 @@
-import { useRouter } from 'vue-router';
-import { mercureSubscribe } from 'src/utils/mercure';
-import { onBeforeUnmount } from 'vue';
-import type { StoreGeneric } from 'pinia';
-import type { Item } from 'src/types/item';
+import { onBeforeUnmount } from "vue";
+import { useRouter } from "vue-router";
+import type { StoreGeneric } from "pinia";
+import { mercureSubscribe } from "../utils/mercure";
+import type { Item } from "../types/item";
 
 export function useMercureItem({
   store,
@@ -26,7 +26,7 @@ export function useMercureItem({
 
   let mercureSub: EventSource | null = null;
 
-  store.$subscribe((mutation, state) => {
+  store.$subscribe((mutation: any, state: any) => {
     if (!state.hubUrl) {
       return;
     }
@@ -41,12 +41,12 @@ export function useMercureItem({
 
     mercureSub = mercureSubscribe(
       state.hubUrl,
-      [state.retrieved['@id'] ?? ''],
+      [state.retrieved["@id"] ?? ""],
       mercureEl
     );
   });
 
-  deleteStore.$subscribe((mutation, state) => {
+  deleteStore.$subscribe((mutation: any, state: any) => {
     if (state.mercureDeleted) {
       router.push({ name: redirectRouteName });
     }

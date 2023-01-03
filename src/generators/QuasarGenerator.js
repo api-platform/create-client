@@ -22,6 +22,12 @@ export default class extends BaseGenerator {
       "utils/mercure.ts",
     ]);
 
+    this.registerTemplates("vue-common/", [
+      // composables
+      "composables/mercureItem.ts",
+      "composables/mercureList.ts",
+    ]);
+
     this.registerTemplates("quasar/", [
       // components
       "components/foo/FooCreate.vue",
@@ -43,8 +49,6 @@ export default class extends BaseGenerator {
       // composables
       "composables/breadcrumb.ts",
       "composables/errors.ts",
-      "composables/mercureItem.ts",
-      "composables/mercureList.ts",
       "composables/notifications.ts",
 
       // i18n
