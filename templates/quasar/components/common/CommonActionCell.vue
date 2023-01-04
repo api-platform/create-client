@@ -16,7 +16,7 @@
       round
       dense
       color="secondary"
-      icon="update"
+      icon="edit"
       @click="emitUpdate"
     />
 
