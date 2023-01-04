@@ -20,8 +20,8 @@
 </template>
 
 <script lang="ts" setup>
-import { {{titleUcFirst}} } from 'src/types/{{lc}}';
 import { toRef } from 'vue';
+import type { {{titleUcFirst}} } from 'src/types/{{lc}}';
 
 const props = defineProps<{
   values: {{titleUcFirst}};

@@ -1,5 +1,5 @@
-import { BreadcrumbValue } from 'src/types/breadcrumb';
 import { useRoute } from 'vue-router';
+import type { BreadcrumbValue } from 'src/types/breadcrumb';
 
 export function useBreadcrumb() {
   const route = useRoute();

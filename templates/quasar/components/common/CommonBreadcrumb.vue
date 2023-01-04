@@ -17,8 +17,8 @@
 </template>
 
 <script lang="ts" setup>
-import { Item } from 'src/types/item';
-import { BreadcrumbValue } from 'src/types/breadcrumb';
+import type { BreadcrumbValue } from 'src/types/breadcrumb';
+import type { Item } from 'src/types/item';
 
 const props = defineProps<{
   values: BreadcrumbValue[];

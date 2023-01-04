@@ -11,16 +11,16 @@
 </template>
 
 <script lang="ts" setup>
-import Toolbar from 'src/components/common/CommonToolbar.vue';
-import Breadcrumb from 'src/components/common/CommonBreadcrumb.vue';
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import Toolbar from 'components/common/CommonToolbar.vue';
+import Breadcrumb from 'components/common/CommonBreadcrumb.vue';
 import Loading from 'components/common/CommonLoading.vue';
 import Form from 'components/{{lc}}/{{titleUcFirst}}Form.vue';
-import { useRouter } from 'vue-router';
 import { use{{titleUcFirst}}CreateStore } from 'stores/{{lc}}/create';
-import { storeToRefs } from 'pinia';
-import { {{titleUcFirst}} } from 'src/types/{{lc}}';
 import { useBreadcrumb } from 'src/composables/breadcrumb';
 import { useWatchErrors } from 'src/composables/errors';
+import type { {{titleUcFirst}} } from 'src/types/{{lc}}';
 
 const router = useRouter();
 const breadcrumb = useBreadcrumb();

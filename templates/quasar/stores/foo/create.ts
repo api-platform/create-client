@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
-import { {{titleUcFirst}} } from 'src/types/{{lc}}';
-import type { SubmissionErrors } from 'src/types/error';
 import { SubmissionError } from 'src/utils/error';
 import api from 'src/utils/api';
+import type { {{titleUcFirst}} } from 'src/types/{{lc}}';
+import type { SubmissionErrors } from 'src/types/error';
 
 interface State {
   created?: {{titleUcFirst}};

@@ -126,8 +126,8 @@
       <template v-if="view">
         <q-btn
           v-if="pagesNumber > 2"
-          :to="view['hydra:first'] ? view['hydra:first'] : { name: 'BookList' }"
-          :disable="!view['hydra:previous']"
+          :to="view['{{hydraPrefix}}first'] ? view['{{hydraPrefix}}first'] : { name: 'BookList' }"
+          :disable="!view['{{hydraPrefix}}previous']"
           icon="first_page"
           color="grey-8"
           round
@@ -137,12 +137,12 @@
 
         <q-btn
           :to="
-            !view['hydra:previous'] ||
-            view['hydra:previous'] === view['hydra:first']
+            !view['{{hydraPrefix}}previous'] ||
+            view['{{hydraPrefix}}previous'] === view['{{hydraPrefix}}first']
               ? { name: 'BookList' }
-              : view['hydra:previous']
+              : view['{{hydraPrefix}}previous']
           "
-          :disable="!view['hydra:previous']"
+          :disable="!view['{{hydraPrefix}}previous']"
           icon="chevron_left"
           color="grey-8"
           round
@@ -151,8 +151,8 @@
         />
 
         <q-btn
-          :to="view['hydra:next'] ? view['hydra:next'] : '#'"
-          :disable="!view['hydra:next']"
+          :to="view['{{hydraPrefix}}next'] ? view['{{hydraPrefix}}next'] : '#'"
+          :disable="!view['{{hydraPrefix}}next']"
           icon="chevron_right"
           color="grey-8"
           round
@@ -162,8 +162,8 @@
 
         <q-btn
           v-if="pagesNumber > 2"
-          :to="view['hydra:last'] ? view['hydra:last'] : '#'"
-          :disable="!view['hydra:next']"
+          :to="view['{{hydraPrefix}}last'] ? view['{{hydraPrefix}}last'] : '#'"
+          :disable="!view['{{hydraPrefix}}next']"
           icon="last_page"
           color="grey-8"
           round
@@ -176,27 +176,27 @@
 </template>
 
 <script lang="ts" setup>
-{{#if parameters.length }}
-import DataFilter from 'src/components/common/CommonDataFilter.vue';
-import Filter from 'src/components/{{lc}}/{{titleUcFirst}}Filter.vue';
-{{/if}}
-import Toolbar from 'src/components/common/CommonToolbar.vue';
-import Breadcrumb from 'src/components/common/CommonBreadcrumb.vue';
-import ActionCell from 'src/components/common/CommonActionCell.vue';
+import { onBeforeUnmount{{#if parameters.length}}, Ref{{/if}}, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
+{{#if parameters.length }}
+import DataFilter from 'components/common/CommonDataFilter.vue';
+import Filter from 'components/{{lc}}/{{titleUcFirst}}Filter.vue';
+{{/if}}
+import Toolbar from 'components/common/CommonToolbar.vue';
+import Breadcrumb from 'components/common/CommonBreadcrumb.vue';
+import ActionCell from 'components/common/CommonActionCell.vue';
 {{#if hasDateField}}
 import { formatDateTime } from 'src/utils/date';
 {{/if}}
 import { use{{titleUcFirst}}ListStore } from 'stores/{{lc}}/list';
 import { use{{titleUcFirst}}DeleteStore } from 'stores/{{lc}}/delete';
-import { storeToRefs } from 'pinia';
-import { onBeforeUnmount{{#if parameters.length}}, Ref{{/if}}, ref, watch } from 'vue';
 import { useBreadcrumb } from 'src/composables/breadcrumb';
 import { useWatchErrors } from 'src/composables/errors';
 import { useMercureList } from 'src/composables/mercureList';
-import { {{titleUcFirst}} } from 'src/types/{{lc}}';
-import { Pagination{{#if parameters.length}}, Filters{{/if}} } from 'src/types/list';
+import type { {{titleUcFirst}} } from 'src/types/{{lc}}';
+import type { Pagination{{#if parameters.length}}, Filters{{/if}} } from 'src/types/list';
 
 const { t } = useI18n();
 const route = useRoute();

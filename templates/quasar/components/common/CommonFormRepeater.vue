@@ -1,12 +1,12 @@
 <template>
   <div>
-    <label for="book_reviews" class="text-body1 form-control-label">
+    <div class="text-body1">
       <span class="q-mr-sm">
         \{{ label }}
       </span>
 
       <q-btn color="secondary" @click="addField">Add</q-btn>
-    </label>
+    </div>
 
     <div class="q-my-md">
       <q-input

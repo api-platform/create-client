@@ -1,4 +1,4 @@
-import { BreadcrumbValue } from 'src/types/breadcrumb';
+import type { BreadcrumbValue } from 'types/breadcrumb';
 
 const list: BreadcrumbValue = {
   label: '{{titleUcFirst}}List',

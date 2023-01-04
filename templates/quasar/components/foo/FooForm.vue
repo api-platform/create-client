@@ -9,7 +9,7 @@
         class="col-12 col-md-8"
         @update="(values: any) => (item.{{name}} = values)"
       />
-      {{else}}
+    {{else}}
       <q-input
         v-model{{#compare type "==" "number" }}.number{{/compare}}="item.{{name}}"
         :label="$t('{{../lc}}.{{name}}')"
@@ -34,7 +34,7 @@
           />
         </template>
       </q-input>
-      {{/if}}
+    {{/if}}
     {{/each}}
     </div>
 
@@ -53,16 +53,16 @@
 </template>
 
 <script lang="ts" setup>
-import { {{titleUcFirst}} } from 'src/types/{{lc}}';
-import type { SubmissionErrors } from 'src/types/error';
 import { Ref, ref, toRef } from 'vue';
-{{#if hasIsRelations}}
-import FormRepeater from 'src/components/common/CommonFormRepeater.vue';
-import { Item } from 'src/types/item';
-{{/if}}
 {{#if hasDateField}}
 import { formatDateInput } from 'src/utils/date';
 {{/if}}
+{{#if hasIsRelations}}
+import FormRepeater from 'components/common/CommonFormRepeater.vue';
+import type { Item } from 'src/types/item';
+{{/if}}
+import type { {{titleUcFirst}} } from 'src/types/{{lc}}';
+import type { SubmissionErrors } from 'src/types/error';
 
 let props = defineProps<{
   values?: {{titleUcFirst}};

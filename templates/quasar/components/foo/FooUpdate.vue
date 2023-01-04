@@ -13,21 +13,21 @@
 </template>
 
 <script lang="ts" setup>
+import { onBeforeUnmount } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useI18n } from 'vue-i18n';
 import Toolbar from 'components/common/CommonToolbar.vue';
 import Breadcrumb from 'components/common/CommonBreadcrumb.vue';
 import Loading from 'components/common/CommonLoading.vue';
 import Form from 'components/{{lc}}/{{titleUcFirst}}Form.vue';
-import { useRoute, useRouter } from 'vue-router';
-import { use{{titleUcFirst}}UpdateStore } from 'src/stores/{{lc}}/update';
-import { storeToRefs } from 'pinia';
-import { use{{titleUcFirst}}DeleteStore } from 'src/stores/{{lc}}/delete';
-import { onBeforeUnmount } from 'vue';
-import { {{titleUcFirst}} } from 'src/types/{{lc}}';
+import { use{{titleUcFirst}}UpdateStore } from 'stores/{{lc}}/update';
+import { use{{titleUcFirst}}DeleteStore } from 'stores/{{lc}}/delete';
 import { useNotifications } from 'src/composables/notifications';
-import { useI18n } from 'vue-i18n';
 import { useBreadcrumb } from 'src/composables/breadcrumb';
 import { useWatchErrors } from 'src/composables/errors';
 import { useMercureItem } from 'src/composables/mercureItem';
+import type { {{titleUcFirst}} } from 'src/types/{{lc}}';
 
 const { t } = useI18n();
 const route = useRoute();

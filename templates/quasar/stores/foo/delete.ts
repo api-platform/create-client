@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { {{titleUcFirst}} } from 'src/types/{{lc}}';
 import api from 'src/utils/api';
+import type { {{titleUcFirst}} } from 'src/types/{{lc}}';
 
 interface State {
   deleted?: {{titleUcFirst}};

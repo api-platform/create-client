@@ -99,21 +99,21 @@
 </template>
 
 <script lang="ts" setup>
-import Toolbar from 'src/components/common/CommonToolbar.vue';
-import Breadcrumb from 'src/components/common/CommonBreadcrumb.vue';
-import Loading from 'src/components/common/CommonLoading.vue';
+import { onBeforeUnmount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { use{{titleUcFirst}}ShowStore } from 'src/stores/{{lc}}/show';
 import { storeToRefs } from 'pinia';
+import { useI18n } from 'vue-i18n';
+import Toolbar from 'components/common/CommonToolbar.vue';
+import Breadcrumb from 'components/common/CommonBreadcrumb.vue';
+import Loading from 'components/common/CommonLoading.vue';
+import { use{{titleUcFirst}}ShowStore } from 'stores/{{lc}}/show';
 {{#if hasDateField}}
 import { formatDateTime } from 'src/utils/date';
 {{/if}}
-import { onBeforeUnmount } from 'vue';
-import { use{{titleUcFirst}}DeleteStore } from 'src/stores/{{lc}}/delete';
+import { use{{titleUcFirst}}DeleteStore } from 'stores/{{lc}}/delete';
 import { useBreadcrumb } from 'src/composables/breadcrumb';
 import { useWatchErrors } from 'src/composables/errors';
 import { useMercureItem } from 'src/composables/mercureItem';
-import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 const route = useRoute();

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
-import { {{titleUcFirst}} } from 'src/types/{{lc}}';
 import api from 'src/utils/api';
 import { extractHubURL } from 'src/utils/mercure';
+import type { {{titleUcFirst}} } from 'src/types/{{lc}}';
 
 interface State {
   retrieved?: {{titleUcFirst}};

@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import api from 'src/utils/api';
-import { {{titleUcFirst}} } from 'src/types/{{lc}}';
-import { View } from 'src/types/view';
 import { extractHubURL } from 'src/utils/mercure';
 import type { PagedCollection } from 'src/types/collection';
-import { ListParams } from 'src/types/list';
+import type { ListParams } from 'src/types/list';
+import type { {{titleUcFirst}} } from 'src/types/{{lc}}';
+import type { View } from 'src/types/view';
 
 interface State {
   items: {{titleUcFirst}}[];
