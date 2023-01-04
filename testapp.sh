@@ -47,7 +47,7 @@ if [ "$1" = "vue" ]; then
   npm init vue@3 -- --typescript --router --pinia --eslint-with-prettier vue
   cd ../..
   yarn --cwd ./tmp/app/vue install
-  yarn --cwd ./tmp/app/vue add lodash @types/lodash dayjs
+  yarn --cwd ./tmp/app/vue add qs @types/qs dayjs
 
   # Tailwind
   yarn --cwd ./tmp/app/vue add tailwindcss postcss autoprefixer
