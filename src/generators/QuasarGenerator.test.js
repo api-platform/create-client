@@ -7,7 +7,7 @@ import QuasarGenerator from "./QuasarGenerator.js";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
-test("Generate a Quasar app", () => {
+test("Generate a Quasar app", async () => {
   const generator = new QuasarGenerator({
     hydraPrefix: "hydra:",
     templateDirectory: `${dirname}/../../templates`,
@@ -21,6 +21,7 @@ test("Generate a Quasar app", () => {
       reference: null,
       required: true,
       description: "An URL",
+      type: "string",
     }),
   ];
   const resource = new Resource("abc", "http://example.com/foos", {
@@ -37,60 +38,62 @@ test("Generate a Quasar app", () => {
     title: "My API",
     resources: [resource],
   });
-  generator
-    .generate(api, resource, tmpobj.name)
-    .then(() => {
-      expect(fs.existsSync(tmpobj.name + "/components/foo/Create.vue")).toBe(
-        true
-      );
-      expect(fs.existsSync(tmpobj.name + "/components/foo/Form.vue")).toBe(
-        true
-      );
-      expect(fs.existsSync(tmpobj.name + "/components/foo/List.vue")).toBe(
-        true
-      );
-      expect(fs.existsSync(tmpobj.name + "/components/foo/Show.vue")).toBe(
-        true
-      );
-      expect(fs.existsSync(tmpobj.name + "/components/foo/Update.vue")).toBe(
-        true
-      );
 
-      expect(fs.existsSync(tmpobj.name + "/config/entrypoint.js")).toBe(true);
+  await generator.generate(api, resource, tmpobj.name, []);
 
-      expect(fs.existsSync(tmpobj.name + "/error/SubmissionError.js")).toBe(
-        true
-      );
+  // common components
+  [
+    "ActionCell",
+    "Breadcrumb",
+    "ConfirmDelete",
+    "DataFilter",
+    "FormRepeater",
+    "Loading",
+    "Toolbar",
+  ].forEach((name) => {
+    expect(
+      fs.existsSync(`${tmpobj.name}/components/common/Common${name}.vue`)
+    ).toBe(true);
+  });
 
-      expect(fs.existsSync(tmpobj.name + "/router/foo.js")).toBe(true);
+  // components
+  ["Create", "Form", "List", "Show", "Update"].forEach((name) => {
+    expect(fs.existsSync(`${tmpobj.name}/components/foo/Foo${name}.vue`)).toBe(
+      true
+    );
+  });
 
-      expect(fs.existsSync(tmpobj.name + "/store/modules/foo/index.js")).toBe(
-        true
-      );
+  // i18n
+  expect(fs.existsSync(`${tmpobj.name}/i18n/en-US/common.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/i18n/en-US/foo.ts`)).toBe(true);
 
-      ["create", "delete", "list", "show", "update"].forEach((action) => {
-        expect(
-          fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/actions.js`)
-        ).toBe(true);
-        expect(
-          fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/getters.js`)
-        ).toBe(true);
-        expect(
-          fs.existsSync(`${tmpobj.name}/store/modules/foo/${action}/index.js`)
-        ).toBe(true);
-        expect(
-          fs.existsSync(
-            `${tmpobj.name}/store/modules/foo/${action}/mutation_types.js`
-          )
-        ).toBe(true);
-        expect(
-          fs.existsSync(
-            `${tmpobj.name}/store/modules/foo/${action}/mutations.js`
-          )
-        ).toBe(true);
-      });
-      expect(fs.existsSync(tmpobj.name + "/utils/fetch.js")).toBe(true);
-      tmpobj.removeCallback();
-    })
-    .catch(() => {});
+  // pages
+  ["Create", "List", "Show", "Update"].forEach((name) => {
+    expect(fs.existsSync(`${tmpobj.name}/pages/foo/Page${name}.vue`)).toBe(
+      true
+    );
+  });
+
+  // router
+  expect(fs.existsSync(`${tmpobj.name}/router/foo.ts`)).toBe(true);
+
+  // stores
+  ["create", "delete", "list", "show", "update"].forEach((name) => {
+    expect(fs.existsSync(`${tmpobj.name}/stores/foo/${name}.ts`)).toBe(true);
+  });
+
+  // types
+  ["breadcrumb", "collection", "error", "foo", "item", "list", "view"].forEach(
+    (name) => {
+      expect(fs.existsSync(`${tmpobj.name}/types/${name}.ts`)).toBe(true);
+    }
+  );
+
+  // utils
+  expect(fs.existsSync(`${tmpobj.name}/utils/api.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/config.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/date.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/error.ts`)).toBe(true);
+
+  tmpobj.removeCallback();
 });

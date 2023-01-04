@@ -17,9 +17,17 @@ export default class extends BaseGenerator {
       "types/view.ts",
 
       // utils
+      "utils/api.ts",
       "utils/config.ts",
+      "utils/date.ts",
       "utils/error.ts",
       "utils/mercure.ts",
+    ]);
+
+    this.registerTemplates("vue-common/", [
+      // composables
+      "composables/mercureItem.ts",
+      "composables/mercureList.ts",
     ]);
 
     this.registerTemplates(`vue/`, [
@@ -33,10 +41,6 @@ export default class extends BaseGenerator {
       // common components
       "components/common/FormRepeater.vue",
 
-      // composables
-      "composables/mercureItem.ts",
-      "composables/mercureList.ts",
-
       // routes
       "router/foo.ts",
 
@@ -49,10 +53,6 @@ export default class extends BaseGenerator {
 
       // types
       "types/stores.ts",
-
-      // utils
-      "utils/api.ts",
-      "utils/date.ts",
 
       // views
       "views/foo/ViewCreate.vue",
