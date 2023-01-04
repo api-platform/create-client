@@ -17,7 +17,9 @@ export default class extends BaseGenerator {
       "types/view.ts",
 
       // utils
+      "utils/api.ts",
       "utils/config.ts",
+      "utils/date.ts",
       "utils/error.ts",
       "utils/mercure.ts",
     ]);
@@ -74,10 +76,6 @@ export default class extends BaseGenerator {
       // types
       "types/breadcrumb.ts",
       "types/list.ts",
-
-      // utils
-      "utils/api.ts",
-      "utils/date.ts",
     ]);
 
     handlebars.registerHelper("compare", hbh_comparison.compare);

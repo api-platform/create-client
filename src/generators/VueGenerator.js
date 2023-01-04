@@ -17,7 +17,9 @@ export default class extends BaseGenerator {
       "types/view.ts",
 
       // utils
+      "utils/api.ts",
       "utils/config.ts",
+      "utils/date.ts",
       "utils/error.ts",
       "utils/mercure.ts",
     ]);
@@ -51,10 +53,6 @@ export default class extends BaseGenerator {
 
       // types
       "types/stores.ts",
-
-      // utils
-      "utils/api.ts",
-      "utils/date.ts",
 
       // views
       "views/foo/ViewCreate.vue",
