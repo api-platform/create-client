@@ -11,13 +11,13 @@
     />
 
     <q-btn
-      v-if="actions.includes('edit')"
+      v-if="actions.includes('update')"
       flat
       round
       dense
       color="secondary"
-      icon="edit"
-      @click="emitEdit"
+      icon="update"
+      @click="emitUpdate"
     />
 
     <q-btn
@@ -44,14 +44,14 @@ import ConfirmDelete from 'src/components/common/CommonConfirmDelete.vue';
 import { ref, toRefs } from 'vue';
 
 const props = defineProps<{
-  actions: ('show' | 'edit' | 'delete')[];
+  actions: ('show' | 'update' | 'delete')[];
 }>();
 
 const { actions } = toRefs(props);
 
 const emit = defineEmits<{
   (e: 'show'): void;
-  (e: 'edit'): void;
+  (e: 'update'): void;
   (e: 'delete'): void;
 }>();
 
@@ -59,8 +59,8 @@ function emitShow() {
   emit('show');
 }
 
-function emitEdit() {
-  emit('edit');
+function emitUpdate() {
+  emit('update');
 }
 
 function emitDelete() {

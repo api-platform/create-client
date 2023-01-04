@@ -37,9 +37,9 @@
   >
     <template #body-cell-actions="{ row }">
       <ActionCell
-        :actions="['show', 'edit', 'delete']"
+        :actions="['show', 'update', 'delete']"
         @show="goToShowPage(row)"
-        @edit="gotToEditPage(row)"
+        @update="goToUpdatePage(row)"
         @delete="deleteItem(row)"
       />
     </template>
@@ -283,7 +283,7 @@ function goToShowPage(item: {{titleUcFirst}}) {
   });
 }
 
-function gotToEditPage(item: {{titleUcFirst}}) {
+function goToUpdatePage(item: {{titleUcFirst}}) {
   router.push({
     name: '{{titleUcFirst}}Update',
     params: { id: item['@id'] },
