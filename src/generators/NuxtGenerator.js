@@ -21,12 +21,13 @@ export default class NuxtGenerator extends BaseGenerator {
       "utils/config.ts",
       "utils/error.ts",
       "utils/mercure.ts",
+
+      // tailwind
+      "style.css",
+      "tailwind.config.js",
     ]);
 
     this.registerTemplates(`nuxt/`, [
-      // assets
-      "assets/css/main.css",
-
       // common components
       "components/common/FormRepeater.vue",
 
@@ -147,7 +148,7 @@ export default class NuxtGenerator extends BaseGenerator {
 
     [
       // assets
-      "assets/css/main.css",
+      "assets/css/style.css",
 
       // components
       "components/common/FormRepeater.vue",
