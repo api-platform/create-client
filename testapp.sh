@@ -34,12 +34,22 @@ if [ "$1" = "react" ]; then
 fi
 
 if [ "$1" = "nuxt" ]; then
-  yarn create nuxt-app --answers "'{\"name\":\"nuxt\",\"language\":\"js\",\"pm\":\"yarn\",\"ui\":\"vuetify\",\"template\":\"html\",\"features\":[],\"linter\":[],\"test\":\"none\",\"mode\":\"spa\",\"target\":\"static\",\"devTools\":[],\"vcs\":\"none\"}'" ./tmp/app/nuxt
-  yarn --cwd ./tmp/app/nuxt add moment lodash vuelidate vuex-map-fields
+  # mkdir -p ./tmp/app/nuxt
+  cd ./tmp/app
+  npx nuxi init nuxt
 
-  cp -R ./tmp/nuxt/* ./tmp/app/nuxt
-  NUXT_TELEMETRY_DISABLED=1 yarn --cwd ./tmp/app/nuxt generate
-  start-server-and-test 'yarn --cwd ./tmp/app/nuxt start --hostname 127.0.0.1' http://127.0.0.1:3000/books/ 'yarn playwright test'
+  cd nuxt
+  rm ./app.vue
+  rm ./nuxt.config.ts
+
+  cp ../../../templates/nuxt/nuxt.config.ts .
+
+  yarn add dayjs @pinia/nuxt
+
+  cp -R ../../../tmp/nuxt/* .
+  yarn generate
+
+  start-server-and-test 'yarn preview' http://127.0.0.1:3000/books/ 'yarn playwright test'
 fi
 
 if [ "$1" = "vue" ]; then
