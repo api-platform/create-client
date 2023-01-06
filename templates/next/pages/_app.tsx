@@ -1,3 +1,4 @@
+import "../styles/style.css";
 import type { AppProps } from "next/app";
 import type { DehydratedState } from "react-query";
 

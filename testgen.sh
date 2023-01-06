@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 entrypoint="https://demo.api-platform.com"
 if [ $ENTRYPOINT ]; then

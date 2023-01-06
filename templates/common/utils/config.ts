@@ -1,1 +1,1 @@
-export const ENTRYPOINT = "https://demo.api-platform.com";
+export const ENTRYPOINT = "{{entrypoint}}";

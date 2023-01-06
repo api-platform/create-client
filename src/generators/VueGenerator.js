@@ -1,60 +1,68 @@
 import chalk from "chalk";
 import BaseGenerator from "./BaseGenerator.js";
+import handlebars from "handlebars";
+import hbhComparison from "handlebars-helpers/lib/comparison.js";
+import hbhString from "handlebars-helpers/lib/string.js";
 
 export default class extends BaseGenerator {
   constructor(params) {
     super(params);
 
     this.registerTemplates("common/", [
+      // types
+      "types/collection.ts",
+      "types/error.ts",
+      "types/foo.ts",
+      "types/item.ts",
+      "types/view.ts",
+
       // utils
-      "utils/mercure.js",
+      "utils/api.ts",
+      "utils/config.ts",
+      "utils/date.ts",
+      "utils/error.ts",
+      "utils/mercure.ts",
+    ]);
+
+    this.registerTemplates("vue-common/", [
+      // composables
+      "composables/mercureItem.ts",
+      "composables/mercureList.ts",
     ]);
 
     this.registerTemplates(`vue/`, [
-      // modules
-      "store/modules/foo/index.js",
-      "store/modules/foo/create/actions.js",
-      "store/modules/foo/create/index.js",
-      "store/modules/foo/create/mutation_types.js",
-      "store/modules/foo/create/mutations.js",
-      "store/modules/foo/delete/actions.js",
-      "store/modules/foo/delete/index.js",
-      "store/modules/foo/delete/mutation_types.js",
-      "store/modules/foo/delete/mutations.js",
-      "store/modules/foo/list/actions.js",
-      "store/modules/foo/list/index.js",
-      "store/modules/foo/list/mutation_types.js",
-      "store/modules/foo/list/mutations.js",
-      "store/modules/foo/show/actions.js",
-      "store/modules/foo/show/index.js",
-      "store/modules/foo/show/mutation_types.js",
-      "store/modules/foo/show/mutations.js",
-      "store/modules/foo/update/actions.js",
-      "store/modules/foo/update/index.js",
-      "store/modules/foo/update/mutation_types.js",
-      "store/modules/foo/update/mutations.js",
-
       // components
-      "components/foo/Create.vue",
-      "components/foo/Form.vue",
-      "components/foo/List.vue",
-      "components/foo/Update.vue",
-      "components/foo/Show.vue",
+      "components/foo/FooCreate.vue",
+      "components/foo/FooForm.vue",
+      "components/foo/FooList.vue",
+      "components/foo/FooShow.vue",
+      "components/foo/FooUpdate.vue",
 
-      // mixins
-      "mixins/ItemWatcher.js",
-      "mixins/ListWatcher.js",
+      // common components
+      "components/common/FormRepeater.vue",
 
       // routes
-      "router/foo.js",
+      "router/foo.ts",
 
-      // error
-      "error/SubmissionError.js",
+      // stores
+      "stores/foo/create.ts",
+      "stores/foo/delete.ts",
+      "stores/foo/list.ts",
+      "stores/foo/show.ts",
+      "stores/foo/update.ts",
 
-      // utils
-      "utils/fetch.js",
-      "utils/hydra.js",
+      // types
+      "types/stores.ts",
+
+      // views
+      "views/foo/ViewCreate.vue",
+      "views/foo/ViewList.vue",
+      "views/foo/ViewUpdate.vue",
+      "views/foo/ViewShow.vue",
     ]);
+
+    handlebars.registerHelper("compare", hbhComparison.compare);
+    handlebars.registerHelper("lowercase", hbhString.lowercase);
   }
 
   help(resource) {
@@ -69,25 +77,15 @@ export default class extends BaseGenerator {
     );
     console.log(
       chalk.green(`
-//import routes
-import ${titleLc}Routes from './router/${titleLc}';
+// Import routes
+import ${titleLc}Routes from '@/router/${titleLc}';
 
 // Add routes to VueRouter
-const router = new VueRouter({
+const router = createRouter({
   // ...
   routes: [
       ...${titleLc}Routes,
   ]
-});
-
-// Add the modules in the store
-import ${titleLc} from './store/modules/${titleLc}/';
-
-export const store = new Vuex.Store({
-  // ...
-  modules: {
-    ${titleLc}
-  }
 });
 `)
     );
@@ -97,100 +95,128 @@ export const store = new Vuex.Store({
     const lc = resource.title.toLowerCase();
     const titleUcFirst =
       resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
+    const fields = this.parseFields(resource);
+    const hasIsRelation = fields.some((field) => field.isRelation);
+    const hasIsRelations = fields.some((field) => field.isRelations);
+    const hasDateField = fields.some((field) => field.type === "dateTime");
 
     const context = {
       title: resource.title,
       name: resource.name,
       lc,
       uc: resource.title.toUpperCase(),
-      fields: resource.readableFields,
-      formFields: this.buildFields(resource.writableFields),
+      fields,
+      formFields: this.buildFields(fields),
       hydraPrefix: this.hydraPrefix,
       titleUcFirst,
+      hasIsRelation,
+      hasIsRelations,
+      hasRelations: hasIsRelation || hasIsRelations,
+      hasDateField,
     };
 
     // Create directories
     // These directories may already exist
     [
-      `${dir}/config`,
-      `${dir}/error`,
-      `${dir}/mixins`,
+      `${dir}/composables`,
       `${dir}/router`,
+      `${dir}/types`,
       `${dir}/utils`,
     ].forEach((dir) => this.createDir(dir, false));
 
     [
-      `${dir}/store/modules/${lc}`,
-      `${dir}/store/modules/${lc}/create`,
-      `${dir}/store/modules/${lc}/delete`,
-      `${dir}/store/modules/${lc}/list`,
-      `${dir}/store/modules/${lc}/show`,
-      `${dir}/store/modules/${lc}/update`,
       `${dir}/components/${lc}`,
+      `${dir}/components/common`,
+      `${dir}/stores/${lc}`,
+      `${dir}/views/${lc}`,
     ].forEach((dir) => this.createDir(dir));
 
     [
-      // modules
-      "store/modules/%s/index.js",
-      "store/modules/%s/create/actions.js",
-      "store/modules/%s/create/index.js",
-      "store/modules/%s/create/mutation_types.js",
-      "store/modules/%s/create/mutations.js",
-      "store/modules/%s/delete/actions.js",
-      "store/modules/%s/delete/index.js",
-      "store/modules/%s/delete/mutation_types.js",
-      "store/modules/%s/delete/mutations.js",
-      "store/modules/%s/list/actions.js",
-      "store/modules/%s/list/index.js",
-      "store/modules/%s/list/mutation_types.js",
-      "store/modules/%s/list/mutations.js",
-      "store/modules/%s/show/actions.js",
-      "store/modules/%s/show/index.js",
-      "store/modules/%s/show/mutation_types.js",
-      "store/modules/%s/show/mutations.js",
-      "store/modules/%s/update/actions.js",
-      "store/modules/%s/update/index.js",
-      "store/modules/%s/update/mutation_types.js",
-      "store/modules/%s/update/mutations.js",
-
       // components
-      "components/%s/Create.vue",
-      "components/%s/Form.vue",
-      "components/%s/List.vue",
-      "components/%s/Update.vue",
-      "components/%s/Show.vue",
+      "components/%s/%sCreate.vue",
+      "components/%s/%sForm.vue",
+      "components/%s/%sList.vue",
+      "components/%s/%sShow.vue",
+      "components/%s/%sUpdate.vue",
 
-      // routes
-      "router/%s.js",
+      // router
+      "router/%s.ts",
+
+      // stores
+      "stores/%s/create.ts",
+      "stores/%s/delete.ts",
+      "stores/%s/list.ts",
+      "stores/%s/show.ts",
+      "stores/%s/update.ts",
+
+      // types
+      "types/%s.ts",
+
+      // views
+      "views/%s/ViewCreate.vue",
+      "views/%s/ViewList.vue",
+      "views/%s/ViewShow.vue",
+      "views/%s/ViewUpdate.vue",
     ].forEach((pattern) =>
-      this.createFileFromPattern(pattern, dir, [lc], context)
+      this.createFileFromPattern(pattern, dir, [lc, titleUcFirst], context)
     );
 
-    for (const file of ["mixins/ItemWatcher.js", "mixins/ListWatcher.js"]) {
-      this.createFile(file, `${dir}/${file}`);
-    }
+    [
+      // components
+      "components/common/FormRepeater.vue",
 
-    // error
-    this.createFile(
-      "error/SubmissionError.js",
-      `${dir}/error/SubmissionError.js`,
-      context,
-      false
+      // composables
+      "composables/mercureItem.ts",
+      "composables/mercureList.ts",
+
+      // types
+      "types/collection.ts",
+      "types/error.ts",
+      "types/item.ts",
+      "types/stores.ts",
+      "types/view.ts",
+
+      // utils
+      "utils/api.ts",
+      "utils/date.ts",
+      "utils/error.ts",
+      "utils/mercure.ts",
+    ].forEach((path) =>
+      this.createFile(path, `${dir}/${path}`, context, false)
     );
 
-    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
-    this.createFile(
-      "utils/fetch.js",
-      `${dir}/utils/fetch.js`,
-      { hydraPrefix: this.hydraPrefix },
-      false
-    );
-    this.createFile(
-      "utils/hydra.js",
-      `${dir}/utils/hydra.js`,
-      { hydraPrefix: this.hydraPrefix },
-      false
-    );
-    this.createFile("utils/mercure.js", `${dir}/utils/mercure.js`);
+    // config
+    this.createConfigFile(`${dir}/utils/config.ts`, {
+      entrypoint: api.entrypoint,
+    });
+  }
+
+  parseFields(resource) {
+    const fields = [
+      ...resource.writableFields,
+      ...resource.readableFields,
+    ].reduce((list, field) => {
+      if (list[field.name]) {
+        return list;
+      }
+
+      const isReferences = Boolean(
+        field.reference && field.maxCardinality !== 1
+      );
+      const isEmbeddeds = Boolean(field.embedded && field.maxCardinality !== 1);
+
+      return {
+        ...list,
+        [field.name]: {
+          ...field,
+          isReferences,
+          isEmbeddeds,
+          isRelation: field.reference || field.embedded,
+          isRelations: isEmbeddeds || isReferences,
+        },
+      };
+    }, {});
+
+    return Object.values(fields);
   }
 }
