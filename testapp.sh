@@ -34,22 +34,26 @@ if [ "$1" = "react" ]; then
 fi
 
 if [ "$1" = "nuxt" ]; then
-  # mkdir -p ./tmp/app/nuxt
-  cd ./tmp/app
-  npx nuxi init nuxt
+  npx nuxi init ./tmp/app/nuxt
 
-  cd nuxt
-  rm ./app.vue
-  rm ./nuxt.config.ts
+  rm ./tmp/app/nuxt/app.vue
+  rm ./tmp/app/nuxt/nuxt.config.ts
 
-  cp ../../../templates/nuxt/nuxt.config.ts .
+  cp ./templates/nuxt/nuxt.config.ts ./tmp/app/nuxt
 
-  yarn add dayjs @pinia/nuxt
+  yarn --cwd ./tmp/app/nuxt add dayjs @pinia/nuxt
 
-  cp -R ../../../tmp/nuxt/* .
-  yarn generate
+  cp -R ./tmp/nuxt/* ./tmp/app/nuxt
 
-  start-server-and-test 'yarn preview' http://127.0.0.1:3000/books/ 'yarn playwright test'
+  # Tailwind
+  yarn --cwd ./tmp/app/nuxt add tailwindcss postcss autoprefixer
+  yarn --cwd ./tmp/app/nuxt tailwindcss init -p
+  cp ./templates/common/tailwind.config.js ./tmp/app/nuxt
+  cp ./templates/common/style.css ./tmp/app/nuxt/assets/css
+
+  yarn --cwd ./tmp/app/nuxt generate
+
+  start-server-and-test 'yarn --cwd ./tmp/app/nuxt preview' http://127.0.0.1:3000/books/ 'yarn playwright test'
 fi
 
 if [ "$1" = "vue" ]; then
