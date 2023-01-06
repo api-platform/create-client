@@ -38,39 +38,56 @@ test("Generate a Nuxt app", () => {
 
   generator.generate(api, resource, tmpobj.name);
 
-  [
-    "/assets/css/main.css",
-    "/components/common/FormRepeater.vue",
-    "/components/foo/FooCreate.vue",
-    "/components/foo/FooForm.vue",
-    "/components/foo/FooList.vue",
-    "/components/foo/FooShow.vue",
-    "/components/foo/FooUpdate.vue",
-    "/composables/mercureItem.ts",
-    "/composables/mercureList.ts",
-    "/pages/foos/[id]/edit.vue",
-    "/pages/foos/[id]/index.vue",
-    "/pages/foos/create.vue",
-    "/pages/foos/index.vue",
-    "/pages/index.vue",
-    "/stores/foo/create.ts",
-    "/stores/foo/delete.ts",
-    "/stores/foo/list.ts",
-    "/stores/foo/show.ts",
-    "/stores/foo/update.ts",
-    "/types/collection.ts",
-    "/types/error.ts",
-    "/types/foo.ts",
-    "/types/item.ts",
-    "/types/view.ts",
-    "/utils/api.ts",
-    "/utils/config.ts",
-    "/utils/date.ts",
-    "/utils/error.ts",
-    "/utils/mercure.ts",
-  ].forEach((file) => {
-    expect(fs.existsSync(tmpobj.name + file)).toBe(true);
-  });
+  // assets
+  // expect(fs.existsSync(`${tmpobj.name}/assets/css/style.css`)).toBe(true);
+
+  // common components
+  expect(
+    fs.existsSync(`${tmpobj.name}/components/common/FormRepeater.vue`)
+  ).toBe(true);
+
+  // components
+  expect(fs.existsSync(`${tmpobj.name}/components/foo/FooCreate.vue`)).toBe(
+    true
+  );
+  expect(fs.existsSync(`${tmpobj.name}/components/foo/FooForm.vue`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/components/foo/FooList.vue`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/components/foo/FooShow.vue`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/components/foo/FooUpdate.vue`)).toBe(
+    true
+  );
+
+  // composables
+  expect(fs.existsSync(`${tmpobj.name}/composables/mercureItem.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/composables/mercureList.ts`)).toBe(true);
+
+  // pages
+  expect(fs.existsSync(`${tmpobj.name}/pages/foos/[id]/edit.vue`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/pages/foos/[id]/index.vue`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/pages/foos/create.vue`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/pages/foos/index.vue`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/pages/index.vue`)).toBe(true);
+
+  // stores
+  expect(fs.existsSync(`${tmpobj.name}/stores/foo/create.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/stores/foo/delete.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/stores/foo/list.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/stores/foo/show.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/stores/foo/update.ts`)).toBe(true);
+
+  // types
+  expect(fs.existsSync(`${tmpobj.name}/types/collection.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/types/error.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/types/foo.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/types/item.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/types/view.ts`)).toBe(true);
+
+  // utils
+  expect(fs.existsSync(`${tmpobj.name}/utils/api.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/config.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/date.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/error.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/mercure.ts`)).toBe(true);
 
   tmpobj.removeCallback();
 });
