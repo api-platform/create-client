@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="{ name: '{{name}}' }" class="text-blue-600 hover:text-blue-800">
+  <nuxt-link :to="{ name: '{{lc}}s' }" class="text-blue-600 hover:text-blue-800">
     &lt; Back to list
   </nuxt-link>
 
@@ -41,7 +41,7 @@ async function create(item: {{titleUcFirst}}) {
   }
 
   navigateTo({
-    name: "{{name}}-id-edit",
+    name: "{{lc}}s-id-edit",
     params: { id: created?.value?.["@id"] },
   });
 }

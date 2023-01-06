@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-between">
     <nuxt-link
-      :to="{ name: '{{name}}' }"
+      :to="{ name: '{{lc}}s' }"
       class="text-blue-600 hover:text-blue-800"
     >
       &lt; Back to list
@@ -10,7 +10,7 @@
     <div>
       <nuxt-link
         v-if="item"
-        :to="{ name: '{{name}}-id-edit', params: { id: item['@id'] } }"
+        :to="{ name: '{{lc}}s-id-edit', params: { id: item['@id'] } }"
         class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
       >
         Edit
@@ -69,7 +69,7 @@
               <nuxt-link
                 v-for="{{lowercase reference.title}} in item.{{reference.name}}"
                 :key="{{lowercase reference.title}}"
-                :to="{ name: '{{reference.name}}-id', params: { id: {{lowercase reference.title}} } }"
+                :to="{ name: '{{lowercase reference.title}}s-id', params: { id: {{lowercase reference.title}} } }"
                 class="text-blue-600 hover:text-blue-800"
               >
                 \{{ {{lowercase reference.title}} }}
@@ -89,7 +89,7 @@
           {{else if reference}}
             <nuxt-link
               v-if="router.hasRoute('{{reference.name}}-id')"
-              :to="{ name: '{{reference.name}}-id', params: { id: item.{{lowercase reference.title}} } }"
+              :to="{ name: '{{lowercase reference.title}}s-id', params: { id: item.{{lowercase reference.title}} } }"
               class="text-blue-600 hover:text-blue-800"
             >
               \{{ item.{{lowercase reference.title}} }}
@@ -103,7 +103,7 @@
               <nuxt-link
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
                 :key="{{lowercase embedded.title}}['@id']"
-                :to="{ name: '{{embedded.name}}-id', params: { id: {{lowercase embedded.title}}['@id'] } }"
+                :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: {{lowercase embedded.title}}['@id'] } }"
                 class="text-blue-600 hover:text-blue-800"
               >
                 \{{ {{lowercase embedded.title}}["@id"] }}
@@ -123,7 +123,7 @@
           {{else if embedded}}
             <nuxt-link
               v-if="router.hasRoute('{{embedded.name}}-id')"
-              :to="{ name: '{{embedded.name}}-id', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
+              :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
               class="text-blue-600 hover:text-blue-800"
             >
               \{{ item.{{lowercase embedded.title}}["@id"] }}
@@ -163,7 +163,7 @@ const { retrieved: item, isLoading, error } = storeToRefs({{lc}}ShowStore);
 useMercureItem({
   store: {{lc}}ShowStore,
   deleteStore: {{lc}}DeleteStore,
-  redirectRouteName: "{{name}}",
+  redirectRouteName: "{{lc}}s",
 });
 
 await {{lc}}ShowStore.retrieve(decodeURIComponent(route.params.id as string));
@@ -178,7 +178,7 @@ async function deleteItem() {
     await {{lc}}DeleteStore.deleteItem(item.value);
 
     if (deleted) {
-      router.push({ name: "{{name}}" });
+      router.push({ name: "{{lc}}s" });
     }
   }
 }

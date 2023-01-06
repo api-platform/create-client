@@ -3,7 +3,7 @@
     <h1 class="text-3xl my-4">{{titleUcFirst}} List</h1>
 
     <nuxt-link
-      :to="{ name: '{{name}}-create' }"
+      :to="{ name: '{{lc}}s-create' }"
       class="px-6 py-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
     >
       Create
@@ -66,7 +66,7 @@
         <tr v-for="item in items" :key="item['@id']" class="border-b">
           <td class="px-6 py-4 text-sm">
             <nuxt-link
-              :to="{ name: '{{name}}-id', params: { id: item['@id'] } }"
+              :to="{ name: '{{lc}}s-id', params: { id: item['@id'] } }"
               class="text-blue-600 hover:text-blue-800"
             >
               \{{ item["@id"] }}
@@ -79,7 +79,7 @@
               <nuxt-link
                 v-for="{{lowercase reference.title}} in item.{{reference.name}}"
                 :key="{{lowercase reference.title}}"
-                :to="{ name: '{{reference.name}}-id', params: { id: {{lowercase reference.title}} } }"
+                :to="{ name: '{{lowercase reference.title}}s-id', params: { id: {{lowercase reference.title}} } }"
                 class="text-blue-600 hover:text-blue-800"
               >
                 \{{ {{lowercase reference.title}} }}
@@ -99,7 +99,7 @@
           {{else if reference}}
             <nuxt-link
               v-if="router.hasRoute('{{reference.name}}-id')"
-              :to="{ name: '{{reference.name}}-id', params: { id: item.{{lowercase reference.title}} } }"
+              :to="{ name: '{{lowercase reference.title}}s-id', params: { id: item.{{lowercase reference.title}} } }"
               class="text-blue-600 hover:text-blue-800"
             >
               \{{ item.{{lowercase reference.title}} }}
@@ -113,7 +113,7 @@
               <nuxt-link
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
                 :key="{{lowercase embedded.title}}['@id']"
-                :to="{ name: '{{embedded.name}}-id', params: { id: {{lowercase embedded.title}}['@id'] } }"
+                :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: {{lowercase embedded.title}}['@id'] } }"
                 class="text-blue-600 hover:text-blue-800"
               >
                 \{{ {{lowercase embedded.title}}["@id"] }}
@@ -133,7 +133,7 @@
           {{else if embedded}}
             <nuxt-link
               v-if="router.hasRoute('{{embedded.name}}-id')"
-              :to="{ name: '{{embedded.name}}-id', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
+              :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
               class="text-blue-600 hover:text-blue-800"
             >
               \{{ item.{{lowercase embedded.title}}["@id"] }}
@@ -151,7 +151,7 @@
           {{/each}}
           <td class="px-6 py-4 text-sm">
             <nuxt-link
-              :to="{ name: '{{name}}-id', params: { id: item['@id'] } }"
+              :to="{ name: '{{lc}}s-id', params: { id: item['@id'] } }"
               class="px-6 py-2 bg-blue-600 text-white text-xs rounded shadow-md hover:bg-blue-700"
             >
               Show
@@ -159,7 +159,7 @@
           </td>
           <td class="px-6 py-4 text-sm">
             <nuxt-link
-              :to="{ name: '{{name}}-id-edit', params: { id: item['@id'] } }"
+              :to="{ name: '{{lc}}s-id-edit', params: { id: item['@id'] } }"
               class="px-6 py-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
             >
               Edit
@@ -175,7 +175,7 @@
       <ul class="flex list-style-none">
         <li :class="{ disabled: !view['{{hydraPrefix}}previous'] }">
           <nuxt-link
-            :to="view['{{hydraPrefix}}first'] ? view['{{hydraPrefix}}first'] : { name: '{{name}}' }"
+            :to="view['{{hydraPrefix}}first'] ? view['{{hydraPrefix}}first'] : { name: '{{lc}}s' }"
             aria-label="First page"
             :class="
               !view['{{hydraPrefix}}previous']
@@ -193,7 +193,7 @@
             :to="
               !view['{{hydraPrefix}}previous'] ||
               view['{{hydraPrefix}}previous'] === view['{{hydraPrefix}}first']
-                ? { name: '{{name}}' }
+                ? { name: '{{lc}}s' }
                 : view['{{hydraPrefix}}previous']
             "
             :class="

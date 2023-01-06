@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-between">
     <nuxt-link
-      :to="{ name: '{{name}}' }"
+      :to="{ name: '{{lc}}s' }"
       class="text-blue-600 hover:text-blue-800"
     >
       &lt; Back to list
@@ -76,7 +76,7 @@ const {
 useMercureItem({
   store: {{lc}}UpdateStore,
   deleteStore: {{lc}}DeleteStore,
-  redirectRouteName: "{{name}}",
+  redirectRouteName: "{{lc}}s",
 });
 
 await {{lc}}UpdateStore.retrieve(decodeURIComponent(route.params.id as string));
@@ -95,7 +95,7 @@ async function deleteItem() {
     await {{lc}}DeleteStore.deleteItem(item.value);
 
     if ({{lc}}DeleteStore.deleted) {
-      router.push({ name: "{{name}}" });
+      router.push({ name: "{{lc}}s" });
     }
   }
 }
