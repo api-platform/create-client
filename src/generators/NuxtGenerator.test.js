@@ -38,9 +38,6 @@ test("Generate a Nuxt app", () => {
 
   generator.generate(api, resource, tmpobj.name);
 
-  // assets
-  // expect(fs.existsSync(`${tmpobj.name}/assets/css/style.css`)).toBe(true);
-
   // common components
   expect(
     fs.existsSync(`${tmpobj.name}/components/common/FormRepeater.vue`)

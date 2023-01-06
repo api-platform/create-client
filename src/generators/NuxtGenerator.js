@@ -23,10 +23,6 @@ export default class NuxtGenerator extends BaseGenerator {
       "utils/date.ts",
       "utils/error.ts",
       "utils/mercure.ts",
-
-      // tailwind
-      "style.css",
-      "tailwind.config.js",
     ]);
 
     this.registerTemplates("vue-common/", [
@@ -171,9 +167,6 @@ export default class NuxtGenerator extends BaseGenerator {
     ].forEach((path) =>
       this.createFile(path, `${dir}/${path}`, context, false)
     );
-
-    // style
-    this.createFile("style.css", `${dir}/assets/css/style.css`);
 
     // config
     this.createConfigFile(`${dir}/utils/config.ts`, {
