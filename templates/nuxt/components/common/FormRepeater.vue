@@ -10,7 +10,7 @@
   <div v-for="(field, index) in fields" :key="index" class="flex gap-2 mb-3">
     <input
       v-model="fields[index]"
-      placeholder="A string"
+      placeholder="Relation IRI"
       class="grow px-3 py-1.5 border rounded"
       @input="updateField(index, ($event?.target as HTMLInputElement)?.value)"
     />

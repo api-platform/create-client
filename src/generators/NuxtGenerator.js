@@ -147,9 +147,6 @@ export default class NuxtGenerator extends BaseGenerator {
     );
 
     [
-      // assets
-      "assets/css/style.css",
-
       // components
       "components/common/FormRepeater.vue",
 
@@ -174,6 +171,9 @@ export default class NuxtGenerator extends BaseGenerator {
     ].forEach((path) =>
       this.createFile(path, `${dir}/${path}`, context, false)
     );
+
+    // style
+    this.createFile("style.css", `${dir}/assets/css/style.css`);
 
     // config
     this.createConfigFile(`${dir}/utils/config.ts`, {

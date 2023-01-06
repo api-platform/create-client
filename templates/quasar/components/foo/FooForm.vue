@@ -7,7 +7,7 @@
         :values="item.{{name}}"
         :label="$t('{{../lc}}.{{name}}')"
         class="col-12 col-md-8"
-        @update="(values: any) => (item.{{name}} = values)"
+        @update="(values: any[]) => (item.{{name}} = values)"
       />
     {{else}}
       <q-input
