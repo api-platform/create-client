@@ -41,7 +41,7 @@ if [ "$1" = "nuxt" ]; then
 
   cp ./templates/nuxt/nuxt.config.ts ./tmp/app/nuxt
 
-  yarn --cwd ./tmp/app/nuxt add dayjs @pinia/nuxt
+  yarn --cwd ./tmp/app/nuxt add dayjs @pinia/nuxt qs @types/qs
 
   cp -R ./tmp/nuxt/* ./tmp/app/nuxt
 
