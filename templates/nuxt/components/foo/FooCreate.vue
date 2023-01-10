@@ -25,10 +25,10 @@
 </template>
 
 <script lang="ts" setup>
-import Form from "~~/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { storeToRefs } from "pinia";
+import Form from "~~/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { use{{titleUcFirst}}CreateStore } from "~~/stores/{{lc}}/create";
-import { {{titleUcFirst}} } from "~~/types/{{lc}}";
+import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 
 const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
 const { created, isLoading, violations, error } = storeToRefs({{lc}}CreateStore);

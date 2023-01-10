@@ -55,10 +55,10 @@
 </template>
 
 <script lang="ts" setup>
+import { Ref } from "vue";
 {{#if hasIsRelations}}
 import FormRepeater from "~~/components/common/FormRepeater.vue";
 {{/if}}
-import { Ref } from "vue";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 import type { SubmissionErrors } from "~~/types/error";
 

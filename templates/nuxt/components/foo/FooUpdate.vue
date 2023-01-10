@@ -46,13 +46,13 @@
 </template>
 
 <script lang="ts" setup>
-import Form from "~~/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { storeToRefs } from "pinia";
-import { {{titleUcFirst}} } from "~~/types/{{lc}}";
+import Form from "~~/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { use{{titleUcFirst}}UpdateStore } from "~~/stores/{{lc}}/update";
 import { use{{titleUcFirst}}CreateStore } from "~~/stores/{{lc}}/create";
 import { use{{titleUcFirst}}DeleteStore } from "~~/stores/{{lc}}/delete";
 import { useMercureItem } from "~~/composables/mercureItem";
+import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 
 const route = useRoute();
 const router = useRouter();

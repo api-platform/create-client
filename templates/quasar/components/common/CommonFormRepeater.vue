@@ -66,7 +66,7 @@ function removeField(index: number) {
 function emitUpdate() {
   emit(
     'update',
-    fields.value.filter((review) => review.length)
+    fields.value.filter((field) => field.length)
   );
 }
 </script>
