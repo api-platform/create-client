@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
-import api from "~~/utils/api";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 import type { SubmissionErrors } from "~~/types/error";
-import { SubmissionError } from "~~/utils/error";
+import { FetchItemData, UpdateItemData } from "~~/types/api";
+import { FetchError } from "ofetch";
 
 interface State {
   updated?: {{titleUcFirst}};
@@ -24,85 +24,52 @@ export const use{{titleUcFirst}}UpdateStore = defineStore("{{lc}}Update", {
   }),
 
   actions: {
-    async retrieve(id: string) {
-      this.setError("");
-      this.toggleLoading();
+    setData({ retrieved, isLoading, error, hubUrl }: FetchItemData<{{titleUcFirst}}>) {
+      this.setRetrieved(retrieved.value);
+      this.setLoading(isLoading.value);
+      this.setHubUrl(hubUrl.value);
 
-      try {
-        const response = await api(id);
-        const data: {{titleUcFirst}} = await response.json();
-        const hubUrl = extractHubURL(response);
-
-        this.toggleLoading();
-        this.setRetrieved(data);
-
-        if (hubUrl) {
-          this.setHubUrl(hubUrl);
-        }
-      } catch (error) {
-        this.toggleLoading();
-
-        if (error instanceof Error) {
-          this.setError(error.message);
-        }
+      if (error.value instanceof FetchError) {
+        this.setError(error.value?.message);
       }
     },
 
-    async update(payload: {{titleUcFirst}}) {
-      this.setError("");
-      this.toggleLoading();
+    setUpdateData({
+      updated,
+      isLoading,
+      error,
+      violations,
+    }: UpdateItemData<{{titleUcFirst}}>) {
+      this.setUpdated(updated.value);
+      this.setLoading(isLoading.value);
+      this.setViolations(violations.value);
 
-      if (!this.retrieved?.["@id"]) {
-        this.setError("No {{lc}} found. Please reload");
-        return;
-      }
-
-      try {
-        const response = await api(this.retrieved["@id"], {
-          method: "PUT",
-          headers: new Headers({ "Content-Type": "application/ld+json" }),
-          body: JSON.stringify(payload),
-        });
-        const data: {{titleUcFirst}} = await response.json();
-
-        this.toggleLoading();
-        this.setUpdated(data);
-      } catch (error) {
-        this.toggleLoading();
-
-        if (error instanceof SubmissionError) {
-          this.setViolations(error.errors);
-          this.setError(error.errors._error);
-          return;
-        }
-
-        if (error instanceof Error) {
-          this.setError(error.message);
-        }
+      if (error.value instanceof FetchError) {
+        this.setError(error.value?.message);
       }
     },
 
-    setRetrieved(retrieved: {{titleUcFirst}}) {
+    setRetrieved(retrieved?: {{titleUcFirst}}) {
       this.retrieved = retrieved;
     },
 
-    setUpdated(updated: {{titleUcFirst}}) {
+    setUpdated(updated?: {{titleUcFirst}}) {
       this.updated = updated;
     },
 
-    setHubUrl(hubUrl: URL) {
+    setHubUrl(hubUrl?: URL) {
       this.hubUrl = hubUrl;
     },
 
-    toggleLoading() {
-      this.isLoading = !this.isLoading;
+    setLoading(isLoading: boolean) {
+      this.isLoading = isLoading;
     },
 
-    setError(error: string) {
+    setError(error?: string) {
       this.error = error;
     },
 
-    setViolations(violations: SubmissionErrors) {
+    setViolations(violations?: SubmissionErrors) {
       this.violations = violations;
     },
   },

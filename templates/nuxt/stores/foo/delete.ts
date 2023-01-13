@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import api from "~~/utils/api";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 
 interface State {
@@ -18,32 +17,8 @@ export const use{{titleUcFirst}}DeleteStore = defineStore("{{lc}}Delete", {
   }),
 
   actions: {
-    async deleteItem(item: {{titleUcFirst}}) {
-      this.setError("");
-      this.toggleLoading();
-
-      if (!item?.["@id"]) {
-        this.setError("No {{lc}} found. Please reload");
-        return;
-      }
-
-      try {
-        await api(item["@id"], { method: "DELETE" });
-
-        this.toggleLoading();
-        this.setDeleted(item);
-        this.setMercureDeleted(undefined);
-      } catch (error) {
-        this.toggleLoading();
-
-        if (error instanceof Error) {
-          this.setError(error.message);
-        }
-      }
-    },
-
-    toggleLoading() {
-      this.isLoading = !this.isLoading;
+    setLoading(isLoading: boolean) {
+      this.isLoading = isLoading;
     },
 
     setDeleted(deleted: {{titleUcFirst}}) {

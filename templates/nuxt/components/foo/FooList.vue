@@ -41,15 +41,11 @@
     <table class="min-w-full">
       <thead class="border-b">
         <tr>
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-          >
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             id
           </th>
           {{#each fields}}
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-          >
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             {{name}}
           </th>
           {{/each }}
@@ -247,8 +243,9 @@ import { storeToRefs } from "pinia";
 import { useMercureList } from "~~/composables/mercureList";
 import { use{{titleUcFirst}}DeleteStore } from "~~/stores/{{lc}}/delete";
 import { use{{titleUcFirst}}ListStore } from "~~/stores/{{lc}}/list";
+import { useFetchAll } from "~~/composables/api";
+import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 
-const route = useRoute();
 {{#if hasRelations}}
 const router = useRouter();
 {{/if}}
@@ -260,14 +257,8 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
 const {{lc}}ListStore = use{{titleUcFirst}}ListStore();
 const { items, view, error, isLoading } = storeToRefs({{lc}}ListStore);
 
-useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
+const data = await useFetchAll<{{titleUcFirst}}>("{{name}}");
+{{lc}}ListStore.setData(data);
 
-watch(
-  () => route.query.page,
-  (newPage) => {
-    const page = newPage as string;
-    {{lc}}ListStore.getItems(page);
-  },
-  { immediate: true }
-);
+useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
 </script>

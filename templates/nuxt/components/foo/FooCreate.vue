@@ -29,12 +29,14 @@ import { storeToRefs } from "pinia";
 import Form from "~~/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { use{{titleUcFirst}}CreateStore } from "~~/stores/{{lc}}/create";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
+import { useCreateItem } from "~~/composables/api";
 
 const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
 const { created, isLoading, violations, error } = storeToRefs({{lc}}CreateStore);
 
 async function create(item: {{titleUcFirst}}) {
-  await {{lc}}CreateStore.create(item);
+  const data = await useCreateItem<{{titleUcFirst}}>("{{name}}", item);
+  {{lc}}CreateStore.setData(data);
 
   if (!created?.value) {
     return;

@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import { {{titleUcFirst}} } from "~~/types/{{lc}}";
 import type { SubmissionErrors } from "~~/types/error";
-import { SubmissionError } from "~~/utils/error";
-import api from "~~/utils/api";
+import { CreateItemData } from "~~/types/api";
+import { FetchError } from "ofetch";
 
 interface State {
   created?: {{titleUcFirst}};
@@ -20,41 +20,22 @@ export const use{{titleUcFirst}}CreateStore = defineStore("{{lc}}Create", {
   }),
 
   actions: {
-    async create(payload: {{titleUcFirst}}) {
-      this.setError(undefined);
-      this.setViolations(undefined);
-      this.toggleLoading();
+    setData({ created, isLoading, error, violations }: CreateItemData<{{titleUcFirst}}>) {
+      this.setCreated(created.value);
+      this.setLoading(isLoading.value);
+      this.setViolations(violations.value);
 
-      try {
-        const response = await api("{{name}}", {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
-        const data: {{titleUcFirst}} = await response.json();
-
-        this.toggleLoading();
-        this.setCreated(data);
-      } catch (error) {
-        this.toggleLoading();
-
-        if (error instanceof SubmissionError) {
-          this.setViolations(error.errors);
-          this.setError(error.errors._error);
-          return;
-        }
-
-        if (error instanceof Error) {
-          this.setError(error.message);
-        }
+      if (error.value instanceof FetchError) {
+        this.setError(error.value?.message);
       }
     },
 
-    setCreated(created: {{titleUcFirst}}) {
+    setCreated(created?: {{titleUcFirst}}) {
       this.created = created;
     },
 
-    toggleLoading() {
-      this.isLoading = !this.isLoading;
+    setLoading(isLoading: boolean) {
+      this.isLoading = isLoading;
     },
 
     setError(error: string | undefined) {

@@ -150,6 +150,8 @@ import { storeToRefs } from "pinia";
 import { use{{titleUcFirst}}ShowStore } from "~~/stores/{{lc}}/show";
 import { use{{titleUcFirst}}DeleteStore } from "~~/stores/{{lc}}/delete";
 import { useMercureItem } from "~~/composables/mercureItem";
+import { useFetchItem } from "~~/composables/api";
+import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 
 const route = useRoute();
 const router = useRouter();
@@ -166,16 +168,26 @@ useMercureItem({
   redirectRouteName: "{{lc}}s",
 });
 
-await {{lc}}ShowStore.retrieve(decodeURIComponent(route.params.id as string));
+const id = decodeURIComponent(route.params.id as string);
+const data = await useFetchItem<{{titleUcFirst}}>(id);
+{{lc}}ShowStore.setData(data);
 
 async function deleteItem() {
   if (!item?.value) {
-    {{lc}}DeleteStore.setError("This item does not exist anymore");
+    {{lc}}DeleteStore.setError("No item found. Please reload");
     return;
   }
 
   if (window.confirm("Are you sure you want to delete this {{lc}}?")) {
-    await {{lc}}DeleteStore.deleteItem(item.value);
+    const { error } = await useDeleteItem(item.value);
+
+    if (error.value) {
+      {{lc}}DeleteStore.setError(error.value);
+      return;
+    }
+
+    {{lc}}DeleteStore.setDeleted(item.value);
+    {{lc}}DeleteStore.setMercureDeleted(undefined);
 
     if (deleted) {
       router.push({ name: "{{lc}}s" });

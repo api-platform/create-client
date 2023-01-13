@@ -38,8 +38,8 @@
     class="bg-green-100 rounded py-4 px-4 my-2 text-green-700 text-sm"
     role="status"
   >
-    <template v-if="created">\{{ created["@id"] }} created. </template>
-    <template v-else-if="updated">\{{ updated["@id"] }} updated. </template>
+    <template v-if="updated">\{{ updated["@id"] }} updated.</template>
+    <template v-else-if="created">\{{ created["@id"] }} created.</template>
   </div>
 
   <Form :values="item" :errors="violations" @submit="update" />
@@ -53,6 +53,7 @@ import { use{{titleUcFirst}}CreateStore } from "~~/stores/{{lc}}/create";
 import { use{{titleUcFirst}}DeleteStore } from "~~/stores/{{lc}}/delete";
 import { useMercureItem } from "~~/composables/mercureItem";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
+import { useFetchItem, useUpdateItem } from "~~/composables/api";
 
 const route = useRoute();
 const router = useRouter();
@@ -61,7 +62,7 @@ const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
 const { created } = storeToRefs({{lc}}CreateStore);
 
 const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
-const { error: deleteError, isLoading: deleteLoading } =
+const { error: deleteError, deleted, isLoading: deleteLoading } =
   storeToRefs({{lc}}DeleteStore);
 
 const {{lc}}UpdateStore = use{{titleUcFirst}}UpdateStore();
@@ -79,22 +80,39 @@ useMercureItem({
   redirectRouteName: "{{lc}}s",
 });
 
-await {{lc}}UpdateStore.retrieve(decodeURIComponent(route.params.id as string));
+const id = decodeURIComponent(route.params.id as string);
+const data = await useFetchItem<{{titleUcFirst}}>(id);
+{{lc}}UpdateStore.setData(data);
 
-async function update(item: {{titleUcFirst}}) {
-  await {{lc}}UpdateStore.update(item);
+async function update(payload: {{titleUcFirst}}) {
+  if (!item?.value) {
+    {{lc}}UpdateStore.setError("No item found. Please reload");
+    return;
+  }
+
+  const data = await useUpdateItem<{{titleUcFirst}}>(item.value, payload);
+  {{lc}}UpdateStore.setUpdateData(data);
 }
 
 async function deleteItem() {
   if (!item?.value) {
-    {{lc}}UpdateStore.setError("No {{lc}} found. Please reload");
+    {{lc}}DeleteStore.setError("No item found. Please reload");
     return;
   }
 
   if (window.confirm("Are you sure you want to delete this {{lc}}?")) {
-    await {{lc}}DeleteStore.deleteItem(item.value);
+    const { isLoading, error } = await useDeleteItem(item.value);
 
-    if ({{lc}}DeleteStore.deleted) {
+    if (error.value) {
+      {{lc}}DeleteStore.setError(error.value);
+      return;
+    }
+
+    {{lc}}DeleteStore.setLoading(Boolean(isLoading?.value));
+    {{lc}}DeleteStore.setDeleted(item.value);
+    {{lc}}DeleteStore.setMercureDeleted(undefined);
+
+    if (deleted) {
       router.push({ name: "{{lc}}s" });
     }
   }

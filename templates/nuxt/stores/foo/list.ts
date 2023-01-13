@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import { {{titleUcFirst}} } from "~~/types/{{lc}}";
-import { PagedCollection } from "~~/types/collection";
 import { View } from "~~/types/view";
-import api from "~~/utils/api";
+import { FetchError } from "ofetch";
+import { FetchAllData } from "~~/types/api";
 
 interface State {
   items: {{titleUcFirst}}[];
@@ -22,29 +22,14 @@ export const use{{titleUcFirst}}ListStore = defineStore("{{lc}}List", {
   }),
 
   actions: {
-    async getItems(page?: string) {
-      this.setLoading(true);
+    setData({ items, view, isLoading, error, hubUrl }: FetchAllData<{{titleUcFirst}}>) {
+      this.setItems(items.value);
+      this.setLoading(isLoading.value);
+      if (hubUrl) this.setHubUrl(hubUrl.value);
+      if (view) this.setView(view.value);
 
-      try {
-        const path = page ? `{{name}}?page=${page}` : "{{name}}";
-        const response = await api(path);
-        const data: PagedCollection<{{titleUcFirst}}> = await response.json();
-        const hubUrl = extractHubURL(response);
-
-        this.setLoading(false);
-
-        this.setItems(data["hydra:member"]);
-        this.setView(data["hydra:view"]);
-
-        if (hubUrl) {
-          this.setHubUrl(hubUrl);
-        }
-      } catch (error) {
-        this.setLoading(false);
-
-        if (error instanceof Error) {
-          this.setError(error.message);
-        }
+      if (error.value instanceof FetchError) {
+        this.setError(error.value?.message);
       }
     },
 
@@ -56,15 +41,15 @@ export const use{{titleUcFirst}}ListStore = defineStore("{{lc}}List", {
       this.items = items;
     },
 
-    setHubUrl(hubUrl: URL) {
+    setHubUrl(hubUrl?: URL) {
       this.hubUrl = hubUrl;
     },
 
-    setView(view: View) {
+    setView(view?: View) {
       this.view = view;
     },
 
-    setError(error: string) {
+    setError(error?: string) {
       this.error = error;
     },
 

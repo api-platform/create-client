@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
-import api from "~~/utils/api";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
-
+import { FetchError } from "ofetch";
+import { FetchItemData } from "~~/types/api";
 interface State {
   retrieved?: {{titleUcFirst}};
   isLoading: boolean;
@@ -18,43 +18,29 @@ export const use{{titleUcFirst}}ShowStore = defineStore("{{lc}}Show", {
   }),
 
   actions: {
-    async retrieve(id: string) {
-      this.setError("");
-      this.toggleLoading();
+    setData({ retrieved, isLoading, error, hubUrl }: FetchItemData<{{titleUcFirst}}>) {
+      this.setRetrieved(retrieved.value);
+      this.setLoading(isLoading.value);
+      this.setHubUrl(hubUrl.value);
 
-      try {
-        const response = await api(id);
-        const data: {{titleUcFirst}} = await response.json();
-        const hubUrl = extractHubURL(response);
-
-        this.toggleLoading();
-        this.setRetrieved(data);
-
-        if (hubUrl) {
-          this.setHubUrl(hubUrl);
-        }
-      } catch (error) {
-        this.toggleLoading();
-
-        if (error instanceof Error) {
-          this.setError(error.message);
-        }
+      if (error.value instanceof FetchError) {
+        this.setError(error.value?.message);
       }
     },
 
-    toggleLoading() {
-      this.isLoading = !this.isLoading;
+    setLoading(isLoading: boolean) {
+      this.isLoading = isLoading;
     },
 
-    setRetrieved(retrieved: {{titleUcFirst}}) {
+    setRetrieved(retrieved?: {{titleUcFirst}}) {
       this.retrieved = retrieved;
     },
 
-    setHubUrl(hubUrl: URL) {
+    setHubUrl(hubUrl?: URL) {
       this.hubUrl = hubUrl;
     },
 
-    setError(error: string) {
+    setError(error?: string) {
       this.error = error;
     },
   },

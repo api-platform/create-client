@@ -18,7 +18,6 @@ export default class NuxtGenerator extends BaseGenerator {
       "types/view.ts",
 
       // utils
-      "utils/api.ts",
       "utils/config.ts",
       "utils/date.ts",
       "utils/error.ts",
@@ -42,6 +41,9 @@ export default class NuxtGenerator extends BaseGenerator {
       "components/foo/FooShow.vue",
       "components/foo/FooUpdate.vue",
 
+      // composables
+      "composables/api.ts",
+
       // pages
       "pages/index.vue",
       "pages/foos/create.vue",
@@ -55,6 +57,9 @@ export default class NuxtGenerator extends BaseGenerator {
       "stores/foo/list.ts",
       "stores/foo/show.ts",
       "stores/foo/update.ts",
+
+      // types
+      "types/api.ts",
     ]);
 
     handlebars.registerHelper("compare", hbh_comparison.compare);
@@ -147,6 +152,7 @@ export default class NuxtGenerator extends BaseGenerator {
       "components/common/FormRepeater.vue",
 
       // composables
+      "composables/api.ts",
       "composables/mercureItem.ts",
       "composables/mercureList.ts",
 
@@ -154,13 +160,13 @@ export default class NuxtGenerator extends BaseGenerator {
       "pages/index.vue",
 
       // types
+      "types/api.ts",
       "types/collection.ts",
       "types/error.ts",
       "types/item.ts",
       "types/view.ts",
 
       // utils
-      "utils/api.ts",
       "utils/date.ts",
       "utils/error.ts",
       "utils/mercure.ts",

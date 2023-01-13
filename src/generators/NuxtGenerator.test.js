@@ -55,6 +55,7 @@ test("Generate a Nuxt app", () => {
   );
 
   // composables
+  expect(fs.existsSync(`${tmpobj.name}/composables/api.ts`)).toBe(true);
   expect(fs.existsSync(`${tmpobj.name}/composables/mercureItem.ts`)).toBe(true);
   expect(fs.existsSync(`${tmpobj.name}/composables/mercureList.ts`)).toBe(true);
 
@@ -73,6 +74,7 @@ test("Generate a Nuxt app", () => {
   expect(fs.existsSync(`${tmpobj.name}/stores/foo/update.ts`)).toBe(true);
 
   // types
+  expect(fs.existsSync(`${tmpobj.name}/types/api.ts`)).toBe(true);
   expect(fs.existsSync(`${tmpobj.name}/types/collection.ts`)).toBe(true);
   expect(fs.existsSync(`${tmpobj.name}/types/error.ts`)).toBe(true);
   expect(fs.existsSync(`${tmpobj.name}/types/foo.ts`)).toBe(true);
@@ -80,7 +82,6 @@ test("Generate a Nuxt app", () => {
   expect(fs.existsSync(`${tmpobj.name}/types/view.ts`)).toBe(true);
 
   // utils
-  expect(fs.existsSync(`${tmpobj.name}/utils/api.ts`)).toBe(true);
   expect(fs.existsSync(`${tmpobj.name}/utils/config.ts`)).toBe(true);
   expect(fs.existsSync(`${tmpobj.name}/utils/date.ts`)).toBe(true);
   expect(fs.existsSync(`${tmpobj.name}/utils/error.ts`)).toBe(true);
