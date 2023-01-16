@@ -48,7 +48,7 @@ export async function useFetchAll<T>(
     view.value = values?.["hydra:view"];
   }
 
-  const { data, pending, refresh, error } = await useApi<T>(resource, {
+  const { pending, refresh, error } = await useApi<T>(resource, {
     query: { page },
 
     onResponse({ response }) {
@@ -58,14 +58,13 @@ export async function useFetchAll<T>(
     },
   });
 
-  setValues(data.value as PagedCollection<T>);
-
   watch(
     () => route.query.page,
     (newPage) => {
       page.value = newPage as string;
       refresh();
-    }
+    },
+    { immediate: true }
   );
 
   return {
@@ -89,8 +88,6 @@ export async function useFetchItem<T>(id: string): Promise<FetchItemData<T>> {
   });
 
   retrieved.value = data.value as T;
-
-  FetchError;
 
   return {
     retrieved,

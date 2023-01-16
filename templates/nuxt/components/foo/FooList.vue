@@ -37,7 +37,7 @@
     </template>
   </div>
 
-  <div class="overflow-x-auto">
+  <div v-if="!isLoading" class="overflow-x-auto">
     <table class="min-w-full">
       <thead class="border-b">
         <tr>
@@ -255,10 +255,10 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
   storeToRefs({{lc}}DeleteStore);
 
 const {{lc}}ListStore = use{{titleUcFirst}}ListStore();
-const { items, view, error, isLoading } = storeToRefs({{lc}}ListStore);
-
-const data = await useFetchAll<{{titleUcFirst}}>("{{name}}");
-{{lc}}ListStore.setData(data);
+const { items, view, error, isLoading, hubUrl } = await useFetchAll<{{titleUcFirst}}>(
+  "{{name}}"
+);
+{{lc}}ListStore.setData({ items, view, error, isLoading, hubUrl });
 
 useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
 </script>
