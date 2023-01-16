@@ -160,7 +160,6 @@ const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
 const { error: deleteError, deleted } = storeToRefs({{lc}}DeleteStore);
 
 const {{lc}}ShowStore = use{{titleUcFirst}}ShowStore();
-const { retrieved: item, isLoading, error } = storeToRefs({{lc}}ShowStore);
 
 useMercureItem({
   store: {{lc}}ShowStore,
@@ -169,8 +168,13 @@ useMercureItem({
 });
 
 const id = decodeURIComponent(route.params.id as string);
-const data = await useFetchItem<{{titleUcFirst}}>(id);
-{{lc}}ShowStore.setData(data);
+const {
+  retrieved: item,
+  isLoading,
+  error,
+  hubUrl,
+} = await useFetchItem<{{titleUcFirst}}>(id);
+{{lc}}ShowStore.setData({ retrieved: item, isLoading, error, hubUrl });
 
 async function deleteItem() {
   if (!item?.value) {
