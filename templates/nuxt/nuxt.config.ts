@@ -8,4 +8,9 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  nitro: {
+    commands: {
+      preview: 'npx serve ./public'
+    }
+  }
 })

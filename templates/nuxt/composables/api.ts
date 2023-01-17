@@ -44,8 +44,8 @@ export async function useFetchAll<T>(
   const page = ref(route.query.page);
 
   function setValues(values: PagedCollection<T>) {
-    items.value = values?.["hydra:member"];
-    view.value = values?.["hydra:view"];
+    items.value = values["hydra:member"];
+    view.value = values["hydra:view"];
   }
 
   const { data, pending, refresh, error } = await useApi<T>(resource, {
