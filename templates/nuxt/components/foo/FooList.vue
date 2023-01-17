@@ -261,4 +261,9 @@ const { items, view, error, isLoading, hubUrl } = await useFetchAll<{{titleUcFir
 {{lc}}ListStore.setData({ items, view, error, isLoading, hubUrl });
 
 useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
+
+onBeforeUnmount(() => {
+  bookListStore.$reset();
+  bookDeleteStore.$reset();
+});
 </script>
