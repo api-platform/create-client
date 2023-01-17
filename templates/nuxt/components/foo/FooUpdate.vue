@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts" setup>
+import { Ref } from "vue";
 import { storeToRefs } from "pinia";
 import Form from "~~/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { use{{titleUcFirst}}UpdateStore } from "~~/stores/{{lc}}/update";
@@ -53,6 +54,7 @@ import { use{{titleUcFirst}}CreateStore } from "~~/stores/{{lc}}/create";
 import { use{{titleUcFirst}}DeleteStore } from "~~/stores/{{lc}}/delete";
 import { useMercureItem } from "~~/composables/mercureItem";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
+import { SubmissionErrors } from "~~/types/error";
 import { useFetchItem, useUpdateItem } from "~~/composables/api";
 
 const route = useRoute();
@@ -66,13 +68,6 @@ const { error: deleteError, deleted, isLoading: deleteLoading } =
   storeToRefs({{lc}}DeleteStore);
 
 const {{lc}}UpdateStore = use{{titleUcFirst}}UpdateStore();
-const {
-  retrieved: item,
-  updated,
-  error,
-  isLoading,
-  violations,
-} = storeToRefs({{lc}}UpdateStore);
 
 useMercureItem({
   store: {{lc}}UpdateStore,
@@ -81,8 +76,20 @@ useMercureItem({
 });
 
 const id = decodeURIComponent(route.params.id as string);
-const data = await useFetchItem<{{titleUcFirst}}>(id);
-{{lc}}UpdateStore.setData(data);
+let updated: Ref<{{titleUcFirst}} | undefined> = ref(undefined);
+let violations: Ref<SubmissionErrors | undefined> = ref(undefined);
+let {
+  retrieved: item,
+  error,
+  isLoading,
+  hubUrl,
+} = await useFetchItem<{{titleUcFirst}}>(id);
+{{lc}}UpdateStore.setData({
+  retrieved: item,
+  error,
+  isLoading,
+  hubUrl,
+});
 
 async function update(payload: {{titleUcFirst}}) {
   if (!item?.value) {
@@ -91,6 +98,10 @@ async function update(payload: {{titleUcFirst}}) {
   }
 
   const data = await useUpdateItem<{{titleUcFirst}}>(item.value, payload);
+  updated.value = data.updated.value;
+  violations.value = data.violations.value;
+  isLoading.value = data.isLoading.value;
+  error.value = data.error.value;
   {{lc}}UpdateStore.setUpdateData(data);
 }
 
