@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 import type { SubmissionErrors } from "~~/types/error";
 import { FetchItemData, UpdateItemData } from "~~/types/api";
-import { FetchError } from "ofetch";
 
 interface State {
   updated?: {{titleUcFirst}};
@@ -29,7 +28,7 @@ export const use{{titleUcFirst}}UpdateStore = defineStore("{{lc}}Update", {
       this.setLoading(isLoading.value);
       this.setHubUrl(hubUrl.value);
 
-      if (error.value instanceof FetchError) {
+      if (error.value instanceof Error) {
         this.setError(error.value?.message);
       }
     },
@@ -44,7 +43,7 @@ export const use{{titleUcFirst}}UpdateStore = defineStore("{{lc}}Update", {
       this.setLoading(isLoading.value);
       this.setViolations(violations.value);
 
-      if (error.value instanceof FetchError) {
+      if (error.value instanceof Error) {
         this.setError(error.value?.message);
       }
     },

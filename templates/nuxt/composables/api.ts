@@ -2,7 +2,6 @@ import { PagedCollection } from "~~/types/collection";
 import { FetchAllData, FetchItemData } from "~~/types/api";
 import { Ref } from "vue";
 import { View } from "~~/types/view";
-import { FetchError } from "ofetch";
 import { UseFetchOptions } from "#app";
 import { SubmissionErrors } from "~~/types/error";
 import { Item } from "~~/types/item";
@@ -23,7 +22,7 @@ async function useApi<T>(path: string, options: UseFetchOptions<T>) {
       const data = response._data;
       const error = data["hydra:description"] || response.statusText;
 
-      throw new FetchError(error);
+      throw new Error(error);
     },
 
     ...options,
@@ -110,7 +109,7 @@ export async function useCreateItem<T>(resource: string, payload: Item) {
       const data = response._data;
       const error = data["hydra:description"] || response.statusText;
 
-      if (!data.violations) throw new FetchError(error);
+      if (!data.violations) throw new Error(error);
 
       const errors: SubmissionErrors = { _error: error };
       data.violations.forEach(
@@ -151,7 +150,7 @@ export async function useUpdateItem<T>(item: Item, payload: Item) {
       const data = response._data;
       const error = data["hydra:description"] || response.statusText;
 
-      if (!data.violations) throw new FetchError(error);
+      if (!data.violations) throw new Error(error);
 
       const errors: SubmissionErrors = { _error: error };
       data.violations.forEach(

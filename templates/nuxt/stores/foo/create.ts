@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { {{titleUcFirst}} } from "~~/types/{{lc}}";
 import type { SubmissionErrors } from "~~/types/error";
 import { CreateItemData } from "~~/types/api";
-import { FetchError } from "ofetch";
 
 interface State {
   created?: {{titleUcFirst}};
@@ -25,7 +24,7 @@ export const use{{titleUcFirst}}CreateStore = defineStore("{{lc}}Create", {
       this.setLoading(isLoading.value);
       this.setViolations(violations.value);
 
-      if (error.value instanceof FetchError) {
+      if (error.value instanceof Error) {
         this.setError(error.value?.message);
       }
     },

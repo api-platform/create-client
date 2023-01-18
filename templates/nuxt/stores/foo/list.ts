@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { {{titleUcFirst}} } from "~~/types/{{lc}}";
 import { View } from "~~/types/view";
-import { FetchError } from "ofetch";
 import { FetchAllData } from "~~/types/api";
 
 interface State {
@@ -28,7 +27,7 @@ export const use{{titleUcFirst}}ListStore = defineStore("{{lc}}List", {
       if (hubUrl) this.setHubUrl(hubUrl.value);
       if (view) this.setView(view.value);
 
-      if (error.value instanceof FetchError) {
+      if (error.value instanceof Error) {
         this.setError(error.value?.message);
       }
     },
