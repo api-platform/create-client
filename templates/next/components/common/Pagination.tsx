@@ -3,9 +3,11 @@ import { PagedCollection } from "../../types/collection";
 
 interface Props {
   collection: PagedCollection<unknown>;
+  // eslint-disable-next-line no-unused-vars
+  getPagePath: (path: string) => string;
 }
 
-const Pagination = ({ collection }: Props) => {
+const Pagination = ({ collection, getPagePath }: Props) => {
   const view = collection && collection['{{{hydraPrefix}}}view'];
   if (!view) return null;
 
@@ -23,7 +25,7 @@ const Pagination = ({ collection }: Props) => {
         aria-label="Page navigation"
       >
         <Link
-          href={first ? first : "#"}
+          href={first ? getPagePath(first) : "#"}
           className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
             previous ? "" : " text-gray-500 pointer-events-none"
           }`}
@@ -32,7 +34,7 @@ const Pagination = ({ collection }: Props) => {
           <span aria-hidden="true">&lArr;</span> First
         </Link>
         <Link
-          href={previous ? previous : "#"}
+          href={previous ? getPagePath(previous) : "#"}
           className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
             previous ? "" : " text-gray-500 pointer-events-none"
           }`}
@@ -41,7 +43,7 @@ const Pagination = ({ collection }: Props) => {
           <span aria-hidden="true">&larr;</span> Previous
         </Link>
         <Link
-          href={next ? next : "#"}
+          href={next ? getPagePath(next) : "#"}
           className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
             next ? "" : " text-gray-500 pointer-events-none"
           }`}
@@ -50,7 +52,7 @@ const Pagination = ({ collection }: Props) => {
           Next <span aria-hidden="true">&rarr;</span>
         </Link>
         <Link
-          href={last ? last : "#"}
+          href={last ? getPagePath(last) : "#"}
           className={`text-black p-3 hover:text-cyan-500 hover:bg-cyan-50 ${
             next ? "" : "text-gray-500 pointer-events-none"
           }`}

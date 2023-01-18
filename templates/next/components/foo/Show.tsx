@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 
 {{#if hasRelations}}import ReferenceLinks from "../common/ReferenceLinks";{{/if}}
-import { fetch, getPath } from "../../utils/dataAccess";
+import { fetch, getItemPath } from "../../utils/dataAccess";
 import { {{{ucf}}} } from "../../types/{{{ucf}}}";
 
 interface Props {
@@ -55,13 +55,13 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
             <th scope="row">{{name}}</th>
             <td>
               {{#if isReferences}}
-                <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((ref: any) => ({ href: getPath(ref, '/{{{lowercase reference.title}}}s/[id]'), name: ref })) } />
+                <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((ref: any) => ({ href: getItemPath(ref, '/{{{lowercase reference.title}}}s/[id]'), name: ref })) } />
               {{else if reference}}
-                <ReferenceLinks items={ { href: getPath({{{../lc}}}['{{{name}}}'], '/{{{lowercase reference.title}}}s/[id]'), name: {{{../lc}}}['{{{name}}}'] } } />
+                <ReferenceLinks items={ { href: getItemPath({{{../lc}}}['{{{name}}}'], '/{{{lowercase reference.title}}}s/[id]'), name: {{{../lc}}}['{{{name}}}'] } } />
               {{else if isEmbeddeds}}
-                <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((emb: any) => ({ href: getPath(emb['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: emb['@id'] })) } />
+                <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((emb: any) => ({ href: getItemPath(emb['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: emb['@id'] })) } />
               {{else if embedded}}
-                <ReferenceLinks items={ { href: getPath({{{../lc}}}['{{{name}}}']['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: {{{../lc}}}['{{{name}}}']['@id'] } } />
+                <ReferenceLinks items={ { href: getItemPath({{{../lc}}}['{{{name}}}']['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: {{{../lc}}}['{{{name}}}']['@id'] } } />
               {{else if (compare type "==" "Date") }}
                 { {{{../lc}}}['{{{name}}}']?.toLocaleString() }
               {{else}}
@@ -79,7 +79,7 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
       )}
       <div className="flex space-x-2 mt-4 items-center justify-end">
         <Link
-          href={getPath({{{lc}}}["@id"], "/{{{lc}}}s/[id]/edit")}
+          href={getItemPath({{{lc}}}["@id"], "/{{{lc}}}s/[id]/edit")}
           className="inline-block mt-2 border-2 border-cyan-500 bg-cyan-500 hover:border-cyan-700 hover:bg-cyan-700 text-xs text-white font-bold py-2 px-4 rounded"
         >
           Edit

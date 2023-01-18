@@ -7,7 +7,7 @@ import { dehydrate, QueryClient, useQuery } from "react-query";
 import { Form } from "../../../components/{{{lc}}}/Form";
 import { PagedCollection } from "../../../types/collection";
 import { {{{ucf}}} } from "../../../types/{{{ucf}}}";
-import { fetch, FetchResponse, getPaths } from "../../../utils/dataAccess";
+import { fetch, FetchResponse, getItemPaths } from "../../../utils/dataAccess";
 
 const get{{{ucf}}} = async (id: string|string[]|undefined) => id ? await fetch<{{{ucf}}}>(`/{{{name}}}/${id}`) : Promise.resolve(undefined);
 
@@ -48,7 +48,7 @@ export const getStaticProps: GetStaticProps = async ({ params: { id } = {} }) =>
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const response = await fetch<PagedCollection<{{{ucf}}}>>("/{{{name}}}");
-  const paths = await getPaths(response, "{{{name}}}", '/{{{lc}}}s/[id]/edit');
+  const paths = await getItemPaths(response, "{{{name}}}", '/{{{lc}}}s/[id]/edit');
 
   return {
     paths,

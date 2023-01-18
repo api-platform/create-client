@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import Link from "next/link";
 
 import ReferenceLinks from "../common/ReferenceLinks";
-import { getPath } from "../../utils/dataAccess";
+import { getItemPath } from "../../utils/dataAccess";
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 
 interface Props {
@@ -35,18 +35,18 @@ export const List: FunctionComponent<Props> = ({ {{{lc}}}s }) => (
           {{{lc}}}['@id'] &&
           <tr className="py-2" key={ {{{lc}}}['@id'] }>
             <th scope="row">
-              <ReferenceLinks items={ { href: getPath({{{lc}}}['@id'], '/{{{lc}}}s/[id]'), name: {{{lc}}}['@id'] } } />
+              <ReferenceLinks items={ { href: getItemPath({{{lc}}}['@id'], '/{{{lc}}}s/[id]'), name: {{{lc}}}['@id'] } } />
             </th>
             {{#each fields}}
               <td>
                 {{#if isReferences}}
-                  <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((ref: any) => ({ href: getPath(ref, '/{{{lowercase reference.title}}}s/[id]'), name: ref })) } />
+                  <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((ref: any) => ({ href: getItemPath(ref, '/{{{lowercase reference.title}}}s/[id]'), name: ref })) } />
                 {{else if reference}}
-                  <ReferenceLinks items={ { href: getPath({{{../lc}}}['{{{name}}}'], '/{{{lowercase reference.title}}}s/[id]'), name: {{{../lc}}}['{{{name}}}'] } } />
+                  <ReferenceLinks items={ { href: getItemPath({{{../lc}}}['{{{name}}}'], '/{{{lowercase reference.title}}}s/[id]'), name: {{{../lc}}}['{{{name}}}'] } } />
                 {{else if isEmbeddeds}}
-                  <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((emb: any) => ({ href: getPath(emb['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: emb['@id'] })) } />
+                  <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((emb: any) => ({ href: getItemPath(emb['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: emb['@id'] })) } />
                 {{else if embedded}}
-                  <ReferenceLinks items={ { href: getPath({{{../lc}}}['{{{name}}}']['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: {{{../lc}}}['{{{name}}}']['@id'] } } />
+                  <ReferenceLinks items={ { href: getItemPath({{{../lc}}}['{{{name}}}']['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: {{{../lc}}}['{{{name}}}']['@id'] } } />
                 {{else if (compare type "==" "Date") }}
                   { {{{../lc}}}['{{{name}}}']?.toLocaleString() }
                 {{else}}
@@ -56,7 +56,7 @@ export const List: FunctionComponent<Props> = ({ {{{lc}}}s }) => (
             {{/each}}
             <td className="w-8">
               <Link
-                href={ getPath({{{lc}}}['@id'], '/{{{lc}}}s/[id]') }
+                href={ getItemPath({{{lc}}}['@id'], '/{{{lc}}}s/[id]') }
                 className="text-cyan-500"
               >
                 Show
@@ -68,7 +68,7 @@ export const List: FunctionComponent<Props> = ({ {{{lc}}}s }) => (
             </td>
             <td className="w-8">
               <Link
-                href={ getPath({{{lc}}}["@id"], '/{{{lc}}}s/[id]/edit') }
+                href={ getItemPath({{{lc}}}["@id"], '/{{{lc}}}s/[id]/edit') }
                 className="text-cyan-500"
               >
                 Edit
