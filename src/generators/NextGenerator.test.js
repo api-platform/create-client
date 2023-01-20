@@ -45,6 +45,7 @@ describe("generate", () => {
     [
       "/config/entrypoint.ts",
       "/components/abc/List.tsx",
+      "/components/abc/PageList.tsx",
       "/components/abc/Show.tsx",
       "/components/abc/Form.tsx",
       "/components/common/Layout.tsx",
@@ -55,6 +56,7 @@ describe("generate", () => {
       "/types/item.ts",
       "/pages/abcs/[id]/index.tsx",
       "/pages/abcs/[id]/edit.tsx",
+      "/pages/abcs/page/[page].tsx",
       "/pages/abcs/index.tsx",
       "/pages/abcs/create.tsx",
       "/pages/_app.tsx",
