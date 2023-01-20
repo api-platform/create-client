@@ -43,7 +43,7 @@ export async function useFetchAll<T>(
   const page = ref(route.params.page);
 
   const { data, pending, error } = await useApi<T>(resource, {
-    query: { page },
+    params: { page },
 
     onResponse({ response }) {
       hubUrl.value = extractHubURL(response);
