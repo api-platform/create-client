@@ -40,32 +40,19 @@ export async function useFetchAll<T>(
   const view: Ref<View | undefined> = ref(undefined);
   const hubUrl: Ref<URL | undefined> = ref(undefined);
 
-  const page = ref(route.query.page);
+  const page = ref(route.params.page);
 
-  function setValues(values: PagedCollection<T>) {
-    items.value = values["hydra:member"];
-    view.value = values["hydra:view"];
-  }
-
-  const { data, pending, refresh, error } = await useApi<T>(resource, {
+  const { data, pending, error } = await useApi<T>(resource, {
     query: { page },
 
     onResponse({ response }) {
-      setValues(response._data);
-
       hubUrl.value = extractHubURL(response);
     },
   });
 
-  setValues(data.value as PagedCollection<T>);
-
-  watch(
-    () => route.query.page,
-    (newPage) => {
-      page.value = newPage as string;
-      refresh();
-    }
-  );
+  const value = data.value as PagedCollection<T>;
+  items.value = value["hydra:member"];
+  view.value = value["hydra:view"];
 
   return {
     items,
@@ -76,11 +63,11 @@ export async function useFetchAll<T>(
   };
 }
 
-export async function useFetchItem<T>(id: string): Promise<FetchItemData<T>> {
+export async function useFetchItem<T>(path: string): Promise<FetchItemData<T>> {
   const retrieved: Ref<T | undefined> = ref(undefined);
   const hubUrl: Ref<URL | undefined> = ref(undefined);
 
-  const { data, pending, error } = await useApi<T>(id, {
+  const { data, pending, error } = await useApi<T>(path, {
     onResponse({ response }) {
       retrieved.value = response._data;
       hubUrl.value = extractHubURL(response);

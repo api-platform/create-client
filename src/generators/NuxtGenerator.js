@@ -14,7 +14,6 @@ export default class NuxtGenerator extends BaseGenerator {
       "types/collection.ts",
       "types/error.ts",
       "types/foo.ts",
-      "types/item.ts",
       "types/view.ts",
 
       // utils
@@ -50,6 +49,7 @@ export default class NuxtGenerator extends BaseGenerator {
       "pages/foos/index.vue",
       "pages/foos/[id]/edit.vue",
       "pages/foos/[id]/index.vue",
+      "pages/foos/page/[page].vue",
 
       // stores
       "stores/foo/create.ts",
@@ -60,6 +60,7 @@ export default class NuxtGenerator extends BaseGenerator {
 
       // types
       "types/api.ts",
+      "types/item.ts",
     ]);
 
     handlebars.registerHelper("compare", hbh_comparison.compare);
@@ -114,6 +115,7 @@ export default class NuxtGenerator extends BaseGenerator {
       `${dir}/pages`,
       `${dir}/pages/${lc}s`,
       `${dir}/pages/${lc}s/[id]`,
+      `${dir}/pages/${lc}s/page`,
       `${dir}/stores`,
       `${dir}/stores/${lc}`,
       `${dir}/types`,
@@ -133,6 +135,7 @@ export default class NuxtGenerator extends BaseGenerator {
       "pages/%ss/index.vue",
       "pages/%ss/[id]/edit.vue",
       "pages/%ss/[id]/index.vue",
+      "pages/%ss/page/[page].vue",
 
       // stores
       "stores/%s/create.ts",

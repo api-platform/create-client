@@ -38,13 +38,14 @@ async function create(item: {{titleUcFirst}}) {
   const data = await useCreateItem<{{titleUcFirst}}>("{{name}}", item);
   {{lc}}CreateStore.setData(data);
 
-  if (!created?.value) {
+  if (!created?.value?.id) {
+    {{lc}}CreateStore.setError("Missing item id. Please reload");
     return;
   }
 
   navigateTo({
     name: "{{lc}}s-id-edit",
-    params: { id: created?.value?.["@id"] },
+    params: { id: created?.value?.id },
   });
 }
 </script>

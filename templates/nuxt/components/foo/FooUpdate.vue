@@ -83,7 +83,7 @@ let {
   error,
   isLoading,
   hubUrl,
-} = await useFetchItem<{{titleUcFirst}}>(id);
+} = await useFetchItem<{{titleUcFirst}}>(`{{name}}/${id}`);
 {{lc}}UpdateStore.setData({
   retrieved: item,
   error,

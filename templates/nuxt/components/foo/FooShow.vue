@@ -10,7 +10,7 @@
     <div>
       <nuxt-link
         v-if="item"
-        :to="{ name: '{{lc}}s-id-edit', params: { id: item['@id'] } }"
+        :to="{ name: '{{lc}}s-id-edit', params: { id: item.id } }"
         class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
       >
         Edit
@@ -102,8 +102,8 @@
             <template v-if="router.hasRoute('{{embedded.name}}-id')">
               <nuxt-link
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-                :key="{{lowercase embedded.title}}['@id']"
-                :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: {{lowercase embedded.title}}['@id'] } }"
+                :key="{{lowercase embedded.title}}.id"
+                :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: {{lowercase embedded.title}}.id } }"
                 class="text-blue-600 hover:text-blue-800"
               >
                 \{{ {{lowercase embedded.title}}["@id"] }}
@@ -115,7 +115,7 @@
             <template v-else>
               <p
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-                :key="{{lowercase embedded.title}}['@id']"
+                :key="{{lowercase embedded.title}}.id"
               >
                 \{{ {{lowercase embedded.title}}["@id"] }}
               </p>
@@ -123,7 +123,7 @@
           {{else if embedded}}
             <nuxt-link
               v-if="router.hasRoute('{{embedded.name}}-id')"
-              :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
+              :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: item.{{lowercase embedded.title}}.id } }"
               class="text-blue-600 hover:text-blue-800"
             >
               \{{ item.{{lowercase embedded.title}}["@id"] }}
@@ -173,7 +173,7 @@ const {
   isLoading,
   error,
   hubUrl,
-} = await useFetchItem<{{titleUcFirst}}>(id);
+} = await useFetchItem<{{titleUcFirst}}>(`{{name}}/${id}`);
 {{lc}}ShowStore.setData({ retrieved: item, isLoading, error, hubUrl });
 
 async function deleteItem() {

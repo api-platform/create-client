@@ -59,10 +59,10 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in items" :key="item['@id']" class="border-b">
+        <tr v-for="item in items" :key="item.id" class="border-b">
           <td class="px-6 py-4 text-sm">
             <nuxt-link
-              :to="{ name: '{{lc}}s-id', params: { id: item['@id'] } }"
+              :to="{ name: '{{lc}}s-id', params: { id: item.id } }"
               class="text-blue-600 hover:text-blue-800"
             >
               \{{ item["@id"] }}
@@ -108,8 +108,8 @@
             <template v-if="router.hasRoute('{{embedded.name}}-id')">
               <nuxt-link
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-                :key="{{lowercase embedded.title}}['@id']"
-                :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: {{lowercase embedded.title}}['@id'] } }"
+                :key="{{lowercase embedded.title}}.id"
+                :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: {{lowercase embedded.title}}.id } }"
                 class="text-blue-600 hover:text-blue-800"
               >
                 \{{ {{lowercase embedded.title}}["@id"] }}
@@ -121,7 +121,7 @@
             <template v-else>
               <p
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-                :key="{{lowercase embedded.title}}['@id']"
+                :key="{{lowercase embedded.title}}.id"
               >
                 \{{ {{lowercase embedded.title}}["@id"] }}
               </p>
@@ -129,7 +129,7 @@
           {{else if embedded}}
             <nuxt-link
               v-if="router.hasRoute('{{embedded.name}}-id')"
-              :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
+              :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: item.{{lowercase embedded.title}}.id } }"
               class="text-blue-600 hover:text-blue-800"
             >
               \{{ item.{{lowercase embedded.title}}["@id"] }}
@@ -147,7 +147,7 @@
           {{/each}}
           <td class="px-6 py-4 text-sm">
             <nuxt-link
-              :to="{ name: '{{lc}}s-id', params: { id: item['@id'] } }"
+              :to="{ name: '{{lc}}s-id', params: { id: item.id } }"
               class="px-6 py-2 bg-blue-600 text-white text-xs rounded shadow-md hover:bg-blue-700"
             >
               Show
@@ -155,7 +155,7 @@
           </td>
           <td class="px-6 py-4 text-sm">
             <nuxt-link
-              :to="{ name: '{{lc}}s-id-edit', params: { id: item['@id'] } }"
+              :to="{ name: '{{lc}}s-id-edit', params: { id: item.id } }"
               class="px-6 py-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
             >
               Edit
@@ -169,12 +169,15 @@
   <div v-if="view" class="flex justify-center">
     <nav aria-label="Page navigation">
       <ul class="flex list-style-none">
-        <li :class="{ disabled: !view['{{hydraPrefix}}previous'] }">
+        <li :class="{ disabled: !pagination.previous }">
           <nuxt-link
-            :to="view['{{hydraPrefix}}first'] ? view['{{hydraPrefix}}first'] : { name: '{{lc}}s' }"
+            :to="{
+              name: '{{lc}}s-page-page',
+              params: { page: pagination.first },
+            }"
             aria-label="First page"
             :class="
-              !view['{{hydraPrefix}}previous']
+              !pagination.previous
                 ? 'text-gray-500 pointer-events-none'
                 : 'text-gray-800 hover:bg-gray-200'
             "
@@ -184,16 +187,14 @@
           </nuxt-link>
         </li>
 
-        <li :class="{ disabled: !view['{{hydraPrefix}}previous'] }">
+        <li :class="{ disabled: !pagination.previous }">
           <nuxt-link
-            :to="
-              !view['{{hydraPrefix}}previous'] ||
-              view['{{hydraPrefix}}previous'] === view['{{hydraPrefix}}first']
-                ? { name: '{{lc}}s' }
-                : view['{{hydraPrefix}}previous']
-            "
+            :to="{
+              name: '{{lc}}s-page-page',
+              params: { page: pagination.previous ?? pagination.first },
+            }"
             :class="
-              !view['{{hydraPrefix}}previous']
+              !pagination.previous
                 ? 'text-gray-500 pointer-events-none'
                 : 'text-gray-800 hover:bg-gray-200'
             "
@@ -204,11 +205,14 @@
           </nuxt-link>
         </li>
 
-        <li :class="{ disabled: !view['{{hydraPrefix}}next'] }">
+        <li :class="{ disabled: !pagination.next }">
           <nuxt-link
-            :to="view['{{hydraPrefix}}next'] ? view['{{hydraPrefix}}next'] : '#'"
+            :to="{
+              name: '{{lc}}s-page-page',
+              params: { page: pagination.next ?? pagination.last },
+            }"
             :class="
-              !view['{{hydraPrefix}}next']
+              !pagination.next
                 ? 'text-gray-500 pointer-events-none'
                 : 'text-gray-800 hover:bg-gray-200'
             "
@@ -219,11 +223,11 @@
           </nuxt-link>
         </li>
 
-        <li :class="{ disabled: !view['{{hydraPrefix}}next'] }">
+        <li :class="{ disabled: !pagination.next }">
           <nuxt-link
-            :to="view['{{hydraPrefix}}last'] ? view['{{hydraPrefix}}last'] : '#'"
+            :to="{ name: '{{lc}}s-page-page', params: { page: pagination.last } }"
             :class="
-              !view['{{hydraPrefix}}next']
+              !pagination.next
                 ? 'text-gray-500 pointer-events-none'
                 : 'text-gray-800 hover:bg-gray-200'
             "
@@ -260,10 +264,17 @@ const { items, view, error, isLoading, hubUrl } = await useFetchAll<{{titleUcFir
 );
 {{lc}}ListStore.setData({ items, view, error, isLoading, hubUrl });
 
+const pagination = {
+  first: view.value?.["hydra:first"]?.slice(-1),
+  previous: view.value?.["hydra:previous"]?.slice(-1),
+  next: view.value?.["hydra:next"]?.slice(-1),
+  last: view.value?.["hydra:last"]?.slice(-1),
+};
+
 useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });
 
 onBeforeUnmount(() => {
-  bookListStore.$reset();
-  bookDeleteStore.$reset();
+  {{lc}}ListStore.$reset();
+  {{lc}}DeleteStore.$reset();
 });
 </script>
