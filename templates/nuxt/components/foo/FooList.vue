@@ -59,10 +59,10 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in items" :key="item.id" class="border-b">
+        <tr v-for="item in items" :key="item['@id']" class="border-b">
           <td class="px-6 py-4 text-sm">
             <nuxt-link
-              :to="{ name: '{{lc}}s-id', params: { id: item.id } }"
+              :to="{ name: '{{lc}}s-id', params: { id: getIdFromIri(item['@id']) } }"
               class="text-blue-600 hover:text-blue-800"
             >
               \{{ item["@id"] }}
@@ -108,8 +108,8 @@
             <template v-if="router.hasRoute('{{embedded.name}}-id')">
               <nuxt-link
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-                :key="{{lowercase embedded.title}}.id"
-                :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: {{lowercase embedded.title}}.id } }"
+                :key="{{lowercase embedded.title}}['@id']"
+                :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: getIdFromIri({{lowercase embedded.title}}['@id']) } }"
                 class="text-blue-600 hover:text-blue-800"
               >
                 \{{ {{lowercase embedded.title}}["@id"] }}
@@ -121,7 +121,7 @@
             <template v-else>
               <p
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-                :key="{{lowercase embedded.title}}.id"
+                :key="{{lowercase embedded.title}}['@id']"
               >
                 \{{ {{lowercase embedded.title}}["@id"] }}
               </p>
@@ -129,7 +129,7 @@
           {{else if embedded}}
             <nuxt-link
               v-if="router.hasRoute('{{embedded.name}}-id')"
-              :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: item.{{lowercase embedded.title}}.id } }"
+              :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: getIdFromIri(item.{{lowercase embedded.title}}['@id']) } }"
               class="text-blue-600 hover:text-blue-800"
             >
               \{{ item.{{lowercase embedded.title}}["@id"] }}
@@ -147,7 +147,7 @@
           {{/each}}
           <td class="px-6 py-4 text-sm">
             <nuxt-link
-              :to="{ name: '{{lc}}s-id', params: { id: item.id } }"
+              :to="{ name: '{{lc}}s-id', params: { id: getIdFromIri(item['@id']) } }"
               class="px-6 py-2 bg-blue-600 text-white text-xs rounded shadow-md hover:bg-blue-700"
             >
               Show
@@ -155,7 +155,7 @@
           </td>
           <td class="px-6 py-4 text-sm">
             <nuxt-link
-              :to="{ name: '{{lc}}s-id-edit', params: { id: item.id } }"
+              :to="{ name: '{{lc}}s-id-edit', params: { id: getIdFromIri(item['@id']) } }"
               class="px-6 py-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
             >
               Edit
@@ -249,6 +249,7 @@ import { use{{titleUcFirst}}DeleteStore } from "~~/stores/{{lc}}/delete";
 import { use{{titleUcFirst}}ListStore } from "~~/stores/{{lc}}/list";
 import { useFetchAll } from "~~/composables/api";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
+import { getIdFromIri } from "~~/utils/entity";
 
 {{#if hasRelations}}
 const router = useRouter();

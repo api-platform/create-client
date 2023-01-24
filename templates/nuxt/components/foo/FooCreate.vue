@@ -30,6 +30,7 @@ import Form from "~~/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { use{{titleUcFirst}}CreateStore } from "~~/stores/{{lc}}/create";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 import { useCreateItem } from "~~/composables/api";
+import { getIdFromIri } from "~~/utils/entity";
 
 const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
 const { created, isLoading, violations, error } = storeToRefs({{lc}}CreateStore);
@@ -38,14 +39,14 @@ async function create(item: {{titleUcFirst}}) {
   const data = await useCreateItem<{{titleUcFirst}}>("{{name}}", item);
   {{lc}}CreateStore.setData(data);
 
-  if (!created?.value?.id) {
+  if (!created?.value?.["@id"]) {
     {{lc}}CreateStore.setError("Missing item id. Please reload");
     return;
   }
 
   navigateTo({
     name: "{{lc}}s-id-edit",
-    params: { id: created?.value?.id },
+    params: { id: getIdFromIri(created?.value?.["@id"]) },
   });
 }
 </script>

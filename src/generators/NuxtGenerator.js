@@ -14,6 +14,7 @@ export default class NuxtGenerator extends BaseGenerator {
       "types/collection.ts",
       "types/error.ts",
       "types/foo.ts",
+      "types/item.ts",
       "types/view.ts",
 
       // utils
@@ -60,7 +61,9 @@ export default class NuxtGenerator extends BaseGenerator {
 
       // types
       "types/api.ts",
-      "types/item.ts",
+
+      // utils
+      "utils/entity.ts",
     ]);
 
     handlebars.registerHelper("compare", hbh_comparison.compare);
@@ -173,6 +176,9 @@ export default class NuxtGenerator extends BaseGenerator {
       "utils/date.ts",
       "utils/error.ts",
       "utils/mercure.ts",
+
+      // utils
+      "utils/entity.ts",
     ].forEach((path) =>
       this.createFile(path, `${dir}/${path}`, context, false)
     );
