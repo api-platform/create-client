@@ -248,8 +248,8 @@ import { useMercureList } from "~~/composables/mercureList";
 import { use{{titleUcFirst}}DeleteStore } from "~~/stores/{{lc}}/delete";
 import { use{{titleUcFirst}}ListStore } from "~~/stores/{{lc}}/list";
 import { useFetchAll } from "~~/composables/api";
+import { getIdFromIri } from "~~/utils/resource";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
-import { getIdFromIri } from "~~/utils/entity";
 
 {{#if hasRelations}}
 const router = useRouter();

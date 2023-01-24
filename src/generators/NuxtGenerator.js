@@ -63,7 +63,7 @@ export default class NuxtGenerator extends BaseGenerator {
       "types/api.ts",
 
       // utils
-      "utils/entity.ts",
+      "utils/resource.ts",
     ]);
 
     handlebars.registerHelper("compare", hbh_comparison.compare);
@@ -178,7 +178,7 @@ export default class NuxtGenerator extends BaseGenerator {
       "utils/mercure.ts",
 
       // utils
-      "utils/entity.ts",
+      "utils/resource.ts",
     ].forEach((path) =>
       this.createFile(path, `${dir}/${path}`, context, false)
     );

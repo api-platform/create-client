@@ -151,8 +151,8 @@ import { use{{titleUcFirst}}ShowStore } from "~~/stores/{{lc}}/show";
 import { use{{titleUcFirst}}DeleteStore } from "~~/stores/{{lc}}/delete";
 import { useMercureItem } from "~~/composables/mercureItem";
 import { useFetchItem } from "~~/composables/api";
+import { getIdFromIri } from "~~/utils/resource";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
-import { getIdFromIri } from "~~/utils/entity";
 
 const route = useRoute();
 const router = useRouter();

@@ -28,9 +28,9 @@
 import { storeToRefs } from "pinia";
 import Form from "~~/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { use{{titleUcFirst}}CreateStore } from "~~/stores/{{lc}}/create";
-import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 import { useCreateItem } from "~~/composables/api";
-import { getIdFromIri } from "~~/utils/entity";
+import { getIdFromIri } from "~~/utils/resource";
+import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 
 const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
 const { created, isLoading, violations, error } = storeToRefs({{lc}}CreateStore);

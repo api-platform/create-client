@@ -53,9 +53,9 @@ import { use{{titleUcFirst}}UpdateStore } from "~~/stores/{{lc}}/update";
 import { use{{titleUcFirst}}CreateStore } from "~~/stores/{{lc}}/create";
 import { use{{titleUcFirst}}DeleteStore } from "~~/stores/{{lc}}/delete";
 import { useMercureItem } from "~~/composables/mercureItem";
-import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
-import { SubmissionErrors } from "~~/types/error";
 import { useFetchItem, useUpdateItem } from "~~/composables/api";
+import { SubmissionErrors } from "~~/types/error";
+import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 
 const route = useRoute();
 const router = useRouter();
