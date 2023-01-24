@@ -1,0 +1,92 @@
+<template>
+  <Toolbar
+    :actions="['delete']"
+    :breadcrumb="breadcrumb"
+    :is-loading="isLoading"
+    @delete="deleteItem"
+  />
+
+  <v-container fluid>
+    <v-alert v-if="error || deleteError" type="error" class="mb-4">
+      \{{ error || deleteError }}
+    </v-alert>
+
+    <v-alert v-if="created || updated" type="success" class="mb-4">
+      <template v-if="updated">
+        \{{ $t("itemUpdated", [updated["@id"]]) }}
+      </template>
+      <template v-else-if="created">
+        \{{ $t("itemCreated", [created["@id"]]) }}
+      </template>
+    </v-alert>
+
+    <Form v-if="item" :values="item" :errors="violations" @submit="update" />
+  </v-container>
+
+  <Loading :visible="isLoading || deleteLoading" />
+</template>
+
+<script lang="ts" setup>
+import Toolbar from "@/components/common/Toolbar.vue";
+import Form from "@/components/{{lc}}/{{titleUcFirst}}Form.vue";
+import Loading from "@/components/common/Loading.vue";
+import { onBeforeUnmount } from "vue";
+import { use{{titleUcFirst}}DeleteStore } from "@/store/{{lc}}/delete";
+import { use{{titleUcFirst}}UpdateStore } from "@/store/{{lc}}/update";
+import { storeToRefs } from "pinia";
+import { useRoute, useRouter } from "vue-router";
+import { {{titleUcFirst}} } from "@/types/{{lc}}";
+import { useMercureItem } from "@/composables/mercureItem";
+import { useI18n } from "vue-i18n";
+import { BreadcrumbValue } from "@/types/breadcrumb";
+import { use{{titleUcFirst}}CreateStore } from "@/store/{{lc}}/create";
+
+const { t } = useI18n();
+const route = useRoute();
+const router = useRouter();
+const breadcrumb = route.meta.breadcrumb as BreadcrumbValue[];
+
+const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
+const { created } = storeToRefs({{lc}}CreateStore);
+
+const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
+const { isLoading: deleteLoading, error: deleteError } =
+  storeToRefs({{lc}}DeleteStore);
+
+const {{lc}}UpdateStore = use{{titleUcFirst}}UpdateStore();
+const {
+  retrieved: item,
+  updated,
+  isLoading,
+  error,
+  violations,
+} = storeToRefs({{lc}}UpdateStore);
+
+useMercureItem({
+  store: {{lc}}UpdateStore,
+  deleteStore: {{lc}}DeleteStore,
+  redirectRouteName: "{{titleUcFirst}}List",
+});
+
+await {{lc}}UpdateStore.retrieve(decodeURIComponent(route.params.id as string));
+
+async function update(item: {{titleUcFirst}}) {
+  await {{lc}}UpdateStore.update(item);
+}
+
+async function deleteItem() {
+  if (!item?.value) {
+    {{lc}}UpdateStore.setError(t("itemNotFound"));
+    return;
+  }
+
+  await {{lc}}DeleteStore.deleteItem(item?.value);
+
+  router.push({ name: "{{titleUcFirst}}List" });
+}
+
+onBeforeUnmount(() => {
+  {{lc}}UpdateStore.$reset();
+  {{lc}}DeleteStore.$reset();
+});
+</script>
