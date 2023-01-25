@@ -8,6 +8,11 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  // Waiting for https://github.com/unjs/nitro/issues/603 to enable SSR (SWR).
+  ssr: false,
+  routeRules: {
+    "/**": { swr: 1 }
+  },
   nitro: {
     commands: {
       preview: 'npx serve ./public'

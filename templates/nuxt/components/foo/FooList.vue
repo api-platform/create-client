@@ -247,7 +247,7 @@ import { storeToRefs } from "pinia";
 import { useMercureList } from "~~/composables/mercureList";
 import { use{{titleUcFirst}}DeleteStore } from "~~/stores/{{lc}}/delete";
 import { use{{titleUcFirst}}ListStore } from "~~/stores/{{lc}}/list";
-import { useFetchAll } from "~~/composables/api";
+import { useFetchList } from "~~/composables/api";
 import { getIdFromIri } from "~~/utils/resource";
 import type { {{titleUcFirst}} } from "~~/types/{{lc}}";
 
@@ -260,7 +260,7 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
   storeToRefs({{lc}}DeleteStore);
 
 const {{lc}}ListStore = use{{titleUcFirst}}ListStore();
-const { items, view, error, isLoading, hubUrl } = await useFetchAll<{{titleUcFirst}}>(
+const { items, view, error, isLoading, hubUrl } = await useFetchList<{{titleUcFirst}}>(
   "{{name}}"
 );
 {{lc}}ListStore.setData({ items, view, error, isLoading, hubUrl });

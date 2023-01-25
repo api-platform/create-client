@@ -31,7 +31,7 @@ async function useApi<T>(path: string, options: UseFetchOptions<T>) {
   return response;
 }
 
-export async function useFetchAll<T>(
+export async function useFetchList<T>(
   resource: string
 ): Promise<FetchAllData<T>> {
   const route = useRoute();
