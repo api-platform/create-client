@@ -119,12 +119,12 @@ import { useRoute, useRouter } from "vue-router";
 {{#if hasDateField}}
 import { formatDateTime } from "@/utils/date";
 {{/if}}
-import { BreadcrumbValue } from "@/types/breadcrumb";
+import { useBreadcrumb } from "@/composables/breadcrumb";
 
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const breadcrumb = route.meta.breadcrumb as BreadcrumbValue[];
+const breadcrumb = useBreadcrumb();
 
 const {{lc}}ShowStore = use{{titleUcFirst}}ShowStore();
 const { retrieved: item, isLoading, error } = storeToRefs({{lc}}ShowStore);

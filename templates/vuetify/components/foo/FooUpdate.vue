@@ -38,13 +38,13 @@ import { useRoute, useRouter } from "vue-router";
 import { {{titleUcFirst}} } from "@/types/{{lc}}";
 import { useMercureItem } from "@/composables/mercureItem";
 import { useI18n } from "vue-i18n";
-import { BreadcrumbValue } from "@/types/breadcrumb";
 import { use{{titleUcFirst}}CreateStore } from "@/store/{{lc}}/create";
+import { useBreadcrumb } from "@/composables/breadcrumb";
 
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const breadcrumb = route.meta.breadcrumb as BreadcrumbValue[];
+const breadcrumb = useBreadcrumb();
 
 const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
 const { created } = storeToRefs({{lc}}CreateStore);

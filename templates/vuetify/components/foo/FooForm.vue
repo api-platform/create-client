@@ -54,7 +54,7 @@
 import { ref, Ref, toRef } from "vue";
 {{#if hasIsRelations}}
 import FormRepeater from "@/components/common/FormRepeater.vue";
-import type { Item } from 'src/types/item';
+import type { Item } from "@/types/item";
 {{/if}}
 import { {{titleUcFirst}} } from "@/types/{{lc}}";
 import { SubmissionErrors } from "@/types/error";

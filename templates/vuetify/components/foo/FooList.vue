@@ -140,20 +140,19 @@ import DataFilter from "@/components/common/DataFilter.vue";
 import Filter from "@/components/{{lc}}/{{titleUcFirst}}Filter.vue";
 {{/if}}
 import ActionCell from "@/components/common/ActionCell.vue";
-import { useRoute, useRouter } from "vue-router";
-import { Filters, VuetifyOrder } from "@/types/list";
+import { useRouter } from "vue-router";
+import { {{#if parameters.length}}Filters, {{/if}}VuetifyOrder } from "@/types/list";
 {{#if hasDateField}}
 import { formatDateTime } from "@/utils/date";
 {{/if}}
 import { {{titleUcFirst}} } from "@/types/{{lc}}";
 import { useI18n } from "vue-i18n";
 import { useMercureList } from "@/composables/mercureList";
-import { BreadcrumbValue } from "@/types/breadcrumb";
+import { useBreadcrumb } from "@/composables/breadcrumb";
 
 const { t } = useI18n();
-const route = useRoute();
 const router = useRouter();
-const breadcrumb = route.meta.breadcrumb as BreadcrumbValue[];
+const breadcrumb = useBreadcrumb();
 
 const {{lc}}DeleteStore = use{{titleUcFirst}}DeleteStore();
 const { deleted, mercureDeleted } = storeToRefs({{lc}}DeleteStore);

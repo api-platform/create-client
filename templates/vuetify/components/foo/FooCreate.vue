@@ -17,12 +17,11 @@ import Form from "@/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { use{{titleUcFirst}}CreateStore } from "@/store/{{lc}}/create";
 import { {{titleUcFirst}} } from "@/types/{{lc}}";
 import { storeToRefs } from "pinia";
-import { useRoute, useRouter } from "vue-router";
-import { BreadcrumbValue } from "@/types/breadcrumb";
+import { useRouter } from "vue-router";
+import { useBreadcrumb } from "@/composables/breadcrumb";
 
-const route = useRoute();
 const router = useRouter();
-const breadcrumb = route.meta.breadcrumb as BreadcrumbValue[];
+const breadcrumb = useBreadcrumb();
 
 const {{lc}}CreateStore = use{{titleUcFirst}}CreateStore();
 const { created, isLoading, violations, error } = storeToRefs({{lc}}CreateStore);

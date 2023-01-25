@@ -2,7 +2,7 @@
   <v-dialog v-model="show" persistent width="300">
     <v-card>
       <v-card-text>
-        \{{ $t("confirmDeleteItem") }}
+        \{{ $t("confirmDelete") }}
       </v-card-text>
 
       <v-card-actions>
