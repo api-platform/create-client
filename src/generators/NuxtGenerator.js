@@ -1,40 +1,74 @@
+import handlebars from "handlebars";
+import hbh_comparison from "handlebars-helpers/lib/comparison.js";
+import hbh_array from "handlebars-helpers/lib/array.js";
+import hbh_string from "handlebars-helpers/lib/string.js";
 import chalk from "chalk";
-import BaseVueGenerator from "./VueBaseGenerator.js";
+import BaseGenerator from "./BaseGenerator.js";
 
-export default class NuxtGenerator extends BaseVueGenerator {
+export default class NuxtGenerator extends BaseGenerator {
   constructor(params) {
     super(params);
 
-    this.registerTemplates(`nuxt/`, [
-      // components
-      "components/ActionCell.vue",
-      "components/Alert.vue",
-      "components/ConfirmDelete.vue",
-      "components/DataFilter.vue",
-      "components/InputDate.vue",
-      "components/Loading.vue",
-      "components/Toolbar.vue",
-      "components/foo/Filter.vue",
-      "components/foo/Form.vue",
+    this.registerTemplates("common/", [
+      // types
+      "types/collection.ts",
+      "types/error.ts",
+      "types/foo.ts",
+      "types/item.ts",
+      "types/view.ts",
 
-      // mixins
-      "mixins/create.js",
-      "mixins/list.js",
-      "mixins/notification.js",
-      "mixins/show.js",
-      "mixins/update.js",
+      // utils
+      "utils/config.ts",
+      "utils/date.ts",
+      "utils/error.ts",
+      "utils/mercure.ts",
+    ]);
+
+    this.registerTemplates("vue-common/", [
+      // composables
+      "composables/mercureItem.ts",
+      "composables/mercureList.ts",
+    ]);
+
+    this.registerTemplates(`nuxt/`, [
+      // common components
+      "components/common/FormRepeater.vue",
+
+      // components
+      "components/foo/FooCreate.vue",
+      "components/foo/FooForm.vue",
+      "components/foo/FooList.vue",
+      "components/foo/FooShow.vue",
+      "components/foo/FooUpdate.vue",
+
+      // composables
+      "composables/api.ts",
 
       // pages
+      "pages/index.vue",
       "pages/foos/create.vue",
       "pages/foos/index.vue",
-      "pages/foos/_id/edit.vue",
-      "pages/foos/_id/index.vue",
+      "pages/foos/[id]/edit.vue",
+      "pages/foos/[id]/index.vue",
+      "pages/foos/page/[page].vue",
 
-      // store
-      "store/crud.js",
-      "store/notifications.js",
-      "store/foo.js",
+      // stores
+      "stores/foo/create.ts",
+      "stores/foo/delete.ts",
+      "stores/foo/list.ts",
+      "stores/foo/show.ts",
+      "stores/foo/update.ts",
+
+      // types
+      "types/api.ts",
+
+      // utils
+      "utils/resource.ts",
     ]);
+
+    handlebars.registerHelper("compare", hbh_comparison.compare);
+    handlebars.registerHelper("forEach", hbh_array.forEach);
+    handlebars.registerHelper("lowercase", hbh_string.lowercase);
   }
 
   help(resource) {
@@ -44,115 +78,144 @@ export default class NuxtGenerator extends BaseVueGenerator {
     );
   }
 
-  generateFiles(api, resource, dir, params) {
-    const context = super.getContextForResource(resource, params);
-    const lc = context.lc;
+  getContextForResource(resource) {
+    const lc = resource.title.toLowerCase();
+    const titleUcFirst =
+      resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
+    const fields = this.parseFields(resource);
+    const hasIsRelation = fields.some((field) => field.isRelation);
+    const hasIsRelations = fields.some((field) => field.isRelations);
+    const hasRelations = hasIsRelation || hasIsRelations;
+
+    const formFields = this.buildFields(fields);
+
+    return {
+      title: resource.title,
+      name: resource.name,
+      lc,
+      uc: resource.title.toUpperCase(),
+      fields,
+      hasIsRelation,
+      hasIsRelations,
+      hasRelations,
+      formFields,
+      hydraPrefix: this.hydraPrefix,
+      titleUcFirst,
+    };
+  }
+
+  generate(api, resource, dir) {
+    const context = this.getContextForResource(resource);
+    const { lc, titleUcFirst } = context;
 
     [
-      `${dir}/config`,
-      `${dir}/error`,
-      `${dir}/mixins`,
-      `${dir}/services`,
-      `${dir}/store`,
-      `${dir}/utils`,
-      `${dir}/validators`,
-    ].forEach((dir) => this.createDir(dir, false));
-
-    // error
-    this.createFile(
-      "error/SubmissionError.js",
-      `${dir}/error/SubmissionError.js`,
-      {},
-      false
-    );
-
-    // mixins
-    [
-      "mixins/create.js",
-      "mixins/list.js",
-      "mixins/notification.js",
-      "mixins/show.js",
-      "mixins/update.js",
-    ].forEach((file) =>
-      this.createFile(file, `${dir}/${file}`, context, false)
-    );
-
-    // stores
-    this.createFile(
-      `store/modules/notifications.js`,
-      `${dir}/store/notifications.js`,
-      { hydraPrefix: this.hydraPrefix },
-      false
-    );
-
-    this.createFile(
-      `store/crud.js`,
-      `${dir}/store/crud.js`,
-      { hydraPrefix: this.hydraPrefix },
-      false
-    );
-
-    // validators
-    this.createFile(
-      "validators/date.js",
-      `${dir}/validators/date.js`,
-      { hydraPrefix: this.hydraPrefix },
-      false
-    );
-
-    // utils
-    ["dates.js", "fetch.js", "hydra.js"].forEach((file) =>
-      this.createFile(`utils/${file}`, `${dir}/utils/${file}`, {}, false)
-    );
-
-    this.createEntrypoint(api.entrypoint, `${dir}/config/entrypoint.js`);
-
-    [
+      `${dir}/assets`,
+      `${dir}/assets/css`,
+      `${dir}/components`,
+      `${dir}/components/common`,
       `${dir}/components/${lc}`,
+      `${dir}/composables`,
+      `${dir}/pages`,
       `${dir}/pages/${lc}s`,
-      `${dir}/pages/${lc}s/_id`,
-    ].forEach((dir) => {
-      this.createDir(dir);
-    });
-
-    this.createFile("services/api.js", `${dir}/services/api.js`, {}, false);
+      `${dir}/pages/${lc}s/[id]`,
+      `${dir}/pages/${lc}s/page`,
+      `${dir}/stores`,
+      `${dir}/stores/${lc}`,
+      `${dir}/types`,
+      `${dir}/utils`,
+    ].forEach((dir) => this.createDir(dir, false));
 
     [
       // components
-      "components/%s/Filter.vue",
-      "components/%s/Form.vue",
+      "components/%s/%sCreate.vue",
+      "components/%s/%sForm.vue",
+      "components/%s/%sList.vue",
+      "components/%s/%sShow.vue",
+      "components/%s/%sUpdate.vue",
 
       // pages
       "pages/%ss/create.vue",
       "pages/%ss/index.vue",
-      "pages/%ss/_id/edit.vue",
-      "pages/%ss/_id/index.vue",
+      "pages/%ss/[id]/edit.vue",
+      "pages/%ss/[id]/index.vue",
+      "pages/%ss/page/[page].vue",
 
-      // service
-      "services/%s.js",
+      // stores
+      "stores/%s/create.ts",
+      "stores/%s/delete.ts",
+      "stores/%s/list.ts",
+      "stores/%s/show.ts",
+      "stores/%s/update.ts",
 
-      // store
-      "store/%s.js",
+      // types
+      "types/%s.ts",
     ].forEach((pattern) =>
-      this.createFileFromPattern(pattern, dir, [lc], context)
+      this.createFileFromPattern(pattern, dir, [lc, titleUcFirst], context)
     );
 
-    // components
     [
-      "ActionCell.vue",
-      "Alert.vue",
-      "ConfirmDelete.vue",
-      "DataFilter.vue",
-      "InputDate.vue",
-      "Loading.vue",
-      "Toolbar.vue",
-    ].forEach((file) =>
-      this.createFile(
-        `components/${file}`,
-        `${dir}/components/${file}`,
-        context,
-        false
-      )
+      // components
+      "components/common/FormRepeater.vue",
+
+      // composables
+      "composables/api.ts",
+      "composables/mercureItem.ts",
+      "composables/mercureList.ts",
+
+      // pages
+      "pages/index.vue",
+
+      // types
+      "types/api.ts",
+      "types/collection.ts",
+      "types/error.ts",
+      "types/item.ts",
+      "types/view.ts",
+
+      // utils
+      "utils/date.ts",
+      "utils/error.ts",
+      "utils/mercure.ts",
+
+      // utils
+      "utils/resource.ts",
+    ].forEach((path) =>
+      this.createFile(path, `${dir}/${path}`, context, false)
     );
+
+    // config
+    this.createConfigFile(`${dir}/utils/config.ts`, {
+      entrypoint: api.entrypoint,
+    });
+  }
+
+  parseFields(resource) {
+    const fields = [
+      ...resource.writableFields,
+      ...resource.readableFields,
+    ].reduce((list, field) => {
+      if (list[field.name]) {
+        return list;
+      }
+
+      const isReferences = Boolean(
+        field.reference && field.maxCardinality !== 1
+      );
+      const isEmbeddeds = Boolean(field.embedded && field.maxCardinality !== 1);
+
+      return {
+        ...list,
+        [field.name]: {
+          ...field,
+          readonly: false,
+          isReferences,
+          isEmbeddeds,
+          isRelation: field.reference || field.embedded,
+          isRelations: isEmbeddeds || isReferences,
+        },
+      };
+    }, {});
+
+    return Object.values(fields);
   }
 }

@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from "vue";
+import { type Ref } from "vue";
 
 const props = defineProps<{
   values?: string[];

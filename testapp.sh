@@ -34,12 +34,26 @@ if [ "$1" = "react" ]; then
 fi
 
 if [ "$1" = "nuxt" ]; then
-  yarn create nuxt-app --answers "'{\"name\":\"nuxt\",\"language\":\"js\",\"pm\":\"yarn\",\"ui\":\"vuetify\",\"template\":\"html\",\"features\":[],\"linter\":[],\"test\":\"none\",\"mode\":\"spa\",\"target\":\"static\",\"devTools\":[],\"vcs\":\"none\"}'" ./tmp/app/nuxt
-  yarn --cwd ./tmp/app/nuxt add moment lodash vuelidate vuex-map-fields
+  npx nuxi init ./tmp/app/nuxt
+
+  rm ./tmp/app/nuxt/app.vue
+  rm ./tmp/app/nuxt/nuxt.config.ts
+
+  cp ./templates/nuxt/nuxt.config.ts ./tmp/app/nuxt
+
+  yarn --cwd ./tmp/app/nuxt add dayjs @pinia/nuxt qs @types/qs
 
   cp -R ./tmp/nuxt/* ./tmp/app/nuxt
-  NUXT_TELEMETRY_DISABLED=1 yarn --cwd ./tmp/app/nuxt generate
-  start-server-and-test 'yarn --cwd ./tmp/app/nuxt start --hostname 127.0.0.1' http://127.0.0.1:3000/books/ 'yarn playwright test'
+
+  # Tailwind
+  yarn --cwd ./tmp/app/nuxt add tailwindcss postcss autoprefixer
+  yarn --cwd ./tmp/app/nuxt tailwindcss init -p
+  cp ./templates/common/tailwind.config.js ./tmp/app/nuxt
+  cp ./templates/common/style.css ./tmp/app/nuxt/assets/css
+
+  yarn --cwd ./tmp/app/nuxt generate
+
+  start-server-and-test 'yarn --cwd ./tmp/app/nuxt preview' http://127.0.0.1:3000/books/ 'yarn playwright test'
 fi
 
 if [ "$1" = "vue" ]; then

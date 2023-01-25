@@ -9,6 +9,8 @@ test('resource show', async ({ page, within, queries: { getAllByRole, getByRole,
 
   await expect(queryByText('Loading...')).not.toBeVisible();
 
+  await expect(queryByRole('heading', { level: 1 })).toHaveText('Book List');
+
   const listRows = getAllByRole('row');
 
   const { getAllByRole: getAllByRoleWithinListRow } = within(listRows.nth(3));

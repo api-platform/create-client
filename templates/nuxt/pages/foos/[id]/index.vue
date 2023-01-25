@@ -1,9 +1,9 @@
 <template>
   <div class="container mx-auto px-4 max-w-2xl mt-4">
-    <Create />
+    <Show />
   </div>
 </template>
 
 <script lang="ts" setup>
-import Create from "~~/components/{{lc}}/{{titleUcFirst}}Create.vue";
+import Show from "~~/components/{{lc}}/{{titleUcFirst}}Show.vue";
 </script>
