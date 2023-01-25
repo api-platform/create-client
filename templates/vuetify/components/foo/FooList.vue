@@ -77,13 +77,13 @@
       <template #item.{{lowercase reference.title}}="{ item }">
         <router-link
           v-if="router.hasRoute('{{reference.title}}Show')"
-          :to="{ name: '{{reference.title}}Show', params: { id: item } }"
+          :to="{ name: '{{reference.title}}Show', params: { id: item.raw } }"
         >
-          \{{ item }}
+          \{{ item.raw }}
         </router-link>
 
         <p v-else>
-          \{{ item }}
+          \{{ item.raw }}
         </p>
       </template>
       {{else if isEmbeddeds}}
@@ -110,13 +110,13 @@
       <template #item.{{lowercase embedded.title}}="{ item }">
         <router-link
           v-if="router.hasRoute('{{embedded.title}}Show')"
-          :to="{ name: '{{embedded.title}}Show', params: { id: item['@id'] } }"
+          :to="{ name: '{{embedded.title}}Show', params: { id: item.raw['@id'] } }"
         >
-          \{{ item["@id"] }}
+          \{{ item.raw["@id"] }}
         </router-link>
 
         <p v-else>
-          \{{ item["@id"] }}
+          \{{ item.raw["@id"] }}
         </p>
       </template>
       {{else if (compare type "==" "dateTime") }}
