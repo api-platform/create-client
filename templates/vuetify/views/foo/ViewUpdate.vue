@@ -2,7 +2,7 @@
   <Suspense>
     <Update />
 
-    <template #fallback>{{ $t("loading") }}</template>
+    <template #fallback>\{{ $t("loading") }}</template>
   </Suspense>
 </template>
 

@@ -1,12 +1,12 @@
 <template>
   <v-form ref="form" @submit.prevent="emitSubmit">
     <v-row>
-      {{#forEach formFields}}
+      {{#each formFields}}
       {{#if isRelations}}
       <v-col cols="12">
         <FormRepeater
           :values="item.{{name}}"
-          :label="$t('{{../lc}}.{{name}')"
+          :label="$t('{{../lc}}.{{name}}')"
           @update="(values: any) => (item.{{name}} = values)"
         />
       </v-col>
@@ -35,7 +35,7 @@
         </v-text-field>
       </v-col>
       {{/if}}
-      {{/forEach}}
+      {{/each}}
     </v-row>
 
     <v-row>

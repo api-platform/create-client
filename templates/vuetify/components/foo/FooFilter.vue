@@ -1,9 +1,7 @@
 <template>
   <v-container fluid>
-    {{#forEach parameters}}
-    {{#ifOdd index}}
     <v-row>
-    {{/ifOdd}}
+      {{#each parameters}}
       <v-col cols="12" sm="6" md="6">
         <v-text-field
           v-model="item.{{name}}"
@@ -11,15 +9,13 @@
           type="{{type}}"
         />
       </v-col>
-    {{#ifEven index}}
+      {{/each}}
     </v-row>
-    {{/ifEven}}
-    {{/forEach}}
   </v-container>
 </template>
 
 <script lang="ts" setup>
-import { {{titleUcFirst}} } from "@/types/book";
+import { {{titleUcFirst}} } from "@/types/{{lc}}";
 import { toRef } from "vue";
 
 const props = defineProps<{
@@ -28,44 +24,3 @@ const props = defineProps<{
 
 const item = toRef(props, "values");
 </script>
-<!--
-{{#compare type "==" "checkbox" }}
-  <v-col cols="12" sm="6" md="6">
-    <v-checkbox
-      v-model="item.{{{name}}}"
-      :label="$t('{{{name}}}')"
-    />
-  </v-col>
-{{/compare}}
-{{#compare type "==" "date" }}
-  <v-col cols="12" sm="6" md="6">
-    <InputDate
-      v-model="item.{{{name}}}"
-      :label="$t('{{{name}}}')"
-    />
-  </v-col>
-{{/compare}}
-{{#compare type "==" "number" }}
-  <v-col cols="12" sm="6" md="6">
-    <v-text-field
-      v-model.number="item.{{{name}}}"
-      :label="$t('{{{name}}}')"
-    />
-  </v-col>
-{{/compare}}
-{{#compare type "==" "text" }}
-{{#if reference}}
-  <v-col cols="12" sm="6" md="6">
-    <v-combobox
-      v-model="item.{{{name}}}"
-      :items="{{{name}}}SelectItems"
-      :no-data-text="$t('{{{../labels.noresults}}}')"
-      :label="$t('{{{name}}}')"{{#unless maxCardinality}}
-      multiple{{/unless}}
-      item-text="name"
-      item-value="@id"
-      chips
-    />
-  </v-col>
-{{/if}}
-{{/compare}} -->

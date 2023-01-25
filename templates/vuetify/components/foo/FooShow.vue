@@ -53,7 +53,7 @@
               v-if="router.hasRoute('{{reference.title}}Show')"
               :to="{ name: '{{reference.title}}Show', params: { id: item.{{lowercase reference.title}} } }"
             >
-              \{{ {{lowercase reference.title}} }}
+              \{{ item.{{lowercase reference.title}} }}
             </router-link>
 
             <p v-else>
@@ -83,13 +83,13 @@
             {{else if embedded}}
             <router-link
               v-if="router.hasRoute('{{embedded.title}}Show')"
-              :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
+              :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}?.['@id'] } }"
             >
-              \{{ {{lowercase embedded.title}}["@id"] }}
+              \{{ item.{{lowercase embedded.title}}?.["@id"] }}
             </router-link>
 
             <p v-else>
-              \{{ item.{{lowercase embedded.title}}["@id"] }}
+              \{{ item.{{lowercase embedded.title}}?.["@id"] }}
             </p>
             {{else if (compare type "==" "dateTime") }}
             \{{ formatDateTime(item.{{name}}) }}
@@ -116,7 +116,7 @@ import { use{{titleUcFirst}}ShowStore } from "@/store/{{lc}}/show";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
-{#if hasDateField}}
+{{#if hasDateField}}
 import { formatDateTime } from "@/utils/date";
 {{/if}}
 import { BreadcrumbValue } from "@/types/breadcrumb";

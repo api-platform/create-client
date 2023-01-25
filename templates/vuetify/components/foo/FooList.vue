@@ -171,7 +171,9 @@ async function sendRequest() {
   await {{lc}}ListStore.getItems({
     page: page.value,
     order: order.value,
+    {{#if parameters.length}}
     ...filters.value,
+    {{/if}}
   });
 }
 
@@ -186,12 +188,12 @@ const headers = [
     sortable: false,
   },
   { title: t("id"), key: "@id" },
-  {{#forEach fields}}
+  {{#each fields}}
   {
-    title: t("../{{lc}}.{{name}}"),
+    title: t("{{../lc}}.{{name}}"),
     key: "{{name}}",
   },
-  {{/forEach}}
+  {{/each}}
 ];
 
 function updatePage(newPage: string) {
