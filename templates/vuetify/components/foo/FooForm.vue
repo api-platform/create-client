@@ -13,7 +13,7 @@
       {{else}}
       <v-col cols="12" sm="6" md="6">
         <v-text-field
-          v-model="item.{{name}}"
+          v-model{{#compare type "==" "number" }}.number{{/compare}}="item.{{name}}"
           :error="Boolean(violations?.{{name}})"
           :error-messages="violations?.{{name}}"
           :label="$t('{{../lc}}.{{name}}')"

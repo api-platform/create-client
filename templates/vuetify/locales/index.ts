@@ -1,5 +1,5 @@
+import enUS from "./en-US";
+
 export default {
-  {{#each labels}}
-  {{@key}}: '{{this}}',
-  {{/each }}
+  "en-US": enUS,
 };
