@@ -7,7 +7,7 @@ import VuetifyGenerator from "./VuetifyGenerator.js";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
-test("Generate a Vuetify app", () => {
+test("Generate a Vuetify app", async () => {
   const generator = new VuetifyGenerator({
     hydraPrefix: "hydra:",
     templateDirectory: `${dirname}/../../templates`,
@@ -21,6 +21,7 @@ test("Generate a Vuetify app", () => {
       reference: null,
       required: true,
       description: "An URL",
+      type: "string",
     }),
   ];
   const resource = new Resource("abc", "http://example.com/foos", {
@@ -37,36 +38,72 @@ test("Generate a Vuetify app", () => {
     title: "My API",
     resources: [resource],
   });
-  generator.generate(api, resource, tmpobj.name).then(() => {
-    [
-      "/components/ActionCell.vue",
-      "/components/Breadcrumb.vue",
-      "/components/ConfirmDelete.vue",
-      "/components/DataFilter.vue",
-      "/components/foo/Filter.vue",
-      "/components/foo/Form.vue",
-      "/components/foo/Layout.vue",
-      "/components/InputDate.vue",
-      "/components/Loading.vue",
-      "/components/Snackbar.vue",
-      "/components/Toolbar.vue",
-      "/config/entrypoint.js",
-      "/error/SubmissionError.js",
-      "/locales/en.js",
-      "/router/foo.js",
-      "/services/api.js",
-      "/services/foo.js",
-      "/utils/dates.js",
-      "/utils/fetch.js",
-      "/utils/hydra.js",
-      "/views/foo/Create.vue",
-      "/views/foo/List.vue",
-      "/views/foo/Show.vue",
-      "/views/foo/Update.vue",
-    ].forEach((file) => {
-      expect(fs.existsSync(tmpobj.name + file)).toBe(true);
-    });
 
-    tmpobj.removeCallback();
+  await generator.generate(api, resource, tmpobj.name, []);
+
+  // common components
+  [
+    "ActionCell",
+    "Breadcrumb",
+    "ConfirmDelete",
+    "DataFilter",
+    "FormRepeater",
+    "Loading",
+    "Toolbar",
+  ].forEach((name) => {
+    expect(fs.existsSync(`${tmpobj.name}/components/common/${name}.vue`)).toBe(
+      true
+    );
   });
+
+  // components
+  ["Create", "Form", "List", "Show", "Update"].forEach((name) => {
+    expect(fs.existsSync(`${tmpobj.name}/components/foo/Foo${name}.vue`)).toBe(
+      true
+    );
+  });
+
+  // composables
+  expect(fs.existsSync(`${tmpobj.name}/composables/mercureItem.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/composables/mercureList.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/composables/breadcrumb.ts`)).toBe(true);
+
+  // locales
+  expect(fs.existsSync(`${tmpobj.name}/locales/en-US/foo.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/locales/en-US/index.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/locales/index.ts`)).toBe(true);
+
+  // plugins
+  expect(fs.existsSync(`${tmpobj.name}/plugins/i18n.ts`)).toBe(true);
+
+  // router
+  expect(fs.existsSync(`${tmpobj.name}/router/foo.ts`)).toBe(true);
+
+  // stores
+  ["create", "delete", "list", "show", "update"].forEach((name) => {
+    expect(fs.existsSync(`${tmpobj.name}/store/foo/${name}.ts`)).toBe(true);
+  });
+
+  // types
+  ["breadcrumb", "collection", "error", "foo", "item", "list", "view"].forEach(
+    (name) => {
+      expect(fs.existsSync(`${tmpobj.name}/types/${name}.ts`)).toBe(true);
+    }
+  );
+
+  // utils
+  expect(fs.existsSync(`${tmpobj.name}/utils/api.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/config.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/date.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/error.ts`)).toBe(true);
+  expect(fs.existsSync(`${tmpobj.name}/utils/mercure.ts`)).toBe(true);
+
+  // views
+  ["Create", "List", "Show", "Update"].forEach((name) => {
+    expect(fs.existsSync(`${tmpobj.name}/views/foo/View${name}.vue`)).toBe(
+      true
+    );
+  });
+
+  tmpobj.removeCallback();
 });
