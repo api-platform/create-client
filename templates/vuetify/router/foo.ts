@@ -1,41 +1,48 @@
 const names = {
-  list: { name: "{{titleUcFirst}}List" },
-  create: { name: "{{titleUcFirst}}Create" },
-  update: { name: "{{titleUcFirst}}Update" },
-  show: { name: "{{titleUcFirst}}Show" },
+  list: "{{titleUcFirst}}List",
+  create: "{{titleUcFirst}}Create",
+  update: "{{titleUcFirst}}Update",
+  show: "{{titleUcFirst}}Show",
+};
+
+const breadcrumbs = {
+  list: { title: names.list, to: { name: names.list } },
+  create: { title: names.create, to: { name: names.create } },
+  update: { title: names.update, to: { name: names.update } },
+  show: { title: names.show, to: { name: names.show } },
 };
 
 export default [
   {
-    ...names.list,
+    name: names.list,
     path: "/{{name}}",
     component: () => import("@/views/{{lc}}/ViewList.vue"),
     meta: {
-      breadcrumb: [names.list],
+      breadcrumb: [breadcrumbs.list],
     },
   },
   {
-    ...names.create,
+    name: names.create,
     path: "/{{name}}/create",
     component: () => import("@/views/{{lc}}/ViewCreate.vue"),
     meta: {
-      breadcrumb: [names.list, names.create],
+      breadcrumb: [breadcrumbs.list, breadcrumbs.create],
     },
   },
   {
-    ...names.update,
+    name: names.update,
     path: "/{{name}}/edit/:id",
     component: () => import("@/views/{{lc}}/ViewUpdate.vue"),
     meta: {
-      breadcrumb: [names.list, names.update],
+      breadcrumb: [breadcrumbs.list, breadcrumbs.update],
     },
   },
   {
-    ...names.show,
+    name: names.show,
     path: "/{{name}}/show/:id",
     component: () => import("@/views/{{lc}}/ViewShow.vue"),
     meta: {
-      breadcrumb: [names.list, names.show],
+      breadcrumb: [breadcrumbs.list, breadcrumbs.show],
     },
   },
 ];

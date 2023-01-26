@@ -1,32 +1,24 @@
 <template>
-  <v-breadcrumbs>
-    <v-breadcrumbs-item :title="$t('home')" href="/" />
-
-    /
-
-    <v-breadcrumbs-item
-      v-for="(item, index) in breadcrumb"
-      :key="index"
-      :to="{ name: item.name }"
-    >
-      \{{ item.name }}
-
-      <template v-if="index + 1 !== breadcrumb.length">/</template>
-    </v-breadcrumbs-item>
-  </v-breadcrumbs>
+  <v-breadcrumbs :items="items" />
 </template>
 
 <script lang="ts" setup>
 import { BreadcrumbValue } from "@/types/breadcrumb";
+import { useI18n } from "vue-i18n";
 
-defineProps<{
+const { t } = useI18n();
+
+const props = defineProps<{
   breadcrumb: BreadcrumbValue[];
 }>();
+
+const items = [{ title: t("home"), to: "/" }, ...props.breadcrumb];
 </script>
 
 <style>
 .v-breadcrumbs-item--active {
   font-size: 20px;
   font-weight: bold;
+  opacity: 1 !important;
 }
 </style>
