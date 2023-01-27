@@ -30,7 +30,7 @@ export default class extends BaseGenerator {
       "composables/mercureList.ts",
     ]);
 
-    this.registerTemplates(`vuetify/`, [
+    this.registerTemplates("vuetify/", [
       // components
       "components/foo/FooCreate.vue",
       "components/foo/FooFilter.vue",
@@ -143,11 +143,12 @@ export default {
     });
 
     params.forEach((p) => {
-      if (p.variable.endsWith("[exists]")) {
+      if (p.variable.startsWith("exists[")) {
         return; // removed for the moment, it can help to add null option to select
       }
       if (p.variable.startsWith("order[")) {
-        return; // removed for the moment, it can help to sorting data
+        result.push(p);
+        return;
       }
       if (!stats[p.variable] && p.variable.endsWith("[]")) {
         if (stats[p.variable.slice(0, -2)] === 1) {
@@ -175,8 +176,18 @@ export default {
 
     const parameters = [];
     params.forEach((p) => {
-      const param = fields.find((field) => field.name === p.variable);
-      if (param) {
+      const paramIndex = fields.findIndex((field) => field.name === p.variable);
+      if (paramIndex === -1) {
+        if (p.variable.startsWith("order[")) {
+          let v = p.variable.slice(6, -1);
+          let found = fields.findIndex((field) => field.name === v);
+          if (found !== -1) {
+            fields[found].sortable = true;
+          }
+          return;
+        }
+      } else {
+        const param = fields[paramIndex];
         param.multiple = p.multiple;
         parameters.push(param);
       }

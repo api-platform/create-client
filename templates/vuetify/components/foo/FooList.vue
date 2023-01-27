@@ -131,6 +131,8 @@
 
 <script setup lang="ts">
 import { ref, onBeforeUnmount{{#if parameters.length}}, Ref{{/if}} } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { use{{titleUcFirst}}ListStore } from "@/store/{{lc}}/list";
 import { use{{titleUcFirst}}DeleteStore } from "@/store/{{lc}}/delete";
@@ -140,15 +142,13 @@ import DataFilter from "@/components/common/DataFilter.vue";
 import Filter from "@/components/{{lc}}/{{titleUcFirst}}Filter.vue";
 {{/if}}
 import ActionCell from "@/components/common/ActionCell.vue";
-import { useRouter } from "vue-router";
-import { {{#if parameters.length}}Filters, {{/if}}VuetifyOrder } from "@/types/list";
 {{#if hasDateField}}
 import { formatDateTime } from "@/utils/date";
 {{/if}}
-import { {{titleUcFirst}} } from "@/types/{{lc}}";
-import { useI18n } from "vue-i18n";
 import { useMercureList } from "@/composables/mercureList";
 import { useBreadcrumb } from "@/composables/breadcrumb";
+import type { {{#if parameters.length}}Filters, {{/if}}VuetifyOrder } from "@/types/list";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -191,6 +191,7 @@ const headers = [
   {
     title: t("{{../lc}}.{{name}}"),
     key: "{{name}}",
+    sortable: {{#if sortable}}true{{else}}false{{/if}},
   },
   {{/each}}
 ];
