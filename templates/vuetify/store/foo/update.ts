@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
-import { {{titleUcFirst}} } from "@/types/{{lc}}";
-import type { SubmissionErrors } from "@/types/error";
 import { SubmissionError } from "@/utils/error";
 import api from "@/utils/api";
 import { extractHubURL } from "@/utils/mercure";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
+import type { SubmissionErrors } from "@/types/error";
 
 interface State {
   retrieved?: {{titleUcFirst}};

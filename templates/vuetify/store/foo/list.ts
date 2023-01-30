@@ -3,7 +3,7 @@ import api from "@/utils/api";
 import { extractHubURL } from "@/utils/mercure";
 import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 import type { PagedCollection } from "@/types/collection";
-import { ListParams } from "@/types/list";
+import type { ListParams } from "@/types/list";
 
 interface State {
   items: {{titleUcFirst}}[];

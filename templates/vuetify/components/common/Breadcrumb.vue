@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts" setup>
-import { BreadcrumbValue } from "@/types/breadcrumb";
 import { useI18n } from "vue-i18n";
+import type { BreadcrumbValue } from "@/types/breadcrumb";
 
 const { t } = useI18n();
 

@@ -7,11 +7,11 @@
   />
 
   <v-container fluid>
-    <v-alert v-if="error || deleteError" type="error" class="mb-4">
+    <v-alert v-if="error || deleteError" type="error" class="mb-4" closable="true">
       \{{ error || deleteError }}
     </v-alert>
 
-    <v-alert v-if="created || updated" type="success" class="mb-4">
+    <v-alert v-if="created || updated" type="success" class="mb-4" closable="true">
       <template v-if="updated">
         \{{ $t("itemUpdated", [updated["@id"]]) }}
       </template>
@@ -27,19 +27,19 @@
 </template>
 
 <script lang="ts" setup>
+import { onBeforeUnmount } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
 import Toolbar from "@/components/common/Toolbar.vue";
 import Form from "@/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import Loading from "@/components/common/Loading.vue";
-import { onBeforeUnmount } from "vue";
 import { use{{titleUcFirst}}DeleteStore } from "@/store/{{lc}}/delete";
 import { use{{titleUcFirst}}UpdateStore } from "@/store/{{lc}}/update";
-import { storeToRefs } from "pinia";
-import { useRoute, useRouter } from "vue-router";
-import { {{titleUcFirst}} } from "@/types/{{lc}}";
 import { useMercureItem } from "@/composables/mercureItem";
-import { useI18n } from "vue-i18n";
 import { use{{titleUcFirst}}CreateStore } from "@/store/{{lc}}/create";
 import { useBreadcrumb } from "@/composables/breadcrumb";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 
 const { t } = useI18n();
 const route = useRoute();
@@ -87,6 +87,7 @@ async function deleteItem() {
 
 onBeforeUnmount(() => {
   {{lc}}UpdateStore.$reset();
+  {{lc}}CreateStore.$reset();
   {{lc}}DeleteStore.$reset();
 });
 </script>

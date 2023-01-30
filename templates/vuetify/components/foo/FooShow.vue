@@ -7,7 +7,7 @@
   />
 
   <v-container fluid>
-    <v-alert v-if="error || deleteError" type="error" class="mb-4">
+    <v-alert v-if="error || deleteError" type="error" class="mb-4" closable="true">
       \{{ error || deleteError }}
     </v-alert>
 
@@ -107,15 +107,15 @@
 </template>
 
 <script setup lang="ts">
+import { onBeforeUnmount } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRoute, useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 import Toolbar from "@/components/common/Toolbar.vue";
 import Loading from "@/components/common/Loading.vue";
-import { onBeforeUnmount } from "vue";
 import { useMercureItem } from "@/composables/mercureItem";
 import { use{{titleUcFirst}}DeleteStore } from "@/store/{{lc}}/delete";
 import { use{{titleUcFirst}}ShowStore } from "@/store/{{lc}}/show";
-import { storeToRefs } from "pinia";
-import { useI18n } from "vue-i18n";
-import { useRoute, useRouter } from "vue-router";
 {{#if hasDateField}}
 import { formatDateTime } from "@/utils/date";
 {{/if}}

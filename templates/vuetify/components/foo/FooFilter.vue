@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts" setup>
-import { {{titleUcFirst}} } from "@/types/{{lc}}";
 import { toRef } from "vue";
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
 
 const props = defineProps<{
   values: {{titleUcFirst}};

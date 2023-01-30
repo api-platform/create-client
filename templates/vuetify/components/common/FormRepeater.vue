@@ -1,12 +1,12 @@
 <template>
   <div>
-    <label for="book_reviews" class="text-body-1">
+    <div class="text-body-1">
       <span class="mr-2">
         \{{ label }}
       </span>
 
       <v-btn color="secondary" @click="addField">\{{ $t("add") }}</v-btn>
-    </label>
+    </div>
 
     <div class="my-4">
       <v-text-field

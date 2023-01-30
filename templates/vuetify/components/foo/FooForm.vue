@@ -52,17 +52,16 @@
 
 <script setup lang="ts">
 import { ref, Ref, toRef } from "vue";
+import { VForm } from "vuetify/components";
+{{#if hasDateField}}
+import { formatDateInput } from "@/utils/date";
+{{/if}}
 {{#if hasIsRelations}}
 import FormRepeater from "@/components/common/FormRepeater.vue";
 import type { Item } from "@/types/item";
 {{/if}}
-import { {{titleUcFirst}} } from "@/types/{{lc}}";
-import { SubmissionErrors } from "@/types/error";
-{{#if hasDateField}}
-import { formatDateInput } from "@/utils/date";
-{{/if}}
-import { VForm } from "vuetify/lib/components/index";
-
+import type { {{titleUcFirst}} } from "@/types/{{lc}}";
+import type { SubmissionErrors } from "@/types/error";
 const props = defineProps<{
   values?: {{titleUcFirst}};
   errors?: SubmissionErrors;

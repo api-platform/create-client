@@ -371,6 +371,8 @@ export default {
       reset: "Reset",
       add: "Add",
       delete: "Delete",
+      edit: "Edit",
+      show: "Show",
       cancel: "Cancel",
       updated: "Updated",
       filters: "Filters",

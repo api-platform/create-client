@@ -29,6 +29,7 @@
 </template>
 
 <script lang="ts" setup>
+import { onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import Form from "@/components/{{lc}}/{{titleUcFirst}}Form.vue";
@@ -50,4 +51,8 @@ async function create(item: {{titleUcFirst}}) {
     params: { id: {{lc}}CreateStore.created["@id"] },
   });
 }
+
+onBeforeUnmount(() => {
+  {{lc}}CreateStore.$reset();
+});
 </script>

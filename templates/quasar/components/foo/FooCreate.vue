@@ -11,6 +11,7 @@
 </template>
 
 <script lang="ts" setup>
+import { onBeforeUnmount } from "vue";
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import Toolbar from 'components/common/CommonToolbar.vue';
@@ -39,4 +40,8 @@ async function create(item: {{titleUcFirst}}) {
 }
 
 useWatchErrors([error]);
+
+onBeforeUnmount(() => {
+  {{lc}}CreateStore.$reset();
+});
 </script>

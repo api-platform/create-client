@@ -35,7 +35,7 @@
 import { ref, toRefs } from "vue";
 import Breadcrumb from "@/components/common/Breadcrumb.vue";
 import ConfirmDelete from "@/components/common/ConfirmDelete.vue";
-import { BreadcrumbValue } from "@/types/breadcrumb";
+import type { BreadcrumbValue } from "@/types/breadcrumb";
 
 const props = defineProps<{
   actions?: ("submit" | "reset" | "delete" | "add")[];

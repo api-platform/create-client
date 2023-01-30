@@ -1,32 +1,33 @@
 <template>
-  <v-row justify="space-around">
-    <v-btn
-      v-if="actions?.includes('show')"
-      icon="mdi-eye"
-      color="secondary"
-      size="small"
-      class="mb-2"
-      @click="emitShow"
-    />
+  <v-btn
+    v-if="actions?.includes('show')"
+    color="secondary"
+    size="small"
+    class="ma-2"
+    @click="emitShow"
+  >
+    \{{ $t("show") }}
+  </v-btn>
 
-    <v-btn
-      v-if="actions?.includes('update')"
-      icon="mdi-pencil"
-      color="secondary"
-      size="small"
-      class="mb-2"
-      @click="emitUpdate"
-    />
+  <v-btn
+    v-if="actions?.includes('update')"
+    color="secondary"
+    size="small"
+    class="ma-2"
+    @click="emitUpdate"
+  >
+    \{{ $t("edit") }}
+  </v-btn>
 
-    <v-btn
-      v-if="actions?.includes('delete')"
-      icon="mdi-delete"
-      color="secondary"
-      size="small"
-      class="mb-2"
-      @click="toggleConfirmDelete"
-    />
-  </v-row>
+  <v-btn
+    v-if="actions?.includes('delete')"
+    color="secondary"
+    size="small"
+    class="ma-2"
+    @click="toggleConfirmDelete"
+  >
+    \{{ $t("delete") }}
+  </v-btn>
 
   <ConfirmDelete
     v-if="actions?.includes('delete')"
@@ -38,7 +39,10 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import ConfirmDelete from "@/components/common/ConfirmDelete.vue";
+
+const { t } = useI18n();
 
 defineProps<{
   actions?: ("show" | "update" | "delete")[];
