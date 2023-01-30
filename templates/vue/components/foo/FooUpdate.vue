@@ -107,5 +107,6 @@ async function deleteItem() {
 onBeforeUnmount(() => {
   {{lc}}UpdateStore.$reset();
   {{lc}}CreateStore.$reset();
+  {{lc}}DeleteStore.$reset();
 });
 </script>

@@ -144,7 +144,7 @@ export default {
     params.forEach((p) => {
       if (p.variable.startsWith("exists[")) {
         result.push(p);
-        return; // removed for the moment, it can help to add null option to select
+        return;
       }
       if (p.variable.startsWith("order[")) {
         result.push(p);

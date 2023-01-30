@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts" setup>
+import { onBeforeUnmount } from "vue";
 import { storeToRefs } from "pinia";
 import Form from "~~/components/{{lc}}/{{titleUcFirst}}Form.vue";
 import { use{{titleUcFirst}}CreateStore } from "~~/stores/{{lc}}/create";
@@ -49,4 +50,8 @@ async function create(item: {{titleUcFirst}}) {
     params: { id: getIdFromIri(created?.value?.["@id"]) },
   });
 }
+
+onBeforeUnmount(() => {
+  {{lc}}CreateStore.$reset();
+});
 </script>
