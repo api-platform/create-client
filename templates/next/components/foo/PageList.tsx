@@ -1,21 +1,30 @@
-import { NextComponentType, NextPageContext } from "next";
-import { useRouter } from "next/router";
-import Head from "next/head";
+"use client";
+
+import type { Metadata } from "next";
 import { useQuery } from "react-query";
 
 import Pagination from "../common/Pagination";
 import { List } from "./List";
 import { PagedCollection } from "../../types/collection";
 import { {{{ucf}}} } from "../../types/{{{ucf}}}";
-import { fetch, FetchResponse, parsePage } from "../../utils/dataAccess";
+import { customFetch, FetchResponse, parsePage } from "../../utils/dataAccess";
 import { useMercure } from "../../utils/mercure";
 
 export const get{{{ucf}}}sPath = (page?: string | string[] | undefined) => `/{{{name}}}${typeof page === 'string' ? `?page=${page}` : ''}`;
-export const get{{{ucf}}}s = (page?: string | string[] | undefined) => async () => await fetch<PagedCollection<{{{ucf}}}>>(get{{{ucf}}}sPath(page));
+export const get{{{ucf}}}s = (page?: string | string[] | undefined) => async () => await customFetch<PagedCollection<{{{ucf}}}>>(get{{{ucf}}}sPath(page));
 const getPagePath = (path: string) => `/{{{lc}}}s/page/${parsePage("{{{name}}}", path)}`;
 
-export const PageList: NextComponentType<NextPageContext> = () => {
-  const { query: { page } } = useRouter();
+type Props = {
+  params: { page: string };
+};
+
+export const metadata: Metadata = {
+  title: "{{{ucf}}} List",
+};
+
+
+export default function PageList({ params }: Props) {
+  const { page } = params;
   const { data: { data: {{lc}}s, hubURL } = { hubURL: null } } =
     useQuery<FetchResponse<PagedCollection<{{{ucf}}}>> | undefined>(get{{{ucf}}}sPath(page), get{{{ucf}}}s(page));
   const collection = useMercure({{lc}}s, hubURL);
@@ -24,11 +33,6 @@ export const PageList: NextComponentType<NextPageContext> = () => {
 
   return (
     <div>
-      <div>
-        <Head>
-          <title>{{{ucf}}} List</title>
-        </Head>
-      </div>
       <List {{{lc}}}s={collection["{{{hydraPrefix}}}member"]} />
       <Pagination collection={collection} getPagePath={getPagePath} />
     </div>
