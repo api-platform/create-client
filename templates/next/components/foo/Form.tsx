@@ -170,7 +170,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
             {message && (
               <div
               className={`border px-4 py-3 my-4 rounded ${
-                isValid ? "text-cyan-700 border-cyan-500 bg-cyan-200/50" : "text-red-700 border-red-400 bg-red-100"
+                isValid Object.keys(errors).length === 0 ? "text-cyan-700 border-cyan-500 bg-cyan-200/50" : "text-red-700 border-red-400 bg-red-100"
               }`}
                 role="alert"
               >

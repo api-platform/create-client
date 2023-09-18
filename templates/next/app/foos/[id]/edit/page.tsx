@@ -7,9 +7,6 @@ import { Form } from "../../../../components/{{{lc}}}/Form";
 import { {{{ucf}}} } from "../../../../types/{{{ucf}}}";
 import { customFetch, FetchResponse } from "../../../../utils/dataAccess";
 
-export const metadata: Metadata = {
-  title: "Edit {{{ucf}}}",
-};
 
 const get{{{ucf}}} = async (id: string|string[]|undefined) => id ? await customFetch<{{{ucf}}}>(`/{{{name}}}/${id}`) : Promise.resolve(undefined);
 
@@ -28,6 +25,7 @@ export default function Page({ params }: Props) {
 
   return (
     <div>
+      <title>{`Edit {{{ucf}}} ${ {{{lc}}}["@id"]}`}</title>
       <Form {{{lc}}}={ {{{lc}}} } />
     </div>
   );

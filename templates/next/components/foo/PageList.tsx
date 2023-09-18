@@ -1,6 +1,5 @@
 "use client";
 
-import type { Metadata } from "next";
 import { useQuery } from "react-query";
 
 import Pagination from "../common/Pagination";
@@ -17,11 +16,6 @@ const getPagePath = (path: string) => `/{{{lc}}}s/page/${parsePage("{{{name}}}",
 type Props = {
   params: { page: string };
 };
-
-export const metadata: Metadata = {
-  title: "{{{ucf}}} List",
-};
-
 
 export default function PageList({ params }: Props) {
   const { page } = params;

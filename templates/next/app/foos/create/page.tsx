@@ -1,5 +1,3 @@
-"use client";
-
 import type { Metadata } from "next";
 import { Form } from "../../../components/{{{lc}}}/Form";
 
