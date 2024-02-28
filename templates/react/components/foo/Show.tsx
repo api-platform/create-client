@@ -68,7 +68,7 @@ const ShowView = ({del, deleteError, deleted, error, loading, retrieved: item}: 
                   {{else if embedded}}
                     <Links items={ { href: `/{{{embedded.name}}}/show/${encodeURIComponent(item["{{{name}}}"]["@id"])}`, name: item["{{{name}}}"]["@id"] } }/>
                   {{else}}
-                    {item['{{{name}}}']}retrieved
+                    {item['{{{name}}}']}
                   {{/if}}
                 </td>
               </tr>
