@@ -11,7 +11,7 @@ export default class NextGenerator extends BaseGenerator {
     this.routeAddedtoServer = false;
     this.registerTemplates(`next/`, [
       // components
-      "components/common/Layout.tsx",
+      "components/common/Wrapper.tsx",
       "components/common/Pagination.tsx",
       "components/common/ReferenceLinks.tsx",
       "components/foo/List.tsx",
@@ -25,12 +25,12 @@ export default class NextGenerator extends BaseGenerator {
       "types/item.ts",
 
       // pages
-      "pages/foos/[id]/index.tsx",
-      "pages/foos/[id]/edit.tsx",
-      "pages/foos/page/[page].tsx",
-      "pages/foos/index.tsx",
-      "pages/foos/create.tsx",
-      "pages/_app.tsx",
+      "app/foos/[id]/page.tsx",
+      "app/foos/[id]/edit/page.tsx",
+      "app/foos/page/[page]/page.tsx",
+      "app/foos/page.tsx",
+      "app/foos/create/page.tsx",
+      "app/layout.tsx",
 
       // utils
       "utils/dataAccess.ts",
@@ -81,9 +81,12 @@ export default class NextGenerator extends BaseGenerator {
 
     // Copy with patterned name
     this.createDir(`${dir}/components/${context.lc}`);
-    this.createDir(`${dir}/pages/${context.lc}s`);
-    this.createDir(`${dir}/pages/${context.lc}s/[id]`);
-    this.createDir(`${dir}/pages/${context.lc}s/page`);
+    this.createDir(`${dir}/app/${context.lc}s`);
+    this.createDir(`${dir}/app/${context.lc}s/[id]`);
+    this.createDir(`${dir}/app/${context.lc}s/create`);
+    this.createDir(`${dir}/app/${context.lc}s/[id]/edit`);
+    this.createDir(`${dir}/app/${context.lc}s/page`);
+    this.createDir(`${dir}/app/${context.lc}s/page/[page]`);
     [
       // components
       "components/%s/List.tsx",
@@ -92,11 +95,11 @@ export default class NextGenerator extends BaseGenerator {
       "components/%s/Form.tsx",
 
       // pages
-      "pages/%ss/[id]/index.tsx",
-      "pages/%ss/[id]/edit.tsx",
-      "pages/%ss/page/[page].tsx",
-      "pages/%ss/index.tsx",
-      "pages/%ss/create.tsx",
+      "app/%ss/[id]/page.tsx",
+      "app/%ss/[id]/edit/page.tsx",
+      "app/%ss/page/[page]/page.tsx",
+      "app/%ss/page.tsx",
+      "app/%ss/create/page.tsx",
     ].forEach((pattern) =>
       this.createFileFromPattern(pattern, dir, [context.lc], context)
     );
@@ -107,7 +110,7 @@ export default class NextGenerator extends BaseGenerator {
     // copy with regular name
     [
       // components
-      "components/common/Layout.tsx",
+      "components/common/Wrapper.tsx",
       "components/common/Pagination.tsx",
       "components/common/ReferenceLinks.tsx",
 
@@ -116,7 +119,7 @@ export default class NextGenerator extends BaseGenerator {
       "types/item.ts",
 
       // pages
-      "pages/_app.tsx",
+      "app/layout.tsx",
 
       // utils
       "utils/dataAccess.ts",
