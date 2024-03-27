@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { ErrorMessage{{#if hasManyRelations}}, Field, FieldArray{{/if}}, Formik } from "formik";
 import { useMutation } from "react-query";
 
-import { fetch, FetchError, FetchResponse } from "../../utils/dataAccess";
+import { fetchApi, FetchError, FetchResponse } from "../../utils/dataAccess";
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 
 interface Props {
@@ -20,12 +20,12 @@ interface DeleteParams {
 }
 
 const save{{{ucf}}} = async ({ values }: SaveParams) =>
-  await fetch<{{ucf}}>(!values["@id"] ? "/{{{name}}}" : values["@id"], {
+  await fetchApi<{{ucf}}>(!values["@id"] ? "/{{{name}}}" : values["@id"], {
     method: !values["@id"] ? "POST" : "PUT",
     body: JSON.stringify(values),
   });
 
-const delete{{{ucf}}} = async (id: string) => await fetch<{{ucf}}>(id, { method: "DELETE" });
+const delete{{{ucf}}} = async (id: string) => await fetchApi<{{ucf}}>(id, { method: "DELETE" });
 
 export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
   const [, setError] = useState<string | null>(null);

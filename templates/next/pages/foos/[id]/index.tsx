@@ -7,10 +7,10 @@ import { dehydrate, QueryClient, useQuery } from "react-query";
 import { Show } from "../../../components/{{{lc}}}/Show";
 import { PagedCollection } from "../../../types/collection";
 import { {{{ucf}}} } from "../../../types/{{{ucf}}}";
-import { fetch, FetchResponse, getItemPaths } from "../../../utils/dataAccess";
+import { fetchApi, FetchResponse, getItemPaths } from "../../../utils/dataAccess";
 import { useMercure } from "../../../utils/mercure";
 
-const get{{{ucf}}} = async (id: string|string[]|undefined) => id ? await fetch<{{{ucf}}}>(`/{{{name}}}/${id}`) : Promise.resolve(undefined);
+const get{{{ucf}}} = async (id: string|string[]|undefined) => id ? await fetchApi<{{{ucf}}}>(`/{{{name}}}/${id}`) : Promise.resolve(undefined);
 
 const Page: NextComponentType<NextPageContext> = () => {
   const router = useRouter();
@@ -50,7 +50,7 @@ export const getStaticProps: GetStaticProps = async ({ params: { id } = {} }) =>
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetch<PagedCollection<{{{ucf}}}>>("/{{{name}}}");
+  const response = await fetchApi<PagedCollection<{{{ucf}}}>>("/{{{name}}}");
   const paths = await getItemPaths(response, "{{{name}}}", '/{{{lc}}}s/[id]');
 
   return {
