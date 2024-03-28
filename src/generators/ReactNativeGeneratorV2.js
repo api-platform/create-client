@@ -105,8 +105,6 @@ export default class extends BaseGenerator {
     // static files
     [
       "lib/types/ApiResource.ts",
-      "lib/types/HydraView.ts",
-      "lib/types/HydraResponse.ts",
       "lib/hooks/data.ts",
       "lib/hooks/mercure.ts",
       "lib/hooks/modal.ts",
@@ -133,6 +131,8 @@ export default class extends BaseGenerator {
       "components/%s/CreateEditModal.tsx",
       "components/%s/Form.tsx",
       "components/%s/LogsRenderer.tsx",
+      "lib/types/HydraView.ts",
+      "lib/types/HydraResponse.ts",
     ].forEach((pattern) =>
       this.createFileFromPattern(pattern, dir, [lc], context)
     );

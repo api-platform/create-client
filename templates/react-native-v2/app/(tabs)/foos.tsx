@@ -33,8 +33,8 @@ export default function Books() {
 
     useEffect(() => {
         if (isSuccess) {
-            setMember(data["hydra:member"]);
-            setView(data['hydra:view']);
+            setMember(data["{{{hydraPrefix}}}member"]);
+            setView(data['{{{hydraPrefix}}}view']);
         }
     }, [isSuccess, data]);
 

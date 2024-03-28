@@ -1,6 +1,6 @@
 export interface HydraView {
-    'hydra:first'?: string;
-    'hydra:last'?: string;
-    'hydra:previous'?: string;
-    'hydra:next'?: string;
+    '{{{hydraPrefix}}}first'?: string;
+    '{{{hydraPrefix}}}last'?: string;
+    '{{{hydraPrefix}}}previous'?: string;
+    '{{{hydraPrefix}}}next'?: string;
 }

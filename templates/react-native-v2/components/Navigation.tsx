@@ -20,10 +20,10 @@ export default function Navigation(props: { view: HydraView }) {
     const router = useRouter();
 
     const {
-        "hydra:first": first,
-        "hydra:previous": previous,
-        "hydra:next": next,
-        "hydra:last": last,
+        "{{{hydraPrefix}}}first": first,
+        "{{{hydraPrefix}}}previous": previous,
+        "{{{hydraPrefix}}}next": next,
+        "{{{hydraPrefix}}}last": last,
     } = view;
 
     return (
