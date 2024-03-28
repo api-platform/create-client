@@ -1,25 +1,37 @@
-import { useCreateMutation, useLazyGetAllQuery, useUpdateMutation } from "@/lib/api/{{{lc}}}Api";
-import { createErrorLog, createSuccessLog } from "@/lib/factory/logFactory";
-import { useAppSelector } from "@/lib/hooks";
-import { addLog, setData, setModalIsVisible, setView } from "@/lib/slices/{{{lc}}}Slice";
 import {{{ucf}}} from "@/lib/types/{{{ucf}}}";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Controller, SubmitErrorHandler, useForm } from "react-hook-form";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { create, update } from "@/lib/api/{{{lc}}}Api";
+import { {{{ucf}}}Context } from "./Context";
 
 export default function Form() {
-    const [update] = useUpdateMutation();
-    const [create] = useCreateMutation();
-    const [getAll] = useLazyGetAllQuery();
-    const {{{lc}}}Data = useAppSelector(state => state.{{{lc}}});
-    const { page, currentData, modalState } = {{{lc}}}Data;
-    const dispatch = useDispatch();
     const [errors, setErrors] = useState([]);
-    const submitQuery = modalState.edit ? update : create;
+    const queryClient = useQueryClient();
 
-    const initValues: {{{ucf}}} = modalState.edit ? currentData : {
+    const context = useContext({{{ucf}}}Context);
+    const { addNotification, isModalEdit, setIsModalVisible, currentData: data } = context;
+
+    const queryFn = isModalEdit ? update : create;
+
+    const mutation = useMutation({
+        mutationFn: (data: {{{ucf}}}) => queryFn(data),
+        onError: (error) => {
+            addNotification('error', error.toString());
+        },
+        onSuccess: (data) => {
+            if (data.ok) {
+                addNotification('success', `The {{{lc}}} has been ${isModalEdit ? 'updated' : 'created'}`);
+            } else {
+                addNotification('error', `An error occured while ${isModalEdit ? 'updating' : 'creating'} the {{{lc}}} (${data.statusText})`);
+            }
+            queryClient.invalidateQueries({ queryKey: ['getAll'] });
+        }
+    });
+
+    let initValues: {{{ucf}}} = (isModalEdit && data) ? data : {
         '@id': '',
         {{#each formFields}}
             {{{name}}}: {{#if (compare type "==" "number")}}0{{else}}''{{/if}},
@@ -30,30 +42,11 @@ export default function Form() {
         defaultValues: initValues
     });
 
-
     const onSubmit = (data: {{{ucf}}}) => {
         intParser(data);
-        submitQuery(data)
-            .unwrap()
-            .then(() => {
-                dispatch(addLog(createSuccessLog(`The {{{lc}}} has been ${modalState.edit ? 'edited' : 'created'} successfully.`)))
-                getAll(page)
-                    .unwrap()
-                    .then(fulfilled => {
-                        reset();
-                        dispatch(setView(fulfilled["hydra:view"]));
-                        dispatch(setData(fulfilled["hydra:member"]));
-                        dispatch(setModalIsVisible(false));
-                    });
-            })
-            .catch(error => {
-                if (error.data) {
-                    dispatch(
-                        addLog(createErrorLog(`Error : ${error.data["hydra:description"]}`))
-                    )
-                }
-            });
-        return;
+        mutation.mutate(data);
+        setIsModalVisible(false);
+        reset();
     };
 
     const intParser = (data: {{{ucf}}}) => {
@@ -62,14 +55,11 @@ export default function Form() {
                 data[key] = parseInt(data[key]);
             }
         });
-        return;
     }
 
     const onError: SubmitErrorHandler<{{{ucf}}}> = (errors, e) => {
         setErrors(Object.keys(errors));
-        return;
     }
-
 
     return (
         <SafeAreaView>
@@ -102,9 +92,8 @@ export default function Form() {
                     {{#if required}}rules={fieldRequired}{{/if}}
                 />
                 {{/each}}
-
                 <Pressable onPress={handleSubmit(onSubmit, onError)}>
-                    <Text className="bg-cyan-500 cursor-pointer text-white text-sm font-bold py-2 px-4 rounded">{modalState.edit ? 'Edit' : 'Create'}</Text>
+                    <Text className="bg-cyan-500 cursor-pointer text-white text-sm font-bold py-2 px-4 rounded">{isModalEdit ? 'Edit' : 'Create'}</Text>
                 </Pressable>
             </View>
         </SafeAreaView>

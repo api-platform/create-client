@@ -1,43 +1,49 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {{{ucf}}} from '../types/{{{ucf}}}';
 import { ENTRYPOINT } from '@/config/entrypoint';
+import {{{ucf}}} from '../types/{{{ucf}}}';
 
-export const {{{lc}}}Api = createApi({
-    reducerPath: '{{{lc}}}Api',
-    baseQuery: fetchBaseQuery({ baseUrl: ENTRYPOINT }),
-    endpoints: builder => ({
-        getAll: builder.query<any, number>({
-            query: (page) => {
-                return `/{{{lc}}}s?page=${page}`
-            }
-        }),
-        delete: builder.mutation<any, string>({
-            query: (id) => {
-                return {
-                    url: `${id}`,
-                    method: 'DELETE'
-                }
-            }
-        }),
-        create: builder.mutation<any, {{{ucf}}}>({
-            query: ({{{lc}}}) => {
-                return {
-                    url: `/{{{lc}}}s`,
-                    method: 'POST',
-                    body: {{{lc}}},
-                }
-            }
-        }),
-        update: builder.mutation<any, {{{ucf}}}>({
-            query: ({{{lc}}}) => {
-                return {
-                    url: {{{lc}}}['@id'],
-                    method: 'PUT',
-                    body: {{{lc}}},
-                }
-            }
-        }),
-    })
-});
+const ENDPOINT = `{{{lc}}}s`;
 
-export const { useLazyGetAllQuery, useDeleteMutation, useCreateMutation, useUpdateMutation } = {{{lc}}}Api;
+export function getAll(pageId: string) {
+    let page = parseInt(pageId);
+
+    if (page < 1 || isNaN(page)) {
+        page = 1;
+    }
+
+    return fetch(`${ENTRYPOINT}/${ENDPOINT}?page=${page}`).then(res => res.json());
+};
+
+export function update(data: {{{ucf}}}): Promise<Response> {
+    return fetch(
+        `${ENTRYPOINT}${data['@id']}`,
+        {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        }
+    )
+}
+
+export function create(data: {{{ucf}}}): Promise<Response> {
+    return fetch(
+        `${ENTRYPOINT}/${ENDPOINT}`,
+        {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        }
+    )
+}
+
+export function remove(data: {{{ucf}}}): Promise<Response> {
+    return fetch(
+        `${ENTRYPOINT}${data['@id']}`,
+        {
+            method: 'DELETE',
+        }
+    )
+}

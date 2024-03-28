@@ -17,21 +17,25 @@ export default class extends BaseGenerator {
     this.registerTemplates(`react-native-v2/`, [
       "app/(tabs)/foos.tsx",
       "app/_layout.tsx.dist",
-      "lib/hooks.ts",
-      "lib/store.ts",
+      "lib/hooks/data.ts",
+      "lib/hooks/mercure.ts",
+      "lib/hooks/modal.ts",
+      "lib/hooks/notifications.ts",
       "lib/types/ApiResource.ts",
       "lib/types/HydraView.ts",
-      "lib/types/Logs.ts",
+      "lib/types/HydraResponse.ts",
       "lib/types/foo.ts",
-      "lib/factory/logFactory.ts",
-      "lib/slices/fooSlice.ts",
+      "lib/utils/Logs.ts",
+      "lib/utils/mercure.ts",
+      "lib/utils/icons.tsx",
       "lib/api/fooApi.ts",
       "components/Main.tsx",
       "components/Navigation.tsx",
-      "components/StoreProvider.tsx",
+      "components/ConfirmModal.tsx",
       "components/foo/CreateEditModal.tsx",
       "components/foo/Form.tsx",
       "components/foo/LogsRenderer.tsx",
+      "components/foo/Context.ts",
     ]);
 
     handlebars.registerHelper("compare", hbhComparison.compare);
@@ -43,25 +47,6 @@ export default class extends BaseGenerator {
     console.log(
       'Code for the "%s" resource type has been generated!',
       resource.title
-    );
-
-    console.log("You must now configure the lib/store.ts");
-    console.log(
-      chalk.green(`
-            // imports for ${titleLc}
-            import ${titleLc}Slice from './slices/${titleLc}Slice';
-            import { ${titleLc}Api } from './api/${titleLc}Api';
-
-            // reducer for ${titleLc}
-            reducer: {
-                ...
-                ${titleLc}: ${titleLc}Slice,
-                [${titleLc}Api.reducerPath]: ${titleLc}Api.reducer,
-            }
-
-            // middleware for ${titleLc}
-            getDefaultMiddleware().concat(..., ${titleLc}Api.middleware)
-            `)
     );
 
     console.log(
@@ -112,22 +97,26 @@ export default class extends BaseGenerator {
       `${dir}/components/${lc}`,
       `${dir}/lib`,
       `${dir}/lib/api`,
-      `${dir}/lib/factory`,
-      `${dir}/lib/slices`,
       `${dir}/lib/types`,
+      `${dir}/lib/hooks`,
+      `${dir}/lib/utils`,
     ].forEach((dir) => this.createDir(dir, false));
 
     // static files
     [
-      "lib/hooks.ts",
-      "lib/store.ts",
       "lib/types/ApiResource.ts",
       "lib/types/HydraView.ts",
-      "lib/types/Logs.ts",
-      "lib/factory/logFactory.ts",
+      "lib/types/HydraResponse.ts",
+      "lib/hooks/data.ts",
+      "lib/hooks/mercure.ts",
+      "lib/hooks/modal.ts",
+      "lib/hooks/notifications.ts",
+      "lib/utils/Logs.ts",
+      "lib/utils/mercure.ts",
+      "lib/utils/icons.tsx",
       "components/Main.tsx",
       "components/Navigation.tsx",
-      "components/StoreProvider.tsx",
+      "components/ConfirmModal.tsx",
     ].forEach((file) => this.createFile(file, `${dir}/${file}`));
 
     // templated files ucFirst
@@ -139,8 +128,8 @@ export default class extends BaseGenerator {
     [
       "app/(tabs)/%ss.tsx",
       "app/_layout.tsx.dist",
-      "lib/slices/%sSlice.ts",
       "lib/api/%sApi.ts",
+      "components/%s/Context.ts",
       "components/%s/CreateEditModal.tsx",
       "components/%s/Form.tsx",
       "components/%s/LogsRenderer.tsx",

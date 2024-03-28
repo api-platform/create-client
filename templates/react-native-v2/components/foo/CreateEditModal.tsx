@@ -1,58 +1,73 @@
-import { useAppSelector } from "@/lib/hooks";
 import { Modal, Pressable, Text, View } from "react-native";
-import { useDispatch } from "react-redux";
 import Form from "./Form";
-import { addLog, setData, setModalIsVisible, setView } from "@/lib/slices/{{{lc}}}Slice";
-import { useDeleteMutation, useLazyGetAllQuery } from "@/lib/api/{{{lc}}}Api";
-import { createErrorLog, createSuccessLog } from "@/lib/factory/logFactory";
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import {{{ucf}}} from "@/lib/types/{{{ucf}}}";
+import { remove } from "@/lib/api/{{{lc}}}Api";
+import { useContext, useEffect, useState } from "react";
+import ConfirmModal from "../ConfirmModal";
+import { {{{ucf}}}Context } from "./Context";
 
 export default function CreateEditModal() {
-    const {{{lc}}}State = useAppSelector(state => state.{{{lc}}});
-    const { modalState, currentData, page } = {{{lc}}}State;
-    const dispatch = useDispatch();
-    const [deleteMutation] = useDeleteMutation();
-    const [getAll] = useLazyGetAllQuery();
+    const [requestDelete, setRequestDelete] = useState(false);
+    const queryClient = useQueryClient();
 
-    function handleDelete() {
-        deleteMutation(currentData['@id'])
-            .unwrap()
-            .then(() => {
-                dispatch(addLog(createSuccessLog(`{{{ucf}}} ${currentData['@id']} has been deleted successfully.`)))
-                getAll(page)
-                    .unwrap()
-                    .then(fulfilled => {
-                        dispatch(setModalIsVisible(false));
-                        dispatch(setView(fulfilled["hydra:view"]));
-                        dispatch(setData(fulfilled["hydra:member"]));
-                    });
-            })
-            .catch(error => {
-                if (error.data) {
-                    dispatch(addLog(createErrorLog(`Error: ${error.data["hydra:description"]}`)))
-                }
-            });
+    const context = useContext({{{ucf}}}Context);
+    const { addNotification, setIsModalVisible, isModalEdit, isModalVisible, currentData: data } = context;
+
+    const deleteMutation = useMutation({
+        mutationFn: (data: {{{ucf}}}) => remove(data),
+        onError: (error: string) => {
+            addNotification('error', error.toString());
+        },
+        onSuccess: (data) => {
+            if (data.ok) {
+                addNotification('success', 'The {{{lc}}} has been deleted');
+            } else {
+                addNotification('error', `An error occured while deleting the {{{lc}}} (${data.statusText})`);
+            }
+            queryClient.invalidateQueries({ queryKey: ['getAll{{{ucf}}}s'] });
+        },
+    });
+
+    useEffect(() => {
+        if (data && data.deleted) {
+            addNotification('error', `${data["@id"]} has been deleted by another user`);
+            setIsModalVisible(false);
+            setRequestDelete(false);
+        }
+    }, [JSON.stringify(data)])
+
+    const onAccept = () => {
+        deleteMutation.mutate(data);
+        setIsModalVisible(false);
+        setRequestDelete(false);
+    }
+
+    const onDecline = () => {
+        setRequestDelete(false);
     }
 
     return (
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalState.open}
+            visible={isModalVisible}
         >
             <View
                 className="flex absolute bottom-0 rounded bg-white border border-gray-300"
                 style={styles.container}
             >
                 <View className="relative py-12 px-12">
-                    <Text className="text-2xl">{modalState.edit ? `Edit {{{ucf}}}` : 'Create a new {{{ucf}}}'}</Text>
+                    <ConfirmModal isVisible={requestDelete} onAccept={onAccept} onDecline={onDecline} />
+                    <Text className="text-2xl">{isModalEdit ? `Edit {{{ucf}}}` : 'Create a new {{{ucf}}}'} ({ data && data['@id'] })</Text>
                     <Form />
                     {
-                        modalState.edit &&
-                        <Pressable onPress={() => handleDelete()}>
+                        isModalEdit &&
+                        <Pressable onPress={() => setRequestDelete(true)}>
                             <Text className="bg-red-500 cursor-pointer text-white text-sm font-bold py-2 px-4 rounded">Delete</Text>
                         </Pressable>
                     }
-                    <Pressable style={styles.closeButton} onPress={() => dispatch(setModalIsVisible(false))}>
+                    <Pressable style={styles.closeButton} onPress={() => setIsModalVisible(false)}>
                         <Text className="bg-black cursor-pointer text-white text-sm font-bold py-2 px-4 rounded">Close</Text>
                     </Pressable>
                 </View>
