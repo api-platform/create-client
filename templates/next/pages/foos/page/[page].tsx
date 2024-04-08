@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from "next";
-import { dehydrate, QueryClient } from "react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 import { PageList, get{{{ucf}}}s, get{{{ucf}}}sPath } from "../../../components/{{{lc}}}/PageList";
 import { PagedCollection } from "../../../types/collection";
@@ -8,7 +8,7 @@ import { fetchApi, getCollectionPaths } from "../../../utils/dataAccess";
 
 export const getStaticProps: GetStaticProps = async ({ params: { page } = {} }) => {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(get{{{ucf}}}sPath(page), get{{{ucf}}}s(page));
+  await queryClient.prefetchQuery({queryKey: [get{{{ucf}}}sPath(page)], queryFn: get{{{ucf}}}s(page)});
 
   return {
     props: {

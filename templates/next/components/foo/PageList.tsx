@@ -1,7 +1,7 @@
 import { NextComponentType, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import Pagination from "../common/Pagination";
 import { List } from "./List";
@@ -17,7 +17,7 @@ const getPagePath = (path: string) => `/{{{lc}}}s/page/${parsePage("{{{name}}}",
 export const PageList: NextComponentType<NextPageContext> = () => {
   const { query: { page } } = useRouter();
   const { data: { data: {{lc}}s, hubURL } = { hubURL: null } } =
-    useQuery<FetchResponse<PagedCollection<{{{ucf}}}>> | undefined>(get{{{ucf}}}sPath(page), get{{{ucf}}}s(page));
+    useQuery<FetchResponse<PagedCollection<{{{ucf}}}>> | undefined, Error, FetchResponse<PagedCollection<{{{ucf}}}>> | undefined>({queryKey: [get{{{ucf}}}sPath(page)], queryFn: get{{{ucf}}}s(page)});
   const collection = useMercure({{lc}}s, hubURL);
 
   if (!collection || !collection["{{{hydraPrefix}}}member"]) return null;

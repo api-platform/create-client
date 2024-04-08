@@ -2,7 +2,7 @@ import { FunctionComponent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ErrorMessage{{#if hasManyRelations}}, Field, FieldArray{{/if}}, Formik } from "formik";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 
 import { fetchApi, FetchError, FetchResponse } from "../../utils/dataAccess";
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
@@ -31,17 +31,19 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
   const [, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const saveMutation = useMutation<FetchResponse<{{ucf}}> | undefined, Error|FetchError, SaveParams>((saveParams) => save{{{ucf}}}(saveParams));
+  const saveMutation = useMutation<FetchResponse<{{ucf}}> | undefined, Error|FetchError, SaveParams>({mutationFn: (saveParams) => save{{{ucf}}}(saveParams)});
 
-  const deleteMutation = useMutation<FetchResponse<{{ucf}}> | undefined, Error|FetchError, DeleteParams>(({ id }) => delete{{{ucf}}}(id), {
-    onSuccess: () => {
-      router.push("/{{{lc}}}s");
-    },
-    onError: (error)=> {
-      setError(`Error when deleting the resource: ${error}`);
-      console.error(error);
-    }
-  });
+  const deleteMutation = useMutation<FetchResponse<{{ucf}}> | undefined, Error|FetchError, DeleteParams>(
+    {
+      mutationFn: ({ id }) => delete{{{ucf}}}(id),
+      onSuccess: () => {
+        router.push("/{{{lc}}}s");
+      },
+      onError: (error)=> {
+        setError(`Error when deleting the resource: ${error}`);
+        console.error(error);
+      },
+    });
 
 	const handleDelete = () => {
     if (!{{lc}} || !{{lc}}["@id"]) return;
@@ -90,7 +92,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                   isValid: true,
                   msg: `Element ${isCreation ? "created" : "updated"}.`,
                 });
-                router.push("/{{{name}}}");
+                router.push("/{{{lc}}}s");
               },
               onError: (error) => {
                 setStatus({

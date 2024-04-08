@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps, NextComponentType, NextPageContext } fr
 import DefaultErrorPage from "next/error";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 
 import { Show } from "../../../components/{{{lc}}}/Show";
 import { PagedCollection } from "../../../types/collection";
@@ -17,7 +17,7 @@ const Page: NextComponentType<NextPageContext> = () => {
   const { id } = router.query;
 
   const { data: { data: {{lc}}, hubURL, text } = { hubURL: null, text: '' } } =
-    useQuery<FetchResponse<{{{ucf}}}> | undefined>(['{{{lc}}}', id], () => get{{{ucf}}}(id));
+    useQuery<FetchResponse<{{{ucf}}}> | undefined, Error, FetchResponse<{{{ucf}}}> | undefined>({queryKey: ['{{{lc}}}', id], queryFn: () => get{{{ucf}}}(id)});
   const {{{lc}}}Data = useMercure({{lc}}, hubURL);
 
   if (!{{{lc}}}Data) {
@@ -39,7 +39,7 @@ const Page: NextComponentType<NextPageContext> = () => {
 export const getStaticProps: GetStaticProps = async ({ params: { id } = {} }) => {
   if (!id) throw new Error('id not in query param');
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(["{{{lc}}}", id], () => get{{{ucf}}}(id));
+  await queryClient.prefetchQuery({queryKey: ["{{{lc}}}", id], queryFn: () => get{{{ucf}}}(id)});
 
   return {
     props: {
