@@ -2,6 +2,7 @@ import BaseGenerator from "./BaseGenerator.js";
 import handlebars from "handlebars";
 import hbhComparison from "handlebars-helpers/lib/comparison.js";
 import hbhString from "handlebars-helpers/lib/string.js";
+import chalk from "chalk";
 
 export default class extends BaseGenerator {
   constructor(params) {
@@ -58,6 +59,28 @@ export default class extends BaseGenerator {
     handlebars.registerHelper("lowercase", hbhString.lowercase);
   }
 
+  help(resource) {
+    const titleLc = resource.title.toLowerCase();
+
+    console.log(
+      'Code for the "%s" resource type has been generated!',
+      resource.title
+    );
+    console.log(
+      "Paste the following definitions in your application configuration (`client/src/index.js` by default):"
+    );
+    console.log(
+      chalk.green(`
+      // import reducers
+      import ${titleLc} from './reducers/${titleLc}/';
+
+      // Add the reducer
+      combineReducers({ ${titleLc}, /* ... */ }),
+      `)
+    );
+  }
+
+
   generate(api, resource, dir) {
     const lc = resource.title.toLowerCase();
     const titleUcFirst =
@@ -66,6 +89,8 @@ export default class extends BaseGenerator {
     const hasIsRelation = fields.some((field) => field.isRelation);
     const hasIsRelations = fields.some((field) => field.isRelations);
     const hasDateField = fields.some((field) => field.type === "dateTime");
+
+    console.log(resource)
 
     const context = {
       title: resource.title,
@@ -86,9 +111,17 @@ export default class extends BaseGenerator {
     [
       `${dir}/assets`,
       `${dir}/utils`,
-      `${dir}/app/components/${lc}`,
-      `${dir}/app/components/common`,
-      `${dir}/app/components/svg`,
+      `${dir}/app/components/${lc}/create`,
+      `${dir}/app/components/${lc}/edit`,
+      `${dir}/app/components/${lc}/list`,
+      `${dir}/app/components/${lc}/show`,
+      `${dir}/app/components/common/delete`,
+      `${dir}/app/components/common/form`,
+      `${dir}/app/components/common/header`,
+      `${dir}/app/components/common/sidebar`,
+      `${dir}/app/components/common/table`,
+      `${dir}/app/components/svg/list-svg`,
+      `${dir}/app/components/svg/menu`,
       `${dir}/app/interface`,
       `${dir}/app/router`,
       `${dir}/app/service`,
@@ -96,33 +129,35 @@ export default class extends BaseGenerator {
 
     //CREATE FILE
     [
-      `${dir}/app/components/svg/list-svg/list-svg.component.svg`,
-      `${dir}/app/components/svg/list-svg/list-svg.component.ts`,
-      `${dir}/app/components/svg/menu/menu.component.svg`,
-      `${dir}/app/components/svg/menu/menu.component.ts`,
-      `${dir}/app/components/common/delete/delete.component.html`,
-      `${dir}/app/components/common/delete/delete.component.ts`,
-      `${dir}/app/components/common/form/form.component.html`,
-      `${dir}/app/components/common/form/form.component.ts`,
-      `${dir}/app/components/common/header/header.component.html`,
-      `${dir}/app/components/common/header/header.component.ts`,
-      `${dir}/app/components/common/sidebar/sidebar.component.html`,
-      `${dir}/app/components/common/sidebar/sidebar.component.ts`,
-      `${dir}/app/components/common/table/table.component.html`,
-      `${dir}/app/app.component.html`,
-      `${dir}/app/app.component.ts`,
-      `${dir}/app/app.routes.ts`,
-    ].forEach((file) => this.createFile(file, file, context, false));
+      "app/components/svg/list-svg/list-svg.component.svg",
+      "app/components/svg/list-svg/list-svg.component.ts",
+      "app/components/svg/menu/menu.component.svg",
+      "app/components/svg/menu/menu.component.ts",
+      "app/components/common/delete/delete.component.html",
+      "app/components/common/delete/delete.component.ts",
+      "app/components/common/form/form.component.html",
+      "app/components/common/form/form.component.ts",
+      "app/components/common/header/header.component.html",
+      "app/components/common/header/header.component.ts",
+      "app/components/common/sidebar/sidebar.component.html",
+      "app/components/common/sidebar/sidebar.component.ts",
+
+      "app/app.component.html",
+      "app/app.component.ts",
+      "app/app.routes.ts",
+    ].forEach((file) =>
+      this.createFile(file, `${dir}/${file}`, context, false)
+    );
 
     [
-      `app/components/%s/create/create.component.html",
+      "app/components/%s/create/create.component.html",
       "app/components/%s/create/create.component.ts",
-      "app/components/%s/edit/edit.component.html",
+      /*"app/components/%s/edit/edit.component.html",
       "app/components/%s/edit/edit.component.ts",
       "app/components/%s/list/list.component.html",
       "app/components/%s/list/list.component.ts",
       "app/components/%s/show/show.component.html",
-      "app/components/%s/show/show.component.ts",`,
+      "app/components/%s/show/show.component.ts",*/
     ].forEach((file) => this.createFileFromPattern(file, dir, [lc], context));
   }
 

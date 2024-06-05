@@ -72,9 +72,7 @@
   "lint-staged": {
     "src/**/*.js": "yarn lint --fix"
   },
-  "bin": {
-    "create-client": "./lib/index.js"
-  },
+  "bin": "./lib/index.js",
   "publishConfig": {
     "access": "public"
   }

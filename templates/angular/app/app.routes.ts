@@ -1,24 +1,24 @@
 import {Routes} from '@angular/router';
-import {ListComponent} from "./components/foo/list/list.component";
-import {ShowComponent} from "./components/foo/show/show.component";
-import {EditComponent} from "./components/foo/edit/edit.component";
-import {CreateComponent} from "./components/foo/create/create.component";
+import {ListComponent} from "./components/{{lc}}/list/list.component";
+import {ShowComponent} from "./components/{{lc}}/show/show.component";
+import {EditComponent} from "./components/{{lc}}/edit/edit.component";
+import {CreateComponent} from "./components/{{lc}}/create/create.component";
 
 export const routes: Routes = [
   {
-    path: 'heroes',
+    path: '{{lc}}',
     component: ListComponent
   },
   {
-    path: 'heroes/add',
+    path: '{{lc}}/add',
     component: CreateComponent
   },
   {
-    path: 'heroes/:id',
+    path: '{{lc}}/:id',
     component: ShowComponent,
   },
   {
-    path: 'heroes/:id/edit',
+    path: '{{lc}}/:id/edit',
     component: EditComponent
   },
 ];

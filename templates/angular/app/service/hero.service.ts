@@ -2,7 +2,6 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {Injectable, Signal} from "@angular/core";
 import {ApiList, ApiShow} from "../interface/api";
-import {Hero} from "../interface/hero.model";
 import {Foo} from "../interface/foo.model";
 
 @Injectable({providedIn: 'root'})
