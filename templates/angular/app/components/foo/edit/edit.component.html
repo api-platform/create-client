@@ -1,0 +1,34 @@
+<div class="px-4 mt-4">
+  <div class="flex items-center justify-end">
+    <a [routerLink]="['/heroes']"
+       class="text-blue-600 hover:text-blue-800">
+      Back to list
+    </a>
+  </div>
+  @if (isLoading()) {
+    <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
+  } @else {
+    <h1 class="text-3xl my-4">Edit {{  item()?.name }} {{ item()?.["@id"] }}</h1>
+
+      <form (ngSubmit)="onSubmit($event)">
+        <div class="bg-white px-6 py-8">
+          <label for="name"> name</label>
+          <input id="name"
+                 class="mt-1 w-full px-3 py-2 border rounded"
+                 [ngModel]="item()?.name"
+                 (ngModelChange)="getItemId($event)"
+                 [ngModelOptions]="{standalone: true}"
+          >
+        </div>
+        <div class="bg-neutral-100 px-4 py-6 flex justify-between">
+          <button
+            type="submit"
+            class="px-6 py-2 bg-green-500 text-white font-medium rounded shadow-md hover:bg-green-600"
+          >
+            Submit
+          </button>
+          <app-delete (delete)="delete()"></app-delete>
+        </div>
+      </form>
+  }
+</div>

@@ -44,6 +44,7 @@ export default class {
     context,
     templateValues = ["foo", "Foo"]
   ) {
+    console.log(dir);
     this.createFile(
       vsprintf(pattern, templateValues),
       vsprintf(`${dir}/${pattern}`, values),

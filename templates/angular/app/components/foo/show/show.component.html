@@ -1,0 +1,51 @@
+<div class="w-full px-4 mt-4">
+  @if (isLoading()) {
+    <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
+  } @else {
+    <div class="flex items-center justify-between">
+      <a [routerLink]="['/heroes']"
+         class="text-blue-600 hover:text-blue-800">
+        Back to list
+      </a>
+      <div class="flex">
+        <a [routerLink]="[item()?.['@id'], 'edit']"
+           class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700">
+          Edit
+        </a>
+        <app-delete (delete)="delete()"></app-delete>
+      </div>
+    </div>
+
+    <h1 class="text-3xl my-4">Show {{ item()?.['@id'] }}</h1>
+
+    <div class="bg-white overflow-x-auto">
+      <table class="min-w-full">
+        <thead class="border-b">
+        <tr>
+          <th scope="col" class="text-sm font-medium px-6 py-4 text-left">
+            Field
+          </th>
+          <th scope="col" class="text-sm font-medium px-6 py-4 text-left">
+            Value
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+          @if (item()) {
+            <tr class="border-b">
+              <th
+                class="text-sm font-medium px-6 py-4 text-left capitalize"
+                scope="row"
+              >
+                name
+              </th>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                {{ item()?.name }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

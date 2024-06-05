@@ -1,0 +1,27 @@
+<div class="p-8 mt-4">
+  <div class="flex justify-between items-center">
+    <h1 class="text-3xl mb-2">Heroes List</h1>
+    <div class="flex">
+      <a routerLink="/heroes/add"
+         class="bg-cyan-500 hover:bg-cyan-700 text-white text-sm font-bold py-2 px-4 rounded mr-2"
+      >
+        Create
+      </a>
+      <app-delete
+        [disabled]="!bulk().length"
+        (delete)="delete()"
+      >
+      </app-delete>
+    </div>
+  </div>
+  @if (isLoading()) {
+    <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
+  } @else {
+    <app-table [items]="heroes()"
+               [bulk]="bulk()"
+               (addToBulkList)="addToBulk($event)"
+               (selectedAll)="selectedAll()"
+    >
+    </app-table>
+  }
+</div>
