@@ -2,7 +2,7 @@ import {Component, computed, OnInit, Output, signal, WritableSignal} from '@angu
 import {RouterLink} from "@angular/router";
 import {AsyncPipe, Location, NgFor, NgIf} from "@angular/common";
 import {TableComponent} from "../../common/table/table.component";
-import {HeroService} from "../../../service/hero.service";
+import {ApiService} from "../../../service/api.service";
 import {Hero} from "../../../interface/hero.model";
 import {DeleteComponent} from "../../common/delete/delete.component";
 import {log} from "node:util";
@@ -28,7 +28,7 @@ export class ListComponent implements OnInit {
   @Output() bulk: WritableSignal<Array<string>> = signal([])
 
   constructor(
-    private heroService: HeroService,
+    private heroService: ApiService,
     private location: Location
   ) {
   }
@@ -36,7 +36,7 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.isLoading.set(true)
     this.heroService
-      .getHeroes('/heroes')
+      .getDataes('/heroes')
       .subscribe(
         (items) => {
           this.heroes.set(items['hydra:member'])

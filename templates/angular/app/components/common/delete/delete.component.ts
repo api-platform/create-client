@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {HeroService} from "../../../service/hero.service";
+import {ApiService} from "../../../service/api.service";
 import {Location} from "@angular/common";
 
 @Component({
@@ -12,7 +12,7 @@ export class DeleteComponent {
   @Input() disabled!: boolean
   @Output() delete: EventEmitter<Function> = new EventEmitter<Function>()
   constructor(
-    private heroService: HeroService,
+    private heroService: ApiService,
     private location: Location
   ) {
   }

@@ -58,7 +58,7 @@ test("Generate a React app", () => {
     "app/interface/show.model.ts",
     "app/interface/update.model.ts",
     "app/router/foo.ts",
-    "app/service/hero.service.ts",
+    "app/service/api.service.ts",
   ].forEach((file) => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
 
   [

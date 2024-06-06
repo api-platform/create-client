@@ -1,7 +1,7 @@
 import {Component, OnInit, signal, WritableSignal} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
 import {CommonModule, Location} from "@angular/common";
-import {HeroService} from "../../../service/hero.service";
+import {ApiService} from "../../../service/api.service";
 import {DeleteComponent} from "../../common/delete/delete.component";
 import {ApiShow} from "../../../interface/api";
 
@@ -21,7 +21,7 @@ export class ShowComponent implements OnInit {
   public error = signal(undefined)
 
   constructor(
-    private heroService: HeroService,
+    private heroService: ApiService,
     private router: Router,
     private location: Location
   ) {
@@ -31,7 +31,7 @@ export class ShowComponent implements OnInit {
     this.isLoading.set(true)
     const id = this.router.url
     this.heroService
-      .getHero(id)
+      .getData(id)
       .subscribe(item => {
         this.item.set(item)
         this.isLoading.set(false)

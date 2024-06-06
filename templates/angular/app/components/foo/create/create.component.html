@@ -1,30 +1,14 @@
 <div class="container mx-auto px-4 max-w-2xl mt-4">
   <div class="flex items-center justify-between">
-    <a [routerLink]="['/heroes']"
+    <a [routerLink]="['/{{lc}}']"
        class="text-blue-600 hover:text-blue-800">
-      Back to list {{lc}}
+      Back to list
     </a>
   </div>
   @if (isLoading()) {
-    <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
+  <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
   } @else {
-    <h1 class="text-3xl my-4">Create</h1>
-
-    <form (ngSubmit)="onSubmit($event)">
-      <div class="mb-3">
-        <label for="name"> name</label>
-        <input id="name"
-               class="mt-1 w-full px-3 py-2 border rounded"
-               [formControl]="input"
-        >
-      </div>
-
-      <button
-        type="submit"
-        class="px-6 py-2 bg-green-500 text-white font-medium rounded shadow-md hover:bg-green-600"
-      >
-        Submit
-      </button>
-    </form>
+  <h1 class="text-3xl my-4">Create</h1>
+  <app-form [fields]="{{{formType}}}" (submit)="onSubmit($event)"/>
   }
 </div>

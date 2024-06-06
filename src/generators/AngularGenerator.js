@@ -52,7 +52,7 @@ export default class extends BaseGenerator {
       "app/app.routes.ts",
 
       //SERVICE
-      "app/service/hero.service.ts",
+      "app/service/api.service.ts",
     ]);
 
     handlebars.registerHelper("compare", hbhComparison.compare);
@@ -80,17 +80,17 @@ export default class extends BaseGenerator {
     );
   }
 
-
   generate(api, resource, dir) {
     const lc = resource.title.toLowerCase();
     const titleUcFirst =
       resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
     const fields = this.parseFields(resource);
+    console.log(fields);
     const hasIsRelation = fields.some((field) => field.isRelation);
     const hasIsRelations = fields.some((field) => field.isRelations);
     const hasDateField = fields.some((field) => field.type === "dateTime");
 
-    console.log(resource)
+    console.log(resource);
 
     const context = {
       title: resource.title,

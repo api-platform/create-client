@@ -5,7 +5,7 @@ import {ApiList, ApiShow} from "../interface/api";
 import {Foo} from "../interface/foo.model";
 
 @Injectable({providedIn: 'root'})
-export class HeroService {
+export class ApiService {
   baseUrl: string = 'https://localhost'
   httpOptions = {
     headers: new HttpHeaders({

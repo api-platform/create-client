@@ -1,7 +1,7 @@
 import {Component, computed, OnInit, signal, WritableSignal} from '@angular/core';
 import {DeleteComponent} from "../../common/delete/delete.component";
 import {Router, RouterLink} from "@angular/router";
-import {HeroService} from "../../../service/hero.service";
+import {ApiService} from "../../../service/api.service";
 import {CommonModule, Location} from "@angular/common";
 import {ApiShow} from "../../../interface/api";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -25,7 +25,7 @@ export class EditComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private heroService: HeroService,
+    private heroService: ApiService,
     private location: Location
   ) {
   }
@@ -38,7 +38,7 @@ export class EditComponent implements OnInit {
     this.isLoading.set(true)
     const splitUrl = this.router.url.split('/edit')[0]
     this.heroService
-      .getHero(splitUrl)
+      .getData(splitUrl)
       .subscribe(item => {
         this.item.set(item)
         this.isLoading.set(false)
