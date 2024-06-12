@@ -13,7 +13,7 @@ import {ApiShow} from "../../../interface/api";
     RouterLink,
     DeleteComponent
   ],
-  templateUrl: './show.component.html',
+  templateUrl: './show.component.svg',
 })
 export class ShowComponent implements OnInit {
   public item: WritableSignal<ApiShow|null> = signal(null)
@@ -21,7 +21,7 @@ export class ShowComponent implements OnInit {
   public error = signal(undefined)
 
   constructor(
-    private heroService: ApiService,
+    private apiService: ApiService,
     private router: Router,
     private location: Location
   ) {
@@ -30,7 +30,7 @@ export class ShowComponent implements OnInit {
   ngOnInit() {
     this.isLoading.set(true)
     const id = this.router.url
-    this.heroService
+    this.apiService
       .getData(id)
       .subscribe(item => {
         this.item.set(item)
@@ -39,7 +39,7 @@ export class ShowComponent implements OnInit {
   }
 
   delete() {
-    return this.heroService.delete(this.item()?.['@id']).subscribe(
+    return this.apiService.delete(this.item()?.['@id']).subscribe(
       () => this.location.back()
     )
   }

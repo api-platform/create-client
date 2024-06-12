@@ -67,7 +67,8 @@
     "test-react-app": "./testapp.sh react",
     "test-next-app": "./testapp.sh next",
     "test-vue-app": "./testapp.sh vue",
-    "test-nuxt-app": "./testapp.sh nuxt"
+    "test-nuxt-app": "./testapp.sh nuxt",
+    "test-angular-app": "./testapp.sh angular"
   },
   "lint-staged": {
     "src/**/*.js": "yarn lint --fix"

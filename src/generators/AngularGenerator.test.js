@@ -62,9 +62,14 @@ test("Generate a React app", () => {
   ].forEach((file) => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
 
   [
-    "/components/abc/Form.tsx",
-    "/components/abc/List.tsx",
-    "/components/abc/Show.tsx",
+    "app/components/abc/create/create.component.html",
+    "app/components/abc/create/create.component.ts",
+    "app/components/abc/edit/edit.component.html",
+    "app/components/abc/edit/edit.component.ts",
+    "app/components/abc/list/list.component.html",
+    "app/components/abc/list/list.component.ts",
+    "app/components/abc/show/show.component.html",
+    "app/components/abc/show/show.component.ts",
     "/interfaces/Abc.ts",
   ].forEach((file) => {
     expect(fs.existsSync(tmpobj.name + file)).toBe(true);

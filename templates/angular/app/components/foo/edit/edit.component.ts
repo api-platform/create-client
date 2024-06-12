@@ -1,4 +1,4 @@
-import {Component, computed, OnInit, signal, WritableSignal} from '@angular/core';
+import {Component, OnInit, signal, WritableSignal} from '@angular/core';
 import {DeleteComponent} from "../../common/delete/delete.component";
 import {Router, RouterLink} from "@angular/router";
 import {ApiService} from "../../../service/api.service";
@@ -25,7 +25,7 @@ export class EditComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private heroService: ApiService,
+    private apiService: ApiService,
     private location: Location
   ) {
   }
@@ -37,7 +37,7 @@ export class EditComponent implements OnInit {
   loadData() {
     this.isLoading.set(true)
     const splitUrl = this.router.url.split('/edit')[0]
-    this.heroService
+    this.apiService
       .getData(splitUrl)
       .subscribe(item => {
         this.item.set(item)
@@ -58,7 +58,7 @@ export class EditComponent implements OnInit {
   }
 
   onSubmit(event: any) {
-    return this.heroService.putHero(
+    return this.apiService.putHero(
       this.item()?.["@id"],
       this.item()
     ).subscribe(() => {
@@ -67,7 +67,7 @@ export class EditComponent implements OnInit {
   }
 
   delete() {
-    return this.heroService.delete(
+    return this.apiService.delete(
       this.item()?.["@id"]
     ).subscribe(
       () => this.location.back()

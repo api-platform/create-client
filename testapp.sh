@@ -75,3 +75,27 @@ if [ "$1" = "vue" ]; then
   yarn --cwd ./tmp/app/vue build
   start-server-and-test 'yarn --cwd ./tmp/app/vue vite preview --port 3000' http://localhost:3000/books/ 'yarn playwright test'
 fi
+
+if [ "$1" = "angular" ]; then
+  cd ./tmp/app
+  npm install -g @angular/cli
+
+  ng new angular
+  cd ../..
+  yarn --cwd ./tmp/app/angular add tailwindcss postcss autoprefixer
+  yarn --cwd ./tmp/app/angular tailwindcss init -p
+
+  cp ./templates/common/tailwind.config.js ./tmp/app/angular
+  cp ./templates/common/style.css ./tmp/app/angular/src
+
+  cp ./templates/angular/app/app.component.html ./tmp/app/angular/src/app
+  cp ./templates/angular/app/app.component.ts ./tmp/app/angular/src/app
+
+  mkdir -p ./tmp/app/angular/src/app/components/common
+  mkdir -p ./tmp/app/angular/src/app/components/svg
+
+  cp -r ./templates/angular/app/components/common/* ./tmp/app/angular/src/app/components/common/
+  cp -r ./templates/angular/app/components/svg/* ./tmp/app/angular/src/app/components/svg/
+  yarn --cwd ./tmp/app/angular build
+  start-server-and-test 'yarn --cwd ./tmp/app/angular start' http://127.0.0.1:4200/books/ 'yarn playwright test'
+fi

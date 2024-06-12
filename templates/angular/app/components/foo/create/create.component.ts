@@ -20,12 +20,7 @@ import {FormComponent} from "../../common/form/form.component";
 })
 export class CreateComponent {
   public isLoading: WritableSignal<boolean> = signal(false)
-  public formType: Array<{ name: string; type: string }> = [
-    {
-      name: 'name',
-      type: 'string',
-    }
-  ]
+  public formType ='{{formFields}}'
 
   constructor(private apiService: ApiService, private location: Location) {
   }

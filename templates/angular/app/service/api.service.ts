@@ -30,21 +30,13 @@ export class ApiService {
       )
   }
 
-  getHeroes(id: string): Observable<ApiList> {
+  getData(id: string): Observable<ApiList|ApiShow> {
     return this.http
-      .get<ApiList>(this.baseUrl + id)
+      .get<ApiList|ApiShow>(this.baseUrl + id)
       .pipe(
         catchError(
           this.handleError
         )
-      )
-  }
-
-  getHero(id: string): Observable<ApiShow> {
-    return this.http
-      .get<ApiShow>(this.baseUrl + id)
-      .pipe(
-        catchError(this.handleError)
       )
   }
 

@@ -1,12 +1,10 @@
-import {Component, computed, OnInit, Output, signal, WritableSignal} from '@angular/core';
+import {Component, OnInit, signal, WritableSignal} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {AsyncPipe, Location, NgFor, NgIf} from "@angular/common";
 import {TableComponent} from "../../common/table/table.component";
 import {ApiService} from "../../../service/api.service";
 import {Hero} from "../../../interface/hero.model";
 import {DeleteComponent} from "../../common/delete/delete.component";
-import {log} from "node:util";
-import {Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-list',
@@ -22,24 +20,23 @@ import {Validators} from "@angular/forms";
   templateUrl: './list.component.html',
 })
 export class ListComponent implements OnInit {
-  public heroes: WritableSignal<Hero[] | []> = signal([])
+  public items: WritableSignal<Hero[] | []> = signal([])
   public isLoading = signal(false)
   public error = signal(undefined)
-  @Output() bulk: WritableSignal<Array<string>> = signal([])
+  public bulk: WritableSignal<Array<string>> = signal([])
 
   constructor(
-    private heroService: ApiService,
-    private location: Location
+    private apiService: ApiService
   ) {
   }
 
   ngOnInit() {
     this.isLoading.set(true)
-    this.heroService
-      .getDataes('/heroes')
+    this.apiService
+      .getData('/{{lc}}')
       .subscribe(
         (items) => {
-          this.heroes.set(items['hydra:member'])
+          this.items.set(items['hydra:member'])
           this.isLoading.set(false)
         }
       )
@@ -56,8 +53,8 @@ export class ListComponent implements OnInit {
 
   selectedAll() {
     if (!this.bulk().length) {
-      this.heroes().forEach(hero => {
-        this.bulk().push(<string>hero["@id"])
+      this.items().forEach(item => {
+        this.bulk().push(<string>item["@id"])
       })
     } else {
       this.bulk.set([])
@@ -70,7 +67,7 @@ export class ListComponent implements OnInit {
         items =>
           items.forEach(
             uri =>
-              this.heroService.delete(uri)
+              this.apiService.delete(uri)
                 .subscribe(
                   () => {
                     window.location.reload()

@@ -9,6 +9,6 @@
   <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
   } @else {
   <h1 class="text-3xl my-4">Create</h1>
-  <app-form [fields]="{{{formType}}}" (submit)="onSubmit($event)"/>
+  <app-form [fields]="formType" (submit)="onSubmit($event)"></app-form>
   }
 </div>

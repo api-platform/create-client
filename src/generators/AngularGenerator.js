@@ -36,6 +36,10 @@ export default class extends BaseGenerator {
       //SVG COMPONENT
       "app/components/svg/list-svg/list-svg.component.svg",
       "app/components/svg/list-svg/list-svg.component.ts",
+      "app/components/svg/show-svg/show-svg.component.svg",
+      "app/components/svg/show-svg/show-svg.component.ts",
+      "app/components/svg/edit-svg/edit-svg.component.svg",
+      "app/components/svg/edit-svg/edit-svg.component.ts",
       "app/components/svg/menu/menu.component.svg",
       "app/components/svg/menu/menu.component.ts",
 
@@ -89,8 +93,7 @@ export default class extends BaseGenerator {
     const hasIsRelation = fields.some((field) => field.isRelation);
     const hasIsRelations = fields.some((field) => field.isRelations);
     const hasDateField = fields.some((field) => field.type === "dateTime");
-
-    console.log(resource);
+    const formFields = this.buildFields(fields);
 
     const context = {
       title: resource.title,
@@ -98,7 +101,7 @@ export default class extends BaseGenerator {
       lc,
       uc: resource.title.toUpperCase(),
       fields,
-      formFields: this.buildFields(fields),
+      formFields,
       hydraPrefix: this.hydraPrefix,
       titleUcFirst,
       hasIsRelation,
@@ -106,6 +109,7 @@ export default class extends BaseGenerator {
       hasRelations: hasIsRelation || hasIsRelations,
       hasDateField,
     };
+    console.log("api ==>", api);
 
     //CREATE DIRECTORIES - These directories may already exist
     [
@@ -121,6 +125,8 @@ export default class extends BaseGenerator {
       `${dir}/app/components/common/sidebar`,
       `${dir}/app/components/common/table`,
       `${dir}/app/components/svg/list-svg`,
+      `${dir}/app/components/svg/show-svg`,
+      `${dir}/app/components/svg/edit-svg`,
       `${dir}/app/components/svg/menu`,
       `${dir}/app/interface`,
       `${dir}/app/router`,
@@ -131,6 +137,10 @@ export default class extends BaseGenerator {
     [
       "app/components/svg/list-svg/list-svg.component.svg",
       "app/components/svg/list-svg/list-svg.component.ts",
+      "app/components/svg/show-svg/show-svg.component.svg",
+      "app/components/svg/show-svg/show-svg.component.ts",
+      "app/components/svg/edit-svg/edit-svg.component.svg",
+      "app/components/svg/edit-svg/edit-svg.component.ts",
       "app/components/svg/menu/menu.component.svg",
       "app/components/svg/menu/menu.component.ts",
       "app/components/common/delete/delete.component.html",
@@ -150,15 +160,18 @@ export default class extends BaseGenerator {
     );
 
     [
+      "app/router/%s.ts",
+      "app/components/%s/list/list.component.html",
+      "app/components/%s/list/list.component.ts",
       "app/components/%s/create/create.component.html",
       "app/components/%s/create/create.component.ts",
       /*"app/components/%s/edit/edit.component.html",
       "app/components/%s/edit/edit.component.ts",
-      "app/components/%s/list/list.component.html",
-      "app/components/%s/list/list.component.ts",
-      "app/components/%s/show/show.component.html",
+      "app/components/%s/show/show.component.svg",
       "app/components/%s/show/show.component.ts",*/
-    ].forEach((file) => this.createFileFromPattern(file, dir, [lc], context));
+    ].forEach((file) =>
+      this.createFileFromPattern(file, dir, [lc, formFields], context)
+    );
   }
 
   parseFields(resource) {
