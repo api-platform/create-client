@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="text-body1">
-      <span class="q-mr-sm">
-        \{{ label }}
-      </span>
+      <span class="q-mr-sm"> \{{ label }} </span>
 
       <q-btn color="secondary" @click="addField">Add</q-btn>
     </div>
@@ -30,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue';
+import { ref } from "vue";
 
 const props = defineProps<{
   values?: string[];
@@ -38,17 +36,17 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'update', values: string[]): void;
+  (e: "update", values: string[]): void;
 }>();
 
-let fields: Ref<string[]> = ref([]);
+const fields = ref<string[]>([]);
 
 if (props.values) {
   fields.value.push(...props.values);
 }
 
 function addField() {
-  fields.value.push('');
+  fields.value.push("");
 }
 
 function updateField(index: number, value: string) {
@@ -65,7 +63,7 @@ function removeField(index: number) {
 
 function emitUpdate() {
   emit(
-    'update',
+    "update",
     fields.value.filter((field) => field.length)
   );
 }

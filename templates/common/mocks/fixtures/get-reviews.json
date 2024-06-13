@@ -1,0 +1,298 @@
+{
+  "@context": "\/contexts\/Review",
+  "@id": "\/admin\/reviews",
+  "@type": "hydra:Collection",
+  "hydra:totalItems": 536,
+  "hydra:member": [
+    {
+      "@id": "\/admin\/reviews\/1eef9f20-d551-6cc2-a2c9-71c20e5f3ee3",
+      "@type": "https:\/\/schema.org\/Review",
+      "user": {
+        "@id": "\/admin\/users\/1eef9f20-d535-62ac-b9cc-71c20e5f3ee3",
+        "@type": "https:\/\/schema.org\/Person",
+        "sub": "018ed9e8-15c2-71c2-a42a-a54b04215a49",
+        "firstName": "John",
+        "lastName": "Doe",
+        "name": "John Doe"
+      },
+      "book": {
+        "@id": "\/admin\/books\/1eef9f1f-c599-6524-8ea8-71c20e5f3ee3",
+        "@type": [
+          "https:\/\/schema.org\/Book",
+          "https:\/\/schema.org\/Offer"
+        ],
+        "title": "Hyperion",
+        "author": "Dan Simmons"
+      },
+      "publishedAt": "2024-04-14T00:00:49+00:00",
+      "body": "This is the best SF book ever!",
+      "rating": 5
+    },
+    {
+      "@id": "\/admin\/reviews\/1eef9f1f-cea4-6a60-aaf9-71c20e5f3ee3",
+      "@type": "https:\/\/schema.org\/Review",
+      "user": {
+        "@id": "\/admin\/users\/1eef9f1f-ce80-67aa-a4c4-71c20e5f3ee3",
+        "@type": "https:\/\/schema.org\/Person",
+        "sub": "018ed9e7-aa28-7d10-95cf-2d015e75e00a",
+        "firstName": "Aileen",
+        "lastName": "Hane",
+        "name": "Aileen Hane"
+      },
+      "book": {
+        "@id": "\/admin\/books\/1eef9f1f-ce17-6084-bb93-71c20e5f3ee3",
+        "@type": [
+          "https:\/\/schema.org\/Book",
+          "https:\/\/schema.org\/Offer"
+        ],
+        "title": "Burn",
+        "author": "Julianna Baggott"
+      },
+      "publishedAt": "2024-04-01T17:18:14+00:00",
+      "body": "Quia neque quia nostrum velit. Odit rerum quis enim quidem neque exercitationem. Mollitia rem inventore optio sequi. Quo deleniti nam veniam sunt aliquid corporis nostrum.",
+      "rating": 5
+    },
+    {
+      "@id": "\/admin\/reviews\/1eef9f1f-cee6-6852-af6f-71c20e5f3ee3",
+      "@type": "https:\/\/schema.org\/Review",
+      "user": {
+        "@id": "\/admin\/users\/1eef9f1f-cebb-6346-b4b4-71c20e5f3ee3",
+        "@type": "https:\/\/schema.org\/Person",
+        "sub": "018ed9e7-aa40-779c-b6b4-1dd1cbbe274b",
+        "firstName": "Nils",
+        "lastName": "Abbott",
+        "name": "Nils Abbott"
+      },
+      "book": {
+        "@id": "\/admin\/books\/1eef9f1f-ce17-6084-bb93-71c20e5f3ee3",
+        "@type": [
+          "https:\/\/schema.org\/Book",
+          "https:\/\/schema.org\/Offer"
+        ],
+        "title": "Burn",
+        "author": "Julianna Baggott"
+      },
+      "publishedAt": "2024-04-01T17:18:14+00:00",
+      "body": "Deleniti alias ut vitae est. Rem beatae temporibus porro. Nam quis repudiandae blanditiis et sint cupiditate nobis. Non quam ut commodi laborum aut.",
+      "rating": 4
+    },
+    {
+      "@id": "\/admin\/reviews\/1eef9f1f-ce6c-632c-bece-71c20e5f3ee3",
+      "@type": "https:\/\/schema.org\/Review",
+      "user": {
+        "@id": "\/admin\/users\/1eef9f1f-ce2f-6864-8002-71c20e5f3ee3",
+        "@type": "https:\/\/schema.org\/Person",
+        "sub": "018ed9e7-aa06-78bd-845b-7b116df3ce40",
+        "firstName": "Lonie",
+        "lastName": "Fahey",
+        "name": "Lonie Fahey"
+      },
+      "book": {
+        "@id": "\/admin\/books\/1eef9f1f-ce17-6084-bb93-71c20e5f3ee3",
+        "@type": [
+          "https:\/\/schema.org\/Book",
+          "https:\/\/schema.org\/Offer"
+        ],
+        "title": "Burn",
+        "author": "Julianna Baggott"
+      },
+      "publishedAt": "2024-04-01T17:18:14+00:00",
+      "body": "Ex et iure doloribus dolorum aut culpa repellendus. Qui nihil quisquam impedit consequuntur omnis et tempora doloribus. Molestiae sit nostrum cupiditate non. Odio consequuntur quo consectetur.",
+      "rating": 3
+    },
+    {
+      "@id": "\/admin\/reviews\/1eef9f20-9cbb-6502-a5b2-71c20e5f3ee3",
+      "@type": "https:\/\/schema.org\/Review",
+      "user": {
+        "@id": "\/admin\/users\/1eef9f20-9c86-64e2-87ef-71c20e5f3ee3",
+        "@type": "https:\/\/schema.org\/Person",
+        "sub": "018ed9e7-fe8b-791d-9542-bbe7a073744a",
+        "firstName": "Eldred",
+        "lastName": "Bogan",
+        "name": "Eldred Bogan"
+      },
+      "book": {
+        "@id": "\/admin\/books\/1eef9f20-9ba2-6a30-9683-71c20e5f3ee3",
+        "@type": [
+          "https:\/\/schema.org\/Book",
+          "https:\/\/schema.org\/Offer"
+        ],
+        "title": "Corona (Star Trek, No 15)",
+        "author": "Greg Bear"
+      },
+      "publishedAt": "2024-03-22T15:29:13+00:00",
+      "body": "Quo molestiae enim consequatur ut sed excepturi. Doloribus excepturi doloremque voluptas. Itaque quidem iusto rem magni.",
+      "rating": 3
+    },
+    {
+      "@id": "\/admin\/reviews\/1eef9f20-9c57-621e-8335-71c20e5f3ee3",
+      "@type": "https:\/\/schema.org\/Review",
+      "user": {
+        "@id": "\/admin\/users\/1eef9f20-9c24-68dc-a8cf-71c20e5f3ee3",
+        "@type": "https:\/\/schema.org\/Person",
+        "sub": "018ed9e7-fe63-70c5-ab7c-d2685c965558",
+        "firstName": "Marta",
+        "lastName": "Kulas",
+        "name": "Marta Kulas"
+      },
+      "book": {
+        "@id": "\/admin\/books\/1eef9f20-9ba2-6a30-9683-71c20e5f3ee3",
+        "@type": [
+          "https:\/\/schema.org\/Book",
+          "https:\/\/schema.org\/Offer"
+        ],
+        "title": "Corona (Star Trek, No 15)",
+        "author": "Greg Bear"
+      },
+      "publishedAt": "2024-03-22T15:29:13+00:00",
+      "body": "Maiores dolorem ut quis recusandae. Ullam accusamus quis reprehenderit facilis et. Nihil accusantium consectetur quos quis unde aut ducimus. Enim nemo asperiores beatae dolorum non nisi.",
+      "rating": 1
+    },
+    {
+      "@id": "\/admin\/reviews\/1eef9f20-9bff-6410-bc4b-71c20e5f3ee3",
+      "@type": "https:\/\/schema.org\/Review",
+      "user": {
+        "@id": "\/admin\/users\/1eef9f20-9bcf-649a-a1f8-71c20e5f3ee3",
+        "@type": "https:\/\/schema.org\/Person",
+        "sub": "018ed9e7-fe40-74a9-b0ee-5297eb653858",
+        "firstName": "Percy",
+        "lastName": "Hoppe",
+        "name": "Percy Hoppe"
+      },
+      "book": {
+        "@id": "\/admin\/books\/1eef9f20-9ba2-6a30-9683-71c20e5f3ee3",
+        "@type": [
+          "https:\/\/schema.org\/Book",
+          "https:\/\/schema.org\/Offer"
+        ],
+        "title": "Corona (Star Trek, No 15)",
+        "author": "Greg Bear"
+      },
+      "publishedAt": "2024-03-22T15:29:13+00:00",
+      "body": "Voluptatem ducimus dignissimos et impedit. Occaecati eveniet ut libero culpa. Et recusandae sint et in consectetur sunt iusto. Blanditiis autem iste optio.",
+      "rating": 4
+    },
+    {
+      "@id": "\/admin\/reviews\/1eef9f20-1bbd-6e1e-865a-71c20e5f3ee3",
+      "@type": "https:\/\/schema.org\/Review",
+      "user": {
+        "@id": "\/admin\/users\/1eef9f20-1b99-6b22-a483-71c20e5f3ee3",
+        "@type": "https:\/\/schema.org\/Person",
+        "sub": "018ed9e7-c9bc-7778-aca7-1edbcbe6d310",
+        "firstName": "Raphaelle",
+        "lastName": "Green",
+        "name": "Raphaelle Green"
+      },
+      "book": {
+        "@id": "\/admin\/books\/1eef9f20-1b7c-6874-a8bb-71c20e5f3ee3",
+        "@type": [
+          "https:\/\/schema.org\/Book",
+          "https:\/\/schema.org\/Offer"
+        ],
+        "title": "Survival",
+        "author": "Gordon R. Dickson"
+      },
+      "publishedAt": "2023-10-04T04:15:10+00:00",
+      "body": "Sed est dolore maiores aut sunt aut. Nesciunt distinctio illo omnis maxime quo sequi iusto. Perspiciatis necessitatibus fugit fugit ex aut.",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/reviews\/1eef9f20-1bf7-6664-8d9e-71c20e5f3ee3",
+      "@type": "https:\/\/schema.org\/Review",
+      "user": {
+        "@id": "\/admin\/users\/1eef9f20-1bd4-657e-88fc-71c20e5f3ee3",
+        "@type": "https:\/\/schema.org\/Person",
+        "sub": "018ed9e7-c9d4-79c9-9147-d176c20bfd9f",
+        "firstName": "Dimitri",
+        "lastName": "Adams",
+        "name": "Dimitri Adams"
+      },
+      "book": {
+        "@id": "\/admin\/books\/1eef9f20-1b7c-6874-a8bb-71c20e5f3ee3",
+        "@type": [
+          "https:\/\/schema.org\/Book",
+          "https:\/\/schema.org\/Offer"
+        ],
+        "title": "Survival",
+        "author": "Gordon R. Dickson"
+      },
+      "publishedAt": "2023-10-04T04:15:10+00:00",
+      "body": "Atque aut consequuntur quo saepe. Voluptate quae consequatur totam. Et similique vel quia culpa commodi corrupti. Ut corrupti qui ratione vero quia odio.",
+      "rating": 0
+    },
+    {
+      "@id": "\/admin\/reviews\/1eef9f20-1c32-6dd6-9bcd-71c20e5f3ee3",
+      "@type": "https:\/\/schema.org\/Review",
+      "user": {
+        "@id": "\/admin\/users\/1eef9f20-1c0e-6bd4-b238-71c20e5f3ee3",
+        "@type": "https:\/\/schema.org\/Person",
+        "sub": "018ed9e7-c9ec-71c3-81bd-1a8c932ae802",
+        "firstName": "Imogene",
+        "lastName": "Padberg",
+        "name": "Imogene Padberg"
+      },
+      "book": {
+        "@id": "\/admin\/books\/1eef9f20-1b7c-6874-a8bb-71c20e5f3ee3",
+        "@type": [
+          "https:\/\/schema.org\/Book",
+          "https:\/\/schema.org\/Offer"
+        ],
+        "title": "Survival",
+        "author": "Gordon R. Dickson"
+      },
+      "publishedAt": "2023-10-04T04:15:10+00:00",
+      "body": "Natus maiores vero aut ullam est. Ex corporis beatae cupiditate repellat nobis incidunt ex. Dolorum rerum soluta totam qui dolorem inventore est.",
+      "rating": 2
+    }
+  ],
+  "hydra:view": {
+    "@id": "\/admin\/reviews?itemsPerPage=10\u0026order%5Bid%5D=ASC\u0026page=1",
+    "@type": "hydra:PartialCollectionView",
+    "hydra:first": "\/admin\/reviews?itemsPerPage=10\u0026order%5Bid%5D=ASC\u0026page=1",
+    "hydra:last": "\/admin\/reviews?itemsPerPage=10\u0026order%5Bid%5D=ASC\u0026page=54",
+    "hydra:next": "\/admin\/reviews?itemsPerPage=10\u0026order%5Bid%5D=ASC\u0026page=2"
+  },
+  "hydra:search": {
+    "@type": "hydra:IriTemplate",
+    "hydra:template": "\/admin\/reviews{?user,user[],book,book[],rating,rating[]}",
+    "hydra:variableRepresentation": "BasicRepresentation",
+    "hydra:mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "user",
+        "property": "user",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "user[]",
+        "property": "user",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "book",
+        "property": "book",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "book[]",
+        "property": "book",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "rating",
+        "property": "rating",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "rating[]",
+        "property": "rating",
+        "required": false
+      }
+    ]
+  }
+}

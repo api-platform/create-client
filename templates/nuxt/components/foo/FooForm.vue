@@ -1,6 +1,6 @@
 <template>
   <form class="py-4" @submit.prevent="emitSubmit">
-    {{#forEach formFields}}
+    {{#forEach fields}}
     <div class="mb-2">
       <label
         for="{{../lc}}_{{name}}"
@@ -21,11 +21,10 @@
           'mt-1 w-full px-3 py-2 border rounded',
           violations?.{{name}} ? 'border-red-500' : 'border-gray-300',
         ]"
-        {{#compare type "==" "dateTime" }}
+        {{#compare htmlInputType "==" "dateTime" }}
         type="date"
-        {{/compare}}
-        {{#compare type "!=" "dateTime" }}
-        type="{{type}}"
+        {{else}}
+        type="{{htmlInputType}}"
         {{/compare}}
         {{#if step}}
         step="{{step}}"
@@ -75,8 +74,8 @@ if (props.values) {
   item.value = {
     ...props.values,
     {{#each fields}}
-    {{#compare type "==" "dateTime" }}
-    publicationDate: formatDateInput(props.values.publicationDate),
+    {{#compare htmlInputType "==" "dateTime" }}
+    {{name}}: formatDateInput(props.values.{{name}}),
     {{/compare}}
     {{#if isEmbeddeds}}
     {{name}}: props.values.{{name}}?.map((item: any) => item["@id"] ?? "") ?? [],

@@ -1,0 +1,646 @@
+{
+  "@context": "\/contexts\/Book",
+  "@id": "\/admin\/books",
+  "@type": "hydra:Collection",
+  "hydra:totalItems": 201,
+  "hydra:member": [
+    {
+      "@id": "\/admin\/books\/1eef9f1f-c599-6524-8ea8-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL2055137M.json",
+      "title": "Hyperion",
+      "author": "Dan Simmons",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cb40-6ef0-9d77-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL8336028M.json",
+      "title": "The Silver Mistress",
+      "author": "O\u0027Donnell, Peter",
+      "condition": "https:\/\/schema.org\/NewCondition"
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cb49-61ea-b8d2-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL11432734M.json",
+      "title": "Silver Mistress",
+      "author": "O\u0027Donnell, Peter",
+      "condition": "https:\/\/schema.org\/DamagedCondition",
+      "rating": 1
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cba4-619e-a73b-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL39197557M.json",
+      "title": "Dragons of Deltora",
+      "author": "Emily Rodda",
+      "condition": "https:\/\/schema.org\/NewCondition"
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cbad-6c58-8925-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL38215123M.json",
+      "title": "Lost Fortress of Light",
+      "author": "Jamie Childress",
+      "condition": "https:\/\/schema.org\/RefurbishedCondition",
+      "rating": 4
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cc1a-6bd2-8251-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL37044569M.json",
+      "title": "The Airlords of Han",
+      "author": "Philip Francis Nowlan",
+      "condition": "https:\/\/schema.org\/NewCondition",
+      "rating": 1
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cc64-60f2-88d9-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL37044535M.json",
+      "title": "Short Fiction",
+      "author": "Stanley G. Weinbaum",
+      "condition": "https:\/\/schema.org\/DamagedCondition"
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cc68-6170-8f66-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL37014377M.json",
+      "title": "Hellhole",
+      "author": "Brian Herbert",
+      "condition": "https:\/\/schema.org\/RefurbishedCondition"
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cc6c-6c8e-8021-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL36653975M.json",
+      "title": "Juggernaut",
+      "author": "Amelia C. Gormley",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 4
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cca2-601e-ae9a-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL36621903M.json",
+      "title": "The 13th Continuum",
+      "author": "Vera Strange",
+      "condition": "https:\/\/schema.org\/UsedCondition"
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cca6-68a8-8cf9-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL36621423M.json",
+      "title": "Return of the Continuums",
+      "author": "Vera Strange",
+      "condition": "https:\/\/schema.org\/NewCondition",
+      "rating": 1
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cd2d-67f4-bebf-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL35726436M.json",
+      "title": "The slanted worlds",
+      "author": "Catherine Fisher",
+      "condition": "https:\/\/schema.org\/RefurbishedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-ce17-6084-bb93-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL35331117M.json",
+      "title": "Burn",
+      "author": "Julianna Baggott",
+      "condition": "https:\/\/schema.org\/DamagedCondition",
+      "rating": 4
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cefc-6832-8cdb-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL33020196M.json",
+      "title": "Silent Starsong",
+      "author": "T. J. Wooldridge",
+      "condition": "https:\/\/schema.org\/DamagedCondition",
+      "rating": 1
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-cf8c-643c-b4b5-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL32782439M.json",
+      "title": "Breathing Space",
+      "author": "Ian Fydell",
+      "condition": "https:\/\/schema.org\/DamagedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d029-62c8-be1f-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL32771024M.json",
+      "title": "Drift\u0027s samurai showdown",
+      "author": "John Sazaklis",
+      "condition": "https:\/\/schema.org\/NewCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d213-69e4-b6b9-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL32769608M.json",
+      "title": "External forces",
+      "author": "Deborah Rix",
+      "condition": "https:\/\/schema.org\/DamagedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d4e1-6eaa-ac24-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL32352187M.json",
+      "title": "The 5th wave",
+      "author": "Richard Yancey",
+      "condition": "https:\/\/schema.org\/NewCondition",
+      "rating": 1
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d5d4-6f1a-ba7b-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL32129381M.json",
+      "title": "Noggin",
+      "author": "John Corey Whaley",
+      "condition": "https:\/\/schema.org\/NewCondition",
+      "rating": 1
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d6b3-67ec-bd63-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL32115571M.json",
+      "title": "The Last Man",
+      "author": "Mary Wollstonecraft Shelley",
+      "condition": "https:\/\/schema.org\/DamagedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d6f1-6376-a54a-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL32097040M.json",
+      "title": "Escape velocity",
+      "author": "Mark Walden",
+      "condition": "https:\/\/schema.org\/RefurbishedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d764-65ba-a60c-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL31926842M.json",
+      "title": "The end",
+      "author": "Paul Blum",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 3
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d7af-6b3c-9a53-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL31890842M.json",
+      "title": "Interstellar Agent",
+      "author": "Mark Payne",
+      "condition": "https:\/\/schema.org\/NewCondition"
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d7b4-6f88-bf93-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL31887221M.json",
+      "title": "Angels\u0027 bane",
+      "author": "Ryan Kunz",
+      "condition": "https:\/\/schema.org\/NewCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d830-6048-a6fc-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL31880205M.json",
+      "title": "The White Mountain",
+      "author": "David Wingrove",
+      "condition": "https:\/\/schema.org\/DamagedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d84d-6ab2-ae74-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL30106808M.json",
+      "title": "Queen",
+      "author": "Aimée Carter",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 4
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d8af-655a-b3f4-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL30098272M.json",
+      "title": "V-S day",
+      "author": "Allen M. Steele",
+      "condition": "https:\/\/schema.org\/RefurbishedCondition",
+      "rating": 1
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d8e2-6f90-8bb7-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL30085900M.json",
+      "title": "1636",
+      "author": "Eric Flint",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 0
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d922-6140-87d5-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL29651140M.json",
+      "title": "Lightning",
+      "author": "Bonnie S. Calhoun",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 3
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d957-6598-bea1-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL28990797M.json",
+      "title": "Carousel Sun",
+      "author": "Sharon Lee",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 4
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-d992-6f30-a77a-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL28682195M.json",
+      "title": "Arena two",
+      "author": "Morgan Rice",
+      "condition": "https:\/\/schema.org\/DamagedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-da77-62ac-ad44-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL28413089M.json",
+      "title": "Eclipse phase",
+      "author": "Jaym Gates",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-daaf-604e-b610-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL28374962M.json",
+      "title": "Vale of stars",
+      "author": "Sean O\u0027Brien",
+      "condition": "https:\/\/schema.org\/DamagedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-db25-69d8-b1ae-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL28372903M.json",
+      "title": "Superman, The Man of Steel",
+      "author": "Prof. Pablo Luettgen DVM",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 1
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-dc4c-6834-b2cb-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL28299651M.json",
+      "title": "STAR WARS REBEL HEIST",
+      "author": "Matt Kindt",
+      "condition": "https:\/\/schema.org\/DamagedCondition",
+      "rating": 3
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-dcf3-6300-80f6-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL27897213M.json",
+      "title": "Zero world",
+      "author": "Jason M. Hough",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 0
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-ddee-6a34-bccb-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL27468935M.json",
+      "title": "Cobra Outlaw",
+      "author": "Timothy Zahn",
+      "condition": "https:\/\/schema.org\/NewCondition",
+      "rating": 3
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-de55-6d2e-a715-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26463199M.json",
+      "title": "The Darkside War",
+      "author": "Zachary Brown",
+      "condition": "https:\/\/schema.org\/NewCondition",
+      "rating": 5
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-de8e-65d4-b26b-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26461213M.json",
+      "title": "The Mesmer menace",
+      "author": "K. R. Hamilton",
+      "condition": "https:\/\/schema.org\/NewCondition",
+      "rating": 3
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-df07-6d6c-ba9e-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26458654M.json",
+      "title": "The world forgot",
+      "author": "Martin Leicht",
+      "condition": "https:\/\/schema.org\/RefurbishedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-dfdc-6800-a290-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26458503M.json",
+      "title": "The Venusian gambit",
+      "author": "Michael J. Martinez",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 3
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-e031-6abc-9197-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26456141M.json",
+      "title": "Three pickled herrings",
+      "author": "Sally Gardner",
+      "condition": "https:\/\/schema.org\/NewCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-e1b0-6a00-b3db-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26455457M.json",
+      "title": "Aerostar and the 3 1\/2-point plan of vengeance",
+      "author": "Nelson, Peter",
+      "condition": "https:\/\/schema.org\/NewCondition",
+      "rating": 1
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-e615-6d2a-979e-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26454802M.json",
+      "title": "Entangled",
+      "author": "Amy Rose Capetta",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 1
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-e79b-6352-9bda-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26454799M.json",
+      "title": "The Cusanus game",
+      "author": "Wolfgang Jeschke",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-e916-6c22-83f5-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26454262M.json",
+      "title": "Into the maelstrom",
+      "author": "David Drake",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-eadd-6466-b62c-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26452541M.json",
+      "title": "Loop",
+      "author": "Karen Akins",
+      "condition": "https:\/\/schema.org\/DamagedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-eba0-6c22-a3e4-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26451315M.json",
+      "title": "Rebellion",
+      "author": "Stephanie Diaz",
+      "condition": "https:\/\/schema.org\/RefurbishedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-ee44-6546-80b8-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26447033M.json",
+      "title": "Gentleman Jole and the Red Queen",
+      "author": "Lois McMaster Bujold",
+      "condition": "https:\/\/schema.org\/UsedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "\/admin\/books\/1eef9f1f-ef11-6730-83b9-71c20e5f3ee3",
+      "@type": [
+        "https:\/\/schema.org\/Book",
+        "https:\/\/schema.org\/Offer"
+      ],
+      "book": "https:\/\/openlibrary.org\/books\/OL26416641M.json",
+      "title": "Tin star",
+      "author": "Cecil Castellucci",
+      "condition": "https:\/\/schema.org\/NewCondition",
+      "rating": 1
+    }
+  ],
+  "hydra:view": {
+    "@id": "\/admin\/books?itemsPerPage=50\u0026order%5Bid%5D=ASC\u0026page=1",
+    "@type": "hydra:PartialCollectionView",
+    "hydra:first": "\/admin\/books?itemsPerPage=50\u0026order%5Bid%5D=ASC\u0026page=1",
+    "hydra:last": "\/admin\/books?itemsPerPage=50\u0026order%5Bid%5D=ASC\u0026page=5",
+    "hydra:next": "\/admin\/books?itemsPerPage=50\u0026order%5Bid%5D=ASC\u0026page=2"
+  },
+  "hydra:search": {
+    "@type": "hydra:IriTemplate",
+    "hydra:template": "\/admin\/books{?order[title],title,author,condition,condition[]}",
+    "hydra:variableRepresentation": "BasicRepresentation",
+    "hydra:mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[title]",
+        "property": "title",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "title",
+        "property": "title",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "author",
+        "property": "author",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "condition",
+        "property": "condition",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "condition[]",
+        "property": "condition",
+        "required": false
+      }
+    ]
+  }
+}

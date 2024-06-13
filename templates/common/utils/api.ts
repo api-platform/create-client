@@ -1,25 +1,25 @@
-import qs from 'qs';
-import type { SubmissionErrors } from '../types/error';
-import { SubmissionError } from './error';
-import { ENTRYPOINT } from './config';
+import qs from "qs";
+import type { SubmissionErrors } from "../types/error";
+import { SubmissionError } from "./error";
+import { ENTRYPOINT } from "./config";
 
-const MIME_TYPE = 'application/ld+json';
+const MIME_TYPE = "application/ld+json";
 
 export default async function (id: string, options: any = {}) {
-  if (typeof options.headers === 'undefined') {
+  if (typeof options.headers === "undefined") {
     Object.assign(options, { headers: new Headers() });
   }
 
-  if (options.headers.get('Accept') === null) {
-    options.headers.set('Accept', MIME_TYPE);
+  if (options.headers.get("Accept") === null) {
+    options.headers.set("Accept", MIME_TYPE);
   }
 
   if (
     options.body !== undefined &&
     !(options.body instanceof FormData) &&
-    options.headers.get('Content-Type') === null
+    options.headers.get("Content-Type") === null
   ) {
-    options.headers.set('Content-Type', MIME_TYPE);
+    options.headers.set("Content-Type", MIME_TYPE);
   }
 
   if (options.params) {
@@ -29,7 +29,7 @@ export default async function (id: string, options: any = {}) {
 
   // enable CORS for all requests
   Object.assign(options, {
-    mode: 'cors',
+    mode: "cors",
     // credentials: 'include', // when credentials needed
   });
 
@@ -37,7 +37,7 @@ export default async function (id: string, options: any = {}) {
 
   if (!response.ok) {
     const data = await response.json();
-    const error = data['{{hydraPrefix}}description'] || response.statusText;
+    const error = data["{{hydraPrefix}}description"] || response.statusText;
     if (!data.violations) throw Error(error);
 
     const errors: SubmissionErrors = { _error: error };

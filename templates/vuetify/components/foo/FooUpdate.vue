@@ -7,11 +7,11 @@
   />
 
   <v-container fluid>
-    <v-alert v-if="error || deleteError" type="error" class="mb-4" closable="true">
+    <v-alert v-if="error || deleteError" type="error" class="mb-4" closable>
       \{{ error || deleteError }}
     </v-alert>
 
-    <v-alert v-if="created || updated" type="success" class="mb-4" closable="true">
+    <v-alert v-if="created || updated" type="success" class="mb-4" closable>
       <template v-if="updated">
         \{{ $t("itemUpdated", [updated["@id"]]) }}
       </template>

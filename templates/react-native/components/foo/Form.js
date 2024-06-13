@@ -57,7 +57,7 @@ class Form extends Component {
     return (
       <View style={ {backgroundColor: 'white', paddingBottom: 20} }>
 {{#each formFields}}
-        <Field component={this.renderField} name="{{{name}}}" type="{{{type}}}"
+        <Field component={this.renderField} name="{{{name}}}" type="{{{htmlInputType}}}"
           placeholder="{{{description}}}"{{#if required}} required={true}{{/if}} parse={this.intParser} value="" />
 {{/each}}
         <Button buttonStyle={styles.button}

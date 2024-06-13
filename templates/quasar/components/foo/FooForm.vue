@@ -1,7 +1,7 @@
 <template>
   <q-form class="q-pa-md q-col-gutter-y-md" @submit="emitSubmit">
     <div class="row q-gutter-md">
-    {{#each formFields}}
+    {{#each fields}}
     {{#if isRelations}}
       <FormRepeater
         :values="item.{{name}}"
@@ -11,16 +11,15 @@
       />
     {{else}}
       <q-input
-        v-model{{#compare type "==" "number" }}.number{{/compare}}="item.{{name}}"
+        v-model{{#compare htmlInputType "==" "number" }}.number{{/compare}}="item.{{name}}"
         :label="$t('{{../lc}}.{{name}}')"
         :error="Boolean(violations?.{{name}})"
         :error-message="violations?.{{name}}"
         name="{{name}}"
-        {{#compare type "==" "dateTime" }}
+        {{#compare htmlInputType "==" "dateTime" }}
         type="date"
-        {{/compare}}
-        {{#compare type "!=" "dateTime" }}
-        type="{{type}}"
+        {{else}}
+        type="{{htmlInputType}}"
         {{/compare}}
         bottom-slots
         filled
@@ -76,9 +75,9 @@ let item: Ref<{{titleUcFirst}}> = ref({});
 if (props.values) {
   item.value = {
     ...props.values,
-    {{#each formFields}}
-    {{#compare type "==" "dateTime" }}
-    publicationDate: formatDateInput(props.values.publicationDate),
+    {{#each fields}}
+    {{#compare htmlInputType "==" "dateTime" }}
+    {{name}}: formatDateInput(props.values.{{name}}),
     {{/compare}}
     {{#if isEmbeddeds}}
     {{name}}: props.values.{{name}}?.map((item: Item) => item['@id'] ?? '') ?? [],

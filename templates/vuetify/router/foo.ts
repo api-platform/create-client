@@ -15,7 +15,7 @@ const breadcrumbs = {
 export default [
   {
     name: names.list,
-    path: "/{{name}}",
+    path: "/{{lc}}s",
     component: () => import("@/views/{{lc}}/ViewList.vue"),
     meta: {
       breadcrumb: [breadcrumbs.list],
@@ -23,7 +23,7 @@ export default [
   },
   {
     name: names.create,
-    path: "/{{name}}/create",
+    path: "/{{lc}}s/create",
     component: () => import("@/views/{{lc}}/ViewCreate.vue"),
     meta: {
       breadcrumb: [breadcrumbs.list, breadcrumbs.create],
@@ -31,7 +31,7 @@ export default [
   },
   {
     name: names.update,
-    path: "/{{name}}/edit/:id",
+    path: "/{{lc}}s/edit/:id",
     component: () => import("@/views/{{lc}}/ViewUpdate.vue"),
     meta: {
       breadcrumb: [breadcrumbs.list, breadcrumbs.update],
@@ -39,7 +39,7 @@ export default [
   },
   {
     name: names.show,
-    path: "/{{name}}/show/:id",
+    path: "/{{lc}}s/show/:id",
     component: () => import("@/views/{{lc}}/ViewShow.vue"),
     meta: {
       breadcrumb: [breadcrumbs.list, breadcrumbs.show],

@@ -1,34 +1,29 @@
-import { PagedCollection } from "~~/types/collection";
-import { FetchAllData, FetchItemData } from "~~/types/api";
-import { Ref } from "vue";
-import { View } from "~~/types/view";
-import { UseFetchOptions } from "#app";
-import { SubmissionErrors } from "~~/types/error";
-import { Item } from "~~/types/item";
+import type { PagedCollection } from "~~/types/collection";
+import type { FetchAllData, FetchItemData } from "~~/types/api";
+import type { Ref } from "vue";
+import type { View } from "~~/types/view";
+import type { UseFetchOptions } from "#app";
+import type { SubmissionErrors } from "~~/types/error";
+import type { Item } from "~~/types/item";
 
-const MIME_TYPE = 'application/ld+json';
+const MIME_TYPE = "application/ld+json";
 
 async function useApi<T>(path: string, options: UseFetchOptions<T>) {
-  const response = await useFetch(path, {
+  return useFetch(path, {
     baseURL: ENTRYPOINT,
-
-    mode: "cors",
-
     headers: {
       Accept: MIME_TYPE,
+      "Content-Type": MIME_TYPE,
     },
 
     onResponseError({ response }) {
-      const data = response._data;
-      const error = data["hydra:description"] || response.statusText;
+      const error = response._data["hydra:description"] || response.statusText;
 
       throw new Error(error);
     },
 
     ...options,
   });
-
-  return response;
 }
 
 export async function useFetchList<T>(
@@ -36,9 +31,9 @@ export async function useFetchList<T>(
 ): Promise<FetchAllData<T>> {
   const route = useRoute();
 
-  const items: Ref<T[]> = ref([]);
-  const view: Ref<View | undefined> = ref(undefined);
-  const hubUrl: Ref<URL | undefined> = ref(undefined);
+  const items = ref<T[]>([]) as Ref<T[]>;
+  const view = ref<View>();
+  const hubUrl = ref<string>();
 
   const page = ref(route.params.page);
 
@@ -46,7 +41,7 @@ export async function useFetchList<T>(
     params: { page },
 
     onResponse({ response }) {
-      hubUrl.value = extractHubURL(response);
+      hubUrl.value = extractHubURL(response)?.toString();
     },
   });
 
@@ -64,13 +59,13 @@ export async function useFetchList<T>(
 }
 
 export async function useFetchItem<T>(path: string): Promise<FetchItemData<T>> {
-  const retrieved: Ref<T | undefined> = ref(undefined);
-  const hubUrl: Ref<URL | undefined> = ref(undefined);
+  const retrieved = ref<T>();
+  const hubUrl = ref<string>();
 
   const { data, pending, error } = await useApi<T>(path, {
     onResponse({ response }) {
       retrieved.value = response._data;
-      hubUrl.value = extractHubURL(response);
+      hubUrl.value = extractHubURL(response)?.toString();
     },
   });
 
@@ -85,8 +80,8 @@ export async function useFetchItem<T>(path: string): Promise<FetchItemData<T>> {
 }
 
 export async function useCreateItem<T>(resource: string, payload: Item) {
-  const created: Ref<T | undefined> = ref(undefined);
-  const violations: Ref<SubmissionErrors | undefined> = ref(undefined);
+  const created = ref<T>();
+  const violations = ref<SubmissionErrors>();
 
   const { data, pending, error } = await useApi(resource, {
     method: "POST",
@@ -122,8 +117,8 @@ export async function useCreateItem<T>(resource: string, payload: Item) {
 }
 
 export async function useUpdateItem<T>(item: Item, payload: Item) {
-  const updated: Ref<T | undefined> = ref(undefined);
-  const violations: Ref<SubmissionErrors | undefined> = ref(undefined);
+  const updated = ref<T>();
+  const violations = ref<SubmissionErrors>();
 
   const { data, pending, error } = await useApi(item["@id"] ?? "", {
     method: "PUT",
@@ -163,7 +158,7 @@ export async function useUpdateItem<T>(item: Item, payload: Item) {
 }
 
 export async function useDeleteItem(item: Item) {
-  const error: Ref<string | undefined> = ref(undefined);
+  const error = ref<string>();
 
   if (!item?.["@id"]) {
     error.value = "No item found. Please reload";

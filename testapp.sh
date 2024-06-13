@@ -2,76 +2,114 @@
 set -e
 
 if [ "$1" ]; then
-  rm -rf ./tmp/app
-  mkdir -p ./tmp/app
+  rm -rf ./tmp/app/$1
+  mkdir -p ./tmp/app/
 fi
 
 if [ "$1" = "next" ]; then
-  yarn create next-app --typescript --eslint ./tmp/app/next
-  yarn prettier --write ./tmp/app/next
-  yarn --cwd ./tmp/app/next add isomorphic-unfetch formik react-query
+  pnpm create next-app --eslint --no-app --tailwind --typescript --no-src-dir --import-alias="@/*" --use-pnpm ./tmp/app/next
+  pnpm --dir ./tmp/app/$1 add isomorphic-unfetch formik react-query
 
   # Tailwind
-  yarn --cwd ./tmp/app/next add tailwindcss postcss autoprefixer
-  yarn --cwd ./tmp/app/next tailwindcss init -p
-  cp ./templates/common/tailwind.config.js ./tmp/app/next
-  cp ./templates/common/style.css ./tmp/app/next/styles
+  cp ./templates/common/tailwind.config.ts ./tmp/app/$1
+  cp ./templates/common/style.css ./tmp/app/$1/styles
 
-  cp -R ./tmp/next/* ./tmp/app/next
-  rm ./tmp/app/next/pages/index.tsx
-  rm -rf ./tmp/app/next/pages/api
-  yarn --cwd ./tmp/app/next build
-  start-server-and-test 'yarn --cwd ./tmp/app/next start' http://127.0.0.1:3000/books/ 'yarn playwright test'
+  cp -R ./tmp/$1/* ./tmp/app/$1
+
+
+  rm ./tmp/app/$1/pages/index.tsx
+  rm -rf ./tmp/app/$1/pages/api
+  
+  pnpm --dir ./tmp/app/$1 exec eslint --no-eslintrc -c ./.eslintrc.json -f unix .
+
+  pnpm --dir ./tmp/app/$1 build --no-lint
+  pnpm playwright install
+  APP=$1 pnpm playwright test
 fi
 
 if [ "$1" = "react" ]; then
-  yarn create react-app --template typescript ./tmp/app/reactapp
-  yarn --cwd ./tmp/app/reactapp add react-router-dom react-hook-form
+  COREPACK_ENABLE_AUTO_PIN=0 COREPACK_ENABLE_STRICT=0 yarn create react-app --template typescript ./tmp/app/react-app
+  COREPACK_ENABLE_AUTO_PIN=0 COREPACK_ENABLE_STRICT=0 yarn --cwd ./tmp/app/react-app add react-router-dom react-hook-form
 
-  cp -R ./tmp/react/* ./tmp/app/reactapp/src
-  cp ./templates/react/index.tsx ./tmp/app/reactapp/src
-  start-server-and-test 'BROWSER=none yarn --cwd ./tmp/app/reactapp start' http://127.0.0.1:3000/books/ 'yarn playwright test'
+  cp -R ./tmp/$1/* ./tmp/app/react-app/src
+  cp ./templates/react/index.tsx ./tmp/app/react-app/src
+
+  pnpm playwright install
+  APP=$1 pnpm playwright test
 fi
 
 if [ "$1" = "nuxt" ]; then
-  npx nuxi init ./tmp/app/nuxt
+  npx nuxi init ./tmp/app/$1 --git-init false --package-manager pnpm
 
-  rm ./tmp/app/nuxt/app.vue
-  rm ./tmp/app/nuxt/nuxt.config.ts
+  rm ./tmp/app/$1/app.vue
+  rm ./tmp/app/$1/nuxt.config.ts
 
-  cp ./templates/nuxt/nuxt.config.ts ./tmp/app/nuxt
+  cp ./templates/$1/nuxt.config.ts ./tmp/app/$1
 
-  yarn --cwd ./tmp/app/nuxt add dayjs @pinia/nuxt qs @types/qs
+  pnpm --dir ./tmp/app/$1 add dayjs @pinia/nuxt qs @types/qs
 
-  cp -R ./tmp/nuxt/* ./tmp/app/nuxt
+  cp -R ./tmp/$1/* ./tmp/app/$1
 
   # Tailwind
-  yarn --cwd ./tmp/app/nuxt add tailwindcss postcss autoprefixer
-  yarn --cwd ./tmp/app/nuxt tailwindcss init -p
-  cp ./templates/common/tailwind.config.js ./tmp/app/nuxt
-  cp ./templates/common/style.css ./tmp/app/nuxt/assets/css
+  pnpm --dir ./tmp/app/$1 add -D tailwindcss postcss autoprefixer
+  cp ./templates/common/tailwind.config.ts ./tmp/app/$1
+  cp ./templates/common/style.css ./tmp/app/$1/assets/css
 
-  yarn --cwd ./tmp/app/nuxt generate
+  pnpm --dir ./tmp/app/$1 build
 
-  start-server-and-test 'yarn --cwd ./tmp/app/nuxt preview' http://127.0.0.1:3000/books/ 'yarn playwright test'
+  pnpm playwright install
+  APP=$1 pnpm playwright test
 fi
 
 if [ "$1" = "vue" ]; then
   cd ./tmp/app
-  npm init vue@3 -- --typescript --router --pinia --eslint-with-prettier vue
+  pnpm create vue --typescript --router --pinia --eslint-with-prettier vue
   cd ../..
-  yarn --cwd ./tmp/app/vue install
-  yarn --cwd ./tmp/app/vue add qs @types/qs dayjs
+  pnpm --dir ./tmp/app/$1 install
+  pnpm --dir ./tmp/app/$1 add qs @types/qs dayjs
 
   # Tailwind
-  yarn --cwd ./tmp/app/vue add tailwindcss postcss autoprefixer
-  yarn --cwd ./tmp/app/vue tailwindcss init -p
-  cp ./templates/common/tailwind.config.js ./tmp/app/vue
-  cp ./templates/common/style.css ./tmp/app/vue/src/assets
+  pnpm --dir ./tmp/app/$1 add -D tailwindcss postcss autoprefixer
+  pnpm --dir ./tmp/app/$1 exec tailwindcss init -p --ts
 
-  cp -R ./tmp/vue/* ./tmp/app/vue/src
-  cp ./templates/vue/main.ts ./tmp/app/vue/src
-  cp ./templates/vue/App.vue ./tmp/app/vue/src
-  yarn --cwd ./tmp/app/vue build
-  start-server-and-test 'yarn --cwd ./tmp/app/vue vite preview --port 3000' http://localhost:3000/books/ 'yarn playwright test'
+  cp ./templates/common/tailwind.config.ts ./tmp/app/$1
+  cp ./templates/common/style.css ./tmp/app/$1/src/assets
+
+  cp -R ./tmp/$1/* ./tmp/app/$1/src
+  cp ./templates/$1/main.ts ./tmp/app/$1/src
+  cp ./templates/$1/App.vue ./tmp/app/$1/src
+
+  pnpm --dir ./tmp/app/$1 build
+  pnpm playwright install
+  APP=$1 pnpm playwright test
+fi
+
+if [ "$1" = "vuetify" ]; then
+  cd ./tmp/app
+  pnpm create vuetify --ts --preset essentials --install-dependencies
+  cd ../..
+  pnpm --dir ./tmp/app/$1 install
+  pnpm --dir ./tmp/app/$1 add dayjs qs @types/qs vue-i18n vue-router
+
+  # Tailwind
+  # pnpm --dir ./tmp/app/$1 add -D tailwindcss postcss autoprefixer
+  # pnpm --dir ./tmp/app/$1 exec tailwindcss init -p --ts
+
+  # cp ./templates/common/tailwind.config.ts ./tmp/app/$1
+  # cp ./templates/common/style.css ./tmp/app/$1/src/assets
+
+  cp -R ./tmp/$1/* ./tmp/app/$1/src
+  cp ./templates/$1/plugins/index.ts ./tmp/app/$1/src/plugins/index.ts
+  cp ./templates/$1/plugins/i18n.ts ./tmp/app/$1/src/plugins/i18n.ts
+  cp ./templates/$1/plugins/vuetify.ts ./tmp/app/$1/src/plugins/vuetify.ts
+  cp -R ./templates/common/public/* ./tmp/app/$1/public
+  cp ./templates/$1/main.ts ./tmp/app/$1/src/main.ts
+  mkdir -p ./tmp/app/$1/src/mocks/
+  cp -R ./templates/common/mocks/* ./tmp/app/$1/src/mocks
+
+  pnpm --dir ./tmp/app/$1 dev
+
+  # pnpm --dir ./tmp/app/$1 build
+  # pnpm playwright install
+  # APP=$1 pnpm playwright test
 fi

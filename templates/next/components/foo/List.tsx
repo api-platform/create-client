@@ -47,7 +47,7 @@ export const List: FunctionComponent<Props> = ({ {{{lc}}}s }) => (
                   <ReferenceLinks items={ {{{../lc}}}['{{{name}}}'].map((emb: any) => ({ href: getItemPath(emb['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: emb['@id'] })) } />
                 {{else if embedded}}
                   <ReferenceLinks items={ { href: getItemPath({{{../lc}}}['{{{name}}}']['@id'], '/{{{lowercase embedded.title}}}s/[id]'), name: {{{../lc}}}['{{{name}}}']['@id'] } } />
-                {{else if (compare type "==" "Date") }}
+                {{else if (compare htmlInputType "==" "date") }}
                   { {{{../lc}}}['{{{name}}}']?.toLocaleString() }
                 {{else}}
                   { {{{../lc}}}['{{{name}}}'] }

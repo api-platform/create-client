@@ -7,14 +7,14 @@ export interface FetchAllData<T> {
   view: Ref<View | undefined>;
   isLoading: Ref<boolean>;
   error: Ref<Error | null>;
-  hubUrl: Ref<URL | undefined>;
+  hubUrl: Ref<string | undefined>;
 }
 
 export interface FetchItemData<T> {
   retrieved: Ref<T | undefined>;
   isLoading: Ref<boolean>;
   error: Ref<Error | null>;
-  hubUrl: Ref<URL | undefined>;
+  hubUrl: Ref<string | undefined>;
 }
 
 export interface CreateItemData<T> {

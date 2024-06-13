@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    /* Type Checking */
+    "strict": true,
+    "baseUrl": ".",
+    /* Modules */
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "types": ["vitest/globals", "node"],
+
+    /* Emit */
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "lib",
+
+    /* JavaScript Support */
+    "allowJs": true,
+    "checkJs": true,
+
+    /* Interop Constraints */
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+
+    /* Language and Environment */
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "ES2023"],
+    "target": "ES2022",
+
+    /* Completeness */
+    "skipLibCheck": true
+  },
+  // "exclude": ["node_modules", "lib", "tmp", "dist"]
+  "exclude": ["node_modules", "lib", "dist"]
+}

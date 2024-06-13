@@ -1,7 +1,7 @@
 <template>
   <v-form ref="form" @submit.prevent="emitSubmit">
     <v-row>
-      {{#each formFields}}
+      {{#each fields}}
       {{#if isRelations}}
       <v-col cols="12">
         <FormRepeater
@@ -13,11 +13,11 @@
       {{else}}
       <v-col cols="12" sm="6" md="6">
         <v-text-field
-          v-model{{#compare type "==" "number" }}.number{{/compare}}="item.{{name}}"
+          v-model{{#compare htmlInputType "==" "number" }}.number{{/compare}}="item.{{name}}"
           :error="Boolean(violations?.{{name}})"
           :error-messages="violations?.{{name}}"
           :label="$t('{{../lc}}.{{name}}')"
-          {{#compare type "==" "dateTime" }}
+          {{#compare htmlInputType "==" "dateTime" }}
           type="date"
           {{/compare}}
           {{#if required}}
@@ -74,9 +74,9 @@ const item: Ref<{{titleUcFirst}}> = ref({});
 if (props.values) {
   item.value = {
     ...props.values,
-    {{#each formFields}}
-    {{#compare type "==" "dateTime" }}
-    publicationDate: formatDateInput(props.values.publicationDate),
+    {{#each fields}}
+    {{#compare htmlInputType "==" "dateTime" }}
+    {{name}}: formatDateInput(props.values.{{name}}),
     {{/compare}}
     {{#if isEmbeddeds}}
     {{name}}: props.values.{{name}}?.map((item: Item) => item["@id"] ?? "") ?? [],

@@ -6,7 +6,7 @@
         <v-text-field
           v-model="item.{{name}}"
           :label="$t('{{../lc}}.{{name}}')"
-          type="{{type}}"
+          type="{{htmlInputType}}"
         />
       </v-col>
       {{/each}}

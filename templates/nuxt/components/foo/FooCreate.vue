@@ -1,9 +1,12 @@
 <template>
-  <nuxt-link :to="{ name: '{{lc}}s' }" class="text-blue-600 hover:text-blue-800">
+  <nuxt-link
+    :to="{ name: '{{lc}}s' }"
+    class="text-blue-600 hover:text-blue-800"
+  >
     &lt; Back to list
   </nuxt-link>
 
-  <h1 class="text-3xl my-4">Create {{titleUcFirst}}</h1>
+  <h1 class="text-3xl my-4">Create {{ titleUcFirst }}</h1>
 
   <div
     v-if="isLoading"
@@ -46,7 +49,7 @@ async function create(item: {{titleUcFirst}}) {
   }
 
   navigateTo({
-    name: "{{lc}}s-id-edit",
+    name: "{{lc}}s",
     params: { id: getIdFromIri(created?.value?.["@id"]) },
   });
 }

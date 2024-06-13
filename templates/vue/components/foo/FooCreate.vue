@@ -7,7 +7,7 @@
       &lt; Back to list
     </router-link>
 
-    <h1 class="text-3xl my-4">Create {{title}}</h1>
+    <h1 class="text-3xl my-4">Create {{ title }}</h1>
 
     <div
       v-if="isLoading"
@@ -47,7 +47,7 @@ async function create(item: {{titleUcFirst}}) {
   if (!{{lc}}CreateStore.created) return;
 
   router.push({
-    name: "{{titleUcFirst}}Update",
+    name: "{{titleUcFirst}}List",
     params: { id: {{lc}}CreateStore.created["@id"] },
   });
 }

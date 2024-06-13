@@ -46,7 +46,7 @@ const ListView = ({error, loading, retrieved}: ListProps) => {
           {items.map(item => (
             <tr key={item["@id"]}>
               <th scope="row">
-                <Links items={ { href: `show/${encodeURIComponent(item["@id"])}`, name: item["@id"] } } />
+                <Links items={ { href: `/{{lc}}s/show/${encodeURIComponent(item["@id"])}`, name: item["@id"] } } />
               </th>
               {{#each fields}}
                 <td>

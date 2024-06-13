@@ -6,7 +6,7 @@ export class {{{ucf}}} implements Item {
   constructor(
     _id?: string,
 {{#each fields}}
- {{#if readonly}}readonly{{/if}} public {{{name}}}?: {{{type}}},
+ {{#if readonly}}readonly{{/if}} public {{{name}}}?: {{{tsType}}},
 {{/each}}
   ) {
     this["@id"] = _id;

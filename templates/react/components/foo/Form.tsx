@@ -16,7 +16,7 @@ const Form = ({onSubmit, error, reset, initialValues}: FormProps) => {
   const { register, setError, handleSubmit, formState: { errors } } = useForm<TResource>({
     defaultValues: initialValues ? {
       ...initialValues,
-      {{#each formFields}}
+      {{#each fields}}
         {{#if isEmbeddeds}}
           {{name}}: initialValues["{{name}}"]?.map((emb: any) => emb['@id']) ?? [],
         {{else if embedded}}
@@ -43,7 +43,7 @@ const Form = ({onSubmit, error, reset, initialValues}: FormProps) => {
     onSubmit(
       {
         ...data,
-        {{#each formFields ~}}
+        {{#each fields ~}}
           {{#if isRelations ~}}
             {{{name}}}: normalizeLinks(data["{{{name}}}"]),
           {{/if ~}}
@@ -54,12 +54,12 @@ const Form = ({onSubmit, error, reset, initialValues}: FormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)}>
-      {{#each formFields}}
+      {{#each fields}}
         <Field
           register={register}
           name="{{{name}}}"
           placeholder="{{{description}}}"
-          type="{{{type}}}"
+          type="{{{htmlInputType}}}"
           {{#if step}}step="{{{step}}}"{{/if}}
           {{#if required}}required{{/if}}
           errors={errors}

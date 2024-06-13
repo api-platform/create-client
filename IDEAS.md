@@ -1,0 +1,15 @@
+- Use or create a vite plugin for compiling handlebars templates on the fly enabling fast development cycles and easy debugging.
+- It could also be used in the CLI as a transformer pipeline.
+- Use msw/data to build a mock server for SSR frameworks.
+- Build the mock server dynamically from the API documentation using fakerjs.
+- Use the mock server to generate a mock API documentation.
+- Create a hydra to OpenAPI converter.
+- Then use the OpenAPI to generates types and API clients with kubb.
+- Allow generators to access all ressources context in order to generate files based on the ressource list, this kind of generation should be called only once per generation and should be cached.
+- CLI should be able to generate a new project from a template, using the framework own generator.
+- Generators should be able to list and install dependencies by detecting and using the package manager of the project.
+- Logging should be improved to list the resources generated and the time taken to generate them.
+- The generators should be able to patch the project files for special cases like adding routes to the router, or adding a new page to the sitemap etc.
+- Explore using kubb template engine based on JSX to generate files.
+- Make the create-client repository a monorepo with the CLI, templates, shared core, generators and example apps.
+- The Github CI should be triggered based on frameworks generator updates to make sure the generators and templates are working as expected.

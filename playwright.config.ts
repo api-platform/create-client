@@ -1,69 +1,107 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
-import { devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
+import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
+import type { WorkerConfigOptions } from "playwright-ssr";
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
 // require('dotenv').config();
 
+// eslint-disable-next-line
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      APP: "next" | "react" | "nuxt" | "vue";
+      SSR: string;
+    }
+  }
+}
+
+if (!process.env.APP) {
+  throw new Error("APP environment variable is required");
+}
+
+if (["nuxt", "next"].includes(process.env.APP)) {
+  process.env.SSR = "true";
+}
+
+const webServers = {
+  next: { args: ["dev"], cwd: "tmp/app/next" },
+  react: { args: ["start"], cwd: "tmp/app/react-app" },
+  nuxt: { args: ["preview"], cwd: "tmp/app/nuxt" },
+  vue: { args: ["vite", "preview", "--port", "3000"], cwd: "tmp/app/vue" },
+  vuetify: {
+    args: ["vite", "preview", "--port", "3000"],
+    cwd: "tmp/app/vuetify",
+  },
+};
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const config: PlaywrightTestConfig = {
-  testDir: './tests',
-  /* Maximum time one test can run for. */
-  timeout: 30 * 1000,
-  expect: {
-    /**
-     * Maximum time expect() should wait for the condition to be met.
-     * For example in `await expect(locator).toHaveText();`
-     */
-    timeout: 5000
-  },
+export default defineConfig<WorkerConfigOptions>({
+  testDir: "./e2e",
+  testMatch: "**/*.spec.ts",
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: !process.env.SSR,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI || process.env.SSR ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-    actionTimeout: 0,
+    ignoreHTTPSErrors: true,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL: "http://localhost:3000",
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
+      name: "chromium",
       use: {
-        ...devices['Desktop Chrome'],
+        ...devices["Desktop Chrome"],
+        webServer: {
+          command: "pnpm",
+          args: webServers[process.env.APP]["args"],
+          url: "http://localhost:3000",
+          cwd: resolve(__dirname, webServers[process.env.APP]["cwd"]),
+        },
+        /*         process.env.SSR
+          ? {
+              command: "pnpm",
+              args: webServers[process.env.APP]["args"],
+              url: "http://localhost:3000",
+              cwd: resolve(__dirname, webServers[process.env.APP]["cwd"]),
+            }
+          : undefined, */
       },
     },
 
-    {
-      name: 'firefox',
-      use: {
-        ...devices['Desktop Firefox'],
-      },
-    },
+    // {
+    //   name: "firefox",
+    //   use: {
+    //     ...devices["Desktop Firefox"],
+    //   },
+    // },
 
-    {
-      name: 'webkit',
-      use: {
-        ...devices['Desktop Safari'],
-      },
-    },
+    // {
+    //   name: "webkit",
+    //   use: {
+    //     ...devices["Desktop Safari"],
+    //   },
+    // },
 
     /* Test against mobile viewports. */
     // {
@@ -98,10 +136,13 @@ const config: PlaywrightTestConfig = {
   // outputDir: 'test-results/',
 
   /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   port: 3000,
-  // },
-};
-
-export default config;
+  // webServer: process.env.SSR
+  //   ? undefined
+  //   : {
+  //       cwd: resolve(__dirname, webServers[process.env.APP]["cwd"]),
+  //       ignoreHTTPSErrors: true,
+  //       command: ["pnpm", ...webServers[process.env.APP]["args"]].join(" "),
+  //       url: "http://localhost:3000/",
+  //       reuseExistingServer: !process.env.CI,
+  //     },
+});

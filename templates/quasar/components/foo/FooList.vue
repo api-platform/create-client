@@ -6,10 +6,10 @@
   </Toolbar>
 
   <q-banner v-if="deleted" class="bg-positive text-white q-ma-md">
-    \{{ deleted['@id'] }} deleted.
+    \{{ deleted["@id"] }} deleted.
   </q-banner>
   <q-banner v-if="mercureDeleted" class="bg-positive text-white q-ma-md">
-    \{{ mercureDeleted['@id'] }} deleted by another user.
+    \{{ mercureDeleted["@id"] }} deleted by another user.
   </q-banner>
 
   {{#if parameters.length}}
@@ -46,11 +46,11 @@
 
     {{#each fields}}
     {{#if isReferences}}
-    <template #body-cell-{{reference.name}}="{ value }">
+    <template #body-cell-{{name}}="{ value }">
       <td>
         <template v-if="router.hasRoute('{{reference.title}}Show')">
           <router-link
-            v-for="{{lowercase reference.title}} in value"
+            v-for="{{lowercase name}} in value"
             :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
             :key="{{lowercase reference.title}}"
           >
@@ -61,14 +61,17 @@
         </template>
 
         <template v-else>
-          <p v-for="{{lowercase reference.title}} in value" :key="{{lowercase reference.title}}">
+          <p
+            v-for="{{lowercase name}} in value"
+            :key="{{lowercase reference.title}}"
+          >
             \{{ {{lowercase reference.title}} }}
           </p>
         </template>
       </td>
     </template>
     {{else if reference}}
-    <template #body-cell-{{lowercase reference.title}}="{ value }">
+    <template #body-cell-{{lowercase name}}="{ value }">
       <td>
         <router-link
           v-if="router.hasRoute('{{reference.title}}Show')"
@@ -77,14 +80,13 @@
           \{{ value }}
         </router-link>
 
-        <p v-else>
-          \{{ value }}
-        </p>
+        <p v-else>\{{ value }}</p>
       </td>
     </template>
     {{else if isEmbeddeds}}
-    <template #body-cell-{{embedded.name}}="{ value }">
+    <template #body-cell-{{name}}="{ value }">
       <td>
+        isEmbeddeds: {{ isEmbeddeds }}
         <template v-if="router.hasRoute('{{embedded.title}}Show')">
           <router-link
             v-for="{{lowercase embedded.title}} in value"
@@ -98,25 +100,27 @@
         </template>
 
         <template v-else>
-          <p v-for="{{lowercase embedded.title}} in value" :key="{{lowercase embedded.title}}['@id']">
+          <p
+            v-for="{{lowercase embedded.title}} in value"
+            :key="{{lowercase embedded.title}}['@id']"
+          >
             \{{ {{lowercase embedded.title}}['@id'] }}
           </p>
         </template>
       </td>
     </template>
     {{else if embedded}}
-    <template #body-cell-{{lowercase embedded.title}}="{ value }">
+    <template #body-cell-{{lowercase name}}="{ value }">
       <td>
+        embedded
         <router-link
           v-if="router.hasRoute('{{embedded.title}}Show')"
           :to="{ name: '{{embedded.title}}Show', params: { id: value['@id'] } }"
         >
-          \{{ value['@id'] }}
+          \{{ value["@id"] }}
         </router-link>
 
-        <p v-else>
-          \{{ value['@id'] }}
-        </p>
+        <p v-else>\{{ value["@id"] }}</p>
       </td>
     </template>
     {{/if}}
@@ -126,7 +130,11 @@
       <template v-if="view">
         <q-btn
           v-if="pagesNumber > 2"
-          :to="view['{{hydraPrefix}}first'] ? view['{{hydraPrefix}}first'] : { name: 'BookList' }"
+          :to="
+            view['{{hydraPrefix}}first']
+              ? view['{{hydraPrefix}}first']
+              : { name: 'BookList' }
+          "
           :disable="!view['{{hydraPrefix}}previous']"
           icon="first_page"
           color="grey-8"
@@ -225,13 +233,13 @@ const columns = [
   { name: 'id', field: '@id', label: t('id') },
   {{#each fields}}
   {
-    name: '{{name}}',
-    field: '{{name}}',
+    name: '{{lowercase name}}',
+    field: '{{lowercase name}}',
     label: t('{{../lc}}.{{name}}'),
     {{#if sortable }}
     sortable: true,
     {{/if}}
-    {{#compare type "==" "dateTime" }}
+    {{#compare htmlInputType "==" "dateTime" }}
     format: (value: string) => {
       return formatDateTime(value);
     },

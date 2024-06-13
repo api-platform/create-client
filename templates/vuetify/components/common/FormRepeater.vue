@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="text-body-1">
-      <span class="mr-2">
-        \{{ label }}
-      </span>
+      <span class="mr-2"> \{{ label }} </span>
 
       <v-btn color="secondary" @click="addField">\{{ $t("add") }}</v-btn>
     </div>
@@ -26,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from "vue";
+import { ref } from "vue";
 
 const props = defineProps<{
   values?: string[];
@@ -37,7 +35,7 @@ const emit = defineEmits<{
   (e: "update", values: string[]): void;
 }>();
 
-let fields: Ref<string[]> = ref([]);
+let fields = ref<string[]>([]);
 
 if (props.values) {
   fields.value.push(...props.values);

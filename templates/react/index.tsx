@@ -1,28 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import reportWebVitals from "./reportWebVitals";
 
-import App from './App';
+import App from "./App";
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import bookRoutes from './routes/book';
-import reviewRoutes from './routes/review';
+import bookRoutes from "./routes/book";
+import reviewRoutes from "./routes/review";
+import bookmarkRoutes from "./routes/bookmark";
+import userRoutes from "./routes/user";
 
-const NotFound = () => (
-  <h1>Not Found</h1>
-);
+const NotFound = () => <h1>Not Found</h1>;
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
-        { bookRoutes }
-        { reviewRoutes }
+        {bookRoutes}
+        {reviewRoutes}
+        {bookmarkRoutes}
+        {userRoutes}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

@@ -119,7 +119,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
           isSubmitting,
         }) => (
           <form className="shadow-md p-4" onSubmit={handleSubmit}>
-          {{#each formFields}}
+          {{#each fields}}
             <div className="mb-2">
               {{#if isRelations}}
                 <div className="text-gray-700 block text-sm font-bold">{{name}}</div>
@@ -158,13 +158,12 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
                 <input
                   name="{{name}}"
                   id="{{../lc}}_{{name}}"
-                  {{#compare type "==" "dateTime" }}
+                  {{#compare htmlInputType "==" "dateTime" }}
                   value={values.{{name}}?.toLocaleString() ?? ""}
-                  {{/compare}}
-                  {{#compare type "!=" "dateTime" }}
+                  {{else}}
                   value={values.{{name}} ?? ""}
                   {{/compare}}
-                  type="{{type}}"
+                  type="{{htmlInputType}}"
                   {{#if step}}step="{{{step}}}"{{/if}}
                   placeholder="{{{description}}}"
                   {{#if required}}required={true}{{/if}}

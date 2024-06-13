@@ -1,0 +1,13 @@
+{
+  "@context": "/contexts/Book",
+  "@id": "/admin/books/1eeefbac-d477-6eae-863f-216de4cbc8f4",
+  "@type": [
+    "https://schema.org/Book",
+    "https://schema.org/Offer"
+  ],
+  "book": "https://openlibrary.org/books/OL2055137M.json",
+  "title": "Hyperion",
+  "author": "Dan Simmons",
+  "condition": "https://schema.org/UsedCondition",
+  "rating": 2
+}

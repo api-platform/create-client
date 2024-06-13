@@ -17,5 +17,6 @@ if [ $FORMAT ]; then
 fi
 
 echo "$gens" | tr ' ' '\n' | while read gen; do
-  ./lib/index.js $entrypoint ./tmp/$gen -g $gen $format
+  rm -rf ./tmp/$gen 
+  ./dist/cli.js $entrypoint ./tmp/$gen -g $gen $format --username chuck.norris@example.com --password Pa55w0rd
 done

@@ -7,14 +7,14 @@
   />
 
   <v-container fluid>
-    <v-alert v-if="deleted" type="success" class="mb-4" closable="true">
+    <v-alert v-if="deleted" type="success" class="mb-4" closable>
       \{{ $t("itemDeleted", [deleted["@id"]]) }}
     </v-alert>
-    <v-alert v-if="mercureDeleted" type="success" class="mb-4" closable="true">
+    <v-alert v-if="mercureDeleted" type="success" class="mb-4" closable>
       \{{ $t("itemDeletedByAnotherUser", [mercureDeleted["@id"]]) }}
     </v-alert>
 
-    <v-alert v-if="error" type="error" class="mb-4" closable="true">
+    <v-alert v-if="error" type="error" class="mb-4" closable>
       \{{ error }}
     </v-alert>
 
@@ -38,27 +38,34 @@
       <template #item.actions="{ item }">
         <ActionCell
           :actions="['show', 'update', 'delete']"
-          @show="goToShowPage(item.raw)"
-          @update="goToUpdatePage(item.raw)"
-          @delete="deleteItem(item.raw)"
+          @show="goToShowPage(item)"
+          @update="goToUpdatePage(item)"
+          @delete="
+            (toggleConfirmDelete) => deleteItem(item, toggleConfirmDelete)
+          "
         />
       </template>
 
-      <template #item.@id="{ item }">
+      <template #item.id="{ item }">
         <router-link
-          :to="{ name: '{{titleUcFirst}}Show', params: { id: item.raw['@id'] } }"
+          :to="{
+            name: '/{{lc}}s/show.[id]',
+            params: { id: encodeURIComponent(item['@id']) },
+          }"
         >
-          \{{ item.raw["@id"] }}
+          \{{ item["@id"] }}
         </router-link>
       </template>
 
       {{#each fields}}
       {{#if isReferences}}
       <template #item.{{reference.name}}="{ item }">
-        <template v-if="router.hasRoute('{{reference.title}}Show')">
+        <template
+          v-if="router.hasRoute('/{{lowercase reference.title}}s/show.[id]')"
+        >
           <router-link
-            v-for="{{lowercase reference.title}} in item.raw.{{reference.name}}"
-            :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
+            v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+            :to="{ name: '/{{lowercase reference.title}}s/show/.id', params: { id: encodeURIComponent({{lowercase reference.title}}) } }"
             :key="{{lowercase reference.title}}"
           >
             \{{ {{lowercase reference.title}} }}
@@ -68,7 +75,10 @@
         </template>
 
         <template v-else>
-          <p v-for="{{lowercase reference.title}} in item.raw.{{reference.name}}" :key="{{lowercase reference.title}}">
+          <p
+            v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+            :key="{{lowercase reference.title}}"
+          >
             \{{ {{lowercase reference.title}} }}
           </p>
         </template>
@@ -76,22 +86,22 @@
       {{else if reference}}
       <template #item.{{lowercase reference.title}}="{ item }">
         <router-link
-          v-if="router.hasRoute('{{reference.title}}Show')"
-          :to="{ name: '{{reference.title}}Show', params: { id: item.raw.{{lowercase reference.title}} } }"
+          v-if="router.hasRoute('/{{lowercase reference.title}}s/show.[id]')"
+          :to="{ name: '/{{lowercase reference.title}}s/show.[id]', params: { id: item.{{lowercase reference.title}} } }"
         >
-          \{{ item.raw.{{lowercase reference.title}} }}
+          \{{ item.{{lowercase reference.title}} }}
         </router-link>
 
-        <p v-else>
-          \{{ item.raw.{{lowercase reference.title}} }}
-        </p>
+        <p v-else>\{{ item.{{lowercase reference.title}} }}</p>
       </template>
       {{else if isEmbeddeds}}
       <template #item.{{embedded.name}}="{ item }">
-        <template v-if="router.hasRoute('{{embedded.title}}Show')">
+        <template
+          v-if="router.hasRoute('/{{lowercase embedded.title}}s/show.[id]')"
+        >
           <router-link
-            v-for="{{lowercase embedded.title}} in item.raw.{{embedded.name}}"
-            :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
+            v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
+            :to="{ name: '/{{lowercase embedded.title}}s/show.[id]', params: { id: encodeURIComponent({{lowercase embedded.title}}['@id']) } }"
             :key="{{lowercase embedded.title}}['@id']"
           >
             \{{ {{lowercase embedded.title}}["@id"] }}
@@ -101,7 +111,10 @@
         </template>
 
         <template v-else>
-          <p v-for="{{lowercase embedded.title}} in item.raw.{{embedded.name}}" :key="{{lowercase embedded.title}}['@id']">
+          <p
+            v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
+            :key="{{lowercase embedded.title}}['@id']"
+          >
             \{{ {{lowercase embedded.title}}["@id"] }}
           </p>
         </template>
@@ -109,19 +122,17 @@
       {{else if embedded}}
       <template #item.{{lowercase embedded.title}}="{ item }">
         <router-link
-          v-if="router.hasRoute('{{embedded.title}}Show')"
-          :to="{ name: '{{embedded.title}}Show', params: { id: item.raw.{{lowercase embedded.title}}['@id'] } }"
+          v-if="router.hasRoute('/{{lowercase embedded.title}}s/show.[id]')"
+          :to="{ name: '/{{lowercase embedded.title}}s/show.[id]', params: { id: encodeURIComponent(item.{{lowercase embedded.title}}['@id']) } }"
         >
-          \{{ item.raw.{{lowercase embedded.title}}["@id"] }}
+          \{{ item.{{lowercase embedded.title}}["@id"] }}
         </router-link>
 
-        <p v-else>
-          \{{ item.raw.{{lowercase embedded.title}}["@id"] }}
-        </p>
+        <p v-else>\{{ item.{{lowercase embedded.title}}["@id"] }}</p>
       </template>
-      {{else if (compare type "==" "dateTime") }}
+      {{else if (compare htmlInputType "==" "dateTime") }}
       <template #item.{{name}}="{ item }">
-        \{{ formatDateTime(item.raw.{{name}}) }}
+        \{{ formatDateTime(item.{{name}}) }}
       </template>
       {{/if}}
       {{/each}}
@@ -186,7 +197,7 @@ const headers = [
     key: "actions",
     sortable: false,
   },
-  { title: t("id"), key: "@id" },
+  { title: t("id"), key: "id", value: "@id" },
   {{#each fields}}
   {
     title: t("{{../lc}}.{{name}}"),
@@ -223,28 +234,29 @@ function resetFilter() {
 
 function goToShowPage(item: {{titleUcFirst}}) {
   router.push({
-    name: "{{titleUcFirst}}Show",
-    params: { id: item["@id"] },
+    name: "/{{lc}}s/show.[id]",
+    params: { id: encodeURIComponent(item["@id"]) },
   });
 }
 
 function goToCreatePage() {
   router.push({
-    name: "{{titleUcFirst}}Create",
+    name: "/{{lc}}s/create",
   });
 }
 
 function goToUpdatePage(item: {{titleUcFirst}}) {
   router.push({
-    name: "{{titleUcFirst}}Update",
-    params: { id: item["@id"] },
+    name: "/{{lc}}s/edit.[id]",
+    params: { id: encodeURIComponent(item["@id"]) },
   });
 }
 
-async function deleteItem(item: {{titleUcFirst}}) {
+async function deleteItem(item: {{titleUcFirst}}, toggleConfirmDelete: () => void) {
   await {{lc}}DeleteStore.deleteItem(item);
 
-  sendRequest();
+  await sendRequest();
+  toggleConfirmDelete()
 }
 
 onBeforeUnmount(() => {

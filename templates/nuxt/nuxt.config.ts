@@ -8,14 +8,13 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  // Waiting for https://github.com/unjs/nitro/issues/603 to enable SSR (SWR).
-  ssr: false,
+  ssr: true,
   routeRules: {
-    "/**": { swr: 1 }
+    // Homepage pre-rendered at build time
+    "/": { prerender: true },
+    // Greetings page generated on demand, revalidates in background, cached until API response changes
+    "/greetings": { swr: true },
+    // Greetings page generated on demand, revalidates in background, cached for 1 hour (3600 seconds)
+    "/greetings/**": { swr: 1 },
   },
-  nitro: {
-    commands: {
-      preview: 'npx serve ./public'
-    }
-  }
-})
+});

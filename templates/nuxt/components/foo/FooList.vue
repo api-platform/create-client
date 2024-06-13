@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-between">
-    <h1 class="text-3xl my-4">{{titleUcFirst}} List</h1>
+    <h1 class="text-3xl my-4">{{ titleUcFirst }} List</h1>
 
     <nuxt-link
       :to="{ name: '{{lc}}s-create' }"
@@ -41,12 +41,10 @@
     <table class="min-w-full">
       <thead class="border-b">
         <tr>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            id
-          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">id</th>
           {{#each fields}}
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            {{name}}
+            {{ name }}
           </th>
           {{/each }}
           <th
@@ -62,7 +60,10 @@
         <tr v-for="item in items" :key="item['@id']" class="border-b">
           <td class="px-6 py-4 text-sm">
             <nuxt-link
-              :to="{ name: '{{lc}}s-id', params: { id: getIdFromIri(item['@id']) } }"
+              :to="{
+                name: '{{lc}}s-id',
+                params: { id: getIdFromIri(item['@id']) },
+              }"
               class="text-blue-600 hover:text-blue-800"
             >
               \{{ item["@id"] }}
@@ -70,10 +71,10 @@
           </td>
           {{#each fields}}
           <td class="px-6 py-4 text-sm">
-          {{#if isReferences}}
+            {{#if isReferences}}
             <template v-if="router.hasRoute('{{reference.name}}-id')">
               <nuxt-link
-                v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+                v-for="{{lowercase reference.title}} in item.{{name}}"
                 :key="{{lowercase reference.title}}"
                 :to="{ name: '{{lowercase reference.title}}s-id', params: { id: {{lowercase reference.title}} } }"
                 class="text-blue-600 hover:text-blue-800"
@@ -86,13 +87,13 @@
 
             <template v-else>
               <p
-                v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+                v-for="{{lowercase reference.title}} in item.{{name}}"
                 :key="{{lowercase reference.title}}"
               >
                 \{{ {{lowercase reference.title}} }}
               </p>
             </template>
-          {{else if reference}}
+            {{else if reference}}
             <nuxt-link
               v-if="router.hasRoute('{{reference.name}}-id')"
               :to="{ name: '{{lowercase reference.title}}s-id', params: { id: item.{{lowercase reference.title}} } }"
@@ -101,10 +102,8 @@
               \{{ item.{{lowercase reference.title}} }}
             </nuxt-link>
 
-            <p v-else>
-              \{{ item.{{lowercase reference.title}} }}
-            </p>
-          {{else if isEmbeddeds}}
+            <p v-else>\{{ item.{{lowercase reference.title}} }}</p>
+            {{else if isEmbeddeds}}
             <template v-if="router.hasRoute('{{embedded.name}}-id')">
               <nuxt-link
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
@@ -126,7 +125,7 @@
                 \{{ {{lowercase embedded.title}}["@id"] }}
               </p>
             </template>
-          {{else if embedded}}
+            {{else if embedded}}
             <nuxt-link
               v-if="router.hasRoute('{{embedded.name}}-id')"
               :to="{ name: '{{lowercase embedded.title}}s-id', params: { id: getIdFromIri(item.{{lowercase embedded.title}}['@id']) } }"
@@ -135,19 +134,20 @@
               \{{ item.{{lowercase embedded.title}}["@id"] }}
             </nuxt-link>
 
-            <p v-else>
-              \{{ item.{{lowercase embedded.title}}["@id"] }}
-            </p>
-          {{else if (compare type "==" "dateTime") }}
+            <p v-else>\{{ item.{{lowercase embedded.title}}["@id"] }}</p>
+            {{else if (compare htmlInputType "==" "dateTime") }}
             \{{ formatDateTime(item.{{name}}) }}
-          {{else}}
+            {{else}}
             \{{ item.{{name}} }}
-          {{/if}}
+            {{/if}}
           </td>
           {{/each}}
           <td class="px-6 py-4 text-sm">
             <nuxt-link
-              :to="{ name: '{{lc}}s-id', params: { id: getIdFromIri(item['@id']) } }"
+              :to="{
+                name: '{{lc}}s-id',
+                params: { id: getIdFromIri(item['@id']) },
+              }"
               class="px-6 py-2 bg-blue-600 text-white text-xs rounded shadow-md hover:bg-blue-700"
             >
               Show
@@ -155,7 +155,10 @@
           </td>
           <td class="px-6 py-4 text-sm">
             <nuxt-link
-              :to="{ name: '{{lc}}s-id-edit', params: { id: getIdFromIri(item['@id']) } }"
+              :to="{
+                name: '{{lc}}s-id-edit',
+                params: { id: getIdFromIri(item['@id']) },
+              }"
               class="px-6 py-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
             >
               Edit
@@ -225,7 +228,10 @@
 
         <li :class="{ disabled: !pagination.next }">
           <nuxt-link
-            :to="{ name: '{{lc}}s-page-page', params: { page: pagination.last } }"
+            :to="{
+              name: '{{lc}}s-page-page',
+              params: { page: pagination.last },
+            }"
             :class="
               !pagination.next
                 ? 'text-gray-500 pointer-events-none'

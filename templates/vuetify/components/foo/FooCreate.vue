@@ -2,7 +2,9 @@
   <Toolbar :breadcrumb="breadcrumb" :is-loading="isLoading" />
 
   <v-container fluid>
-    <v-alert v-if="error" type="error" class="mb-4" closable="true">\{{ error }}</v-alert>
+    <v-alert v-if="error" type="error" class="mb-4" closable
+      >\{{ error }}</v-alert
+    >
 
     <Form :errors="violations" @submit="create" />
   </v-container>
@@ -34,7 +36,7 @@ async function create(item: {{titleUcFirst}}) {
     return;
   }
 
-  router.push({ name: "{{titleUcFirst}}Update", params: { id: created?.value?.["@id"] } });
+  router.push({ name: "{{titleUcFirst}}Update", params: { id: encodeURIComponent(created?.value?.["@id"]) } });
 }
 
 onBeforeUnmount(() => {

@@ -1,0 +1,1162 @@
+{
+  "@context": {
+    "@vocab": "https:\/\/demo.api-platform.com\/docs.jsonld#",
+    "hydra": "http:\/\/www.w3.org\/ns\/hydra\/core#",
+    "rdf": "http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#",
+    "rdfs": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#",
+    "xmls": "http:\/\/www.w3.org\/2001\/XMLSchema#",
+    "owl": "http:\/\/www.w3.org\/2002\/07\/owl#",
+    "schema": "https:\/\/schema.org\/",
+    "domain": {
+      "@id": "rdfs:domain",
+      "@type": "@id"
+    },
+    "range": {
+      "@id": "rdfs:range",
+      "@type": "@id"
+    },
+    "subClassOf": {
+      "@id": "rdfs:subClassOf",
+      "@type": "@id"
+    },
+    "expects": {
+      "@id": "hydra:expects",
+      "@type": "@id"
+    },
+    "returns": {
+      "@id": "hydra:returns",
+      "@type": "@id"
+    }
+  },
+  "@id": "\/docs.jsonld",
+  "@type": "hydra:ApiDocumentation",
+  "hydra:title": "API Platform\u0027s demo",
+  "hydra:description": "This is a demo application of the [API Platform](https:\/\/api-platform.com) framework.\n[Its source code](https:\/\/github.com\/api-platform\/demo) includes various examples, check it out!\nYou may also be interested by [the GraphQL entrypoint](\/graphql).\n[A PWA](\/) and [an admin](\/admin) are consuming this API.\n",
+  "hydra:entrypoint": "\/",
+  "hydra:supportedClass": [
+    {
+      "@id": "hydra:Error",
+      "@type": "hydra:Class",
+      "rdfs:label": "Error",
+      "hydra:title": "Error",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/title",
+            "@type": "rdf:Property",
+            "rdfs:label": "title",
+            "domain": "hydra:Error",
+            "range": "xmls:string"
+          },
+          "hydra:title": "title",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/detail",
+            "@type": "rdf:Property",
+            "rdfs:label": "detail",
+            "domain": "hydra:Error",
+            "range": "xmls:string"
+          },
+          "hydra:title": "detail",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/status",
+            "@type": "rdf:Property",
+            "rdfs:label": "status",
+            "domain": "hydra:Error",
+            "range": "xmls:integer"
+          },
+          "hydra:title": "status",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/instance",
+            "@type": "rdf:Property",
+            "rdfs:label": "instance",
+            "domain": "hydra:Error",
+            "range": "xmls:string"
+          },
+          "hydra:title": "instance",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/type",
+            "@type": "rdf:Property",
+            "rdfs:label": "type",
+            "domain": "hydra:Error",
+            "range": "xmls:string"
+          },
+          "hydra:title": "type",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/trace",
+            "@type": "rdf:Property",
+            "rdfs:label": "trace",
+            "domain": "hydra:Error"
+          },
+          "hydra:title": "trace",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/message",
+            "@type": "rdf:Property",
+            "rdfs:label": "message",
+            "domain": "hydra:Error",
+            "range": "xmls:string"
+          },
+          "hydra:title": "message",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/code",
+            "@type": "rdf:Property",
+            "rdfs:label": "code",
+            "domain": "hydra:Error",
+            "range": "xmls:integer"
+          },
+          "hydra:title": "code",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/file",
+            "@type": "rdf:Property",
+            "rdfs:label": "file",
+            "domain": "hydra:Error",
+            "range": "xmls:string"
+          },
+          "hydra:title": "file",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/line",
+            "@type": "rdf:Property",
+            "rdfs:label": "line",
+            "domain": "hydra:Error",
+            "range": "xmls:integer"
+          },
+          "hydra:title": "line",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/hydra:title",
+            "@type": "rdf:Property",
+            "rdfs:label": "hydra:title",
+            "domain": "hydra:Error",
+            "range": "xmls:string"
+          },
+          "hydra:title": "hydra:title",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/hydra:description",
+            "@type": "rdf:Property",
+            "rdfs:label": "hydra:description",
+            "domain": "hydra:Error",
+            "range": "xmls:string"
+          },
+          "hydra:title": "hydra:description",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/description",
+            "@type": "rdf:Property",
+            "rdfs:label": "description",
+            "domain": "hydra:Error",
+            "range": "xmls:string"
+          },
+          "hydra:title": "description",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/string",
+            "@type": "rdf:Property",
+            "rdfs:label": "string",
+            "domain": "hydra:Error"
+          },
+          "hydra:title": "string",
+          "hydra:required": false,
+          "hydra:readable": false,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/trace",
+            "@type": "rdf:Property",
+            "rdfs:label": "trace",
+            "domain": "hydra:Error"
+          },
+          "hydra:title": "trace",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/previous",
+            "@type": "rdf:Property",
+            "rdfs:label": "previous",
+            "domain": "hydra:Error"
+          },
+          "hydra:title": "previous",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Error\/traceAsString",
+            "@type": "rdf:Property",
+            "rdfs:label": "traceAsString",
+            "domain": "hydra:Error",
+            "range": "xmls:string"
+          },
+          "hydra:title": "traceAsString",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves a Error resource.",
+          "rdfs:label": "Retrieves a Error resource.",
+          "returns": "hydra:Error"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves a Error resource.",
+          "rdfs:label": "Retrieves a Error resource.",
+          "returns": "hydra:Error"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves a Error resource.",
+          "rdfs:label": "Retrieves a Error resource.",
+          "returns": "hydra:Error"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves a Error resource.",
+          "rdfs:label": "Retrieves a Error resource.",
+          "returns": "hydra:Error"
+        }
+      ]
+    },
+    {
+      "@id": "https:\/\/schema.org\/Book",
+      "@type": "hydra:Class",
+      "rdfs:label": "Book",
+      "hydra:title": "Book",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Book\/book",
+            "@type": "rdf:Property",
+            "rdfs:label": "book",
+            "domain": "https:\/\/schema.org\/Book",
+            "range": "xmls:string"
+          },
+          "hydra:title": "book",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Book\/title",
+            "@type": "rdf:Property",
+            "rdfs:label": "title",
+            "domain": "https:\/\/schema.org\/Book",
+            "range": "xmls:string"
+          },
+          "hydra:title": "title",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Book\/author",
+            "@type": "rdf:Property",
+            "rdfs:label": "author",
+            "domain": "https:\/\/schema.org\/Book",
+            "range": "xmls:string"
+          },
+          "hydra:title": "author",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Book\/condition",
+            "@type": "rdf:Property",
+            "rdfs:label": "condition",
+            "domain": "https:\/\/schema.org\/Book"
+          },
+          "hydra:title": "condition",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Book\/rating",
+            "@type": "rdf:Property",
+            "rdfs:label": "rating",
+            "domain": "https:\/\/schema.org\/Book",
+            "range": "xmls:integer"
+          },
+          "hydra:title": "rating",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves a Book resource.",
+          "rdfs:label": "Retrieves a Book resource.",
+          "returns": "https:\/\/schema.org\/Book"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "https:\/\/schema.org\/Book",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the Book resource.",
+          "rdfs:label": "Replaces the Book resource.",
+          "returns": "https:\/\/schema.org\/Book"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the Book resource.",
+          "rdfs:label": "Deletes the Book resource.",
+          "returns": "owl:Nothing"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves a Book resource.",
+          "rdfs:label": "Retrieves a Book resource.",
+          "returns": "https:\/\/schema.org\/Book"
+        }
+      ]
+    },
+    {
+      "@id": "https:\/\/schema.org\/BookmarkAction",
+      "@type": "hydra:Class",
+      "rdfs:label": "Bookmark",
+      "hydra:title": "Bookmark",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Bookmark\/book",
+            "@type": "rdf:Property",
+            "rdfs:label": "book",
+            "domain": "https:\/\/schema.org\/BookmarkAction",
+            "owl:maxCardinality": 1,
+            "range": [
+              "https:\/\/schema.org\/Book",
+              "https:\/\/schema.org\/Offer"
+            ]
+          },
+          "hydra:title": "book",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Bookmark\/bookmarkedAt",
+            "@type": "rdf:Property",
+            "rdfs:label": "bookmarkedAt",
+            "domain": "https:\/\/schema.org\/BookmarkAction",
+            "range": "xmls:dateTime"
+          },
+          "hydra:title": "bookmarkedAt",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves a Bookmark resource.",
+          "rdfs:label": "Retrieves a Bookmark resource.",
+          "returns": "owl:Nothing"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the Bookmark resource.",
+          "rdfs:label": "Deletes the Bookmark resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#Parchment",
+      "@type": "hydra:Class",
+      "rdfs:label": "Parchment",
+      "hydra:title": "Parchment",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Parchment\/title",
+            "@type": "rdf:Property",
+            "rdfs:label": "title",
+            "domain": "#Parchment",
+            "range": "xmls:string"
+          },
+          "hydra:title": "title",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Parchment\/description",
+            "@type": "rdf:Property",
+            "rdfs:label": "description",
+            "domain": "#Parchment",
+            "range": "xmls:string"
+          },
+          "hydra:title": "description",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves a Parchment resource.",
+          "owl:deprecated": true,
+          "rdfs:label": "Retrieves a Parchment resource.",
+          "returns": "#Parchment"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#Parchment",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the Parchment resource.",
+          "owl:deprecated": true,
+          "rdfs:label": "Replaces the Parchment resource.",
+          "returns": "#Parchment"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "#Parchment",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the Parchment resource.",
+          "owl:deprecated": true,
+          "rdfs:label": "Updates the Parchment resource.",
+          "returns": "#Parchment"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the Parchment resource.",
+          "owl:deprecated": true,
+          "rdfs:label": "Deletes the Parchment resource.",
+          "returns": "owl:Nothing"
+        }
+      ],
+      "owl:deprecated": true
+    },
+    {
+      "@id": "https:\/\/schema.org\/Review",
+      "@type": "hydra:Class",
+      "rdfs:label": "Review",
+      "hydra:title": "Review",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Review\/user",
+            "@type": "rdf:Property",
+            "rdfs:label": "user",
+            "domain": "https:\/\/schema.org\/Review",
+            "owl:maxCardinality": 1,
+            "range": "https:\/\/schema.org\/Person"
+          },
+          "hydra:title": "user",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Review\/book",
+            "@type": "rdf:Property",
+            "rdfs:label": "book",
+            "domain": "https:\/\/schema.org\/Review",
+            "owl:maxCardinality": 1,
+            "range": [
+              "https:\/\/schema.org\/Book",
+              "https:\/\/schema.org\/Offer"
+            ]
+          },
+          "hydra:title": "book",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Review\/publishedAt",
+            "@type": "rdf:Property",
+            "rdfs:label": "publishedAt",
+            "domain": "https:\/\/schema.org\/Review",
+            "range": "xmls:dateTime"
+          },
+          "hydra:title": "publishedAt",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Review\/body",
+            "@type": "rdf:Property",
+            "rdfs:label": "body",
+            "domain": "https:\/\/schema.org\/Review",
+            "range": "xmls:string"
+          },
+          "hydra:title": "body",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Review\/rating",
+            "@type": "rdf:Property",
+            "rdfs:label": "rating",
+            "domain": "https:\/\/schema.org\/Review",
+            "range": "xmls:integer"
+          },
+          "hydra:title": "rating",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Review\/letter",
+            "@type": "rdf:Property",
+            "rdfs:label": "letter",
+            "domain": "https:\/\/schema.org\/Review",
+            "owl:deprecated": true,
+            "range": "xmls:string"
+          },
+          "hydra:title": "letter",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves a Review resource.",
+          "rdfs:label": "Retrieves a Review resource.",
+          "returns": "https:\/\/schema.org\/Review"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "https:\/\/schema.org\/Review",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the Review resource.",
+          "rdfs:label": "Replaces the Review resource.",
+          "returns": "https:\/\/schema.org\/Review"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the Review resource.",
+          "rdfs:label": "Deletes the Review resource.",
+          "returns": "owl:Nothing"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves a Review resource.",
+          "rdfs:label": "Retrieves a Review resource.",
+          "returns": "owl:Nothing"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "https:\/\/schema.org\/Review",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the Review resource.",
+          "rdfs:label": "Updates the Review resource.",
+          "returns": "https:\/\/schema.org\/Review"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the Review resource.",
+          "rdfs:label": "Deletes the Review resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "https:\/\/schema.org\/Person",
+      "@type": "hydra:Class",
+      "rdfs:label": "User",
+      "hydra:title": "User",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#User\/sub",
+            "@type": "rdf:Property",
+            "rdfs:label": "sub",
+            "domain": "https:\/\/schema.org\/Person"
+          },
+          "hydra:title": "sub",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#User\/firstName",
+            "@type": "rdf:Property",
+            "rdfs:label": "firstName",
+            "domain": "https:\/\/schema.org\/Person",
+            "range": "xmls:string"
+          },
+          "hydra:title": "firstName",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#User\/lastName",
+            "@type": "rdf:Property",
+            "rdfs:label": "lastName",
+            "domain": "https:\/\/schema.org\/Person",
+            "range": "xmls:string"
+          },
+          "hydra:title": "lastName",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#User\/name",
+            "@type": "rdf:Property",
+            "rdfs:label": "name",
+            "domain": "https:\/\/schema.org\/Person",
+            "range": "xmls:string"
+          },
+          "hydra:title": "name",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves a User resource.",
+          "rdfs:label": "Retrieves a User resource.",
+          "returns": "https:\/\/schema.org\/Person"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves a User resource.",
+          "rdfs:label": "Retrieves a User resource.",
+          "returns": "https:\/\/schema.org\/Person"
+        }
+      ]
+    },
+    {
+      "@id": "#Entrypoint",
+      "@type": "hydra:Class",
+      "hydra:title": "The API entrypoint",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint\/book",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of Book resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "https:\/\/schema.org\/Book"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of Book resources.",
+                "rdfs:label": "Retrieves the collection of Book resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "https:\/\/schema.org\/Book",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a Book resource.",
+                "rdfs:label": "Creates a Book resource.",
+                "returns": "https:\/\/schema.org\/Book"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of Book resources.",
+                "rdfs:label": "Retrieves the collection of Book resources.",
+                "returns": "hydra:Collection"
+              }
+            ]
+          },
+          "hydra:title": "The collection of Book resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint\/bookmark",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of Bookmark resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "https:\/\/schema.org\/BookmarkAction"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of Bookmark resources.",
+                "rdfs:label": "Retrieves the collection of Bookmark resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "https:\/\/schema.org\/BookmarkAction",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a Bookmark resource.",
+                "rdfs:label": "Creates a Bookmark resource.",
+                "returns": "https:\/\/schema.org\/BookmarkAction"
+              }
+            ]
+          },
+          "hydra:title": "The collection of Bookmark resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint\/parchment",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of Parchment resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#Parchment"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of Parchment resources.",
+                "owl:deprecated": true,
+                "rdfs:label": "Retrieves the collection of Parchment resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#Parchment",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a Parchment resource.",
+                "owl:deprecated": true,
+                "rdfs:label": "Creates a Parchment resource.",
+                "returns": "#Parchment"
+              }
+            ]
+          },
+          "hydra:title": "The collection of Parchment resources",
+          "hydra:readable": true,
+          "hydra:writeable": false,
+          "owl:deprecated": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint\/review",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of Review resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "https:\/\/schema.org\/Review"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of Review resources.",
+                "rdfs:label": "Retrieves the collection of Review resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of Review resources.",
+                "rdfs:label": "Retrieves the collection of Review resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "https:\/\/schema.org\/Review",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a Review resource.",
+                "rdfs:label": "Creates a Review resource.",
+                "returns": "https:\/\/schema.org\/Review"
+              }
+            ]
+          },
+          "hydra:title": "The collection of Review resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint\/user",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of User resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "https:\/\/schema.org\/Person"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of User resources.",
+                "rdfs:label": "Retrieves the collection of User resources.",
+                "returns": "hydra:Collection"
+              }
+            ]
+          },
+          "hydra:title": "The collection of User resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        }
+      ],
+      "hydra:supportedOperation": {
+        "@type": "hydra:Operation",
+        "hydra:method": "GET",
+        "rdfs:label": "The API entrypoint.",
+        "returns": "#EntryPoint"
+      }
+    },
+    {
+      "@id": "#ConstraintViolation",
+      "@type": "hydra:Class",
+      "hydra:title": "A constraint violation",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ConstraintViolation\/propertyPath",
+            "@type": "rdf:Property",
+            "rdfs:label": "propertyPath",
+            "domain": "#ConstraintViolation",
+            "range": "xmls:string"
+          },
+          "hydra:title": "propertyPath",
+          "hydra:description": "The property path of the violation",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ConstraintViolation\/message",
+            "@type": "rdf:Property",
+            "rdfs:label": "message",
+            "domain": "#ConstraintViolation",
+            "range": "xmls:string"
+          },
+          "hydra:title": "message",
+          "hydra:description": "The message associated with the violation",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        }
+      ]
+    },
+    {
+      "@id": "#ConstraintViolationList",
+      "@type": "hydra:Class",
+      "subClassOf": "hydra:Error",
+      "hydra:title": "A constraint violation list",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ConstraintViolationList\/violations",
+            "@type": "rdf:Property",
+            "rdfs:label": "violations",
+            "domain": "#ConstraintViolationList",
+            "range": "#ConstraintViolation"
+          },
+          "hydra:title": "violations",
+          "hydra:description": "The violations",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        }
+      ]
+    }
+  ]
+}

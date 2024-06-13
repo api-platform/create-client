@@ -9,20 +9,20 @@
     <q-markup-table>
       <thead>
         <tr>
-          <th>\{{ $t('field') }}</th>
-          <th>\{{ $t('value') }}</th>
+          <th>\{{ $t("field") }}</th>
+          <th>\{{ $t("value") }}</th>
         </tr>
       </thead>
       <tbody>
         {{#each fields}}
         <tr>
-          <td>\{{ $t('{{../lc}}.{{name}}') }}</td>
+          <td>\{{ $t('{{../lc}}.{{ name }}') }}</td>
 
           <td>
             {{#if isReferences}}
             <template v-if="router.hasRoute('{{reference.title}}Show')">
               <router-link
-                v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+                v-for="{{lowercase reference.title}} in item.{{name}}"
                 :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
                 :key="{{lowercase reference.title}}"
               >
@@ -34,7 +34,7 @@
 
             <template v-else>
               <p
-                v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+                v-for="{{lowercase reference.title}} in item.{{name}}"
                 :key="{{lowercase reference.title}}"
               >
                 \{{ {{lowercase reference.title}} }}
@@ -48,13 +48,11 @@
               \{{ item.{{lowercase reference.title}} }}
             </router-link>
 
-            <p v-else>
-              \{{ item.{{lowercase reference.title}} }}
-            </p>
+            <p v-else>\{{ item.{{lowercase reference.title}} }}</p>
             {{else if isEmbeddeds}}
             <template v-if="router.hasRoute('{{embedded.title}}Show')">
               <router-link
-                v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
+                v-for="{{lowercase embedded.title}} in item.{{name}}"
                 :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
                 :key="{{lowercase embedded.title}}['@id']"
               >
@@ -66,7 +64,7 @@
 
             <template v-else>
               <p
-                v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
+                v-for="{{lowercase embedded.title}} in item.{{name}}"
                 :key="{{lowercase embedded.title}}['@id']"
               >
                 \{{ {{lowercase embedded.title}}['@id'] }}
@@ -80,10 +78,8 @@
               \{{ item.{{lowercase embedded.title}}['@id'] }}
             </router-link>
 
-            <p v-else>
-              \{{ item.{{lowercase embedded.title}}['@id'] }}
-            </p>
-            {{else if (compare type "==" "dateTime") }}
+            <p v-else>\{{ item.{{lowercase embedded.title}}['@id'] }}</p>
+            {{else if (compare htmlInputType "==" "dateTime") }}
             \{{ formatDateTime(item.{{name}}) }}
             {{else}}
             \{{ item.{{name}} }}

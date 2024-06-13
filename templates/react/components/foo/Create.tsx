@@ -16,7 +16,7 @@ const CreateView = ({create, created, error, reset, loading}: CreateProps) => {
   if (created) {
     return (
       <Navigate
-        to={`/{{lc}}s/edit/${encodeURIComponent(created["@id"])}`}
+        to={`/{{lc}}s`}
         replace
       />
     );

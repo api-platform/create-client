@@ -1,0 +1,171 @@
+{
+  "@context": "/contexts/Book",
+  "@id": "/admin/books",
+  "@type": "hydra:Collection",
+  "hydra:totalItems": 204,
+  "hydra:member": [
+    {
+      "@id": "/admin/books/1eeefbac-d477-6eae-863f-216de4cbc8f4",
+      "@type": [
+        "https://schema.org/Book",
+        "https://schema.org/Offer"
+      ],
+      "book": "https://openlibrary.org/books/OL2055137M.json",
+      "title": "Hyperion",
+      "author": "Dan Simmons",
+      "condition": "https://schema.org/UsedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "/admin/books/1eeefbac-d879-6746-a002-216de4cbc8f4",
+      "@type": [
+        "https://schema.org/Book",
+        "https://schema.org/Offer"
+      ],
+      "book": "https://openlibrary.org/books/OL8336028M.json",
+      "title": "The Silver Mistress",
+      "author": "O'Donnell, Peter",
+      "condition": "https://schema.org/RefurbishedCondition",
+      "rating": 0
+    },
+    {
+      "@id": "/admin/books/1eeefbac-d8c7-6bee-8aca-216de4cbc8f4",
+      "@type": [
+        "https://schema.org/Book",
+        "https://schema.org/Offer"
+      ],
+      "book": "https://openlibrary.org/books/OL11432734M.json",
+      "title": "Silver Mistress",
+      "author": "O'Donnell, Peter",
+      "condition": "https://schema.org/RefurbishedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "/admin/books/1eeefbac-d92f-6a6e-ae4a-216de4cbc8f4",
+      "@type": [
+        "https://schema.org/Book",
+        "https://schema.org/Offer"
+      ],
+      "book": "https://openlibrary.org/books/OL39197557M.json",
+      "title": "Dragons of Deltora",
+      "author": "Emily Rodda",
+      "condition": "https://schema.org/RefurbishedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "/admin/books/1eeefbac-d967-646e-920e-216de4cbc8f4",
+      "@type": [
+        "https://schema.org/Book",
+        "https://schema.org/Offer"
+      ],
+      "book": "https://openlibrary.org/books/OL38215123M.json",
+      "title": "Lost Fortress of Light",
+      "author": "Jamie Childress",
+      "condition": "https://schema.org/UsedCondition"
+    },
+    {
+      "@id": "/admin/books/1eeefbac-d971-60f4-ad92-216de4cbc8f4",
+      "@type": [
+        "https://schema.org/Book",
+        "https://schema.org/Offer"
+      ],
+      "book": "https://openlibrary.org/books/OL37044569M.json",
+      "title": "The Airlords of Han",
+      "author": "Philip Francis Nowlan",
+      "condition": "https://schema.org/NewCondition",
+      "rating": 2
+    },
+    {
+      "@id": "/admin/books/1eeefbac-d998-685c-a8af-216de4cbc8f4",
+      "@type": [
+        "https://schema.org/Book",
+        "https://schema.org/Offer"
+      ],
+      "book": "https://openlibrary.org/books/OL37044535M.json",
+      "title": "Short Fiction",
+      "author": "Stanley G. Weinbaum",
+      "condition": "https://schema.org/UsedCondition",
+      "rating": 3
+    },
+    {
+      "@id": "/admin/books/1eeefbac-d9f7-6c6c-822d-216de4cbc8f4",
+      "@type": [
+        "https://schema.org/Book",
+        "https://schema.org/Offer"
+      ],
+      "book": "https://openlibrary.org/books/OL37014377M.json",
+      "title": "Hellhole",
+      "author": "Brian Herbert",
+      "condition": "https://schema.org/NewCondition",
+      "rating": 3
+    },
+    {
+      "@id": "/admin/books/1eeefbac-da13-6232-814e-216de4cbc8f4",
+      "@type": [
+        "https://schema.org/Book",
+        "https://schema.org/Offer"
+      ],
+      "book": "https://openlibrary.org/books/OL36653975M.json",
+      "title": "Juggernaut",
+      "author": "Amelia C. Gormley",
+      "condition": "https://schema.org/RefurbishedCondition",
+      "rating": 2
+    },
+    {
+      "@id": "/admin/books/1eeefbac-da93-6c20-9925-216de4cbc8f4",
+      "@type": [
+        "https://schema.org/Book",
+        "https://schema.org/Offer"
+      ],
+      "book": "https://openlibrary.org/books/OL36621903M.json",
+      "title": "The 13th Continuum",
+      "author": "Vera Strange",
+      "condition": "https://schema.org/RefurbishedCondition",
+      "rating": 4
+    }
+  ],
+  "hydra:view": {
+    "@id": "/admin/books?itemsPerPage=10&order%5Bid%5D=ASC&page=1",
+    "@type": "hydra:PartialCollectionView",
+    "hydra:first": "/admin/books?itemsPerPage=10&order%5Bid%5D=ASC&page=1",
+    "hydra:last": "/admin/books?itemsPerPage=10&order%5Bid%5D=ASC&page=21",
+    "hydra:next": "/admin/books?itemsPerPage=10&order%5Bid%5D=ASC&page=2"
+  },
+  "hydra:search": {
+    "@type": "hydra:IriTemplate",
+    "hydra:template": "/admin/books{?order[title],title,author,condition,condition[]}",
+    "hydra:variableRepresentation": "BasicRepresentation",
+    "hydra:mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[title]",
+        "property": "title",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "title",
+        "property": "title",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "author",
+        "property": "author",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "condition",
+        "property": "condition",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "condition[]",
+        "property": "condition",
+        "required": false
+      }
+    ]
+  }
+}

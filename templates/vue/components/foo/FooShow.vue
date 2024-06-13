@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <h1 class="text-3xl my-4">Show {{titleUcFirst}} \{{ item?.["@id"] }}</h1>
+    <h1 class="text-3xl my-4">Show {{ titleUcFirst }} \{{ item?.["@id"] }}</h1>
 
     <div
       v-if="isLoading"
@@ -62,82 +62,78 @@
               class="text-sm font-medium px-6 py-4 text-left capitalize"
               scope="row"
             >
-              {{name}}
+              {{ name }}
             </th>
             <td class="px-6 py-4 whitespace-nowrap text-sm">
-            {{#if isReferences}}
-            <template v-if="router.hasRoute('{{reference.title}}Show')">
+              {{#if isReferences}}
+              <template v-if="router.hasRoute('{{reference.title}}Show')">
+                <router-link
+                  v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+                  :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
+                  :key="{{lowercase reference.title}}"
+                  class="text-blue-600 hover:text-blue-800"
+                >
+                  \{{ {{lowercase reference.title}} }}
+
+                  <br />
+                </router-link>
+              </template>
+
+              <template v-else>
+                <p
+                  v-for="{{lowercase reference.title}} in item.{{reference.name}}"
+                  :key="{{lowercase reference.title}}"
+                >
+                  \{{ {{lowercase reference.title}} }}
+                </p>
+              </template>
+              {{else if reference}}
               <router-link
-                v-for="{{lowercase reference.title}} in item.{{reference.name}}"
-                :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
-                :key="{{lowercase reference.title}}"
+                v-if="router.hasRoute('{{reference.title}}Show')"
+                :to="{ name: '{{reference.title}}Show', params: { id: item.{{lowercase reference.title}} } }"
                 class="text-blue-600 hover:text-blue-800"
               >
-                \{{ {{lowercase reference.title}} }}
-
-                <br />
+                \{{ item.{{lowercase reference.title}} }}
               </router-link>
-            </template>
 
-            <template v-else>
-              <p
-                v-for="{{lowercase reference.title}} in item.{{reference.name}}"
-                :key="{{lowercase reference.title}}"
-              >
-                \{{ {{lowercase reference.title}} }}
-              </p>
-            </template>
-            {{else if reference}}
-            <router-link
-              v-if="router.hasRoute('{{reference.title}}Show')"
-              :to="{ name: '{{reference.title}}Show', params: { id: item.{{lowercase reference.title}} } }"
-              class="text-blue-600 hover:text-blue-800"
-            >
-              \{{ item.{{lowercase reference.title}} }}
-            </router-link>
+              <p v-else>\{{ item.{{lowercase reference.title}} }}</p>
+              {{else if isEmbeddeds}}
+              <template v-if="router.hasRoute('{{embedded.title}}Show')">
+                <router-link
+                  v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
+                  :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
+                  :key="{{lowercase embedded.title}}['@id']"
+                  class="text-blue-600 hover:text-blue-800"
+                >
+                  \{{ {{lowercase embedded.title}}["@id"] }}
 
-            <p v-else>
-              \{{ item.{{lowercase reference.title}} }}
-            </p>
-            {{else if isEmbeddeds}}
-            <template v-if="router.hasRoute('{{embedded.title}}Show')">
+                  <br />
+                </router-link>
+              </template>
+
+              <template v-else>
+                <p
+                  v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
+                  :key="{{lowercase embedded.title}}['@id']"
+                >
+                  \{{ {{lowercase embedded.title}}["@id"] }}
+                </p>
+              </template>
+              {{else if embedded}}
               <router-link
-                v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-                :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
-                :key="{{lowercase embedded.title}}['@id']"
+                v-if="router.hasRoute('{{embedded.title}}Show')"
+                :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
                 class="text-blue-600 hover:text-blue-800"
               >
-                \{{ {{lowercase embedded.title}}["@id"] }}
-
-                <br />
+                \{{ item.{{lowercase embedded.title}}["@id"] }}
               </router-link>
-            </template>
 
-            <template v-else>
-              <p
-                v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-                :key="{{lowercase embedded.title}}['@id']"
-              >
-                \{{ {{lowercase embedded.title}}["@id"] }}
-              </p>
-            </template>
-            {{else if embedded}}
-            <router-link
-              v-if="router.hasRoute('{{embedded.title}}Show')"
-              :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}['@id'] } }"
-              class="text-blue-600 hover:text-blue-800"
-            >
-              \{{ item.{{lowercase embedded.title}}["@id"] }}
-            </router-link>
-
-            <p v-else>
-              \{{ item.{{lowercase embedded.title}}["@id"] }}
-            </p>
-            {{else if (compare type "==" "dateTime") }}
-            \{{ formatDateTime(item.{{name}}) }}
-            {{else}}
-            \{{ item.{{name}} }}
-            {{/if}}
+              <p v-else>\{{ item.{{lowercase embedded.title}}["@id"] }}</p>
+              {{else if (compare htmlInputType "==" "dateTime") }}
+              \{{ formatDateTime(item.{{name}}) }}
+              {{else}}
+              \{{ item.{{name}} }}
+              {{/if}}
             </td>
           </tr>
           {{/each}}
@@ -194,4 +190,3 @@ onBeforeUnmount(() => {
   {{lc}}ShowStore.$reset();
 });
 </script>
-

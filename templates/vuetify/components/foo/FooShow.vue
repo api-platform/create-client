@@ -7,7 +7,7 @@
   />
 
   <v-container fluid>
-    <v-alert v-if="error || deleteError" type="error" class="mb-4" closable="true">
+    <v-alert v-if="error || deleteError" type="error" class="mb-4" closable>
       \{{ error || deleteError }}
     </v-alert>
 
@@ -22,16 +22,18 @@
       <tbody>
         {{#each fields}}
         <tr>
-          <td>
-            \{{ $t("{{../lc}}.{{name}}") }}
-          </td>
+          <td>\{{ $t("{{../lc}}.{{ name }}") }}</td>
 
           <td>
             {{#if isReferences}}
-            <template v-if="router.hasRoute('{{reference.title}}Show')">
+            <template
+              v-if="
+                router.hasRoute('/{{lowercase reference.title}}s/show.[id]')
+              "
+            >
               <router-link
                 v-for="{{lowercase reference.title}} in item.{{reference.name}}"
-                :to="{ name: '{{reference.title}}Show', params: { id: {{lowercase reference.title}} } }"
+                :to="{ name: '/{{lowercase reference.title}}s/show.[id]', params: { id: encodeURIComponent({{lowercase reference.title}}) } }"
                 :key="{{lowercase reference.title}}"
               >
                 \{{ {{lowercase reference.title}} }}
@@ -50,20 +52,22 @@
             </template>
             {{else if reference}}
             <router-link
-              v-if="router.hasRoute('{{reference.title}}Show')"
-              :to="{ name: '{{reference.title}}Show', params: { id: item.{{lowercase reference.title}} } }"
+              v-if="
+                router.hasRoute('/{{lowercase reference.title}}s/show.[id]')
+              "
+              :to="{ name: '/{{lowercase reference.title}}s/show.[id]', params: { id: encodeURIComponent(item.{{lowercase reference.title}}) } }"
             >
               \{{ item.{{lowercase reference.title}} }}
             </router-link>
 
-            <p v-else>
-              \{{ item.{{lowercase reference.title}} }}
-            </p>
+            <p v-else>\{{ item.{{lowercase reference.title}} }}</p>
             {{else if isEmbeddeds}}
-            <template v-if="router.hasRoute('{{embedded.title}}Show')">
+            <template
+              v-if="router.hasRoute('/{{lowercase embedded.title}}s/show.[id]')"
+            >
               <router-link
                 v-for="{{lowercase embedded.title}} in item.{{embedded.name}}"
-                :to="{ name: '{{embedded.title}}Show', params: { id: {{lowercase embedded.title}}['@id'] } }"
+                :to="{ name: '/{{lowercase embedded.title}}s/show.[id]', params: { id: encodeURIComponent({{lowercase embedded.title}}['@id']) } }"
                 :key="{{lowercase embedded.title}}['@id']"
               >
                 \{{ {{lowercase embedded.title}}["@id"] }}
@@ -82,16 +86,14 @@
             </template>
             {{else if embedded}}
             <router-link
-              v-if="router.hasRoute('{{embedded.title}}Show')"
-              :to="{ name: '{{embedded.title}}Show', params: { id: item.{{lowercase embedded.title}}?.['@id'] } }"
+              v-if="router.hasRoute('/{{lowercase embedded.title}}s/show.[id]')"
+              :to="{ name: '/{{lowercase embedded.title}}s/show.[id]', params: { id: encodeURIComponent(item.{{lowercase embedded.title}}?.['@id']) } }"
             >
               \{{ item.{{lowercase embedded.title}}?.["@id"] }}
             </router-link>
 
-            <p v-else>
-              \{{ item.{{lowercase embedded.title}}?.["@id"] }}
-            </p>
-            {{else if (compare type "==" "dateTime") }}
+            <p v-else>\{{ item.{{lowercase embedded.title}}?.["@id"] }}</p>
+            {{else if (compare htmlInputType "==" "dateTime") }}
             \{{ formatDateTime(item.{{name}}) }}
             {{else}}
             \{{ item.{{name}} }}
@@ -135,7 +137,7 @@ const { deleted, error: deleteError } = storeToRefs({{lc}}DeleteStore);
 useMercureItem({
   store: {{lc}}ShowStore,
   deleteStore: {{lc}}DeleteStore,
-  redirectRouteName: "{{titleUcFirst}}List",
+  redirectRouteName: "/{{lc}}s/",
 });
 
 await {{lc}}ShowStore.retrieve(decodeURIComponent(route.params.id as string));
@@ -152,7 +154,7 @@ async function deleteItem() {
     return;
   }
 
-  router.push({ name: "{{titleUcFirst}}List" });
+  router.push({ name: "/{{lc}}s/" });
 }
 
 onBeforeUnmount(() => {
