@@ -1,10 +1,10 @@
-import {Component, signal, WritableSignal} from '@angular/core';
-import {DeleteComponent} from "../../common/delete/delete.component";
-import {RouterLink} from "@angular/router";
-import {ApiService} from "../../../service/api.service";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Location} from "@angular/common";
-import {FormComponent} from "../../common/form/form.component";
+import {Component, inject, signal, WritableSignal} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterLink} from "@angular/router";
+import {DeleteComponent} from "@components/common/delete/delete.component";
+import {FormComponent} from "@components/{{lc}}/form/form.component";
+import {ApiService} from "@service/api.service";
 
 @Component({
   selector: 'app-create',
@@ -19,11 +19,17 @@ import {FormComponent} from "../../common/form/form.component";
   templateUrl: './create.component.html',
 })
 export class CreateComponent {
+  private apiService: ApiService = inject(ApiService)
+  private location: Location = inject(Location)
   public isLoading: WritableSignal<boolean> = signal(false)
-  public formType ='{{formFields}}'
 
-  constructor(private apiService: ApiService, private location: Location) {
-  }
+  public formType: Array<{ name: string; type: string }> = [
+    {
+      name: 'name',
+      type: 'string',
+    }
+  ]
+
   onSubmit(data: any) {
     return this.apiService
       .add('/{{lc}}',

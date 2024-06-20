@@ -1,9 +1,9 @@
-import {Component, OnInit, signal, WritableSignal} from '@angular/core';
-import {Router, RouterLink} from "@angular/router";
 import {CommonModule, Location} from "@angular/common";
-import {ApiService} from "../../../service/api.service";
-import {DeleteComponent} from "../../common/delete/delete.component";
-import {ApiShow} from "../../../interface/api";
+import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
+import {Router, RouterLink} from "@angular/router";
+import {DeleteComponent} from "@components/common/delete/delete.component";
+import {ApiService} from "@service/api.service";
+import {ApiItem} from "@interface/api";
 
 @Component({
   selector: 'app-show',
@@ -13,34 +13,33 @@ import {ApiShow} from "../../../interface/api";
     RouterLink,
     DeleteComponent
   ],
-  templateUrl: './show.component.svg',
+  templateUrl: './show.component.html',
 })
 export class ShowComponent implements OnInit {
-  public item: WritableSignal<ApiShow|null> = signal(null)
-  public isLoading = signal(false)
-  public error = signal(undefined)
+  private apiService: ApiService = inject(ApiService)
+  private router: Router = inject(Router)
+  private location: Location = inject(Location)
 
-  constructor(
-    private apiService: ApiService,
-    private router: Router,
-    private location: Location
-  ) {
-  }
+  public item: WritableSignal<ApiItem> = signal({} as ApiItem)
+  public isLoading: WritableSignal<boolean> = signal(false)
+  public error: WritableSignal<string> = signal('')
 
   ngOnInit() {
-    this.isLoading.set(true)
+    this.toggleIsLoading()
     const id = this.router.url
     this.apiService
-      .getData(id)
-      .subscribe(item => {
-        this.item.set(item)
-        this.isLoading.set(false)
-      })
+      .fetchData(id)
+      .subscribe(item => this.item.set(item))
+    this.toggleIsLoading()
   }
 
-  delete() {
-    return this.apiService.delete(this.item()?.['@id']).subscribe(
+  delete(id: string | undefined | null) {
+    return this.apiService.delete(id).subscribe(
       () => this.location.back()
     )
+  }
+
+  private toggleIsLoading() {
+    return this.isLoading.update(value => !value)
   }
 }

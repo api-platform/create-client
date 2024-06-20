@@ -1,8 +1,7 @@
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
-import {Injectable, Signal} from "@angular/core";
-import {ApiList, ApiShow} from "../interface/api";
-import {Foo} from "../interface/foo.model";
+import {inject, Injectable} from "@angular/core";
+import {ApiItem, ApiList, ApiShow} from "@interface/api";
 
 @Injectable({providedIn: 'root'})
 export class ApiService {
@@ -12,15 +11,11 @@ export class ApiService {
       'Content-Type': 'application/ld+json',
     })
   }
+  public http: HttpClient = inject(HttpClient)
 
-  constructor(
-    private http: HttpClient
-  ) {
-  }
-
-  add(id: string, data: { name: string | null }) {
+  public add(id: string, data: ApiItem) {
     return this.http
-      .post<Foo>(
+      .post<ApiItem>(
         this.baseUrl + id,
         data,
         this.httpOptions
@@ -30,18 +25,25 @@ export class ApiService {
       )
   }
 
-  getData(id: string): Observable<ApiList|ApiShow> {
+  public fetchDataList(id: string): Observable<ApiList> {
+    const url = this.baseUrl + id
     return this.http
-      .get<ApiList|ApiShow>(this.baseUrl + id)
+      .get<ApiList>(url)
       .pipe(
-        catchError(
-          this.handleError
-        )
+        catchError(this.handleError)
       )
   }
 
-  putHero(id: Signal<string | undefined> | string | undefined, data: ApiShow | null) {
+  public fetchData(id: string): Observable<ApiItem> {
+    const url = this.baseUrl + id
+    return this.http
+      .get<ApiItem>(url)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
 
+  public put(id: string, data: ApiItem) {
     return this.http
       .put<ApiShow>(
         this.baseUrl + id,
@@ -54,7 +56,7 @@ export class ApiService {
   }
 
 
-  delete(id: Signal<string | undefined> | string | undefined) {
+  public delete(id: string | undefined | null) {
     return this.http
       .delete(this.baseUrl + id)
       .pipe(

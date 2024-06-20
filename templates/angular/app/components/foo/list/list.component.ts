@@ -1,10 +1,11 @@
-import {Component, OnInit, signal, WritableSignal} from '@angular/core';
-import {RouterLink} from "@angular/router";
 import {AsyncPipe, Location, NgFor, NgIf} from "@angular/common";
-import {TableComponent} from "../../common/table/table.component";
-import {ApiService} from "../../../service/api.service";
-import {Hero} from "../../../interface/hero.model";
-import {DeleteComponent} from "../../common/delete/delete.component";
+import {Component, DestroyRef, inject, OnInit, signal, WritableSignal} from '@angular/core';
+import {RouterLink} from "@angular/router";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {DeleteComponent} from "@components/common/delete/delete.component";
+import {TableComponent} from "@components/common/table/table.component";
+import {ApiItem} from "@interface/api";
+import {ApiService} from "@service/api.service";
 
 @Component({
   selector: 'app-list',
@@ -20,38 +21,40 @@ import {DeleteComponent} from "../../common/delete/delete.component";
   templateUrl: './list.component.html',
 })
 export class ListComponent implements OnInit {
-  public items: WritableSignal<Hero[] | []> = signal([])
-  public isLoading = signal(false)
-  public error = signal(undefined)
+  public isLoading: WritableSignal<Boolean> = signal(false)
+  public items: WritableSignal<ApiItem[]> = signal([])
+  public error: WritableSignal<String> = signal('')
   public bulk: WritableSignal<Array<string>> = signal([])
 
-  constructor(
-    private apiService: ApiService
-  ) {
-  }
+  private apiService: ApiService = inject(ApiService)
+  private location: Location = inject(Location)
+  private destroy: DestroyRef = inject(DestroyRef)
 
   ngOnInit() {
-    this.isLoading.set(true)
+    this.toggleIsLoading()
     this.apiService
-      .getData('/{{lc}}')
+      .fetchDataList('/{{lc}}')
+      .pipe(takeUntilDestroyed(this.destroy))
       .subscribe(
         (items) => {
           this.items.set(items['hydra:member'])
-          this.isLoading.set(false)
         }
       )
+    this.toggleIsLoading()
   }
 
-  addToBulk(id: string) {
+  public addToBulk(id: string) {
     if (this.isInBulkList(id)) {
-      const bulkFilter = this.bulk().filter(element => element !== id)
+      const bulkFilter =
+        this.bulk()
+          .filter(element => element !== id)
       return this.bulk.set(bulkFilter)
     }
 
     this.bulk.update(uri => [...uri, id])
   }
 
-  selectedAll() {
+  public selectedAll() {
     if (!this.bulk().length) {
       this.items().forEach(item => {
         this.bulk().push(<string>item["@id"])
@@ -61,7 +64,7 @@ export class ListComponent implements OnInit {
     }
   }
 
-  delete() {
+  public delete() {
     Promise.all(this.bulk())
       .then(
         items =>
@@ -75,6 +78,10 @@ export class ListComponent implements OnInit {
                 )
           )
       )
+  }
+
+  private toggleIsLoading() {
+    return this.isLoading.update(value => !value)
   }
 
   private isInBulkList(id: string): boolean {

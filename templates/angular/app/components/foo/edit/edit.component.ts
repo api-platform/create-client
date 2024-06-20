@@ -1,10 +1,11 @@
-import {Component, OnInit, signal, WritableSignal} from '@angular/core';
-import {DeleteComponent} from "../../common/delete/delete.component";
-import {Router, RouterLink} from "@angular/router";
-import {ApiService} from "../../../service/api.service";
 import {CommonModule, Location} from "@angular/common";
-import {ApiShow} from "../../../interface/api";
+import {Component, OnInit, signal,WritableSignal} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {Router, RouterLink} from "@angular/router";
+import {DeleteComponent} from "@components/common/delete/delete.component";
+import {FormComponent} from "@components/{{lc}}/form/form.component";
+import {ApiItem} from "@interface/api";
+import {ApiService} from "@service/api.service";
 
 
 @Component({
@@ -16,61 +17,56 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     RouterLink,
     FormsModule,
     ReactiveFormsModule,
+    FormComponent,
   ],
   templateUrl: './edit.component.html',
 })
 export class EditComponent implements OnInit {
-  public isLoading: WritableSignal<boolean> = signal(false)
-  public item: WritableSignal<ApiShow | null> = signal(null)
+  public item: WritableSignal<ApiItem> = signal({} as ApiItem);
+  public isLoading: WritableSignal<Boolean> = signal(false)
+  public error: WritableSignal<string> = signal('')
+  public formType: Array<{ name: string; type: string }> = [
+    {
+      name: 'name',
+      type: 'string',
+    }
+  ]
 
   constructor(
-    private router: Router,
     private apiService: ApiService,
-    private location: Location
+    private router: Router,
+    private location: Location,
   ) {
   }
 
   ngOnInit() {
-    this.loadData()
-  }
-
-  loadData() {
+    const uri = this.router.url.split('/edit')[0]
     this.isLoading.set(true)
-    const splitUrl = this.router.url.split('/edit')[0]
-    this.apiService
-      .getData(splitUrl)
-      .subscribe(item => {
-        this.item.set(item)
+    this.apiService.fetchData(uri)
+      .subscribe(value => {
+        this.item.set(value)
         this.isLoading.set(false)
       })
   }
-  getItemId(event: any) {
-    this.item.update(update => {
-      if (update) {
-        return {
-          ...update,
-          name: event
-        }
-      } else {
-        return update
-      }
-    })
-  }
 
-  onSubmit(event: any) {
-    return this.apiService.putHero(
-      this.item()?.["@id"],
-      this.item()
-    ).subscribe(() => {
-      this.location.back()
-    })
+  onSubmit(data: any) {
+    return this.apiService
+      .put(
+        this.item()['@id']!,
+        {
+          ...this.item,
+          ...data
+        })
+      .subscribe(
+        () => this.location.back()
+      )
   }
 
   delete() {
-    return this.apiService.delete(
-      this.item()?.["@id"]
-    ).subscribe(
-      () => this.location.back()
-    )
+    return this.apiService
+      .delete(this.item()['@id']!)
+      .subscribe(
+        () => this.location.back()
+      )
   }
 }

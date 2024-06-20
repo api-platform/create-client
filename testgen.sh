@@ -6,7 +6,7 @@ if [ $ENTRYPOINT ]; then
   entrypoint="$ENTRYPOINT"
 fi
 
-gens="vue angular"
+gens="angular"
 if [ $1 ]; then
   gens="$1"
 fi

@@ -1,20 +1,14 @@
 <div class="sidebar px-3 py-6">
   <ul>
+    {{#each apiResource}}
     <li class="py-2 hover:bg-neutral-100">
-      <a routerLink="/heroes" [routerLinkActive]="['active']">
+      <a routerLink="/{{lowercase this}}" [routerLinkActive]="['active']">
         <div class="flex just-center items-center px-4 text-lg">
-          <app-list-svg/>
-          <span class="ml-4">Heroes</span>
+          <app-list-svg></app-list-svg>
+          <span class="ml-4">{{this}}</span>
         </div>
       </a>
     </li>
-    <li class="py-2 hover:bg-neutral-100">
-      <a  routerLink="/heroes2" [routerLinkActive]="['active']">
-        <div class="flex just-center items-center px-4 text-lg">
-          <app-list-svg/>
-          <span class="ml-4">Heroes</span>
-        </div>
-      </a>
-    </li>
+    {{/each}}
   </ul>
 </div>

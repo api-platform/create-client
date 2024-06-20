@@ -10,18 +10,16 @@
       <app-delete
         [disabled]="!bulk().length"
         (delete)="delete()"
-      >
-      </app-delete>
+      />
     </div>
   </div>
   @if (isLoading()) {
-    <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
+  <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
   } @else {
-    <app-table [items]="items()"
-               [bulk]="bulk()"
-               (addToBulkList)="addToBulk($event)"
-               (selectedAll)="selectedAll()"
-    >
-    </app-table>
+  <app-table [items]="items"
+             [bulk]="bulk()"
+             (addToBulkList)="addToBulk($event)"
+             (selectedAll)="selectedAll()"
+  />
   }
 </div>

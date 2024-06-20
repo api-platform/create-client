@@ -10,13 +10,14 @@
              (change)="selected()"
       >
     </th>
-    <th>id</th>
-    <th>name</th>
-    <th [colSpan]="2"></th>
+    {{#each fields}}
+    <th>{{name}}</th>
+    {{/each}}
+    <th [colSpan]="2">Actions</th>
   </tr>
   </thead>
   <tbody>
-  @for (item of items; track item) {
+  @for (item of items(); track item) {
   <tr>
     <td class="w-2">
       <input type="checkbox"
@@ -26,18 +27,18 @@
              (change)="addToBulk(item['@id']!)"
       >
     </td>
-    <td>{{ item['id'] }}</td>
-    <td>{{ item['name'] }}</td>
+    <td>\{{ item['id'] }}</td>
+    <td>\{{ item['name'] }}</td>
     <td class="w-8">
       <a [routerLink]="[item['@id']]" class="text-cyan-500">
         Show
-        <app-show-svg />
+        <app-show-svg></app-show-svg>
       </a>
     </td>
     <td class="w-8">
       <a [routerLink]="[item['id'], 'edit']" class="text-cyan-500">
         Edit
-        <app-edit-svg />
+        <app-edit-svg></app-edit-svg>
       </a>
     </td>
   </tr>

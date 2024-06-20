@@ -52,9 +52,6 @@ export default class {
   }
 
   createFile(template, dest, context = {}, warn = true) {
-    console.table(this.templates);
-    console.log("template ==>", template);
-    console.log("dest ==>", dest);
     if (undefined === this.templates[template]) {
       console.log(
         `The template ${template} does not exists in the registered templates.`

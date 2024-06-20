@@ -12,10 +12,10 @@ export default class extends BaseGenerator {
       // COMMON COMPONENTS
       "app/components/common/delete/delete.component.html",
       "app/components/common/delete/delete.component.ts",
-      "app/components/common/form/form.component.html",
-      "app/components/common/form/form.component.ts",
       "app/components/common/header/header.component.html",
       "app/components/common/header/header.component.ts",
+      "app/components/common/layout/layout.component.html",
+      "app/components/common/layout/layout.component.ts",
       "app/components/common/sidebar/sidebar.component.html",
       "app/components/common/sidebar/sidebar.component.ts",
       "app/components/common/table/table.component.html",
@@ -26,6 +26,8 @@ export default class extends BaseGenerator {
       "app/components/foo/create/create.component.ts",
       "app/components/foo/edit/edit.component.html",
       "app/components/foo/edit/edit.component.ts",
+      "app/components/foo/form/form.component.html",
+      "app/components/foo/form/form.component.ts",
       "app/components/foo/list/list.component.html",
       "app/components/foo/list/list.component.ts",
       "app/components/foo/show/show.component.html",
@@ -45,11 +47,6 @@ export default class extends BaseGenerator {
 
       //INTERFACE
       "app/interface/api.ts",
-      "app/interface/foo.model.ts",
-      "app/interface/hero.model.ts",
-      "app/interface/list.model.ts",
-      "app/interface/show.model.ts",
-      "app/interface/update.model.ts",
 
       // ROUTER
       "app/router/foo.ts",
@@ -89,7 +86,6 @@ export default class extends BaseGenerator {
     const titleUcFirst =
       resource.title.charAt(0).toUpperCase() + resource.title.slice(1);
     const fields = this.parseFields(resource);
-    console.log(fields);
     const hasIsRelation = fields.some((field) => field.isRelation);
     const hasIsRelations = fields.some((field) => field.isRelations);
     const hasDateField = fields.some((field) => field.type === "dateTime");
@@ -108,8 +104,8 @@ export default class extends BaseGenerator {
       hasIsRelations,
       hasRelations: hasIsRelation || hasIsRelations,
       hasDateField,
+      apiResource: this.apiResource(api),
     };
-    console.log("api ==>", api);
 
     //CREATE DIRECTORIES - These directories may already exist
     [
@@ -117,10 +113,10 @@ export default class extends BaseGenerator {
       `${dir}/utils`,
       `${dir}/app/components/${lc}/create`,
       `${dir}/app/components/${lc}/edit`,
+      `${dir}/app/components/${lc}/form`,
       `${dir}/app/components/${lc}/list`,
       `${dir}/app/components/${lc}/show`,
       `${dir}/app/components/common/delete`,
-      `${dir}/app/components/common/form`,
       `${dir}/app/components/common/header`,
       `${dir}/app/components/common/sidebar`,
       `${dir}/app/components/common/table`,
@@ -145,13 +141,14 @@ export default class extends BaseGenerator {
       "app/components/svg/menu/menu.component.ts",
       "app/components/common/delete/delete.component.html",
       "app/components/common/delete/delete.component.ts",
-      "app/components/common/form/form.component.html",
-      "app/components/common/form/form.component.ts",
       "app/components/common/header/header.component.html",
       "app/components/common/header/header.component.ts",
+      "app/components/common/sidebar/sidebar.component.css",
       "app/components/common/sidebar/sidebar.component.html",
       "app/components/common/sidebar/sidebar.component.ts",
-
+      "app/components/common/table/table.component.html",
+      "app/components/common/table/table.component.ts",
+      "app/interface/api.ts",
       "app/app.component.html",
       "app/app.component.ts",
       "app/app.routes.ts",
@@ -165,10 +162,13 @@ export default class extends BaseGenerator {
       "app/components/%s/list/list.component.ts",
       "app/components/%s/create/create.component.html",
       "app/components/%s/create/create.component.ts",
-      /*"app/components/%s/edit/edit.component.html",
+      "app/components/%s/edit/edit.component.html",
       "app/components/%s/edit/edit.component.ts",
-      "app/components/%s/show/show.component.svg",
-      "app/components/%s/show/show.component.ts",*/
+      "app/components/%s/form/form.component.html",
+      "app/components/%s/form/form.component.ts",
+      "app/components/%s/show/show.component.html",
+      "app/components/%s/show/show.component.ts",
+      "app/components/%s/show/show.component.html",
     ].forEach((file) =>
       this.createFileFromPattern(file, dir, [lc, formFields], context)
     );
@@ -201,5 +201,11 @@ export default class extends BaseGenerator {
     }, {});
 
     return Object.values(fields);
+  }
+
+  apiResource(api) {
+    return api.resources
+      .filter((val) => !val.deprecated)
+      .map((val) => val.title);
   }
 }

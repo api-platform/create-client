@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import {ListComponent} from "../../foo/list/list.component";
-import {ListSvgComponent} from "../../svg/list-svg/list-svg.component";
 import {RouterLink, RouterLinkActive} from "@angular/router";
+import {ListSvgComponent} from "@components/svg/list-svg/list-svg.component";
 
 @Component({
   selector: 'app-sidebar',

@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {RouterLink} from "@angular/router";
-import {Hero} from "../../../interface/hero.model";
+import {AsyncPipe} from "@angular/common";
+import {Component, EventEmitter, Input, Output, WritableSignal} from '@angular/core';
 import {FormsModule} from "@angular/forms";
-import {ShowComponent} from "../../svg/show/show.component";
-import {ShowSvgComponent} from "../../svg/show-svg/show-svg.component";
-import {EditSvgComponent} from "../../svg/edit-svg/edit-svg.component";
+import {RouterLink} from "@angular/router";
+import {ShowSvgComponent} from "@components/svg/show-svg/show-svg.component";
+import {EditSvgComponent} from "@components/svg/edit-svg/edit-svg.component";
+import {ApiItem} from "@interface/api";
 
 @Component({
   selector: 'app-table',
@@ -12,14 +12,14 @@ import {EditSvgComponent} from "../../svg/edit-svg/edit-svg.component";
   imports: [
     RouterLink,
     FormsModule,
-    ShowComponent,
     ShowSvgComponent,
-    EditSvgComponent
+    EditSvgComponent,
+    AsyncPipe
   ],
   templateUrl: './table.component.html',
 })
 export class TableComponent {
-  @Input() items!: Hero[];
+  @Input() items!: WritableSignal<ApiItem[]>;
   @Input() bulk!: Array<string>;
   @Output() addToBulkList = new EventEmitter<string>()
   @Output() selectedAll = new EventEmitter<Function>()
