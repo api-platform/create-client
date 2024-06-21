@@ -1,0 +1,49 @@
+<div class="flex justify-center mt-8">
+  <nav aria-label="Page navigation">
+    <ul class="flex list-style-none">
+      <li>
+        <a [routerLink]="['/books']"
+           [routerLinkActive]="'bg-gray-200 text-gray-500 pointer-events-none'"
+           (click)="changeUri(pagination()['hydra:first'])"
+           class="bg-gray block py-2 px-3 rounded"
+           aria-label="First page">
+          <span aria-hidden="true">&lArr;</span>First
+        </a>
+      </li>
+      @if (pagination()['hydra:previous']) {
+        <li>
+          <a [routerLink]="['/books']"
+             [queryParams]="pageParamValue('hydra:previous')"
+             [routerLinkActive]="'bg-gray-200 text-gray-500 pointer-events-none'"
+             (click)="changeUri(pagination()['hydra:previous'])"
+             class="bg-gray block py-2 px-3 rounded"
+             aria-label="Previous page">
+            Previous
+          </a>
+        </li>
+      }
+      @if (pagination()['hydra:next']) {
+      <li>
+        <a [routerLink]="['/books']"
+           [queryParams]="pageParamValue('hydra:next')"
+           [routerLinkActive]="'bg-gray-200 text-gray-500 pointer-events-none'"
+           (click)="changeUri(pagination()['hydra:next'])"
+           class="bg-gray block py-2 px-3 rounded"
+           aria-label="Next page">
+          Next
+        </a>
+      </li>
+      }
+      <li>
+        <a [routerLink]="['/books']"
+           [queryParams]="pageParamValue('hydra:last')"
+           [routerLinkActive]="'bg-gray-200 text-gray-500 pointer-events-none'"
+           (click)="changeUri(pagination()['hydra:last'])"
+           class="bg-gray block py-2 px-3 rounded"
+           aria-label="Last page">
+          <span aria-hidden="true">&rAarr;</span> Last
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

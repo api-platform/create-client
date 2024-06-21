@@ -1,12 +1,20 @@
 import {CommonModule, Location} from "@angular/common";
-import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal
+} from '@angular/core';
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {Router, RouterLink} from "@angular/router";
 import {DeleteComponent} from "@components/common/delete/delete.component";
 import {ApiService} from "@service/api.service";
 import {ApiItem} from "@interface/api";
 
 @Component({
-  selector: 'app-show',
+  selector: 'app-show-{{lc}}',
   standalone: true,
   imports: [
     CommonModule,
@@ -19,6 +27,7 @@ export class ShowComponent implements OnInit {
   private apiService: ApiService = inject(ApiService)
   private router: Router = inject(Router)
   private location: Location = inject(Location)
+  private destroy: DestroyRef = inject(DestroyRef)
 
   public item: WritableSignal<ApiItem> = signal({} as ApiItem)
   public isLoading: WritableSignal<boolean> = signal(false)
@@ -29,6 +38,7 @@ export class ShowComponent implements OnInit {
     const id = this.router.url
     this.apiService
       .fetchData(id)
+      .pipe(takeUntilDestroyed(this.destroy))
       .subscribe(item => this.item.set(item))
     this.toggleIsLoading()
   }

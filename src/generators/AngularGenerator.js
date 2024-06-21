@@ -8,18 +8,32 @@ export default class extends BaseGenerator {
   constructor(params) {
     super(params);
 
+    this.registerTemplates("common/", [
+      // utils
+      "utils/config.ts",
+      "utils/date.ts",
+    ]);
+
     this.registerTemplates("angular/", [
       // COMMON COMPONENTS
       "app/components/common/delete/delete.component.html",
       "app/components/common/delete/delete.component.ts",
+      "app/components/common/header/header.component.css",
       "app/components/common/header/header.component.html",
       "app/components/common/header/header.component.ts",
       "app/components/common/layout/layout.component.html",
       "app/components/common/layout/layout.component.ts",
+      "app/components/common/sidebar/sidebar.component.css",
       "app/components/common/sidebar/sidebar.component.html",
       "app/components/common/sidebar/sidebar.component.ts",
-      "app/components/common/table/table.component.html",
-      "app/components/common/table/table.component.ts",
+      "app/components/common/svg/list-svg/list-svg.component.svg",
+      "app/components/common/svg/list-svg/list-svg.component.ts",
+      "app/components/common/svg/show-svg/show-svg.component.svg",
+      "app/components/common/svg/show-svg/show-svg.component.ts",
+      "app/components/common/svg/edit-svg/edit-svg.component.svg",
+      "app/components/common/svg/edit-svg/edit-svg.component.ts",
+      "app/components/common/svg/menu/menu.component.svg",
+      "app/components/common/svg/menu/menu.component.ts",
 
       // COMPONENTS
       "app/components/foo/create/create.component.html",
@@ -32,24 +46,17 @@ export default class extends BaseGenerator {
       "app/components/foo/list/list.component.ts",
       "app/components/foo/show/show.component.html",
       "app/components/foo/show/show.component.ts",
+      "app/components/foo/table/table.component.html",
+      "app/components/foo/table/table.component.ts",
       "app/app.component.html",
       "app/app.component.ts",
-
-      //SVG COMPONENT
-      "app/components/svg/list-svg/list-svg.component.svg",
-      "app/components/svg/list-svg/list-svg.component.ts",
-      "app/components/svg/show-svg/show-svg.component.svg",
-      "app/components/svg/show-svg/show-svg.component.ts",
-      "app/components/svg/edit-svg/edit-svg.component.svg",
-      "app/components/svg/edit-svg/edit-svg.component.ts",
-      "app/components/svg/menu/menu.component.svg",
-      "app/components/svg/menu/menu.component.ts",
 
       //INTERFACE
       "app/interface/api.ts",
 
       // ROUTER
       "app/router/foo.ts",
+      "app/router/index.ts",
       "app/app.routes.ts",
 
       //SERVICE
@@ -109,46 +116,45 @@ export default class extends BaseGenerator {
 
     //CREATE DIRECTORIES - These directories may already exist
     [
-      `${dir}/assets`,
-      `${dir}/utils`,
       `${dir}/app/components/${lc}/create`,
       `${dir}/app/components/${lc}/edit`,
       `${dir}/app/components/${lc}/form`,
       `${dir}/app/components/${lc}/list`,
       `${dir}/app/components/${lc}/show`,
+      `${dir}/app/components/${lc}/table`,
       `${dir}/app/components/common/delete`,
       `${dir}/app/components/common/header`,
       `${dir}/app/components/common/sidebar`,
-      `${dir}/app/components/common/table`,
-      `${dir}/app/components/svg/list-svg`,
-      `${dir}/app/components/svg/show-svg`,
-      `${dir}/app/components/svg/edit-svg`,
-      `${dir}/app/components/svg/menu`,
+      `${dir}/app/components/common/svg/list-svg`,
+      `${dir}/app/components/common/svg/show-svg`,
+      `${dir}/app/components/common/svg/edit-svg`,
+      `${dir}/app/components/common/svg/menu`,
       `${dir}/app/interface`,
       `${dir}/app/router`,
       `${dir}/app/service`,
+      `${dir}/app/utils`,
     ].forEach((dir) => this.createDir(dir, false));
 
     //CREATE FILE
     [
-      "app/components/svg/list-svg/list-svg.component.svg",
-      "app/components/svg/list-svg/list-svg.component.ts",
-      "app/components/svg/show-svg/show-svg.component.svg",
-      "app/components/svg/show-svg/show-svg.component.ts",
-      "app/components/svg/edit-svg/edit-svg.component.svg",
-      "app/components/svg/edit-svg/edit-svg.component.ts",
-      "app/components/svg/menu/menu.component.svg",
-      "app/components/svg/menu/menu.component.ts",
+      "app/components/common/svg/list-svg/list-svg.component.svg",
+      "app/components/common/svg/list-svg/list-svg.component.ts",
+      "app/components/common/svg/show-svg/show-svg.component.svg",
+      "app/components/common/svg/show-svg/show-svg.component.ts",
+      "app/components/common/svg/edit-svg/edit-svg.component.svg",
+      "app/components/common/svg/edit-svg/edit-svg.component.ts",
+      "app/components/common/svg/menu/menu.component.svg",
+      "app/components/common/svg/menu/menu.component.ts",
       "app/components/common/delete/delete.component.html",
       "app/components/common/delete/delete.component.ts",
+      "app/components/common/header/header.component.css",
       "app/components/common/header/header.component.html",
       "app/components/common/header/header.component.ts",
       "app/components/common/sidebar/sidebar.component.css",
       "app/components/common/sidebar/sidebar.component.html",
       "app/components/common/sidebar/sidebar.component.ts",
-      "app/components/common/table/table.component.html",
-      "app/components/common/table/table.component.ts",
       "app/interface/api.ts",
+      "app/service/api.service.ts",
       "app/app.component.html",
       "app/app.component.ts",
       "app/app.routes.ts",
@@ -156,6 +162,7 @@ export default class extends BaseGenerator {
       this.createFile(file, `${dir}/${file}`, context, false)
     );
 
+    // DYNAMIC FILE
     [
       "app/router/%s.ts",
       "app/components/%s/list/list.component.html",
@@ -169,9 +176,16 @@ export default class extends BaseGenerator {
       "app/components/%s/show/show.component.html",
       "app/components/%s/show/show.component.ts",
       "app/components/%s/show/show.component.html",
+      "app/components/%s/table/table.component.html",
+      "app/components/%s/table/table.component.ts",
     ].forEach((file) =>
       this.createFileFromPattern(file, dir, [lc, formFields], context)
     );
+
+    // CONFIG
+    this.createConfigFile(`${dir}/app/utils/config.ts`, {
+      entrypoint: api.entrypoint,
+    });
   }
 
   parseFields(resource) {

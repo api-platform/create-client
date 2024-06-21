@@ -1,16 +1,16 @@
+import {AsyncPipe, NgIf} from "@angular/common";
 import {
   Component,
   EventEmitter,
   Input,
-  Output, SimpleChange,
+  Output
 } from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {ApiItem} from "@interface/api";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {ReactiveFormsModule} from "@angular/forms";
 import {DeleteComponent} from "@components/common/delete/delete.component";
+import {ApiItem} from "@interface/api";
 
 @Component({
-  selector: 'app-form',
+  selector: 'app-form-{{lc}}',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -21,33 +21,15 @@ import {DeleteComponent} from "@components/common/delete/delete.component";
   templateUrl: './form.component.html',
 })
 export class FormComponent {
-  @Input() fields: Array<{ name: string; type: string }> = [];
-  @Input() itemToUpdate!: ApiItem;
-  @Output() submit = new EventEmitter
-  @Output() delete = new EventEmitter
-  public formGroup: FormGroup = new FormGroup<any>({})
-
-  ngOnChanges(changes: SimpleChange) {
-    this.formGroup = this.createFormGroup()
-  }
-
-  createFormGroup() {
-    const group: { [key: string]: FormControl<string | null | undefined> } = {}
-    this.fields.forEach(field => {
-      let value;
-      if (this.itemToUpdate) {
-        value = this.itemToUpdate[field?.name as keyof ApiItem]
-      }
-      group[field.name] = new FormControl(value)
-    })
-    return new FormGroup(group)
-  }
+  @Input() item!: ApiItem;
+  @Output() submit = new EventEmitter()
+  @Output() delete = new EventEmitter()
 
   handleSubmit() {
-    this.submit.emit(this.formGroup.value)
+    this.submit.emit()
   }
 
   handleDelete() {
-    this.delete.emit(this.itemToUpdate?.["@id"])
+    this.delete.emit(this.item?.["@id"])
   }
 }

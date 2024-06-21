@@ -10,12 +10,10 @@
   } @else if (error()) {
   <div class="bg-red-100 rounded py-4 px-4 text-blue-700 text-sm">Error ...</div>
   } @else {
-
   <h1 class="text-3xl my-4">Edit \{{ item()['name'] }} <span class="text-xl">\{{ item()["@id"] }} </span></h1>
-  <app-form [fields]="formType"
-            [itemToUpdate]="item()"
-            (submit)="onSubmit($event)"
-            (delete)="delete()"
+  <app-form-{{lc}}  [item]="item()"
+                    (submit)="onSubmit($event)"
+                    (delete)="delete()"
   />
   }
 </div>

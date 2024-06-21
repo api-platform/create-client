@@ -31,20 +31,29 @@
       </tr>
       </thead>
       <tbody>
+      {{#each fields}}
       <tr class="border-b">
         @if (item()) {
         <th
           class="text-sm font-medium px-6 py-4 text-left capitalize"
           scope="row"
         >
-          name
+          {{name}}
         </th>
         <td class="px-6 py-4 whitespace-nowrap text-sm">
+          {{#if isReferences}}
           \{{ item()['name'] }}
         </td>
+        {{else if (compare type "==" "dateTime") }}
+        \{{ formatDateTime(item.{{name}}) }}
+        {{else}}
+        \{{ item.{{name}} }}
+        {{/if}}
         } @else {
         <td>Rien</td>
         }
+      </tr>
+      {{/each}}
       </tbody>
     </table>
   </div>

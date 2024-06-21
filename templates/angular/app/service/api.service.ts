@@ -2,10 +2,11 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {inject, Injectable} from "@angular/core";
 import {ApiItem, ApiList, ApiShow} from "@interface/api";
+import {ENTRYPOINT} from "@config/entrypoint";
 
 @Injectable({providedIn: 'root'})
 export class ApiService {
-  baseUrl: string = 'https://localhost'
+  baseUrl: string = ENTRYPOINT
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/ld+json',

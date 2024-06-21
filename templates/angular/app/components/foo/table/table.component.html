@@ -4,14 +4,14 @@
 >
   <thead class="w-full text-xs uppercase font-light text-gray-700 bg-gray-200 py-2 px-4">
   <tr>
-    <th>
+    <th class="text-sm font-medium px-6 py-4 text-left capitalize">
       <input type="checkbox"
              name="selectedAll"
              (change)="selected()"
       >
-    </th>
+    </th >
     {{#each fields}}
-    <th>{{name}}</th>
+    <th class="text-sm font-medium px-6 py-4 text-left capitalize">{{name}}</th>
     {{/each}}
     <th [colSpan]="2">Actions</th>
   </tr>
@@ -19,16 +19,26 @@
   <tbody>
   @for (item of items(); track item) {
   <tr>
-    <td class="w-2">
+    <td class="px-6 py-4 w-2">
       <input type="checkbox"
-             name="test"
+             name="bulk"
              [id]="item['@id']"
              [checked]="bulk.includes(item['@id']!)"
              (change)="addToBulk(item['@id']!)"
       >
     </td>
-    <td>\{{ item['id'] }}</td>
-    <td>\{{ item['name'] }}</td>
+    {{#each fields}}
+    <td class="px-6 py-4 text-sm">
+      {{#if isReferences}}
+      \{{ {{lowercase reference.title}} }}
+        'coucou"
+      {{else if (compare type "==" "dateTime") }}
+      \{{ formatDateTime(item['{{name}}') }}
+      {{else}}
+      \{{ item['{{name}}'] }}
+      {{/if}}
+    </td>
+    {{/each}}
     <td class="w-8">
       <a [routerLink]="[item['@id']]" class="text-cyan-500">
         Show

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MenuComponent} from "@components/svg/menu/menu.component";
+import {MenuComponent} from "@components/common/svg/menu/menu.component";
 
 @Component({
   selector: 'app-header',

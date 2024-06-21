@@ -4,10 +4,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
 import {DeleteComponent} from "@components/common/delete/delete.component";
 import {FormComponent} from "@components/{{lc}}/form/form.component";
+import {ApiItem} from "@interface/api";
 import {ApiService} from "@service/api.service";
 
 @Component({
-  selector: 'app-create',
+  selector: 'app-create-{{lc}}',
   standalone: true,
   imports: [
     DeleteComponent,
@@ -21,21 +22,13 @@ import {ApiService} from "@service/api.service";
 export class CreateComponent {
   private apiService: ApiService = inject(ApiService)
   private location: Location = inject(Location)
+  public item: WritableSignal<ApiItem> = signal({} as ApiItem)
   public isLoading: WritableSignal<boolean> = signal(false)
-
-  public formType: Array<{ name: string; type: string }> = [
-    {
-      name: 'name',
-      type: 'string',
-    }
-  ]
 
   onSubmit(data: any) {
     return this.apiService
       .add('/{{lc}}',
-        {
-          ...data
-        }
+        this.item()
       ).subscribe(
         (item) => {
           this.isLoading.set(true)

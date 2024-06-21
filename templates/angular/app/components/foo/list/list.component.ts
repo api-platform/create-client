@@ -1,46 +1,62 @@
-import {AsyncPipe, Location, NgFor, NgIf} from "@angular/common";
-import {Component, DestroyRef, inject, OnInit, signal, WritableSignal} from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {
+  AsyncPipe,
+  Location,
+  NgFor,
+  NgIf
+} from "@angular/common";
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal
+} from '@angular/core';
+import {Router, RouterLink} from "@angular/router";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {DeleteComponent} from "@components/common/delete/delete.component";
-import {TableComponent} from "@components/common/table/table.component";
-import {ApiItem} from "@interface/api";
+import {TableComponent} from "@components/{{lc}}/table/table.component";
+import {ApiItem, Pagination} from "@interface/api";
 import {ApiService} from "@service/api.service";
+import {PaginationComponent} from "@components/common/pagination/pagination.component";
 
 @Component({
-  selector: 'app-list',
+  selector: 'app-list-{{lc}}',
   standalone: true,
   imports: [
     RouterLink,
     NgFor,
     TableComponent,
-    AsyncPipe,
     NgIf,
-    DeleteComponent
+    DeleteComponent,
+    PaginationComponent
   ],
   templateUrl: './list.component.html',
 })
 export class ListComponent implements OnInit {
   public isLoading: WritableSignal<Boolean> = signal(false)
+  public pagination: WritableSignal<Pagination> = signal({} as Pagination)
   public items: WritableSignal<ApiItem[]> = signal([])
   public error: WritableSignal<String> = signal('')
   public bulk: WritableSignal<Array<string>> = signal([])
-
+  public uri: WritableSignal<string> = signal('/{{lc}}')
   private apiService: ApiService = inject(ApiService)
-  private location: Location = inject(Location)
   private destroy: DestroyRef = inject(DestroyRef)
 
   ngOnInit() {
+    this.fetchData()
+  }
+
+  public fetchData() {
     this.toggleIsLoading()
     this.apiService
-      .fetchDataList('/{{lc}}')
+      .fetchDataList(this.uri())
       .pipe(takeUntilDestroyed(this.destroy))
-      .subscribe(
-        (items) => {
-          this.items.set(items['hydra:member'])
-        }
-      )
-    this.toggleIsLoading()
+      .subscribe((items) => {
+        this.toggleIsLoading();
+        if (items['hydra:view']) this.pagination.set(items['hydra:view'])
+        this.items.set(items["hydra:member"])
+      })
   }
 
   public addToBulk(id: string) {
@@ -65,19 +81,18 @@ export class ListComponent implements OnInit {
   }
 
   public delete() {
-    Promise.all(this.bulk())
-      .then(
-        items =>
-          items.forEach(
-            uri =>
-              this.apiService.delete(uri)
-                .subscribe(
-                  () => {
-                    window.location.reload()
-                  }
-                )
-          )
+    Promise.all(this.bulk()).then(items =>
+      items.forEach(uri =>
+        this.apiService.delete(uri).subscribe(() => {
+          window.location.reload()
+        })
       )
+    )
+  }
+
+  public changePage(uri: string) {
+    this.uri.set(uri)
+    this.fetchData()
   }
 
   private toggleIsLoading() {

@@ -1,16 +1,29 @@
-<form [formGroup]="formGroup" (ngSubmit)="handleSubmit()">
-  @for (field of fields; track field.name) {
+<form (ngSubmit)="handleSubmit()">
   <div class="bg-white px-6 py-8">
-    <div class="mb-3">
-      <label [for]="field.name">{{ field.name }}</label>
-      <input [id]="field.name"
-             [type]="field.type"
-             [formControlName]="field.name"
+    {{#each formFields}}
+    <div class="mb-2">
+      <label for="{{name}}" class="text-gray-700 block text-sm font-bold capitalize">{{ name }}</label>
+      <input id="{{name}}"
+             name="{{name}}"
              class="mt-1 w-full px-3 py-2 border rounded"
-      >
+             [(ngModel)]="item['{{name}}']"
+             {{#compare type "==" "dateTime" }}
+              type="date"
+              {{/compare}}
+              {{#compare type "!=" "dateTime" }}
+              type="{{type}}"
+              {{/compare}}
+              {{#if step}}
+              step="{{step}}"
+              {{/if}}
+              {{#if required}}
+              required
+              {{/if}}
+              placeholder="{{description}}"
+      />
     </div>
+    {{/each}}
   </div>
-  }
   <div class="bg-neutral-100 px-4 py-6 flex justify-between">
     <button
       type="submit"
