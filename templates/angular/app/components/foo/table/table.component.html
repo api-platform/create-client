@@ -1,17 +1,16 @@
 <table
-  [cellPadding]="10"
   class="shadow-md table border-collapse min-w-full leading-normal table-auto text-left my-3"
 >
   <thead class="w-full text-xs uppercase font-light text-gray-700 bg-gray-200 py-2 px-4">
   <tr>
-    <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+    <th class="px-3 py-2text-sm font-medium px-6 py-4 text-left capitalize">
       <input type="checkbox"
              name="selectedAll"
              (change)="selected()"
       >
     </th>
     {{#each fields}}
-    <th class="text-sm font-medium px-6 py-4 text-left capitalize">{{name}}</th>
+    <th class="px-3 py-2text-sm font-medium px-6 py-4 text-left capitalize">{{name}}</th>
     {{/each}}
     <th [colSpan]="2">Actions</th>
   </tr>
@@ -19,7 +18,7 @@
   <tbody>
   @for (item of items(); track item) {
   <tr>
-    <td class="px-6 py-4 w-2">
+    <td class="px-3 py-2 w-2">
       <input type="checkbox"
              name="bulk"
              [id]="item['@id']"
@@ -28,10 +27,9 @@
       >
     </td>
     {{#each fields}}
-    <td class="px-6 py-4 text-sm">
+    <td class="px-3 py-2 text-sm">
       {{#if isReferences}}
       \{{ {{lowercase reference.title}} }}
-      'coucou"
       {{else if (compare type "==" "dateTime") }}
       \{{ formatDateTime(item['{{name}}']) }}
       {{else}}
@@ -39,13 +37,13 @@
       {{/if}}
     </td>
     {{/each}}
-    <td class="w-8">
+    <td class="px-3 py-2">
       <a [routerLink]="[item['@id']]" class="text-cyan-500">
         Show
         <app-show-svg/>
       </a>
     </td>
-    <td class="w-8">
+    <td class="px-3 py-2">
       <a [routerLink]="[item['@id'], 'edit']" class="text-cyan-500">
         Edit
         <app-edit-svg/>
@@ -54,7 +52,7 @@
   </tr>
   } @empty {
   <tr>
-    <td colspan="2" class="text-center italic p-6">
+    <td class="px-3 py-2 text-center italic p-6">
       Pas de données.
     </td>
   </tr>

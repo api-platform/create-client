@@ -1,7 +1,10 @@
 <div class="w-full px-4 mt-4">
   @if (isLoading()) {
-  <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
-  } @else {
+  <app-alert type="loading"/>
+  }
+  @if (error()) {
+  <app-alert type="error" [error]="error"/>
+  }
   <div class="flex items-center justify-between">
     <app-back-to-list url="/{{lc}}s" />
     <div class="flex">
@@ -40,7 +43,6 @@
         <td class="px-6 py-4 whitespace-nowrap text-sm">
           {{#if isReferences}}
           \{{ item(){{name}} }}
-
           {{else if (compare type "==" "dateTime") }}
           \{{ formatDateTime(item()['{{name}}']) }}
           {{else}}
@@ -55,5 +57,4 @@
       </tbody>
     </table>
   </div>
-  }
 </div>

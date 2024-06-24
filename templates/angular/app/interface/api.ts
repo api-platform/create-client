@@ -21,10 +21,9 @@ export interface ApiItem extends Api {
 }
 
 export interface Pagination {
-  "@id": string;
-  "@type": string;
-  "hydra:first": string;
-  "hydra:previous": string;
-  "hydra:last": string;
-  "hydra:next": string;
+  [key: string]: string;
+}
+
+export interface SubmissionErrors {
+  [key: string]: string;
 }

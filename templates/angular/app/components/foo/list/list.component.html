@@ -14,8 +14,11 @@
     </div>
   </div>
   @if (isLoading()) {
-  <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
-  } @else {
+  <app-alert type="loading"/>
+  }
+  @if (error()) {
+  <app-alert type="error" [error]="error"/>
+  }
   <app-table-{{lc}} [items]="items"
              [bulk]="bulk()"
              (addToBulkList)="addToBulk($event)"
@@ -23,9 +26,8 @@
   />
     @if (pagination()) {
       <app-pagination
-        [pagination]="pagination!"
+        [pagination]="pagination"
         (handleChangePage)="changePage($event)"
       />
     }
-  }
 </div>

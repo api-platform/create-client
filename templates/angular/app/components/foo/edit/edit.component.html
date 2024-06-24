@@ -1,16 +1,20 @@
 <div class="px-4 mt-4">
   <div class="flex items-center justify-end">
-    <app-back-to-list url="/{{lc}}s" />
+    <app-back-to-list url="/{{lc}}s"/>
   </div>
   @if (isLoading()) {
-  <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
-  } @else if (error()) {
-  <div class="bg-red-100 rounded py-4 px-4 text-blue-700 text-sm">Error ...</div>
-  } @else {
-  <h1 class="text-3xl my-4">Edit \{{ item()['name'] }} <span class="text-xl">\{{ item()["@id"] }} </span></h1>
-  <app-form-{{lc}}  [item]="item()"
-                    (submit)="onSubmit($event)"
-                    (delete)="delete()"
-  />
+  <app-alert type="loading"/>
   }
+  @if (error()) {
+  <app-alert type="error" [error]="error"/>
+  }
+  <h1 class="text-3xl my-4">
+    Edit \{{ item()['name'] }}
+    <span class="text-xl">\{{ item()["@id"] }}</span>
+  </h1>
+  <app-form-{{lc}}
+    [item]="item()"
+    (submit)="onSubmit($event)"
+    (delete)="delete()"
+  />
 </div>

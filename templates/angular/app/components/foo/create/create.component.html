@@ -3,9 +3,11 @@
     <app-back-to-list url="/{{lc}}s" />
   </div>
   @if (isLoading()) {
-  <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
-  } @else {
-  <h1 class="text-3xl my-4">Create</h1>
-  <app-form-{{lc}} [item]="item()" (submit)="onSubmit($event)"/>
+    <app-alert type="loading"/>
   }
+  @if (error()) {
+  <app-alert type="error" [error]="error"/>
+  }
+  <h1 class="text-3xl my-4">Create {{title}}</h1>
+  <app-form-{{lc}} [item]="item()" (submit)="onSubmit($event)"/>
 </div>

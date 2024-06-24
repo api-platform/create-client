@@ -1,4 +1,4 @@
-import {CommonModule, Location} from "@angular/common";
+import {CommonModule, Location} from "@angular/common"
 import {
   Component,
   DestroyRef,
@@ -6,19 +6,21 @@ import {
   OnInit,
   signal,
   WritableSignal
-} from '@angular/core';
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
-import {Router, RouterLink} from "@angular/router";
-import {BackToListComponent} from "@components/common/back-to-list/back-to-list.component";
-import {DeleteComponent} from "@components/common/delete/delete.component";
-import {ApiService} from "@service/api.service";
-import {ApiItem} from "@interface/api";
-import {formatDateTime} from "@utils/date";
+} from '@angular/core'
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop"
+import {Router, RouterLink} from "@angular/router"
+import {AlertComponent} from "@components/common/alert/alert.component"
+import {BackToListComponent} from "@components/common/back-to-list/back-to-list.component"
+import {DeleteComponent} from "@components/common/delete/delete.component"
+import {ApiService} from "@service/api.service"
+import {ApiItem, SubmissionErrors} from "@interface/api"
+import {formatDateTime} from "@utils/date"
 
 @Component({
   selector: 'app-show-{{lc}}',
   standalone: true,
   imports: [
+    AlertComponent,
     BackToListComponent,
     CommonModule,
     DeleteComponent,
@@ -31,28 +33,38 @@ export class ShowComponent implements OnInit {
   private router: Router = inject(Router)
   private location: Location = inject(Location)
   private destroy: DestroyRef = inject(DestroyRef)
-
   public item: WritableSignal<ApiItem> = signal({} as ApiItem)
   public isLoading: WritableSignal<boolean> = signal(false)
-  public error: WritableSignal<string> = signal('')
-  protected readonly formatDateTime = formatDateTime;
+  public error: WritableSignal<SubmissionErrors | null> = signal(null)
+  protected readonly formatDateTime = formatDateTime
+
   ngOnInit() {
-    this.toggleIsLoading()
-    const id = this.router.url
+    this.fetchData()
+  }
+
+  public fetchData() {
+    this.toggleIsLoading();
+    const id = this.router.url;
     this.apiService
       .fetchData(id)
       .pipe(takeUntilDestroyed(this.destroy))
-      .subscribe(item => this.item.set(item))
-    this.toggleIsLoading()
+      .subscribe({
+        next: (item) => this.item.set(item),
+        error: err => this.error.set(err)
+      });
+    this.toggleIsLoading();
   }
 
-  delete(id: string | undefined | null) {
-    return this.apiService.delete(id).subscribe(
-      () => this.location.back()
-    )
+  public delete(id: string | undefined | null) {
+    return this.apiService
+      .delete(id)
+      .subscribe({
+        next: () => this.location.back(),
+        error: err => this.error.set(err)
+      });
   }
 
   private toggleIsLoading() {
-    return this.isLoading.update(value => !value)
+    return this.isLoading.update((value) => !value);
   }
 }

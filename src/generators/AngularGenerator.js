@@ -36,6 +36,8 @@ export default class extends BaseGenerator {
       "app/components/common/svg/menu/menu.component.ts",
       "app/components/common/back-to-list/back-to-list.component.html",
       "app/components/common/back-to-list/back-to-list.component.ts",
+      "app/components/common/alert/alert.component.html",
+      "app/components/common/alert/alert.component.ts",
 
       // COMPONENTS
       "app/components/foo/create/create.component.html",
@@ -67,6 +69,9 @@ export default class extends BaseGenerator {
 
     handlebars.registerHelper("compare", hbhComparison.compare);
     handlebars.registerHelper("lowercase", hbhString.lowercase);
+    handlebars.registerHelper("get_length", function (obj) {
+      return obj.length;
+    });
   }
 
   help(resource) {
@@ -124,6 +129,7 @@ export default class extends BaseGenerator {
       `${dir}/app/components/${lc}/list`,
       `${dir}/app/components/${lc}/show`,
       `${dir}/app/components/${lc}/table`,
+      `${dir}/app/components/common/alert`,
       `${dir}/app/components/common/back-to-list`,
       `${dir}/app/components/common/delete`,
       `${dir}/app/components/common/header`,
@@ -158,6 +164,8 @@ export default class extends BaseGenerator {
       "app/components/common/sidebar/sidebar.component.ts",
       "app/components/common/back-to-list/back-to-list.component.html",
       "app/components/common/back-to-list/back-to-list.component.ts",
+      "app/components/common/alert/alert.component.html",
+      "app/components/common/alert/alert.component.ts",
       "app/interface/api.ts",
       "app/service/api.service.ts",
       "app/app.component.html",
