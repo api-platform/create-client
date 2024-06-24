@@ -5,7 +5,7 @@ import {
   Input,
   Output
 } from '@angular/core';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DeleteComponent} from "@components/common/delete/delete.component";
 import {ApiItem} from "@interface/api";
 
@@ -13,10 +13,11 @@ import {ApiItem} from "@interface/api";
   selector: 'app-form-{{lc}}',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
     AsyncPipe,
+    DeleteComponent,
+    FormsModule,
     NgIf,
-    DeleteComponent
+    ReactiveFormsModule,
   ],
   templateUrl: './form.component.html',
 })

@@ -23,7 +23,7 @@ export class PaginationComponent {
     }
   }
 
-  changeUri (uri: string) {
+  paginationAction (uri: string) {
     this.handleChangePage.emit(uri)
   }
 }

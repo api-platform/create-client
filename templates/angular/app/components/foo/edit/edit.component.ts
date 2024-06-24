@@ -10,6 +10,7 @@ import {
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
+import {BackToListComponent} from "@components/common/back-to-list/back-to-list.component";
 import {DeleteComponent} from "@components/common/delete/delete.component";
 import {FormComponent} from "@components/{{lc}}/form/form.component";
 import {ApiItem} from "@interface/api";
@@ -19,6 +20,7 @@ import {ApiService} from "@service/api.service";
   selector: 'app-edit-{{lc}}',
   standalone: true,
   imports: [
+    BackToListComponent,
     CommonModule,
     DeleteComponent,
     RouterLink,

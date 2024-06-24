@@ -3,10 +3,7 @@
   <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
   } @else {
   <div class="flex items-center justify-between">
-    <a [routerLink]="['/{{lc}}']"
-       class="text-blue-600 hover:text-blue-800">
-      Back to list
-    </a>
+    <app-back-to-list url="/{{lc}}s" />
     <div class="flex">
       <a [routerLink]="[item()['@id'], 'edit']"
          class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700">
@@ -31,9 +28,9 @@
       </tr>
       </thead>
       <tbody>
+      @if (item()) {
       {{#each fields}}
       <tr class="border-b">
-        @if (item()) {
         <th
           class="text-sm font-medium px-6 py-4 text-left capitalize"
           scope="row"
@@ -42,18 +39,19 @@
         </th>
         <td class="px-6 py-4 whitespace-nowrap text-sm">
           {{#if isReferences}}
-          \{{ item()['name'] }}
+          \{{ item(){{name}} }}
+
+          {{else if (compare type "==" "dateTime") }}
+          \{{ formatDateTime(item()['{{name}}']) }}
+          {{else}}
+          \{{ item()['{{name}}'] }}
+          {{/if}}
         </td>
-        {{else if (compare type "==" "dateTime") }}
-        \{{ formatDateTime(item.{{name}}) }}
-        {{else}}
-        \{{ item.{{name}} }}
-        {{/if}}
-        } @else {
-        <td>Rien</td>
-        }
       </tr>
       {{/each}}
+      } @else {
+      <td>Rien</td>
+      }
       </tbody>
     </table>
   </div>

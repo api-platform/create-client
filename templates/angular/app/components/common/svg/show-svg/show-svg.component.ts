@@ -4,8 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-show-svg',
   standalone: true,
   imports: [],
-  templateUrl: './show-svg.component.svg',
-  styleUrl: './show-svg.component.css'
+  templateUrl: './show-svg.component.svg'
 })
 export class ShowSvgComponent {
 

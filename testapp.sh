@@ -82,7 +82,7 @@ if [ "$1" = "angular" ]; then
 
   ng new angular
   cd ../..
-  yarn --cwd ./tmp/app/angular add tailwindcss postcss autoprefixer
+  yarn --cwd ./tmp/app/angular add tailwindcss postcss autoprefixer dayjs
   yarn --cwd ./tmp/app/angular tailwindcss init -p
 
   cp ./templates/common/tailwind.config.js ./tmp/app/angular

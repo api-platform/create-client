@@ -4,8 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-edit-svg',
   standalone: true,
   imports: [],
-  templateUrl: './edit-svg.component.svg',
-  styleUrl: './edit-svg.component.css'
+  templateUrl: './edit-svg.component.svg'
 })
 export class EditSvgComponent {
 

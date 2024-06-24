@@ -34,6 +34,8 @@ export default class extends BaseGenerator {
       "app/components/common/svg/edit-svg/edit-svg.component.ts",
       "app/components/common/svg/menu/menu.component.svg",
       "app/components/common/svg/menu/menu.component.ts",
+      "app/components/common/back-to-list/back-to-list.component.html",
+      "app/components/common/back-to-list/back-to-list.component.ts",
 
       // COMPONENTS
       "app/components/foo/create/create.component.html",
@@ -122,6 +124,7 @@ export default class extends BaseGenerator {
       `${dir}/app/components/${lc}/list`,
       `${dir}/app/components/${lc}/show`,
       `${dir}/app/components/${lc}/table`,
+      `${dir}/app/components/common/back-to-list`,
       `${dir}/app/components/common/delete`,
       `${dir}/app/components/common/header`,
       `${dir}/app/components/common/sidebar`,
@@ -153,6 +156,8 @@ export default class extends BaseGenerator {
       "app/components/common/sidebar/sidebar.component.css",
       "app/components/common/sidebar/sidebar.component.html",
       "app/components/common/sidebar/sidebar.component.ts",
+      "app/components/common/back-to-list/back-to-list.component.html",
+      "app/components/common/back-to-list/back-to-list.component.ts",
       "app/interface/api.ts",
       "app/service/api.service.ts",
       "app/app.component.html",
@@ -180,6 +185,11 @@ export default class extends BaseGenerator {
       "app/components/%s/table/table.component.ts",
     ].forEach((file) =>
       this.createFileFromPattern(file, dir, [lc, formFields], context)
+    );
+
+    //UTILS
+    ["utils/date.ts"].forEach((path) =>
+      this.createFile(path, `${dir}/app/${path}`, context, false)
     );
 
     // CONFIG

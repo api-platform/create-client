@@ -10,6 +10,7 @@ import {RouterLink} from "@angular/router";
 import {ShowSvgComponent} from "@components/common/svg/show-svg/show-svg.component";
 import {EditSvgComponent} from "@components/common/svg/edit-svg/edit-svg.component";
 import {ApiItem} from "@interface/api";
+import {formatDateTime} from "@utils/date";
 
 @Component({
   selector: 'app-table-{{lc}}',
@@ -27,7 +28,7 @@ export class TableComponent {
   @Input() bulk!: Array<string>;
   @Output() addToBulkList = new EventEmitter<string>()
   @Output() selectedAll = new EventEmitter<Function>()
-
+  protected readonly formatDateTime = formatDateTime;
 
   addToBulk(id: string) {
     this.addToBulkList.emit(id)

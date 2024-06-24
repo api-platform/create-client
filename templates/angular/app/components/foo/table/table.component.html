@@ -9,7 +9,7 @@
              name="selectedAll"
              (change)="selected()"
       >
-    </th >
+    </th>
     {{#each fields}}
     <th class="text-sm font-medium px-6 py-4 text-left capitalize">{{name}}</th>
     {{/each}}
@@ -31,9 +31,9 @@
     <td class="px-6 py-4 text-sm">
       {{#if isReferences}}
       \{{ {{lowercase reference.title}} }}
-        'coucou"
+      'coucou"
       {{else if (compare type "==" "dateTime") }}
-      \{{ formatDateTime(item['{{name}}') }}
+      \{{ formatDateTime(item['{{name}}']) }}
       {{else}}
       \{{ item['{{name}}'] }}
       {{/if}}
@@ -42,13 +42,13 @@
     <td class="w-8">
       <a [routerLink]="[item['@id']]" class="text-cyan-500">
         Show
-        <app-show-svg></app-show-svg>
+        <app-show-svg/>
       </a>
     </td>
     <td class="w-8">
-      <a [routerLink]="[item['id'], 'edit']" class="text-cyan-500">
+      <a [routerLink]="[item['@id'], 'edit']" class="text-cyan-500">
         Edit
-        <app-edit-svg></app-edit-svg>
+        <app-edit-svg/>
       </a>
     </td>
   </tr>

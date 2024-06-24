@@ -39,7 +39,7 @@ export class ListComponent implements OnInit {
   public items: WritableSignal<ApiItem[]> = signal([])
   public error: WritableSignal<String> = signal('')
   public bulk: WritableSignal<Array<string>> = signal([])
-  public uri: WritableSignal<string> = signal('/{{lc}}')
+  public uri: WritableSignal<string> = signal('/{{lc}}s')
   private apiService: ApiService = inject(ApiService)
   private destroy: DestroyRef = inject(DestroyRef)
 

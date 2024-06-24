@@ -4,7 +4,7 @@
       <li>
         <a [routerLink]="['/books']"
            [routerLinkActive]="'bg-gray-200 text-gray-500 pointer-events-none'"
-           (click)="changeUri(pagination()['hydra:first'])"
+           (click)="paginationAction(pagination()['hydra:first'])"
            class="bg-gray block py-2 px-3 rounded"
            aria-label="First page">
           <span aria-hidden="true">&lArr;</span>First
@@ -15,7 +15,7 @@
           <a [routerLink]="['/books']"
              [queryParams]="pageParamValue('hydra:previous')"
              [routerLinkActive]="'bg-gray-200 text-gray-500 pointer-events-none'"
-             (click)="changeUri(pagination()['hydra:previous'])"
+             (click)="paginationAction(pagination()['hydra:previous'])"
              class="bg-gray block py-2 px-3 rounded"
              aria-label="Previous page">
             Previous
@@ -27,7 +27,7 @@
         <a [routerLink]="['/books']"
            [queryParams]="pageParamValue('hydra:next')"
            [routerLinkActive]="'bg-gray-200 text-gray-500 pointer-events-none'"
-           (click)="changeUri(pagination()['hydra:next'])"
+           (click)="paginationAction(pagination()['hydra:next'])"
            class="bg-gray block py-2 px-3 rounded"
            aria-label="Next page">
           Next
@@ -38,7 +38,7 @@
         <a [routerLink]="['/books']"
            [queryParams]="pageParamValue('hydra:last')"
            [routerLinkActive]="'bg-gray-200 text-gray-500 pointer-events-none'"
-           (click)="changeUri(pagination()['hydra:last'])"
+           (click)="paginationAction(pagination()['hydra:last'])"
            class="bg-gray block py-2 px-3 rounded"
            aria-label="Last page">
           <span aria-hidden="true">&rAarr;</span> Last
