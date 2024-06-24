@@ -2,7 +2,7 @@
   <ul>
     {{#each apiResource}}
     <li class="py-2 hover:bg-neutral-100">
-      <a routerLink="/{{lowercase this}}" [routerLinkActive]="['active']">
+      <a routerLink="/{{lowercase this}}s" [routerLinkActive]="['active']">
         <div class="flex just-center items-center px-4 text-lg">
           <app-list-svg></app-list-svg>
           <span class="ml-4">{{this}}</span>

@@ -1,23 +1,18 @@
-import {ListComponent} from "@components/{{lc}}/list/list.component";
-import {CreateComponent} from "@components/{{lc}}/create/create.component";
-import {ShowComponent} from "@components/{{lc}}/show/show.component";
-import {EditComponent} from "@components/{{lc}}/edit/edit.component";
-
 export const {{title}}Routes = [
   {
-    path: '{{lc}}',
-    component: ListComponent
+    path: '{{lc}}s',
+    loadComponent: () => import("@components/{{lc}}/list/list.component").then(c => c.ListComponent)
   },
   {
-    path: '{{lc}}/add',
-    component: CreateComponent
+    path: '{{lc}}s/add',
+    loadComponent: () => import("@components/{{lc}}/create/create.component").then(c => c.CreateComponent)
   },
   {
-    path: '{{lc}}/:id',
-    component: ShowComponent,
+    path: '{{lc}}s/:id',
+    loadComponent: () => import("@components/{{lc}}/show/show.component").then(c => c.ShowComponent),
   },
   {
-    path: '{{lc}}/:id/edit',
-    component: EditComponent
+    path: '{{lc}}s/:id/edit',
+    loadComponent: () => import("@components/{{lc}}/edit/edit.component").then(c => c.EditComponent)
   },
 ]
