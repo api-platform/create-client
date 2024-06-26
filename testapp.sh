@@ -80,7 +80,7 @@ if [ "$1" = "angular" ]; then
   cd ./tmp/app
   npm install -g @angular/cli
 
-  ng new angular
+  ng new angular --ssr --style=css
   cd ../..
   yarn --cwd ./tmp/app/angular add tailwindcss postcss autoprefixer dayjs
   yarn --cwd ./tmp/app/angular tailwindcss init -p
@@ -88,14 +88,18 @@ if [ "$1" = "angular" ]; then
   cp ./templates/common/tailwind.config.js ./tmp/app/angular
   cp ./templates/common/style.css ./tmp/app/angular/src
 
-  cp ./templates/angular/app/app.component.html ./tmp/app/angular/src/app
-  cp ./templates/angular/app/app.component.ts ./tmp/app/angular/src/app
-
-  mkdir -p ./tmp/app/angular/src/app/components/common
-  mkdir -p ./tmp/app/angular/src/app/components/svg
-
-  cp -r ./templates/angular/app/components/common/* ./tmp/app/angular/src/app/components/common/
-  cp -r ./templates/angular/app/components/svg/* ./tmp/app/angular/src/app/components/svg/
+  cp -R ./tmp/angular/* ./tmp/app/angular/src
+  file="./tmp/app/angular/tsconfig.json"
+  newContent='"baseUrl": "./src",\
+  "paths": {\
+    "@components/*" : ["app/components/*"],\
+    "@interface/*" : ["app/interface/*"],\
+    "@service/*" : ["app/service/*"],\
+    "@router/*" : ["app/router/*"],\
+    "@utils/*" : ["app/utils/*"],\
+  },'
+  sed -i.bak '21a\'"$newContent" "$file"
+  cat ./tmp/app/angular/tsconfig.json
   yarn --cwd ./tmp/app/angular build
   start-server-and-test 'yarn --cwd ./tmp/app/angular start' http://127.0.0.1:4200/books/ 'yarn playwright test'
 fi

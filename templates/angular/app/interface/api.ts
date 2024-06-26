@@ -8,12 +8,11 @@ export interface ApiList {
   "hydra:totalItems": Number;
   "hydra:member": [];
   "hydra:view": Pagination;
-  "hydra:search": object;
+  "hydra:search": {};
 }
 
 export interface ApiShow extends Api {
-  id: string | undefined;
-  name: string | null;
+  [key: string]: string | null | undefined;
 }
 
 export interface ApiItem extends Api {

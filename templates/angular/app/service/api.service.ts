@@ -2,7 +2,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {inject, Injectable} from "@angular/core";
 import {ApiItem, ApiList, ApiShow} from "@interface/api";
-import {ENTRYPOINT} from "@config/entrypoint";
+import {ENTRYPOINT} from "@utils/config";
 
 @Injectable({providedIn: 'root'})
 export class ApiService {

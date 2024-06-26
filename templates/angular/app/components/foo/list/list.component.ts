@@ -35,7 +35,7 @@ import {PaginationComponent} from "@components/common/pagination/pagination.comp
 })
 export class ListComponent implements OnInit {
   public isLoading: WritableSignal<Boolean> = signal(false)
-  public pagination: WritableSignal<Pagination | undefined> = signal(undefined)
+  public pagination: WritableSignal<Pagination> = signal({} as Pagination)
   public items: WritableSignal<ApiItem[]> = signal([])
   public error: WritableSignal<SubmissionErrors | null> = signal(null)
   public bulk: WritableSignal<Array<string>> = signal([])

@@ -1,5 +1,4 @@
 import {AsyncPipe} from "@angular/common";
-import {HttpClientModule} from "@angular/common/http";
 import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {LayoutComponent} from "@components/common/layout/layout.component";
@@ -7,7 +6,7 @@ import {LayoutComponent} from "@components/common/layout/layout.component";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AsyncPipe, HttpClientModule,LayoutComponent],
+  imports: [RouterOutlet, AsyncPipe, LayoutComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

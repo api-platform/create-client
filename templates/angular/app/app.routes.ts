@@ -1,11 +1,11 @@
 import { Routes } from "@angular/router";
 import { LayoutComponent } from "@components/common/layout/layout.component";
-import { allRoutes } from "@router";
+import { resourcesRoutes } from "@router/index";
 
 export const routes: Routes = [
   {
     path: "",
     component: LayoutComponent,
-    children: allRoutes,
+    children: resourcesRoutes,
   },
 ];
