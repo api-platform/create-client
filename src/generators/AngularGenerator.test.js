@@ -73,15 +73,20 @@ describe("generate", () => {
     ].forEach((file) => expect(fs.existsSync(tmpobj.name + file)).toBe(true));
 
     [
+      "app/router/abc.ts",
+      "app/components/abc/list/list.component.html",
+      "app/components/abc/list/list.component.ts",
       "app/components/abc/create/create.component.html",
       "app/components/abc/create/create.component.ts",
       "app/components/abc/edit/edit.component.html",
       "app/components/abc/edit/edit.component.ts",
-      "app/components/abc/list/list.component.html",
-      "app/components/abc/list/list.component.ts",
+      "app/components/abc/form/form.component.html",
+      "app/components/abc/form/form.component.ts",
       "app/components/abc/show/show.component.html",
       "app/components/abc/show/show.component.ts",
-      "/interfaces/Abc.ts",
+      "app/components/abc/show/show.component.html",
+      "app/components/abc/table/table.component.html",
+      "app/components/abc/table/table.component.ts",
     ].forEach((file) => {
       expect(fs.existsSync(tmpobj.name + file)).toBe(true);
       expect(fs.readFileSync(tmpobj.name + file, "utf8")).toMatch(/bar/);

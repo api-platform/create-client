@@ -12,11 +12,11 @@ export interface ApiList {
 }
 
 export interface ApiShow extends Api {
-  [key: string]: string | null | undefined;
+  [key: string]: string | undefined;
 }
 
 export interface ApiItem extends Api {
-  [key: string]: string | null | undefined;
+  [key: string]: string | undefined;
 }
 
 export interface Pagination {

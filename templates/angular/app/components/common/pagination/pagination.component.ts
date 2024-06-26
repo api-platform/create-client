@@ -15,13 +15,6 @@ export class PaginationComponent {
   @Input() pagination!: WritableSignal<Pagination>;
   @Output() handleChangePage = new EventEmitter()
 
-  pageParamValue(page: keyof Pagination) {
-    const pageParams = this.pagination()[page].split('?page=')
-    return {
-      page: pageParams![1]
-    }
-  }
-
   changeUri(uri: string) {
     this.handleChangePage.emit(uri)
   }

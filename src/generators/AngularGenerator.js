@@ -57,6 +57,9 @@ export default class extends BaseGenerator {
       "app/app.component.html",
       "app/app.component.ts",
 
+      // CONFIG
+      "app/app.config.ts",
+
       //INTERFACE
       "app/interface/api.ts",
 
@@ -71,9 +74,6 @@ export default class extends BaseGenerator {
 
     handlebars.registerHelper("compare", hbhComparison.compare);
     handlebars.registerHelper("lowercase", hbhString.lowercase);
-    handlebars.registerHelper("get_length", function (obj) {
-      return obj.length;
-    });
   }
 
   help(resource) {
@@ -180,6 +180,7 @@ export default class extends BaseGenerator {
       "app/router/index.ts",
       "app/app.component.html",
       "app/app.component.ts",
+      "app/app.config.ts",
       "app/app.routes.ts",
     ].forEach((file) =>
       this.createFile(file, `${dir}/${file}`, context, false)
