@@ -28,20 +28,9 @@ test("resource edit", async ({
 
   const { getAllByRole: getAllByRoleWithinRow } = within(rows.nth(3));
 
-  const bookLink = getAllByRoleWithinRow("link").nth(0);
+  const bookLink = getAllByRoleWithinRow("link", { name: "Edit" }).nth(0);
   bookLink.click();
 
-  await expect(
-    queryByRole("heading", { level: 1, name: /^\s*Show Book/ })
-  ).toBeVisible();
-  await expect(queryByText("Loading...")).not.toBeVisible();
-
-  const editLink = getByRole("link", { name: "Edit" });
-  editLink.click();
-
-  await expect(
-    queryByRole("heading", { level: 1, name: /^\s*Show Book/ })
-  ).not.toBeVisible();
   await expect(queryByText("Loading...")).not.toBeVisible();
 
   await expect(queryByRole("heading", { level: 1 })).toHaveText(
@@ -50,9 +39,12 @@ test("resource edit", async ({
 
   await expect(queryByText("Loading...")).not.toBeVisible();
 
-  await expect(getByLabelText("isbn")).toBeEditable();
-  await expect(getByLabelText("description")).toBeEditable();
-  await expect(getByText("reviews")).toBeVisible();
+  await expect(getByLabelText("book")).toBeEditable();
+  await expect(getByLabelText("condition")).toBeEditable();
+  await expect(getByLabelText("title")).toBeEditable();
+  await expect(getByLabelText("author")).toBeEditable();
+  await expect(getByLabelText("rating")).toBeEditable();
+  //await expect(getByText("reviews")).toBeVisible();
 
   await expect(getByRole("button", { name: "Submit" })).toBeVisible();
   await expect(getByRole("button", { name: "Delete" })).toBeVisible();

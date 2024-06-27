@@ -8,10 +8,8 @@
   @if (error()) {
   <app-alert type="error" [error]="error"/>
   }
-  <h1 class="text-3xl my-4">
-    Edit \{{ item()['name'] }}
-    <span class="text-xl">\{{ item()["@id"] }}</span>
-  </h1>
+  <h1 class="text-3xl my-4">Edit {{ titleUcFirst }} <span class="text-xl">\{{ item()["@id"] }} </span></h1>
+
   <app-form-{{lc}}
     [item]="item()"
     (submit)="onSubmit($event)"
