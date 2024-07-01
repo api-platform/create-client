@@ -10,8 +10,9 @@ import {RouterLink} from "@angular/router";
 import {ShowSvgComponent} from "@components/common/svg/show-svg/show-svg.component";
 import {EditSvgComponent} from "@components/common/svg/edit-svg/edit-svg.component";
 import {ApiItem} from "@interface/api";
+{{#if hasDateField}}
 import {formatDateTime} from "@utils/date";
-
+{{/if}}
 @Component({
   selector: 'app-table-{{lc}}',
   standalone: true,
@@ -28,8 +29,9 @@ export class TableComponent {
   @Input() bulk!: Array<string>;
   @Output() addToBulkList = new EventEmitter<string>()
   @Output() selectedAll = new EventEmitter<Function>()
+  {{#if hasDateField}}
   protected readonly formatDateTime = formatDateTime;
-
+  {{/if}}
   addToBulk(id: string) {
     this.addToBulkList.emit(id)
   }

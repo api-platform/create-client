@@ -29,7 +29,18 @@
     {{#each fields}}
     <td class="px-3 py-2 text-sm">
       {{#if isReferences}}
-      \{{ {{lowercase reference.title}} }}
+      @for ({{lowercase reference.title}} of {{reference.name}}; track reference.title) {
+      <a [routerLink]="['{{reference.title}}']"
+         [queryParams]="{id: {{lowercase reference.title}} }"
+         class="text-blue-600 hover:text-blue-800">
+        \{{ {{lowercase reference.title}} }}
+        <br />
+      </a>
+      } @empty {
+       <p> \{{ {{lowercase reference.title}} }}</p>
+      }
+      {{else if reference}}
+
       {{else if (compare type "==" "dateTime") }}
       \{{ formatDateTime(item['{{name}}']) }}
       {{else}}

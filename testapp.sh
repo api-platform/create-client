@@ -101,5 +101,5 @@ if [ "$1" = "angular" ]; then
   },'
   sed -i.bak '21a\'"$newContent" "$file"
   yarn --cwd ./tmp/app/angular build
-  start-server-and-test 'BROWSER=none yarn --cwd ./tmp/app/angular start --port=3000' http://127.0.0.1:3000/books/ 'yarn playwright test'
+  start-server-and-test 'yarn --cwd ./tmp/app/angular start --port=3000' http://127.0.0.1:3000/books/ 'yarn playwright test'
 fi

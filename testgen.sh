@@ -6,7 +6,7 @@ if [ $ENTRYPOINT ]; then
   entrypoint="$ENTRYPOINT"
 fi
 
-gens="next angular"
+gens="react react-native next vue vuetify nuxt quasar typescript angular"
 if [ $1 ]; then
   gens="$1"
 fi
