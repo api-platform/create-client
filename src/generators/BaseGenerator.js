@@ -139,7 +139,7 @@ export default class {
         return { type: "time" };
 
       case "http://www.w3.org/2001/XMLSchema#dateTime":
-        return { type: "dateTime" };
+        return { type: "datetime-local" };
 
       default:
         return { type: "text" };
