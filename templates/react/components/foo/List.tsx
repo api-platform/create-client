@@ -13,7 +13,7 @@ interface ListProps {
 }
 
 const ListView = ({error, loading, retrieved}: ListProps) => {
-  const items = (retrieved && retrieved["hydra:member"]) || [];
+  const items = (retrieved && retrieved["{{hydraPrefix}}member"]) || [];
 
   return (
     <div>

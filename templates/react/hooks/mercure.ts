@@ -71,8 +71,8 @@ const useMercure = <Resource extends ApiResource>(retrieved: Resource | null): I
       const collection = retrieved as PagedCollection<Resource>;
 
       if (hubURL && retrieved) {
-        if (collection["hydra:member"]) {
-          setEventSource(subscribe(hubURL, collection["hydra:member"].map(item => item["@id"])));
+        if (collection["{{hydraPrefix}}member"]) {
+          setEventSource(subscribe(hubURL, collection["{{hydraPrefix}}member"].map(item => item["@id"])));
         } else {
           setEventSource(subscribe(hubURL, retrieved["@id"]));
         }

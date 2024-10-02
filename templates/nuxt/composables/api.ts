@@ -20,7 +20,7 @@ async function useApi<T>(path: string, options: UseFetchOptions<T>) {
 
     onResponseError({ response }) {
       const data = response._data;
-      const error = data["hydra:description"] || response.statusText;
+      const error = data["{{hydraPrefix}}description"] || response.statusText;
 
       throw new Error(error);
     },
@@ -51,8 +51,8 @@ export async function useFetchList<T>(
   });
 
   const value = data.value as PagedCollection<T>;
-  items.value = value["hydra:member"];
-  view.value = value["hydra:view"];
+  items.value = value["{{hydraPrefix}}member"];
+  view.value = value["{{hydraPrefix}}view"];
 
   return {
     items,
@@ -94,7 +94,7 @@ export async function useCreateItem<T>(resource: string, payload: Item) {
 
     onResponseError({ response }) {
       const data = response._data;
-      const error = data["hydra:description"] || response.statusText;
+      const error = data["{{hydraPrefix}}description"] || response.statusText;
 
       if (!data.violations) throw new Error(error);
 
@@ -135,7 +135,7 @@ export async function useUpdateItem<T>(item: Item, payload: Item) {
 
     onResponseError({ response }) {
       const data = response._data;
-      const error = data["hydra:description"] || response.statusText;
+      const error = data["{{hydraPrefix}}description"] || response.statusText;
 
       if (!data.violations) throw new Error(error);
 

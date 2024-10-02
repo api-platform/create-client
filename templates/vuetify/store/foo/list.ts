@@ -34,8 +34,8 @@ export const use{{titleUcFirst}}ListStore = defineStore("{{lc}}List", {
 
         this.toggleLoading();
 
-        this.setItems(data["hydra:member"]);
-        this.setTotalItems(data["hydra:totalItems"] ?? 0);
+        this.setItems(data["{{hydraPrefix}}member"]);
+        this.setTotalItems(data["{{hydraPrefix}}totalItems"] ?? 0);
 
         if (hubUrl) {
           this.setHubUrl(hubUrl);

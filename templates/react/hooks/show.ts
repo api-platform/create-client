@@ -34,8 +34,8 @@ const useShow = <Resource extends ApiResource>(): IShowStore<Resource> => {
   useEffect(() => {
     if (message) {
       const collection = (retrieved as PagedCollection<Resource>);
-      if (collection && collection['hydra:member']) {
-        const item = collection['hydra:member'].find((i) => i["@id"] === message["@id"]);
+      if (collection && collection['{{hydraPrefix}}member']) {
+        const item = collection['{{hydraPrefix}}member'].find((i) => i["@id"] === message["@id"]);
         if (item && retrieved) {
           Object.assign(item, message);
           setRetrieved({ ...retrieved });

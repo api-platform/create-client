@@ -6,16 +6,16 @@ interface PaginationProps {
 }
 
 const Pagination = ({retrieved}: PaginationProps) => {
-  const view = retrieved && retrieved["hydra:view"];
+  const view = retrieved && retrieved["{{hydraPrefix}}view"];
   if (!view) {
     return null;
   }
 
   const {
-    "hydra:first": first,
-    "hydra:previous": previous,
-    "hydra:next": next,
-    "hydra:last": last,
+    "{{hydraPrefix}}first": first,
+    "{{hydraPrefix}}previous": previous,
+    "{{hydraPrefix}}next": next,
+    "{{hydraPrefix}}last": last,
   } = view;
 
   return (

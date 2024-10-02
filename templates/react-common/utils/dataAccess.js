@@ -24,8 +24,8 @@ export function fetch(id, options = {}) {
     return response.json().then(
       json => {
         const error =
-          json['hydra:description'] ||
-          json['hydra:title'] ||
+          json['{{hydraPrefix}}description'] ||
+          json['{{hydraPrefix}}title'] ||
           'An error occurred.';
         if (!json.violations) throw Error(error);
 
@@ -47,9 +47,9 @@ export function fetch(id, options = {}) {
 }
 
 export function normalize(data) {
-  if (has(data, 'hydra:member')) {
+  if (has(data, '{{hydraPrefix}}member')) {
     // Normalize items in collections
-    data['hydra:member'] = data['hydra:member'].map(item => normalize(item));
+    data['{{hydraPrefix}}member'] = data['{{hydraPrefix}}member'].map(item => normalize(item));
 
     return data;
   }

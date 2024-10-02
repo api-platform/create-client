@@ -31,11 +31,11 @@ export function list(page = '{{{name}}}') {
         dispatch(loading(false));
         dispatch(success(retrieved));
 
-        if (hubURL && retrieved['hydra:member'].length)
+        if (hubURL && retrieved['{{hydraPrefix}}member'].length)
           dispatch(
             mercureSubscribe(
               hubURL,
-              retrieved['hydra:member'].map(i => i['@id'])
+              retrieved['{{hydraPrefix}}member'].map(i => i['@id'])
             )
           );
       })

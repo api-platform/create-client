@@ -73,11 +73,11 @@ class ListComponent extends Component {
           <ScrollView contentInset={ {top: -24} }
                       automaticallyAdjustContentInsets>
             <List>
-              {this.props.retrieved['hydra:member'].map(
+              {this.props.retrieved['{{hydraPrefix}}member'].map(
                   item => ListComponent.renderRow(item))}
             </List>
           </ScrollView>
-          {pagination(this.props.retrieved['hydra:view'], this.props.list)}
+          {pagination(this.props.retrieved['{{hydraPrefix}}view'], this.props.list)}
         </View>
     );
   }
