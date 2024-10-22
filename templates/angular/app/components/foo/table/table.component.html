@@ -1,0 +1,72 @@
+<table
+  class="shadow-md table border-collapse min-w-full leading-normal table-auto text-left my-3"
+>
+  <thead class="w-full text-xs uppercase font-light text-gray-700 bg-gray-200 py-2 px-4">
+  <tr>
+    <th class="px-3 py-2text-sm font-medium px-6 py-4 text-left capitalize">
+      <input type="checkbox"
+             name="selectedAll"
+             (change)="selected()"
+      >
+    </th>
+    {{#each fields}}
+    <th class="px-3 py-2text-sm font-medium px-6 py-4 text-left capitalize">{{name}}</th>
+    {{/each}}
+    <th [colSpan]="2">Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  @for (item of items(); track item) {
+  <tr>
+    <td class="px-3 py-2 w-2">
+      <input type="checkbox"
+             name="bulk"
+             [id]="item['@id']"
+             [checked]="bulk.includes(item['@id']!)"
+             (change)="addToBulk(item['@id']!)"
+      >
+    </td>
+    {{#each fields}}
+    <td class="px-3 py-2 text-sm">
+      {{#if isReferences}}
+      @for ({{lowercase reference.title}} of {{reference.name}}; track reference.title) {
+      <a [routerLink]="['{{reference.title}}']"
+         [queryParams]="{id: {{lowercase reference.title}} }"
+         class="text-blue-600 hover:text-blue-800">
+        \{{ {{lowercase reference.title}} }}
+        <br />
+      </a>
+      } @empty {
+       <p> \{{ {{lowercase reference.title}} }}</p>
+      }
+      {{else if reference}}
+
+      {{else if (compare type "==" "dateTime") }}
+      \{{ formatDateTime(item['{{name}}']) }}
+      {{else}}
+      \{{ item['{{name}}'] }}
+      {{/if}}
+    </td>
+    {{/each}}
+    <td class="px-3 py-2">
+      <a [routerLink]="[item['@id']]" class="text-cyan-500">
+        Show
+        <app-show-svg/>
+      </a>
+    </td>
+    <td class="px-3 py-2">
+      <a [routerLink]="[item['@id'], 'edit']" class="text-cyan-500">
+        Edit
+        <app-edit-svg/>
+      </a>
+    </td>
+  </tr>
+  } @empty {
+  <tr>
+    <td class="px-3 py-2 text-center italic p-6">
+      Pas de données.
+    </td>
+  </tr>
+  }
+  </tbody>
+</table>

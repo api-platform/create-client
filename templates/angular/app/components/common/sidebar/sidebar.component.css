@@ -1,0 +1,10 @@
+.sidebar a  div {
+  border-left: 5px solid transparent;
+}
+.sidebar a.active div {
+  border-left: 5px solid #288690;
+}
+
+.sidebar a.active span {
+  font-weight: 600;
+}

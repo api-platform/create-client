@@ -22,7 +22,7 @@ async function main() {
   program
     .version(packageJson.version)
     .description(
-      "Generate apps built with Next, Nuxt, Quasar, React, React Native, Vue or Vuetify for any API documented using Hydra or OpenAPI"
+      "Generate apps built with Next, Nuxt, Quasar, React, React Native, Vue, Vuetify or Angular for any API documented using Hydra or OpenAPI"
     )
     .usage("entrypoint outputDirectory")
     .option(

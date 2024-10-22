@@ -1,0 +1,13 @@
+<div class=" w-full px-4 mt-4">
+  <div class="flex items-center justify-between">
+    <app-back-to-list url="/{{lc}}s" />
+  </div>
+  @if (isLoading()) {
+    <app-alert type="loading"/>
+  }
+  @if (error()) {
+  <app-alert type="error" [error]="error"/>
+  }
+  <h1 class="text-3xl my-4">Create {{title}}</h1>
+  <app-form-{{lc}} [item]="item()" (submit)="onSubmit($event)"/>
+</div>
