@@ -20,8 +20,8 @@ export default class ReactGenerator extends BaseGenerator {
       "hooks/list.ts",
       "hooks/mercure.ts",
       "hooks/retrieve.ts",
-      "hooks/update.ts",
       "hooks/show.ts",
+      "hooks/update.ts",
 
       // interfaces
       "interfaces/Collection.ts",
@@ -32,9 +32,9 @@ export default class ReactGenerator extends BaseGenerator {
       "components/foo/Form.tsx",
       "components/foo/index.ts",
       "components/foo/List.tsx",
-      "components/foo/Update.tsx",
-      "components/foo/type.ts",
       "components/foo/Show.tsx",
+      "components/foo/type.ts",
+      "components/foo/Update.tsx",
       "components/Field.tsx",
       "components/Links.tsx",
       "components/Pagination.tsx",

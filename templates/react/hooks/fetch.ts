@@ -64,8 +64,8 @@ const normalizeAuth = (auth: string) => {
 // Error handling
 const regularHandler = (response: Response, json: any) => {
   const error =
-    json["hydra:description"] ||
-    json["hydra:title"] ||
+    json["{{hydraPrefix}}description"] ||
+    json["{{hydraPrefix}}title"] ||
     json["message"] ||
     "An error occurred.";
 
@@ -78,8 +78,8 @@ const submissionHandler = (response: Response, json: any) => {
   }
 
   const error =
-    json["hydra:description"] ||
-    json["hydra:title"] ||
+    json["{{hydraPrefix}}description"] ||
+    json["{{hydraPrefix}}title"] ||
     json["message"] ||
     "An error occurred.";
 

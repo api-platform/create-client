@@ -266,10 +266,10 @@ const { items, view, error, isLoading, hubUrl } = await useFetchList<{{titleUcFi
 {{lc}}ListStore.setData({ items, view, error, isLoading, hubUrl });
 
 const pagination = {
-  first: view.value?.["hydra:first"]?.slice(-1),
-  previous: view.value?.["hydra:previous"]?.slice(-1),
-  next: view.value?.["hydra:next"]?.slice(-1),
-  last: view.value?.["hydra:last"]?.slice(-1),
+  first: view.value?.["{{hydraPrefix}}first"]?.slice(-1),
+  previous: view.value?.["{{hydraPrefix}}previous"]?.slice(-1),
+  next: view.value?.["{{hydraPrefix}}next"]?.slice(-1),
+  last: view.value?.["{{hydraPrefix}}last"]?.slice(-1),
 };
 
 useMercureList({ store: {{lc}}ListStore, deleteStore: {{lc}}DeleteStore });

@@ -40,7 +40,7 @@ export function retrieved(state = null, action) {
     case '{{{uc}}}_LIST_MERCURE_MESSAGE':
       return {
         ...state,
-        'hydra:member': state['hydra:member'].map(item =>
+        '{{hydraPrefix}}member': state['{{hydraPrefix}}member'].map(item =>
           item['@id'] === action.retrieved['@id'] ? action.retrieved : item
         )
       };
@@ -48,7 +48,7 @@ export function retrieved(state = null, action) {
     case '{{{uc}}}_LIST_MERCURE_DELETED':
       return {
         ...state,
-        'hydra:member': state['hydra:member'].filter(
+        '{{hydraPrefix}}member': state['{{hydraPrefix}}member'].filter(
           item => item['@id'] !== action.retrieved['@id']
         )
       };
