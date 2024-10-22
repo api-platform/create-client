@@ -1,18 +1,16 @@
 import { FunctionComponent, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import Head from "next/head";
+import { useRouter } from "next/navigation";
 
 {{#if hasRelations}}import ReferenceLinks from "../common/ReferenceLinks";{{/if}}
-import { fetch, getItemPath } from "../../utils/dataAccess";
+import { customFetch, getItemPath } from "../../utils/dataAccess";
 import { {{{ucf}}} } from "../../types/{{{ucf}}}";
 
 interface Props {
   {{{lc}}}: {{{ucf}}};
-  text: string;
 }
 
-export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
+export const Show: FunctionComponent<Props> = ({ {{{lc}}} }) => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
@@ -21,7 +19,7 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
 		if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     try {
-      await fetch({{{lc}}}["@id"], { method: "DELETE" });
+      await customFetch({{{lc}}}["@id"], { method: "DELETE" });
       router.push("/{{{lc}}}s");
     } catch (error) {
       setError("Error when deleting the resource.");
@@ -31,10 +29,6 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
 
   return (
     <div className="p-4">
-      <Head>
-        <title>{`Show {{{ucf}}} ${ {{~lc}}['@id']}`}</title>
-        <script type="application/ld+json" dangerouslySetInnerHTML={ { __html: text } } />
-      </Head>
       <Link
         href="/{{{lc}}}s"
         className="text-sm text-cyan-500 font-bold hover:text-cyan-700"
