@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 
 {{#if hasRelations}}import ReferenceLinks from "../common/ReferenceLinks";{{/if}}
-import { fetch, getItemPath } from "../../utils/dataAccess";
+import { fetchApi, getItemPath } from "../../utils/dataAccess";
 import { {{{ucf}}} } from "../../types/{{{ucf}}}";
 
 interface Props {
@@ -21,7 +21,7 @@ export const Show: FunctionComponent<Props> = ({ {{{lc}}}, text }) => {
 		if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     try {
-      await fetch({{{lc}}}["@id"], { method: "DELETE" });
+      await fetchApi({{{lc}}}["@id"], { method: "DELETE" });
       router.push("/{{{lc}}}s");
     } catch (error) {
       setError("Error when deleting the resource.");
