@@ -1,0 +1,10 @@
+<div class="rounded py-4 px-4 text-sm mt-2"
+     [class]="type === 'loading' ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'">
+  @if (type === 'loading') {
+    Loading ...
+  }
+  @if (type === 'error') {
+    <h3 class="text-lg">\{{ error()?.['name'] }} <span class="text-sm">\{{ error()?.['status'] }}</span></h3>
+    <p>\{{ error()?.['message'] }}</p>
+  }
+</div>

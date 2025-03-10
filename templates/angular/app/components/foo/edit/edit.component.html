@@ -1,0 +1,18 @@
+<div class="px-4 mt-4">
+  <div class="flex items-center justify-end">
+    <app-back-to-list url="/{{lc}}s"/>
+  </div>
+  @if (isLoading()) {
+  <app-alert type="loading"/>
+  }
+  @if (error()) {
+  <app-alert type="error" [error]="error"/>
+  }
+  <h1 class="text-3xl my-4">Edit {{ titleUcFirst }} <span class="text-xl">\{{ item()["@id"] }} </span></h1>
+
+  <app-form-{{lc}}
+    [item]="item()"
+    (submit)="onSubmit($event)"
+    (delete)="delete()"
+  />
+</div>

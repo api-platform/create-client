@@ -1,0 +1,37 @@
+<div class="flex justify-center mt-8">
+  <nav aria-label="Page navigation">
+    <ul class="flex list-style-none">
+      <li>
+        <a [routerLink]="pagination()['hydra:first']"
+           (click)="changeUri(pagination()!['hydra:first'])"
+           class="bg-gray block py-2 px-3 rounded"
+           aria-label="First page">
+          <span aria-hidden="true">&lArr;</span>First
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="pagination()['hydra:previous']"
+           (click)="changeUri(pagination()!['hydra:previous'])"
+           class="bg-gray block py-2 px-3 rounded"
+           aria-label="Previous page">
+          Previous
+        </a>
+      <li>
+        <a [routerLink]="pagination()['hydra:next']"
+           (click)="changeUri(pagination()!['hydra:next'])"
+           class="bg-gray block py-2 px-3 rounded"
+           aria-label="Next page">
+          Next
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="pagination()['hydra:last']"
+           (click)="changeUri(pagination()!['hydra:last'])"
+           class="bg-gray block py-2 px-3 rounded"
+           aria-label="Last page">
+          <span aria-hidden="true">&rAarr;</span> Last
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

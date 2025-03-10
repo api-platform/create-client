@@ -13,6 +13,9 @@ module.exports = {
     "./pages/**/*.vue",
     "./plugins/**/*.ts",
     "./nuxt.config.ts",
+    //ANGULAR
+    "./src/app/components/**/**/*.component.ts",
+    "./src/app/components/**/**/*.component.html",
   ],
   theme: {
     extend: {},

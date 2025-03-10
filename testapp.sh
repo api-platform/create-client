@@ -73,5 +73,33 @@ if [ "$1" = "vue" ]; then
   cp ./templates/vue/main.ts ./tmp/app/vue/src
   cp ./templates/vue/App.vue ./tmp/app/vue/src
   yarn --cwd ./tmp/app/vue build
-  start-server-and-test 'yarn --cwd ./tmp/app/vue vite preview --port 3000' http://localhost:3000/books/ 'yarn playwright test'
+  start-server-and-test 'yarn --cwd ./tmp/app/vue vite preview' http://localhost:3000/books/ 'yarn playwright test'
+fi
+
+if [ "$1" = "angular" ]; then
+  cd ./tmp/app
+  npm install @angular/cli
+
+  ng new angular --ssr --standalone --style=css
+  cd ../..
+  yarn --cwd ./tmp/app/angular add tailwindcss postcss autoprefixer dayjs
+  yarn --cwd ./tmp/app/angular tailwindcss init -p
+
+  cp ./templates/common/tailwind.config.js ./tmp/app/angular
+  cp ./templates/common/style.css ./tmp/app/angular/src/styles.css
+
+  cp -R ./tmp/angular/* ./tmp/app/angular/src
+
+  file="./tmp/app/angular/tsconfig.json"
+  newContent='"baseUrl": "./src",\
+  "paths": {\
+    "@components/*" : ["app/components/*"],\
+    "@interface/*" : ["app/interface/*"],\
+    "@service/*" : ["app/service/*"],\
+    "@router/*" : ["app/router/*"],\
+    "@utils/*" : ["app/utils/*"],\
+  },'
+  sed -i.bak '21a\'"$newContent" "$file"
+  yarn --cwd ./tmp/app/angular build
+  start-server-and-test 'yarn --cwd ./tmp/app/angular start --port=3000' http://127.0.0.1:3000/books/ 'yarn playwright test'
 fi
