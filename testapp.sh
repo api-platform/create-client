@@ -9,7 +9,7 @@ fi
 if [ "$1" = "next" ]; then
   yarn create next-app --typescript --eslint ./tmp/app/next
   yarn prettier --write ./tmp/app/next
-  yarn --cwd ./tmp/app/next add isomorphic-unfetch formik react-query
+  yarn --cwd ./tmp/app/next add react-hook-form react-query
 
   # Tailwind
   yarn --cwd ./tmp/app/next add tailwindcss postcss autoprefixer
@@ -18,8 +18,7 @@ if [ "$1" = "next" ]; then
   cp ./templates/common/style.css ./tmp/app/next/styles
 
   cp -R ./tmp/next/* ./tmp/app/next
-  rm ./tmp/app/next/pages/index.tsx
-  rm -rf ./tmp/app/next/pages/api
+  rm -rf ./tmp/app/next/app
   yarn --cwd ./tmp/app/next build
   start-server-and-test 'yarn --cwd ./tmp/app/next start' http://127.0.0.1:3000/books/ 'yarn playwright test'
 fi

@@ -1,5 +1,3 @@
-import isomorphicFetch from "isomorphic-unfetch";
-
 import { PagedCollection } from "../types/collection";
 import { Item } from "../types/item";
 import { ENTRYPOINT } from "../config/entrypoint";
@@ -20,7 +18,7 @@ export interface FetchResponse<TData> {
 export interface FetchError {
   message: string;
   status: string;
-  fields: {[key: string]: string};
+  fields: { field: string; message: string }[];
 }
 
 const extractHubURL = (response: Response): null | URL => {
@@ -34,7 +32,7 @@ const extractHubURL = (response: Response): null | URL => {
   return matches && matches[1] ? new URL(matches[1], ENTRYPOINT) : null;
 };
 
-export const fetch = async <TData>(id: string, init: RequestInit = {}): Promise<FetchResponse<TData>|undefined> => {
+export const customFetch = async <TData>(id: string, init: RequestInit = {}): Promise<FetchResponse<TData>|undefined> => {
   if (typeof init.headers === "undefined") init.headers = {};
   if (!init.headers.hasOwnProperty("Accept"))
     init.headers = { ...init.headers, Accept: MIME_TYPE };
@@ -45,7 +43,7 @@ export const fetch = async <TData>(id: string, init: RequestInit = {}): Promise<
   )
     init.headers = { ...init.headers, "Content-Type": MIME_TYPE };
 
-  const resp = await isomorphicFetch(ENTRYPOINT + id, init);
+  const resp = await fetch(ENTRYPOINT + id, init);
   if (resp.status === 204) return;
 
   const text = await resp.text();
@@ -61,10 +59,9 @@ export const fetch = async <TData>(id: string, init: RequestInit = {}): Promise<
   const errorMessage = json["{{{hydraPrefix}}}title"];
   const status = json["{{{hydraPrefix}}}description"] || resp.statusText;
   if (!json.violations) throw Error(errorMessage);
-  const fields: { [key: string]: string } = {};
-  json.violations.map(
-    (violation: Violation) =>
-      (fields[violation.propertyPath] = violation.message)
+  const fields: { field: string; message: string }[] = [];
+  json.violations.forEach((violation: Violation) =>
+    fields.push({ field: violation.propertyPath, message: violation.message })
   );
 
   throw { message: errorMessage, status, fields } as FetchError;
@@ -93,7 +90,7 @@ export const getItemPaths = async <TData extends Item>(response: FetchResponse<P
 
     for (let page = 2; page <= lastPage; page++) {
       paths.push(
-        ...(await fetch<PagedCollection<TData>>(`/${resourceName}?page=${page}`))
+        ...(await customFetch<PagedCollection<TData>>(`/${resourceName}?page=${page}`))
           ?.data["{{{hydraPrefix}}}member"]?.map((resourceData) => getItemPath(resourceData['@id'] ?? '', pathTemplate)) ?? []
       );
     }
