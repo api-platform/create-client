@@ -9,7 +9,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test("Generate a Vuetify app", async () => {
   const generator = new VuetifyGenerator({
-    hydraPrefix: "hydra:",
+    hydraPrefix: "",
     templateDirectory: `${dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });

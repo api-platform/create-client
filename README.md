@@ -41,6 +41,8 @@ The documentation of API Platform Create Client can be browsed [on the official 
 
     npm init @api-platform/client https://demo.api-platform.com/ output/ --resource Book
 
+**Hint:** If needed, you can customize the Hydra prefix using the `-p` or `--hydraPrefix` option (default: none).
+
 ### OpenAPI 3
 
     npm init @api-platform/client https://demo.api-platform.com/docs.json output/ --resource Book --format openapi3

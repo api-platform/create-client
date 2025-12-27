@@ -8,7 +8,7 @@ import NextGenerator from "./NextGenerator.js";
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const generator = new NextGenerator({
-  hydraPrefix: "hydra:",
+  hydraPrefix: "",
   templateDirectory: `${dirname}/../../templates`,
 });
 

@@ -9,7 +9,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test("Generate a Nuxt app", () => {
   const generator = new NuxtGenerator({
-    hydraPrefix: "hydra:",
+    hydraPrefix: "",
     templateDirectory: `${dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });

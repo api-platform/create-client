@@ -9,7 +9,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test("Generate a React app", () => {
   const generator = new ReactNativeGenerator({
-    hydraPrefix: "hydra:",
+    hydraPrefix: "",
     templateDirectory: `${dirname}/../../templates`,
   });
   const tmpobj = tmp.dirSync({ unsafeCleanup: true });

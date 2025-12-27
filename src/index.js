@@ -32,7 +32,7 @@ async function main() {
     .option(
       "-p, --hydra-prefix [hydraPrefix]",
       "The hydra prefix used by the API",
-      "hydra:"
+      ""
     )
     .option("--username [username]", "Username for basic auth (Hydra only)")
     .option("--password [password]", "Password for basic auth (Hydra only)")
