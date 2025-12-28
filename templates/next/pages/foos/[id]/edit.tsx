@@ -2,20 +2,20 @@ import { GetStaticPaths, GetStaticProps, NextComponentType, NextPageContext } fr
 import DefaultErrorPage from "next/error";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 
 import { Form } from "../../../components/{{{lc}}}/Form";
 import { PagedCollection } from "../../../types/collection";
 import { {{{ucf}}} } from "../../../types/{{{ucf}}}";
-import { fetch, FetchResponse, getItemPaths } from "../../../utils/dataAccess";
+import { fetchApi, FetchResponse, getItemPaths } from "../../../utils/dataAccess";
 
-const get{{{ucf}}} = async (id: string|string[]|undefined) => id ? await fetch<{{{ucf}}}>(`/{{{name}}}/${id}`) : Promise.resolve(undefined);
+const get{{{ucf}}} = async (id: string|string[]|undefined) => id ? await fetchApi<{{{ucf}}}>(`/{{{name}}}/${id}`) : Promise.resolve(undefined);
 
 const Page: NextComponentType<NextPageContext> = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: { data: {{lc}} } = {} } = useQuery<FetchResponse<{{{ucf}}}> | undefined>(['{{{lc}}}', id], () => get{{{ucf}}}(id));
+  const { data: { data: {{lc}} } = {} } = useQuery<FetchResponse<{{{ucf}}}> | undefined, Error, FetchResponse<{{{ucf}}}> | undefined>({queryKey: ['{{{lc}}}', id], queryFn: () => get{{{ucf}}}(id)});
 
   if (!{{{lc}}}) {
     return <DefaultErrorPage statusCode={404} />;
@@ -36,7 +36,7 @@ const Page: NextComponentType<NextPageContext> = () => {
 export const getStaticProps: GetStaticProps = async ({ params: { id } = {} }) => {
   if (!id) throw new Error('id not in query param');
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(["{{{lc}}}", id], () => get{{{ucf}}}(id));
+  await queryClient.prefetchQuery({queryKey: ["{{{lc}}}", id], queryFn: () => get{{{ucf}}}(id)});
 
   return {
     props: {
@@ -47,7 +47,7 @@ export const getStaticProps: GetStaticProps = async ({ params: { id } = {} }) =>
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetch<PagedCollection<{{{ucf}}}>>("/{{{name}}}");
+  const response = await fetchApi<PagedCollection<{{{ucf}}}>>("/{{{name}}}");
   const paths = await getItemPaths(response, "{{{name}}}", '/{{{lc}}}s/[id]/edit');
 
   return {

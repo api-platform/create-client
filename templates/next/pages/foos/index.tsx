@@ -1,11 +1,11 @@
 import { GetStaticProps } from "next";
-import { dehydrate, QueryClient } from "react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 import { PageList, get{{{ucf}}}s, get{{{ucf}}}sPath } from "../../components/{{{lc}}}/PageList";
 
 export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(get{{{ucf}}}sPath(), get{{{ucf}}}s());
+  await queryClient.prefetchQuery({queryKey: [get{{{ucf}}}sPath()], queryFn: get{{{ucf}}}s()});
 
   return {
     props: {
