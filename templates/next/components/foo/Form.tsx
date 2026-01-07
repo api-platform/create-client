@@ -1,10 +1,11 @@
 import { FunctionComponent, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { ErrorMessage{{#if hasManyRelations}}, Field, FieldArray{{/if}}, Formik } from "formik";
+import { useRouter } from "next/navigation";
+import { useForm{{#if hasManyRelations}}, useFieldArray{{/if}} } from "react-hook-form";
+
 import { useMutation } from "react-query";
 
-import { fetch, FetchError, FetchResponse } from "../../utils/dataAccess";
+import { customFetch, FetchError, FetchResponse } from "../../utils/dataAccess";
 import { {{{ucf}}} } from '../../types/{{{ucf}}}';
 
 interface Props {
@@ -20,17 +21,52 @@ interface DeleteParams {
 }
 
 const save{{{ucf}}} = async ({ values }: SaveParams) =>
-  await fetch<{{ucf}}>(!values["@id"] ? "/{{{name}}}" : values["@id"], {
+  await customFetch<{{ucf}}>(!values["@id"] ? "/{{{name}}}" : values["@id"], {
     method: !values["@id"] ? "POST" : "PUT",
     body: JSON.stringify(values),
   });
 
-const delete{{{ucf}}} = async (id: string) => await fetch<{{ucf}}>(id, { method: "DELETE" });
+const delete{{{ucf}}} = async (id: string) => await customFetch<{{ucf}}>(id, { method: "DELETE" });
+
+
+const formatDefaultValue = ({{lc}} : {{{ucf}}} | undefined)=> {
+  return {{lc}} ?
+  {
+    ...{{lc}},
+    {{#each fields}}
+      {{#if isEmbeddeds}}
+        {{name}}: {{../lc}}["{{name}}"]?.map((emb: any) => emb['@id']) ?? [],
+      {{else if embedded}}
+        {{name}}: {{../lc}}["{{name}}"]?.['@id'] ?? "",
+      {{/if}}
+    {{/each}}
+  } :
+  new {{{ucf}}}()
+}
+
 
 export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
-  const [, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
   const router = useRouter();
 
+  const {
+    handleSubmit,
+    register,
+    setError,
+    control,
+    formState: { errors, isSubmitting, dirtyFields, isValid },
+  } = useForm<{{{ucf}}}>({
+    defaultValues: formatDefaultValue({{lc}}),
+  });
+
+  {{#each formFields}}
+  {{#if isRelations}}
+  const { fields: {{{name}}}, append: append{{{name}}}, remove: remove{{{name}}} } = useFieldArray({
+    control,
+    name: "{{{name}}}",
+  });
+  {{/if}}
+  {{/each}}
   const saveMutation = useMutation<FetchResponse<{{ucf}}> | undefined, Error|FetchError, SaveParams>((saveParams) => save{{{ucf}}}(saveParams));
 
   const deleteMutation = useMutation<FetchResponse<{{ucf}}> | undefined, Error|FetchError, DeleteParams>(({ id }) => delete{{{ucf}}}(id), {
@@ -38,16 +74,41 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
       router.push("/{{{lc}}}s");
     },
     onError: (error)=> {
-      setError(`Error when deleting the resource: ${error}`);
+      setMessage(`Error when deleting the resource: ${error}`);
       console.error(error);
     }
   });
 
 	const handleDelete = () => {
+    setMessage(null);
     if (!{{lc}} || !{{lc}}["@id"]) return;
 		if (!window.confirm("Are you sure you want to delete this item?")) return;
     deleteMutation.mutate({ id: {{lc}}["@id"] });
 	};
+
+  const onSubmit = async (values: {{{ucf}}}) => {
+    const isCreation = !values["@id"];
+    setMessage(null);
+    
+    saveMutation.mutate(
+      { values },
+      {
+        onSuccess: () => {
+          setMessage(`Element ${isCreation ? "created" : "updated"}.`);
+          router.push("/{{{name}}}");
+        },
+        onError: (error) => {
+          setMessage(error.message);
+          if ("fields" in error) {
+            error.fields.map(
+              ({ field, message }: { field: string; message: string }) =>
+                setError(field, { type: "custom", message })
+            );
+          }
+        }
+      }
+    );
+  }
 
 	return (
     <div className="container mx-auto px-4 max-w-2xl mt-4">
@@ -60,135 +121,60 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
       <h1 className="text-3xl my-2">
         { {{{lc}}} ? `Edit {{{ucf}}} ${ {{~lc}}['@id']}` : `Create {{{ucf}}}` }
       </h1>
-      <Formik
-        initialValues={
-          {{lc}} ?
-          {
-            ...{{lc}},
-            {{#each fields}}
-              {{#if isEmbeddeds}}
-                {{name}}: {{../lc}}["{{name}}"]?.map((emb: any) => emb['@id']) ?? [],
-              {{else if embedded}}
-                {{name}}: {{../lc}}["{{name}}"]?.['@id'] ?? "",
-              {{/if}}
-            {{/each}}
-          } :
-          new {{{ucf}}}()
-        }
-        validate={() => {
-          const errors = {};
-          // add your validation logic here
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting, setStatus, setErrors }) => {
-          const isCreation = !values["@id"];
-          saveMutation.mutate(
-            { values },
-            {
-              onSuccess: () => {
-                setStatus({
-                  isValid: true,
-                  msg: `Element ${isCreation ? "created" : "updated"}.`,
-                });
-                router.push("/{{{name}}}");
-              },
-              onError: (error) => {
-                setStatus({
-                  isValid: false,
-                  msg: `${error.message}`,
-                });
-                if ("fields" in error) {
-                  setErrors(error.fields);
-                }
-              },
-              onSettled: ()=> {
-                setSubmitting(false);
-              }
-            }
-          );
-        }}
-      >
-        {({
-          values,
-          status,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
-          <form className="shadow-md p-4" onSubmit={handleSubmit}>
-          {{#each formFields}}
+      <form className="shadow-md p-4" onSubmit={handleSubmit(onSubmit)}>
+      {{#each formFields}}
             <div className="mb-2">
               {{#if isRelations}}
                 <div className="text-gray-700 block text-sm font-bold">{{name}}</div>
-                <FieldArray
-                  name="{{name}}"
-                  render={(arrayHelpers) => (
-                    <div className="mb-2" id="{{../lc}}_{{name}}">
-                      {values.{{name}} && values.{{name}}.length > 0 ? (
-                        values.{{name}}.map((item: any, index: number) => (
-                          <div key={index}>
-                            <Field name={`{{name}}.${index}`} />
-                            <button
-                              type="button"
-                              onClick={() => arrayHelpers.remove(index)}
-                            >
-                              -
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => arrayHelpers.insert(index, '')}
-                            >
-                              +
-                            </button>
-                          </div>
-                        ))
-                      ) : (
-                        <button type="button" onClick={() => arrayHelpers.push('')}>
-                          Add
-                        </button>
-                      )}
-                    </div>
-                  )}
-                />
+                <ul>
+                  { {{name}}.map((item, index) => (
+                    <li key={item.id}>
+                      <input
+                        {...register(`{{name}}.${index}`)}
+                        name={`{{name}}.${index}`}
+                        id={`{{../lc}}_{{name}}.${index}`}
+                        aria-label={`{{name}} ${index}`}
+                        className="mt-1 border-grey-500 border-2 p-1 "
+                      />
+                      <button type="button" onClick={() => remove{{name}}(index)}>
+                        -
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  onClick={() => append{{name}}("")}
+                >
+                  Add
+                </button>
               {{else}}
                 <label className="text-gray-700 block text-sm font-bold" htmlFor="{{../lc}}_{{name}}">{{name}}</label>
                 <input
+                  {...register("{{name}}", { required: "{{name}} is required" })}
                   name="{{name}}"
                   id="{{../lc}}_{{name}}"
-                  {{#compare type "==" "dateTime" }}
-                  value={values.{{name}}?.toLocaleString() ?? ""}
-                  {{/compare}}
-                  {{#compare type "!=" "dateTime" }}
-                  value={values.{{name}} ?? ""}
-                  {{/compare}}
                   type="{{type}}"
                   {{#if step}}step="{{{step}}}"{{/if}}
                   placeholder="{{{description}}}"
                   {{#if required}}required={true}{{/if}}
-                  className={`mt-1 block w-full ${errors.{{name}} && touched.{{name}} ? 'border-red-500' : ''}`}
-                  aria-invalid={errors.{{name}} && touched.{{name~}} ? 'true' : undefined}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+                  className={`mt-1 block w-full border-grey-500 border-2 p-1 ${errors.{{name}} && dirtyFields.{{name}} ? 'border-red-500' : ''}`}
+                  aria-invalid={errors.{{name}} && dirtyFields.{{name~}} ? 'true' : undefined}
                 />
-                <ErrorMessage
-                  className="text-xs text-red-500 pt-1"
-                  component="div"
-                  name="{{name}}"
-                />
+                {errors?.{{name}} && (
+                  <p className="text-red-600 text-sm">{errors?.{{name}}?.message}</p>
+                )}
               {{/if}}
             </div>
           {{/each}}
-            {status && status.msg && (
+            {message && (
               <div
-                className={`border px-4 py-3 my-4 rounded ${
-                  status.isValid ? "text-cyan-700 border-cyan-500 bg-cyan-200/50" : "text-red-700 border-red-400 bg-red-100"
-                }`}
+              className={`border px-4 py-3 my-4 rounded ${
+                isValid Object.keys(errors).length === 0 ? "text-cyan-700 border-cyan-500 bg-cyan-200/50" : "text-red-700 border-red-400 bg-red-100"
+              }`}
                 role="alert"
               >
-                {status.msg}
+                {message}
               </div>
             )}
             <button
@@ -198,9 +184,7 @@ export const Form: FunctionComponent<Props> = ({ {{{lc}}} }) => {
             >
               Submit
             </button>
-          </form>
-        )}
-      </Formik>
+      </form>
       <div className="flex space-x-2 mt-4 justify-end">
       { {{{lc}}} && (
         <button className="inline-block mt-2 border-2 border-red-400 hover:border-red-700 hover:text-red-700 text-sm text-red-400 font-bold py-2 px-4 rounded" onClick={handleDelete}>
