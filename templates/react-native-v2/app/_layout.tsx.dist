@@ -1,0 +1,44 @@
+import React from 'react';
+import { FontAwesome } from "@expo/vector-icons";
+import "../global.css";
+import { Tabs } from "expo-router";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+function TabBarIcon(props: {
+  name: React.ComponentProps<typeof FontAwesome>['name'];
+  color: string;
+}) {
+  return <FontAwesome size={28} style={iconMargin} {...props} />;
+}
+const iconMargin = { marginBottom: -3 }
+
+export default function Layout() {
+  const queryClient = new QueryClient();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Tabs screenOptions={options.tabsContainer}>
+        <Tabs.Screen
+          name="index"
+          options={options.tabs.home}
+        />
+      </Tabs>
+    </QueryClientProvider>
+  )
+}
+
+const options = {
+  tabsContainer: {
+    headerShown: false,
+    tabBarShowLabel: false,
+  },
+  tabs: {
+    home: {
+      title: 'Accueil',
+      tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+    },
+  }
+};
